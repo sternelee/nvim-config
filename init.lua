@@ -85,6 +85,7 @@ require('packer').startup(function()
   use 'kabouzeid/nvim-lspinstall'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
+  use 'glepnir/lspsaga.nvim'
   use 'onsails/lspkind-nvim'
   use 'simrat39/symbols-outline.nvim'
   use 'ray-x/lsp_signature.nvim'
