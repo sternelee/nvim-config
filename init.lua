@@ -82,7 +82,7 @@ require('packer').startup(function()
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
-  -- use 'kabouzeid/nvim-lspinstall'
+  use 'kabouzeid/nvim-lspinstall'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -508,9 +508,9 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- can use rls or rust_analyzer
 
 local function setup_servers()
-  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls", "stylelint_lsp" }
-  -- require'lspinstall'.setup()
-  -- local servers = require'lspinstall'.installed_servers()
+  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls", "stylelint_lsp" }
+  require'lspinstall'.setup()
+  local servers = require'lspinstall'.installed_servers()
   for _, server in pairs(servers) do
     require'lspconfig'[server].setup{
       on_attach = on_attach,
