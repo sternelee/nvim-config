@@ -6,7 +6,7 @@ local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 --gui
-g.neovide_fullscreen = true
+-- g.neovide_fullscreen = true
 g.neovide_cursor_vfx_mode = "pixiedust"
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
 --Install packer
@@ -82,7 +82,7 @@ require('packer').startup(function()
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
-  use 'kabouzeid/nvim-lspinstall'
+  -- use 'kabouzeid/nvim-lspinstall'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -95,8 +95,8 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  use 'jose-elias-alvarez/null-ls.nvim'
+  -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  -- use 'jose-elias-alvarez/null-ls.nvim'
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -114,12 +114,12 @@ require('packer').startup(function()
       require "surround".setup {}
     end
   }
-  use {
+  --[[ use {
     "folke/which-key.nvim",
     config = function()
       require("which-key").setup {}
     end
-  } -- 提示leader按键
+  } -- 提示leader按键 ]]
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use {
@@ -128,7 +128,7 @@ require('packer').startup(function()
           require('todo-comments').setup{}
       end
   }
-  use 'konfekt/fastfold' -- 性能更好的语法折叠
+  -- use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use {
     'mhartington/formatter.nvim',
@@ -136,7 +136,7 @@ require('packer').startup(function()
       require('formatter').setup{}
     end
   }
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
@@ -145,7 +145,7 @@ require('packer').startup(function()
     end
   }
   use 'rcarriga/nvim-notify'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 end)
 
 --settings
@@ -288,7 +288,7 @@ let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'tel
 ]], false)
 
 -- fastfold
-g.fastfold_savehook = 1
+--[[ g.fastfold_savehook = 1
 g.fastfold_fold_command_suffixes =  {'x','X','a','A','o','O','c','C'}
 g.fastfold_fold_movement_commands = {']z', '[z', 'zj', 'zk'}
 g.markdown_folding = 1
@@ -302,7 +302,7 @@ g.perl_fold = 1
 g.perl_fold_blocks = 1
 g.r_syntax_folding = 1
 g.rust_fold = 1
-g.php_folding = 1
+g.php_folding = 1 ]]
 
 --barbar
 nvim_exec([[
@@ -783,7 +783,7 @@ fn.sign_define(
     {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
 )
 
--- true-zen
+-- TrueZen
 local true_zen = require("true-zen")
 true_zen.setup(
     {
