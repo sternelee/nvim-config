@@ -55,7 +55,7 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-hlslens'}
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
-  use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
     'nvim-telescope/telescope-project.nvim',
@@ -267,14 +267,14 @@ for _, num in pairs(numbers) do
 end
 
 g.loaded_python_provider = 0
--- g.loaded_python3_provider = 0
+g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- LeaderF
-g.Lf_WindowPosition = 'popup'
+--[[ g.Lf_WindowPosition = 'popup'
 g.Lf_PreviewInPopup = 1
-g.Lf_ShortcutF = '<C-P>'
+g.Lf_ShortcutF = '<C-P>' ]]
 
 --visual multi
 nvim_exec([[
@@ -508,7 +508,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- can use rls or rust_analyzer
 
 local function setup_servers()
-  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls", "stylelint_lsp" }
   require'lspinstall'.setup()
   local servers = require'lspinstall'.installed_servers()
   for _, server in pairs(servers) do
@@ -521,10 +520,10 @@ end
 
 setup_servers()
 
-require'lspinstall'.post_install_hook = function ()
+--[[ require'lspinstall'.post_install_hook = function ()
   setup_servers() -- reload installed servers
   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
+end ]]
 
 --nvim-compe
 require'compe'.setup {
