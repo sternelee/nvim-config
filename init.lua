@@ -762,7 +762,9 @@ require('gitsigns').setup {
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default
-  use_internal_diff = false,  -- If luajit is present
+  diff_opts = {
+    internal = false
+  }
 }
 
 fn.sign_define(
@@ -1004,7 +1006,7 @@ local quickfix = {
         { '🧛 ', { 'white', 'black' } },
     },
 
-    show_in_active = true,
+    always_active = true,
 }
 
 local explorer = {
@@ -1015,7 +1017,7 @@ local explorer = {
         { b_components.divider, '' },
         { b_components.file_name(''), { 'white', 'black_light' } },
     },
-    show_in_active = true,
+    always_active = true,
     show_last_status = true,
 }
 local default = {
@@ -1033,7 +1035,7 @@ local default = {
         { ' ', hl_list.Black },
         basic.square_mode,
     },
-    in_active = {
+    inactive = {
         { b_components.full_file_name, hl_list.Inactive },
         basic.file_name_inactive,
         basic.gps,
