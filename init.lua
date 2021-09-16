@@ -32,18 +32,15 @@ require('packer').startup(function()
   use 'f-person/git-blame.nvim' -- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use  'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'windwp/nvim-ts-autotag'
   use 'nvim-treesitter/playground'
-  use 'junegunn/limelight.vim'
+  -- use 'junegunn/limelight.vim'
   use {
     "folke/twilight.nvim",
     config = function()
       require("twilight").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
       }
     end
   }
@@ -72,17 +69,18 @@ require('packer').startup(function()
           })
       end,
   }
-  --[[ use {
+  use {
     'ahmedkhalf/lsp-rooter.nvim',
     config = function()
       require('lsp-rooter').setup {
       }
     end
-  } ]]
+  }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'kabouzeid/nvim-lspinstall'
+  use {'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe'}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -144,7 +142,7 @@ require('packer').startup(function()
         require('rest-nvim').setup()
     end
   }
-  use 'rcarriga/nvim-notify'
+  -- use 'rcarriga/nvim-notify'
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 end)
 
@@ -315,7 +313,7 @@ let bufferline.icons = 'both'
 --theme
 cmd 'colorscheme nightfly'
 
-local notify = require("notify")
+-- local notify = require("notify")
 
 require('kommentary.config').use_extended_mappings()
 
@@ -349,6 +347,9 @@ require('nvim-treesitter.configs').setup {
   autotag = {
     enable = true,
   },
+  refactor = {
+    highlight_definitions = { enable = true },
+  },
   incremental_selection = {
     enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     disable = { "cpp", "lua" },
@@ -360,18 +361,47 @@ require('nvim-treesitter.configs').setup {
     }
   },
   textobjects = {
-    -- These are provided by
     select = {
-      enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+      enable = true,
+      lookahead = true,
       keymaps = {
-        -- You can use the capture groups defined here:
-  -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/c/textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
-        ["ab"] = "@block.outer",
-        ["ib"] = "@block.inner",
-        ["as"] = "@statement.outer",
-        ["is"] = "@statement.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["iF"] = {
+          javascript = "(function_definition) @function",
+          typescript = "(function_definition) @function",
+          rust = "(function_definition) @function",
+        },
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["df"] = "@function.outer",
+        ["dF"] = "@class.outer",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
       },
     },
   },
@@ -555,15 +585,15 @@ require'compe'.setup {
         -- ultisnips = {kind = "  "},
         treesitter = {kind = "  "},
         emoji = {kind = " ﲃ  (Emoji)", filetypes={"markdown", "text"}},
-        -- for emoji press : (idk if that in compe tho)
-        --[[ tabnine = {
-        max_line = 5000;
-        max_num_results = 6;
-        priority = 500;
-        sort = false;
-        show_prediction_strength = true;
-        ignore_pattern = '';
-      } ]]
+        tabnine = {
+          max_line = 5000,
+          max_num_results = 6,
+          priority = 500,
+          sort = false,
+          show_prediction_strength = true,
+          ignore_pattern = '',
+          kind = "⦿ (TN)",
+        }
     }
 }
 
