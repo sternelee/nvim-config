@@ -79,7 +79,6 @@ require('packer').startup(function()
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
-  use 'kabouzeid/nvim-lspinstall'
   use {'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe'}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
@@ -534,12 +533,11 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
--- npm install --global vls vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server
+-- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server
 -- can use rls or rust_analyzer
 
 local function setup_servers()
-  require'lspinstall'.setup()
-  local servers = require'lspinstall'.installed_servers()
+  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
   for _, server in pairs(servers) do
     require'lspconfig'[server].setup{
       on_attach = on_attach,
@@ -549,11 +547,6 @@ local function setup_servers()
 end
 
 setup_servers()
-
---[[ require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end ]]
 
 --nvim-compe
 require'compe'.setup {
@@ -926,8 +919,8 @@ end
 --[[ local gps = require("nvim-gps")
 local gps_provider = function()
   return gps.get_location()
-end
- ]]
+end ]]
+
 require'feline'.setup {
   colors = {
     black = '#434C5E',
