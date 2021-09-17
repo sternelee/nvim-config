@@ -69,13 +69,13 @@ require('packer').startup(function()
           })
       end,
   }
-  use {
+  --[[ use {
     'ahmedkhalf/lsp-rooter.nvim',
     config = function()
       require('lsp-rooter').setup {
       }
     end
-  }
+  } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
