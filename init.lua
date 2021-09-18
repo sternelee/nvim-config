@@ -69,13 +69,13 @@ require('packer').startup(function()
           })
       end,
   }
-  --[[ use {
+  use {
     'ahmedkhalf/lsp-rooter.nvim',
     config = function()
       require('lsp-rooter').setup {
       }
     end
-  } ]]
+  }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
@@ -92,8 +92,8 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  -- use 'jose-elias-alvarez/null-ls.nvim'
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  use 'jose-elias-alvarez/null-ls.nvim'
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -127,13 +127,8 @@ require('packer').startup(function()
   }
   -- use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
-  use {
-    'mhartington/formatter.nvim',
-    config = function()
-      require('formatter').setup{}
-    end
-  }
-  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use 'mhartington/formatter.nvim'
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
@@ -649,7 +644,7 @@ require('nvim-autopairs.completion.compe').setup({
   map_complete = true
 })
 
---[[ require("dapui").setup({
+require("dapui").setup({
   icons = {
     expanded = "▾",
     collapsed = "▸"
@@ -685,7 +680,7 @@ require('nvim-autopairs.completion.compe').setup({
     max_height = nil, -- These can be integers or a float between 0 and 1.
     max_width = nil   -- Floats will be treated as percentage of your screen.
   }
-}) ]]
+})
 
 --colorizer
 require'colorizer'.setup()
@@ -873,6 +868,23 @@ g.dashboard_custom_section = {
     g = {description = {'  Open Neovim Configuration      SPC f e'}, command = ':e ~/AppData/Local/nvim/init.lua'},
 }
 
+local prettier = function ()
+  return {
+    exe = "prettier",
+    args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
+    stdin = true
+  }
+end
+require('formatter').setup({
+  filetype = {
+    javascript = {
+      prettier
+    },
+    typescript = {
+      prettier
+    },
+  }
+})
 
 -- feline config
 local get_diag = function(str)
