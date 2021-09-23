@@ -85,8 +85,8 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'f3fora/cmp-spell'}
-    -- {'tzachar/cmp-tabnine', run='./install.sh'},
+    {'f3fora/cmp-spell'},
+    {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use 'hrsh7th/nvim-cmp'
   use { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' } }
@@ -442,8 +442,8 @@ cmp.setup({
     { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'spell' }
-    -- { name = "cmp_tabnine"},
+    { name = 'spell' },
+    { name = 'cmp_tabnine'},
   },
   formatting = {
     format = function(entry, vim_item)
