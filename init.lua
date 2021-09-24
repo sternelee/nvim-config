@@ -163,7 +163,7 @@ opt('b', 'expandtab', true)                           -- Use spaces instead of t
 opt('b', 'shiftwidth', indent)                        -- Size of an indent
 opt('b', 'smartindent', true)                         -- Insert indents automatically
 opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
-opt('o', 'completeopt', 'menuone,noselect')           -- Completion options (for compe)
+opt('o', 'completeopt', 'menu,menuone,noselect')      -- Completion options
 opt('o', 'hidden', true)                              -- Enable modified buffers in background
 opt('o', 'scrolloff', 3 )                             -- Lines of context
 opt('o', 'shiftround', true)                          -- Round indent
