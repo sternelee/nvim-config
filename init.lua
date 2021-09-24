@@ -438,12 +438,12 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name = 'crates' },
     { name = 'treesitter' },
+    { name = 'cmp_tabnine'},
+    { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'spell' },
-    { name = 'cmp_tabnine'},
   },
   formatting = {
     format = function(entry, vim_item)
@@ -457,7 +457,7 @@ cmp.setup({
         calc = "   [Calc]",
         spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
-        tabnine = "⦿ [Tn]"
+        cmp_tabnine = "⦿ [Tn]"
       })[entry.source.name]
       return vim_item
     end
