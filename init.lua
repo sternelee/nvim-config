@@ -843,12 +843,12 @@ true_zen.setup(
             custome_bg = "#1e222a"
         },
         integrations = {
-            integration_galaxyline = true
+          feline = true
         }
     }
 )
 
-g.dashboard_session_directory = '/.sessions'
+g.dashboard_session_directory = '~/.sessions'
 g.dashboard_default_executive = 'telescope'
 cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
 
