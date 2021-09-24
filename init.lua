@@ -36,7 +36,6 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'windwp/nvim-ts-autotag'
   use 'nvim-treesitter/playground'
-  -- use 'junegunn/limelight.vim'
   use {
     "folke/twilight.nvim",
     config = function()
@@ -69,13 +68,6 @@ require('packer').startup(function()
           })
       end,
   }
-  --[[ use {
-    'ahmedkhalf/lsp-rooter.nvim',
-    config = function()
-      require('lsp-rooter').setup {
-      }
-    end
-  } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use {'hrsh7th/cmp-nvim-lsp', requires = {
@@ -121,12 +113,7 @@ require('packer').startup(function()
       require "surround".setup {}
     end
   }
-  --[[ use {
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup {}
-    end
-  } -- 提示leader按键 ]]
+  use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use {
@@ -135,7 +122,7 @@ require('packer').startup(function()
           require('todo-comments').setup{}
       end
   }
-  -- use 'konfekt/fastfold' -- 性能更好的语法折叠
+  use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
@@ -146,8 +133,7 @@ require('packer').startup(function()
         require('rest-nvim').setup()
     end
   }
-  -- use 'rcarriga/nvim-notify'
-  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use 'rcarriga/nvim-notify'
 end)
 
 --settings
@@ -243,6 +229,7 @@ map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -290,7 +277,7 @@ let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'tel
 ]], false)
 
 -- fastfold
---[[ g.fastfold_savehook = 1
+g.fastfold_savehook = 1
 g.fastfold_fold_command_suffixes =  {'x','X','a','A','o','O','c','C'}
 g.fastfold_fold_movement_commands = {']z', '[z', 'zj', 'zk'}
 g.markdown_folding = 1
@@ -304,7 +291,7 @@ g.perl_fold = 1
 g.perl_fold_blocks = 1
 g.r_syntax_folding = 1
 g.rust_fold = 1
-g.php_folding = 1 ]]
+g.php_folding = 1
 
 --barbar
 nvim_exec([[
@@ -317,7 +304,7 @@ let bufferline.icons = 'both'
 --theme
 cmd 'colorscheme nightfly'
 
--- local notify = require("notify")
+local notify = require("notify")
 
 require('kommentary.config').use_extended_mappings()
 
@@ -529,37 +516,38 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
+-- Mappings.
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<spacn>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', '<space>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'ge', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  buf_set_keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
-  buf_set_keymap('x', 'ga', '<cmd>Lspsaga range_code_action<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
-  buf_set_keymap('n', 'rn', '<cmd>Lspsaga rename<CR>', opts)
-  -- buf_set_keymap('n', 'gd', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', '<space>cd', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
-  buf_set_keymap('n', '[e', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
+  buf_set_keymap('n', '[f', '<cmd>Lspsaga lsp_finder<CR>', opts)
+  buf_set_keymap('n', '[a', '<cmd>Lspsaga code_action<CR>', opts)
+  buf_set_keymap('x', '[a', '<cmd>Lspsaga range_code_action<CR>', opts)
+  buf_set_keymap('n', '[o', '<cmd>Lspsaga hover_doc<CR>', opts)
+  buf_set_keymap('n', '[s', '<cmd>Lspsaga signature_help<CR>', opts)
+  buf_set_keymap('n', '[n', '<cmd>Lspsaga rename<CR>', opts)
+  buf_set_keymap('n', '[p', '<cmd>Lspsaga preview_definition<CR>', opts)
+  buf_set_keymap('n', '[l', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
+  buf_set_keymap('n', '[g', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+  buf_set_keymap('n', ']g', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
@@ -650,11 +638,8 @@ setup_servers()
 vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
-
 require('symbols-outline').setup()
-
 require'diffview'.setup{}
-
 require('nvim-autopairs').setup()
 
 require("dapui").setup({
@@ -1031,3 +1016,5 @@ require'feline'.setup {
     bufnames = {},
   }
 }
+
+require("which-key").setup {}
