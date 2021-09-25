@@ -35,6 +35,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'windwp/nvim-ts-autotag'
+  use '9mm/vim-closer'
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
@@ -70,6 +71,7 @@ require('packer').startup(function()
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/nvim-cmp'
   use {'hrsh7th/cmp-nvim-lsp', requires = {
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
@@ -77,11 +79,10 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'f3fora/cmp-spell'},
+    -- {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
-  use 'hrsh7th/nvim-cmp'
-  use { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -123,17 +124,17 @@ require('packer').startup(function()
       end
   }
   use 'konfekt/fastfold' -- 性能更好的语法折叠
-  use 'ThePrimeagen/vim-be-good'
+  use {'ThePrimeagen/vim-be-good', opt = true, cmd = {'VimBeGood'}}
   use 'mhartington/formatter.nvim'
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
     config = function()
         require('rest-nvim').setup()
     end
   }
   use 'rcarriga/nvim-notify'
+  use {'metakirby5/codi.vim', opt = true, cmd = { 'Codi' }}
 end)
 
 --settings
@@ -436,7 +437,7 @@ cmp.setup({
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'spell' },
+    -- { name = 'spell' },
   },
   formatting = {
     format = function(entry, vim_item)
@@ -448,7 +449,7 @@ cmp.setup({
         vsnip = "   [Vsnip]",
         treesitter = "   [Ts]",
         calc = "   [Calc]",
-        spell = "   [Spell]",
+        -- spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
         cmp_tabnine = "⦿ [Tn]"
       })[entry.source.name]
