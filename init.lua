@@ -25,7 +25,7 @@ require('packer').startup(function()
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -185,9 +185,14 @@ opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
 opt('o', 'laststatus', 2)
 opt('o', 'cursorline', true)
+opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
+opt('o', 'timeoutlen', 500)
+opt('o', 'ttimeoutlen', 10)
+opt('o', 'updatetime', 300)
+opt('o', 'scrolljump', 5)
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -207,6 +212,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 g.mapleader = " "                                                     --leader
+g.maplocalleader = ","
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -536,7 +542,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '[f', '<cmd>Lspsaga lsp_finder<CR>', opts)
   buf_set_keymap('n', '[a', '<cmd>Lspsaga code_action<CR>', opts)
@@ -926,10 +932,10 @@ local vi_mode_hl = function()
   }
 end
 
---[[ local gps = require("nvim-gps")
+local gps = require("nvim-gps")
 local gps_provider = function()
   return gps.get_location()
-end ]]
+end
 
 require'feline'.setup {
   colors = {
@@ -971,7 +977,7 @@ require'feline'.setup {
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        -- { provider = gps_provider, enabled = gps.is_available() }
+        { provider = gps_provider, enabled = gps.is_available() }
       },
       {},
       {
