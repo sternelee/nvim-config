@@ -25,7 +25,7 @@ require('packer').startup(function()
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
-  use 'SmiteshP/nvim-gps'
+  -- use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -932,10 +932,10 @@ local vi_mode_hl = function()
   }
 end
 
-local gps = require("nvim-gps")
+--[[ local gps = require("nvim-gps")
 local gps_provider = function()
   return gps.get_location()
-end
+end ]]
 
 require'feline'.setup {
   colors = {
@@ -977,7 +977,7 @@ require'feline'.setup {
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        { provider = gps_provider, enabled = gps.is_available() }
+        -- { provider = gps_provider, enabled = gps.is_available() }
       },
       {},
       {
