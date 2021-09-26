@@ -71,7 +71,7 @@ require('packer').startup(function()
   }
   -- 语法建议
   use {
-      'neovim/nvim-lsp-config',
+      'neovim/nvim-lspconfig',
       'williamboman/nvim-lsp-installer',
   }
   use 'hrsh7th/nvim-cmp'
