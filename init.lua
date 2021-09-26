@@ -21,9 +21,12 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   -- 状态栏
-  use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
+  use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  use 'kyazdani42/nvim-tree.lua'
+  use {
+      'kyazdani42/nvim-tree.lua',
+      config = function() require'nvim-tree'.setup {} end
+  }
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -124,7 +127,7 @@ require('packer').startup(function()
       end
   }
   use 'konfekt/fastfold' -- 性能更好的语法折叠
-  use {'ThePrimeagen/vim-be-good', opt = true, cmd = {'VimBeGood'}}
+  use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
@@ -134,7 +137,7 @@ require('packer').startup(function()
     end
   }
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', opt = true, cmd = { 'Codi' }}
+  use 'metakirby5/codi.vim'
 end)
 
 --settings
