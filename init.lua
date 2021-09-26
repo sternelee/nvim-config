@@ -70,7 +70,10 @@ require('packer').startup(function()
       end,
   }
   -- 语法建议
-  use 'neovim/nvim-lspconfig'
+  use {
+      'neovim/nvim-lsp-config',
+      'williamboman/nvim-lsp-installer',
+  }
   use 'hrsh7th/nvim-cmp'
   use {'hrsh7th/cmp-nvim-lsp', requires = {
     {'hrsh7th/cmp-path'},
@@ -575,12 +578,20 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local function setup_servers()
   local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
   local nvim_lsp = require'lspconfig'
-  for _, server in pairs(servers) do
+  --[[ for _, server in pairs(servers) do
     nvim_lsp[server].setup{
       on_attach = on_attach,
       capabilities = capabilities
     }
-  end
+  end ]]
+  local lsp_installer = require("nvim-lsp-installer")
+
+  lsp_installer.on_server_ready(function(server)
+      server:setup{
+        on_attach = on_attach,
+        capabilities = capabilities
+      }
+  end)
   nvim_lsp.diagnosticls.setup {
     on_attach = on_attach,
     filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
@@ -778,7 +789,7 @@ require('gitsigns').setup {
     ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
   },
-  watch_index = {
+  watch_gitdir = {
     interval = 1000
   },
   current_line_blame = false,
