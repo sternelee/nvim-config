@@ -129,7 +129,7 @@ require('packer').startup(function()
   use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
     config = function()
@@ -652,7 +652,7 @@ require('symbols-outline').setup()
 require'diffview'.setup{}
 require('nvim-autopairs').setup()
 
-require("dapui").setup({
+--[[ require("dapui").setup({
   icons = {
     expanded = "▾",
     collapsed = "▸"
@@ -688,7 +688,7 @@ require("dapui").setup({
     max_height = nil, -- These can be integers or a float between 0 and 1.
     max_width = nil   -- Floats will be treated as percentage of your screen.
   }
-})
+}) ]]
 
 --colorizer
 require'colorizer'.setup()
