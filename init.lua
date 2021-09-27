@@ -564,7 +564,6 @@ local function setup_servers()
       capabilities = capabilities
     }
   end
-}
 end
 
 setup_servers()
