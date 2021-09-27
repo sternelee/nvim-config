@@ -83,7 +83,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     -- {'f3fora/cmp-spell'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
@@ -436,7 +436,7 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
@@ -503,25 +503,6 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)"
 }
 
-local function documentHighlight(client, bufnr)
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-      vim.api.nvim_exec(
-          [[
-    hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-    hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-    hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
-    augroup lsp_document_highlight
-      autocmd! * <buffer>
-      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
-  ]],
-          false
-      )
-  end
-end
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -559,7 +540,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[g', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
-  -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>fo", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
@@ -569,7 +549,7 @@ local on_attach = function(client, bufnr)
 
 end
 
--- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server diagnostic-languageserver eslint_d prettier
+-- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -584,62 +564,6 @@ local function setup_servers()
       capabilities = capabilities
     }
   end
-  nvim_lsp.diagnosticls.setup {
-    on_attach = on_attach,
-    filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
-    init_options = {
-      linters = {
-        eslint = {
-          command = 'eslint_d',
-          rootPatterns = { '.git' },
-          debounce = 100,
-          args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-          sourceName = 'eslint_d',
-          parseJson = {
-            errorsRoot = '[0].messages',
-            line = 'line',
-            column = 'column',
-            endLine = 'endLine',
-            endColumn = 'endColumn',
-            message = '[eslint] ${message} [${ruleId}]',
-            security = 'severity'
-          },
-          securities = {
-            [2] = 'error',
-            [1] = 'warning'
-          }
-        },
-      },
-      filetypes = {
-        javascript = 'eslint',
-        javascriptreact = 'eslint',
-        typescript = 'eslint',
-        typescriptreact = 'eslint',
-      },
-      formatters = {
-        eslint_d = {
-          command = 'eslint_d',
-          args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-          rootPatterns = { '.git' },
-        },
-        prettier = {
-          command = 'prettier',
-          args = { '--stdin-filepath', '%filename' }
-        }
-      },
-      formatFiletypes = {
-        css = 'prettier',
-        javascript = 'eslint_d',
-        javascriptreact = 'eslint_d',
-        json = 'prettier',
-        scss = 'prettier',
-        less = 'prettier',
-        typescript = 'eslint_d',
-        typescriptreact = 'eslint_d',
-        json = 'prettier',
-        markdown = 'prettier',
-      }
-  }
 }
 end
 
@@ -763,7 +687,6 @@ require('gitsigns').setup {
   numhl = false,
   linehl = false,
   keymaps = {
-    -- Default keymap options
     noremap = true,
     buffer = true,
 
