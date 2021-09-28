@@ -23,10 +23,6 @@ require('packer').startup(function()
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  use {
-      'kyazdani42/nvim-tree.lua',
-      config = function() require'nvim-tree'.setup {} end
-  }
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -109,7 +105,6 @@ require('packer').startup(function()
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use 'b3nj5m1n/kommentary' -- 注释
-  use 'Pocco81/TrueZen.nvim'
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -129,7 +124,6 @@ require('packer').startup(function()
   use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
     config = function()
@@ -235,10 +229,9 @@ map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fp', '<cmd>Telescope project<CR>')
 map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>Telescope file_browser<CR><CR>')                      --nvimtree
 map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -575,44 +568,6 @@ require('symbols-outline').setup()
 require'diffview'.setup{}
 require('nvim-autopairs').setup()
 
---[[ require("dapui").setup({
-  icons = {
-    expanded = "▾",
-    collapsed = "▸"
-  },
-  mappings = {
-    -- Use a table to apply multiple mappings
-    expand = {"<CR>", "<2-LeftMouse>"},
-    open = "o",
-    remove = "d",
-    edit = "e",
-  },
-  sidebar = {
-    open_on_start = true,
-    elements = {
-      -- You can change the order of elements in the sidebar
-      "scopes",
-      "breakpoints",
-      "stacks",
-      "watches"
-    },
-    size = 40,
-    position = "left" -- Can be "left" or "right"
-  },
-  tray = {
-    open_on_start = true,
-    elements = {
-      "repl"
-    },
-    size = 10,
-    position = "bottom" -- Can be "bottom" or "top"
-  },
-  floating = {
-    max_height = nil, -- These can be integers or a float between 0 and 1.
-    max_width = nil   -- Floats will be treated as percentage of your screen.
-  }
-}) ]]
-
 --colorizer
 require'colorizer'.setup()
 
@@ -625,54 +580,6 @@ require'shade'.setup({
     toggle           = '<Leader>s',
   }
 })
-
---nvimtree
-g.nvim_tree_side = "left"
-g.nvim_tree_width = 25
--- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
-g.nvim_tree_auto_open = 0
-g.nvim_tree_auto_close = 0
-g.nvim_tree_quit_on_open = 0
-g.nvim_tree_follow = 1
-g.nvim_tree_indent_markers = 1
-g.nvim_tree_hide_dotfiles = 1
-g.nvim_tree_git_hl = 1
-g.nvim_tree_root_folder_modifier = ":~"
-g.nvim_tree_allow_resize = 1
-
-g.nvim_tree_show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1
-}
-
-g.nvim_tree_icons = {
-    default = '',
-    symlink = '',
-    git  = {
-      unstaged = "",
-      staged = "✓",
-      unmerged = "",
-      renamed = "",
-      untracked = "",
-      deleted = "",
-      ignored = ""
-      },
-    folder  = {
-      default = "",
-      open = "",
-      empty = "",
-      empty_open = "",
-      symlink = "",
-      symlink_open = "",
-      },
-      lsp  = {
-        hint = "",
-        info = "",
-        warning = "",
-        error = "",
-        }
-}
 
 --gitsigns
 require('gitsigns').setup {
@@ -730,54 +637,6 @@ fn.sign_define(
 fn.sign_define(
     "LspDiagnosticsSignInformation",
     {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
-)
-
--- TrueZen
-local true_zen = require("true-zen")
-true_zen.setup(
-    {
-        true_false_commands = false,
-        cursor_by_mode = false,
-        before_minimalist_mode_shown = true,
-        before_minimalist_mode_hidden = true,
-        after_minimalist_mode_shown = true,
-        after_minimalist_mode_hidden = true,
-        bottom = {
-            hidden_laststatus = 0,
-            hidden_ruler = false,
-            hidden_showmode = false,
-            hidden_showcmd = false,
-            hidden_cmdheight = 1,
-            shown_laststatus = 2,
-            shown_ruler = true,
-            shown_showmode = false,
-            shown_showcmd = false,
-            shown_cmdheight = 1
-        },
-        top = {
-            hidden_showtabline = 0,
-            shown_showtabline = 2
-        },
-        left = {
-            hidden_number = false,
-            hidden_relativenumber = false,
-            hidden_signcolumn = "no",
-            shown_number = true,
-            shown_relativenumber = false,
-            shown_signcolumn = "yes"
-        },
-        ataraxis = {
-            just_do_it_for_me = false,
-            left_padding = 37,
-            right_padding = 37,
-            top_padding = 2,
-            bottom_padding = 2,
-            custome_bg = "#1e222a"
-        },
-        integrations = {
-          feline = true
-        }
-    }
 )
 
 g.dashboard_session_directory = '~/.sessions'
