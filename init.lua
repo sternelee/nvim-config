@@ -70,18 +70,9 @@ require('packer').startup(function()
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/nvim-cmp'
-  use {'hrsh7th/cmp-nvim-lsp', requires = {
-    {'hrsh7th/cmp-path'},
-    {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-vsnip'},
-    {'ray-x/cmp-treesitter'},
-    {'hrsh7th/cmp-calc'},
-    {'hrsh7th/cmp-emoji'},
-    {'f3fora/cmp-spell'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
-  }}
-  use { 'Saecki/crates.nvim', ft = {'toml'} }
+  use {'ms-jpq/coq_nvim', branch =  'coq' }
+  use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
+  use {'ms-jpq/coq.thirdparty', branch = '3p'}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -259,7 +250,7 @@ for _, num in pairs(numbers) do
 end
 
 g.loaded_python_provider = 0
-g.loaded_python3_provider = 0
+-- g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
@@ -401,59 +392,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-local lspkind = require('lspkind')
-local cmp = require'cmp'
-
-cmp.setup({
-  completion = {
-    autocomplete = true,
-    completeopt = 'menu,menuone,noinsert',
-  },
-  snippet = {
-    expand = function(args)
-      -- For `vsnip` user.
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
-    end,
-  },
-  mapping = {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
-  },
-  sources = {
-    { name = 'path' },
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'buffer' },
-    { name = 'treesitter' },
-    { name = 'cmp_tabnine'},
-    { name = 'crates' },
-    { name = 'calc' },
-    { name = 'emoji' },
-    { name = 'spell' },
-  },
-  formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
-      vim_item.menu = ({
-        path = "   [Path]",
-        buffer = "   [Buffer]",
-        nvim_lsp = "   [LSP]",
-        vsnip = "   [Vsnip]",
-        treesitter = "   [Ts]",
-        calc = "   [Calc]",
-        spell = "   [Spell]",
-        emoji = " ﲃ  [Emoji]",
-        cmp_tabnine = "⦿ [Tn]"
-      })[entry.source.name]
-      return vim_item
-    end
-  }
-})
-
 -- Signature help
 require('lsp_signature').on_attach()
 
@@ -545,16 +483,12 @@ end
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
 local function setup_servers()
   local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
   local nvim_lsp = require'lspconfig'
   for _, server in pairs(servers) do
     nvim_lsp[server].setup{
-      on_attach = on_attach,
-      capabilities = capabilities
+      on_attach = on_attach
     }
   end
 end
