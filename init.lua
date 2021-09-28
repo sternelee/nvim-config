@@ -21,9 +21,8 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   -- 状态栏
-  use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
+  use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -79,7 +78,7 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'f3fora/cmp-spell'},
+    {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
@@ -106,7 +105,6 @@ require('packer').startup(function()
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use 'b3nj5m1n/kommentary' -- 注释
-  use 'Pocco81/TrueZen.nvim'
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -124,9 +122,8 @@ require('packer').startup(function()
       end
   }
   use 'konfekt/fastfold' -- 性能更好的语法折叠
-  use {'ThePrimeagen/vim-be-good', opt = true, cmd = {'VimBeGood'}}
+  use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {
     'NTBBloodbath/rest.nvim',
     config = function()
@@ -134,7 +131,7 @@ require('packer').startup(function()
     end
   }
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', opt = true, cmd = { 'Codi' }}
+  use 'metakirby5/codi.vim'
 end)
 
 --settings
@@ -232,10 +229,9 @@ map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fp', '<cmd>Telescope project<CR>')
 map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>Telescope file_browser<CR><CR>')                      --nvimtree
 map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -437,7 +433,7 @@ cmp.setup({
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
-    -- { name = 'spell' },
+    { name = 'spell' },
   },
   formatting = {
     format = function(entry, vim_item)
@@ -449,7 +445,7 @@ cmp.setup({
         vsnip = "   [Vsnip]",
         treesitter = "   [Ts]",
         calc = "   [Calc]",
-        -- spell = "   [Spell]",
+        spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
         cmp_tabnine = "⦿ [Tn]"
       })[entry.source.name]
@@ -500,25 +496,6 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)"
 }
 
-local function documentHighlight(client, bufnr)
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-      vim.api.nvim_exec(
-          [[
-    hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-    hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-    hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
-    augroup lsp_document_highlight
-      autocmd! * <buffer>
-      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
-  ]],
-          false
-      )
-  end
-end
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -556,7 +533,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[g', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
-  -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>fo", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
@@ -566,7 +542,7 @@ local on_attach = function(client, bufnr)
 
 end
 
--- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server diagnostic-languageserver eslint_d prettier
+-- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -581,63 +557,6 @@ local function setup_servers()
       capabilities = capabilities
     }
   end
-  nvim_lsp.diagnosticls.setup {
-    on_attach = on_attach,
-    filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
-    init_options = {
-      linters = {
-        eslint = {
-          command = 'eslint_d',
-          rootPatterns = { '.git' },
-          debounce = 100,
-          args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-          sourceName = 'eslint_d',
-          parseJson = {
-            errorsRoot = '[0].messages',
-            line = 'line',
-            column = 'column',
-            endLine = 'endLine',
-            endColumn = 'endColumn',
-            message = '[eslint] ${message} [${ruleId}]',
-            security = 'severity'
-          },
-          securities = {
-            [2] = 'error',
-            [1] = 'warning'
-          }
-        },
-      },
-      filetypes = {
-        javascript = 'eslint',
-        javascriptreact = 'eslint',
-        typescript = 'eslint',
-        typescriptreact = 'eslint',
-      },
-      formatters = {
-        eslint_d = {
-          command = 'eslint_d',
-          args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-          rootPatterns = { '.git' },
-        },
-        prettier = {
-          command = 'prettier',
-          args = { '--stdin-filepath', '%filename' }
-        }
-      },
-      formatFiletypes = {
-        css = 'prettier',
-        javascript = 'eslint_d',
-        javascriptreact = 'eslint_d',
-        json = 'prettier',
-        scss = 'prettier',
-        less = 'prettier',
-        typescript = 'eslint_d',
-        typescriptreact = 'eslint_d',
-        json = 'prettier',
-        markdown = 'prettier',
-      }
-  }
-}
 end
 
 setup_servers()
@@ -648,44 +567,6 @@ require("lspkind").init()
 require('symbols-outline').setup()
 require'diffview'.setup{}
 require('nvim-autopairs').setup()
-
-require("dapui").setup({
-  icons = {
-    expanded = "▾",
-    collapsed = "▸"
-  },
-  mappings = {
-    -- Use a table to apply multiple mappings
-    expand = {"<CR>", "<2-LeftMouse>"},
-    open = "o",
-    remove = "d",
-    edit = "e",
-  },
-  sidebar = {
-    open_on_start = true,
-    elements = {
-      -- You can change the order of elements in the sidebar
-      "scopes",
-      "breakpoints",
-      "stacks",
-      "watches"
-    },
-    size = 40,
-    position = "left" -- Can be "left" or "right"
-  },
-  tray = {
-    open_on_start = true,
-    elements = {
-      "repl"
-    },
-    size = 10,
-    position = "bottom" -- Can be "bottom" or "top"
-  },
-  floating = {
-    max_height = nil, -- These can be integers or a float between 0 and 1.
-    max_width = nil   -- Floats will be treated as percentage of your screen.
-  }
-})
 
 --colorizer
 require'colorizer'.setup()
@@ -700,54 +581,6 @@ require'shade'.setup({
   }
 })
 
---nvimtree
-g.nvim_tree_side = "left"
-g.nvim_tree_width = 25
--- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
-g.nvim_tree_auto_open = 0
-g.nvim_tree_auto_close = 0
-g.nvim_tree_quit_on_open = 0
-g.nvim_tree_follow = 1
-g.nvim_tree_indent_markers = 1
-g.nvim_tree_hide_dotfiles = 1
-g.nvim_tree_git_hl = 1
-g.nvim_tree_root_folder_modifier = ":~"
-g.nvim_tree_allow_resize = 1
-
-g.nvim_tree_show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1
-}
-
-g.nvim_tree_icons = {
-    default = '',
-    symlink = '',
-    git  = {
-      unstaged = "",
-      staged = "✓",
-      unmerged = "",
-      renamed = "",
-      untracked = "",
-      deleted = "",
-      ignored = ""
-      },
-    folder  = {
-      default = "",
-      open = "",
-      empty = "",
-      empty_open = "",
-      symlink = "",
-      symlink_open = "",
-      },
-      lsp  = {
-        hint = "",
-        info = "",
-        warning = "",
-        error = "",
-        }
-}
-
 --gitsigns
 require('gitsigns').setup {
   signs = {
@@ -760,7 +593,6 @@ require('gitsigns').setup {
   numhl = false,
   linehl = false,
   keymaps = {
-    -- Default keymap options
     noremap = true,
     buffer = true,
 
@@ -805,54 +637,6 @@ fn.sign_define(
 fn.sign_define(
     "LspDiagnosticsSignInformation",
     {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
-)
-
--- TrueZen
-local true_zen = require("true-zen")
-true_zen.setup(
-    {
-        true_false_commands = false,
-        cursor_by_mode = false,
-        before_minimalist_mode_shown = true,
-        before_minimalist_mode_hidden = true,
-        after_minimalist_mode_shown = true,
-        after_minimalist_mode_hidden = true,
-        bottom = {
-            hidden_laststatus = 0,
-            hidden_ruler = false,
-            hidden_showmode = false,
-            hidden_showcmd = false,
-            hidden_cmdheight = 1,
-            shown_laststatus = 2,
-            shown_ruler = true,
-            shown_showmode = false,
-            shown_showcmd = false,
-            shown_cmdheight = 1
-        },
-        top = {
-            hidden_showtabline = 0,
-            shown_showtabline = 2
-        },
-        left = {
-            hidden_number = false,
-            hidden_relativenumber = false,
-            hidden_signcolumn = "no",
-            shown_number = true,
-            shown_relativenumber = false,
-            shown_signcolumn = "yes"
-        },
-        ataraxis = {
-            just_do_it_for_me = false,
-            left_padding = 37,
-            right_padding = 37,
-            top_padding = 2,
-            bottom_padding = 2,
-            custome_bg = "#1e222a"
-        },
-        integrations = {
-          feline = true
-        }
-    }
 )
 
 g.dashboard_session_directory = '~/.sessions'
