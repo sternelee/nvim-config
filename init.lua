@@ -23,11 +23,7 @@ require('packer').startup(function()
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  use {
-      'kyazdani42/nvim-tree.lua',
-      requires = 'kyazdani42/nvim-web-devicons',
-      config = function() require'nvim-tree'.setup {} end
-  }
+  use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -498,6 +494,16 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
+-- coq
+vim.g.coq_settings = {
+  auto_start = true,
+  clients = {
+    tabnine = {
+      enabled = true
+    }
+  }
+}
+
 local function setup_servers()
   local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
   local nvim_lsp = require'lspconfig'
@@ -811,13 +817,33 @@ require'feline'.setup {
 }
 
 require("which-key").setup {}
+require'nvim-tree'.setup {
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  ignore_ft_on_setup  = {},
+  auto_close          = false,
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  lsp_diagnostics     = false,
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
 
--- coq
-vim.g.coq_settings = {
-  auto_start = true,
-  clients = {
-    tabnine = {
-      enabled = true
+  view = {
+    width = 30,
+    side = 'left',
+    auto_resize = false,
+    mappings = {
+      custom_only = false,
+      list = {}
     }
   }
 }
