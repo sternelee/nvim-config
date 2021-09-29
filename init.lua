@@ -23,6 +23,11 @@ require('packer').startup(function()
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
+  use {
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function() require'nvim-tree'.setup {} end
+  }
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -220,9 +225,10 @@ map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fp', '<cmd>Telescope project<CR>')
 map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>e', '<cmd>Telescope file_browser<CR><CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -480,16 +486,30 @@ local on_attach = function(client, bufnr)
 
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
 local function setup_servers()
   local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
   local nvim_lsp = require'lspconfig'
+  local coq = require "coq"
+  local config = {
+    on_attach = on_attach,
+    capcapabilities = capabilities
+  }
   for _, server in pairs(servers) do
-    nvim_lsp[server].setup{
-      on_attach = on_attach
-    }
+    nvim_lsp[server].setup(
+      coq.lsp_ensure_capabilities(config)
+    )
   end
 end
 
@@ -514,6 +534,54 @@ require'shade'.setup({
     toggle           = '<Leader>s',
   }
 })
+
+--nvimtree
+g.nvim_tree_side = "left"
+g.nvim_tree_width = 25
+-- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
+g.nvim_tree_auto_open = 0
+g.nvim_tree_auto_close = 0
+g.nvim_tree_quit_on_open = 0
+g.nvim_tree_follow = 1
+g.nvim_tree_indent_markers = 1
+g.nvim_tree_hide_dotfiles = 1
+g.nvim_tree_git_hl = 1
+g.nvim_tree_root_folder_modifier = ":~"
+g.nvim_tree_allow_resize = 1
+
+g.nvim_tree_show_icons = {
+    git = 1,
+    folders = 1,
+    files = 1
+}
+
+g.nvim_tree_icons = {
+    default = '',
+    symlink = '',
+    git  = {
+      unstaged = "",
+      staged = "✓",
+      unmerged = "",
+      renamed = "",
+      untracked = "",
+      deleted = "",
+      ignored = ""
+      },
+    folder  = {
+      default = "",
+      open = "",
+      empty = "",
+      empty_open = "",
+      symlink = "",
+      symlink_open = "",
+      },
+      lsp  = {
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
+        }
+}
 
 --gitsigns
 require('gitsigns').setup {
@@ -743,3 +811,13 @@ require'feline'.setup {
 }
 
 require("which-key").setup {}
+
+-- coq
+vim.g.coq_settings = {
+  auto_start = true,
+  clients = {
+    tabnine = {
+      enabled = true
+    }
+  }
+}
