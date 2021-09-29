@@ -23,6 +23,7 @@ require('packer').startup(function()
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
+  use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
   -- use 'SmiteshP/nvim-gps'
   -- git相关
@@ -229,9 +230,10 @@ map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fp', '<cmd>Telescope project<CR>')
 map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR><CR>')                      --nvimtree
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>e', '<cmd>Telescope file_browser<CR><CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR><CR>')                      --nvimtree
 map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -581,6 +583,51 @@ require'shade'.setup({
   }
 })
 
+--nvim-tree
+g.nvim_tree_side = "left"
+g.nvim_tree_width = 25
+-- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
+g.nvim_tree_quit_on_open = 0
+g.nvim_tree_indent_markers = 1
+g.nvim_tree_hide_dotfiles = 1
+g.nvim_tree_git_hl = 1
+g.nvim_tree_root_folder_modifier = ":~"
+g.nvim_tree_allow_resize = 1
+
+g.nvim_tree_show_icons = {
+    git = 1,
+    folders = 1,
+    files = 1
+}
+
+g.nvim_tree_icons = {
+    default = '',
+    symlink = '',
+    git  = {
+      unstaged = "",
+      staged = "✓",
+      unmerged = "",
+      renamed = "",
+      untracked = "",
+      deleted = "",
+      ignored = ""
+      },
+    folder  = {
+      default = "",
+      open = "",
+      empty = "",
+      empty_open = "",
+      symlink = "",
+      symlink_open = "",
+      },
+      lsp  = {
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
+      }
+}
+
 --gitsigns
 require('gitsigns').setup {
   signs = {
@@ -809,3 +856,34 @@ require'feline'.setup {
 }
 
 require("which-key").setup {}
+
+
+require'nvim-tree'.setup {
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  ignore_ft_on_setup  = {},
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  lsp_diagnostics     = false,
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+
+  view = {
+    width = 30,
+    side = 'left',
+    auto_resize = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    }
+  }
+}
