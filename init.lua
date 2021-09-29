@@ -545,10 +545,7 @@ require'shade'.setup({
 g.nvim_tree_side = "left"
 g.nvim_tree_width = 25
 -- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
-g.nvim_tree_auto_open = 0
-g.nvim_tree_auto_close = 0
 g.nvim_tree_quit_on_open = 0
-g.nvim_tree_follow = 1
 g.nvim_tree_indent_markers = 1
 g.nvim_tree_hide_dotfiles = 1
 g.nvim_tree_git_hl = 1
@@ -586,7 +583,7 @@ g.nvim_tree_icons = {
         info = "",
         warning = "",
         error = "",
-        }
+      }
 }
 
 --gitsigns
@@ -822,7 +819,6 @@ require'nvim-tree'.setup {
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {},
-  auto_close          = false,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
