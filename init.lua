@@ -52,7 +52,8 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-hlslens'}
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
-  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
     'nvim-telescope/telescope-project.nvim',
@@ -133,6 +134,14 @@ require('packer').startup(function()
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   use 'metakirby5/codi.vim'
+  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
+  use {
+    'karb94/neoscroll.nvim',
+    config = function ()
+      require('neoscroll').setup()
+    end
+  }
+  use 'simnalamburt/vim-mundo'
 end)
 
 --settings
@@ -192,6 +201,8 @@ opt('o', 'timeoutlen', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 5)
+opt('o', 'undofile', true)
+opt('o', 'undodir', '~/.vim/undo')
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -262,14 +273,15 @@ for _, num in pairs(numbers) do
 end
 
 g.loaded_python_provider = 0
-g.loaded_python3_provider = 0
+-- g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- LeaderF
---[[ g.Lf_WindowPosition = 'popup'
+g.Lf_WindowPosition = 'popup'
 g.Lf_PreviewInPopup = 1
-g.Lf_ShortcutF = '<C-P>' ]]
+g.Lf_ShortcutF = '<C-P>'
+execute("call wilder#setup({'modes': [':', '/', '?']})")
 
 --visual multi
 nvim_exec([[
@@ -279,7 +291,6 @@ let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
 let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope']
-
 ]], false)
 
 -- fastfold
@@ -566,7 +577,7 @@ end
 
 setup_servers()
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require('symbols-outline').setup()
