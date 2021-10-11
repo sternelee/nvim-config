@@ -131,7 +131,7 @@ require('packer').startup(function()
         require('rest-nvim').setup()
     end
   }
-  use 'rcarriga/nvim-notify'
+    use({ "rcarriga/nvim-notify", event = "VimEnter", config = 'vim.notify = require("notify")' })
   use 'metakirby5/codi.vim'
 end)
 
@@ -254,6 +254,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+cmd([[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Reload', 'timeout': 2500})]])
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -542,6 +543,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("v", "<space>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
+  local msg = string.format("Language server %s started!", client.name)
+  notify(msg, 'info', {title = 'LSP Tip', timeout = 2500})
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
