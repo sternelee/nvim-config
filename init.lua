@@ -131,7 +131,7 @@ require('packer').startup(function()
         require('rest-nvim').setup()
     end
   }
-    use({ "rcarriga/nvim-notify", event = "VimEnter", config = 'vim.notify = require("notify")' })
+  use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   use 'metakirby5/codi.vim'
 end)
 
@@ -869,7 +869,9 @@ require'nvim-tree'.setup {
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
-  lsp_diagnostics     = false,
+  diagnostics     = {
+    enable = true
+  },
   update_focused_file = {
     enable      = false,
     update_cwd  = false,
