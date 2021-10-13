@@ -52,7 +52,8 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-hlslens'}
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
-  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
     'nvim-telescope/telescope-project.nvim',
@@ -96,7 +97,13 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  use 'b3nj5m1n/kommentary' -- 注释
+  -- use 'b3nj5m1n/kommentary' -- 注释
+  use {
+      'numToStr/Comment.nvim',
+      config = function()
+          require('Comment').setup()
+      end
+  }
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -122,8 +129,16 @@ require('packer').startup(function()
         require('rest-nvim').setup()
     end
   }
-  use 'rcarriga/nvim-notify'
+  use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   use 'metakirby5/codi.vim'
+  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
+  use {
+    'karb94/neoscroll.nvim',
+    config = function ()
+      require('neoscroll').setup()
+    end
+  }
+  use 'simnalamburt/vim-mundo'
 end)
 
 --settings
@@ -183,6 +198,8 @@ opt('o', 'timeoutlen', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 5)
+opt('o', 'undofile', true)
+-- opt('o', 'undodir', '~/.vim/undo')
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -245,6 +262,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+cmd([[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]])
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -257,9 +275,10 @@ g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- LeaderF
---[[ g.Lf_WindowPosition = 'popup'
+g.Lf_WindowPosition = 'popup'
 g.Lf_PreviewInPopup = 1
-g.Lf_ShortcutF = '<C-P>' ]]
+g.Lf_ShortcutF = '<C-P>'
+execute("call wilder#setup({'modes': [':', '/', '?']})")
 
 --visual multi
 nvim_exec([[
@@ -269,7 +288,6 @@ let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
 let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope']
-
 ]], false)
 
 -- fastfold
@@ -302,7 +320,7 @@ cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 
-require('kommentary.config').use_extended_mappings()
+-- require('kommentary.config').use_extended_mappings()
 
 require'lightspeed'.setup {
   jump_to_first_match = true,
@@ -452,7 +470,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -480,6 +498,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("v", "<space>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
+  local msg = string.format("Language server %s started!", client.name)
+  notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -521,7 +541,7 @@ end
 
 setup_servers()
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require('symbols-outline').setup()
@@ -541,7 +561,7 @@ require'shade'.setup({
   }
 })
 
---nvimtree
+--nvim-tree
 g.nvim_tree_side = "left"
 g.nvim_tree_width = 25
 -- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
@@ -814,6 +834,7 @@ require'feline'.setup {
 }
 
 require("which-key").setup {}
+
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
@@ -822,7 +843,9 @@ require'nvim-tree'.setup {
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
-  lsp_diagnostics     = false,
+  diagnostics     = {
+    enable = true
+  },
   update_focused_file = {
     enable      = false,
     update_cwd  = false,
