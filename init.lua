@@ -81,7 +81,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'f3fora/cmp-spell'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
@@ -245,8 +245,8 @@ map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<c-n>', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
+map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('t', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -443,7 +443,7 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
