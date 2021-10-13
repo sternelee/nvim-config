@@ -52,8 +52,8 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-hlslens'}
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
-  use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
-  use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
+  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  -- use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
     'nvim-telescope/telescope-project.nvim',
@@ -106,8 +106,8 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  -- use 'b3nj5m1n/kommentary' -- 注释
-  use 'numToStr/Comment.nvim'
+  use 'b3nj5m1n/kommentary' -- 注释
+  -- use 'numToStr/Comment.nvim'
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -274,15 +274,15 @@ for _, num in pairs(numbers) do
 end
 
 g.loaded_python_provider = 0
--- g.loaded_python3_provider = 0
+g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- LeaderF
-g.Lf_WindowPosition = 'popup'
-g.Lf_PreviewInPopup = 1
-g.Lf_ShortcutF = '<C-P>'
-execute("call wilder#setup({'modes': [':', '/', '?']})")
+-- g.Lf_WindowPosition = 'popup'
+-- g.Lf_PreviewInPopup = 1
+-- g.Lf_ShortcutF = '<C-P>'
+-- execute("call wilder#setup({'modes': [':', '/', '?']})")
 
 --visual multi
 nvim_exec([[
@@ -324,8 +324,8 @@ cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 
--- require('kommentary.config').use_extended_mappings()
-require('Comment').setup()
+require('kommentary.config').use_extended_mappings()
+-- require('Comment').setup()
 require'lightspeed'.setup {
   jump_to_first_match = true,
   jump_on_partial_input_safety_timeout = 400,
