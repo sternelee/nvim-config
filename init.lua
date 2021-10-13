@@ -97,8 +97,8 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  -- use 'b3nj5m1n/kommentary' -- 注释
-  use 'numToStr/Comment.nvim'
+  use 'b3nj5m1n/kommentary' -- 注释
+  -- use 'numToStr/Comment.nvim'
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -315,8 +315,8 @@ cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 
--- require('kommentary.config').use_extended_mappings()
-require('Comment').setup()
+require('kommentary.config').use_extended_mappings()
+-- require('Comment').setup()
 
 require'lightspeed'.setup {
   jump_to_first_match = true,
