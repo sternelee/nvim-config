@@ -208,7 +208,7 @@ opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 5)
 opt('o', 'undofile', true)
-opt('o', 'undodir', '~/.vim/undo')
+-- opt('o', 'undodir', '~/.vim/undo')
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
