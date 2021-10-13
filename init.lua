@@ -525,7 +525,7 @@ vim.g.coq_settings = {
 }
 
 local function setup_servers()
-  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
+  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "volar", "jsonls", "dockerls" }
   local nvim_lsp = require'lspconfig'
   local coq = require "coq"
   local config = {
