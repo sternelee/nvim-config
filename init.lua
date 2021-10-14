@@ -726,7 +726,12 @@ fn.sign_define(
 
 g.dashboard_session_directory = '~/.sessions'
 g.dashboard_default_executive = 'telescope'
-cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
+
+if vim.fn.has 'win32' == 1 then
+  cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
+else
+  cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
+end
 
 nvim_exec([[
     let g:dashboard_custom_footer = ['LuaJIT loaded '..packages..' packages']
