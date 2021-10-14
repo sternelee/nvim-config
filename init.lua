@@ -20,6 +20,7 @@ cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
+  use 'nathom/filetype.nvim'
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
@@ -34,6 +35,12 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
+  use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require("treesitter-context").setup {}
+    end
+  }
   use 'windwp/nvim-ts-autotag'
   use '9mm/vim-closer'
   use 'nvim-treesitter/playground'
@@ -41,7 +48,7 @@ require('packer').startup(function()
     "folke/twilight.nvim",
     config = function()
       require("twilight").setup {
-      }
+    }
     end
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
@@ -72,6 +79,7 @@ require('packer').startup(function()
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
+  use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/nvim-cmp'
   use {'hrsh7th/cmp-nvim-lsp', requires = {
     {'hrsh7th/cmp-path'},
@@ -135,7 +143,6 @@ require('packer').startup(function()
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   use 'metakirby5/codi.vim'
-  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
   use {
     'karb94/neoscroll.nvim',
     config = function ()
@@ -143,6 +150,14 @@ require('packer').startup(function()
     end
   }
   use 'simnalamburt/vim-mundo'
+  use {
+    "max397574/better-escape.nvim",
+    event = 'InsertEnter',
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
+  use 'RRethy/vim-illuminate'
 end)
 
 --settings
@@ -556,6 +571,7 @@ local on_attach = function(client, bufnr)
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
+  require 'illuminate'.on_attach(client)
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
@@ -565,19 +581,27 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
-  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
-  local nvim_lsp = require'lspconfig'
-  for _, server in pairs(servers) do
-    nvim_lsp[server].setup{
-      on_attach = on_attach,
-      capabilities = capabilities
-    }
-  end
+  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
+  -- local nvim_lsp = require'lspconfig'
+  local lsp_installer = require("nvim-lsp-installer")
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities
+  }
+  lsp_installer.on_server_ready(function(server)
+      server:setup(opts)
+  end)
+  -- for _, server in pairs(servers) do
+  --   nvim_lsp[server].setup{
+  --     on_attach = on_attach,
+  --     capabilities = capabilities
+  --   }
+  -- end
 end
 
 setup_servers()
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require('symbols-outline').setup()
