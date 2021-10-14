@@ -90,7 +90,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'f3fora/cmp-spell'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}
+    {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
@@ -519,7 +519,7 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    -- { name = 'cmp_tabnine'},
+    { name = 'cmp_tabnine'},
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
