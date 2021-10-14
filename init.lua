@@ -35,12 +35,12 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require("treesitter-context").setup {}
-    end
-  }
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require("treesitter-context").setup {}
+  --   end
+  -- }
   use 'windwp/nvim-ts-autotag'
   use '9mm/vim-closer'
   use 'nvim-treesitter/playground'
@@ -53,6 +53,7 @@ require('packer').startup(function()
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'bluz71/vim-nightfly-guicolors'
+  use 'Pocco81/Catppuccino.nvim'
   use 'sunjon/shade.nvim' -- 高亮当前tab窗口
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
@@ -237,6 +238,7 @@ local function map(mode, lhs, rhs, opts)
   remap(mode, lhs, rhs, options)
 end
 
+g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('i', 'jk', '<esc>')                                               --jk to exit
@@ -335,7 +337,66 @@ let bufferline.icons = 'both'
 ]], false)
 
 --theme
-cmd 'colorscheme nightfly'
+-- cmd 'colorscheme nightfly'
+local catppuccino = require("catppuccino")
+catppuccino.setup(
+    {
+		colorscheme = "dark_catppuccino",
+		transparency = true,
+		term_colors = true,
+		styles = {
+			comments = "italic",
+			functions = "italic",
+			keywords = "italic",
+			strings = "NONE",
+			variables = "NONE",
+		},
+		integrations = {
+			treesitter = true,
+			native_lsp = {
+				enabled = true,
+				virtual_text = {
+					errors = "italic",
+					hints = "italic",
+					warnings = "italic",
+					information = "italic",
+				},
+				underlines = {
+					errors = "underline",
+					hints = "underline",
+					warnings = "underline",
+					information = "underline",
+				}
+			},
+			lsp_trouble = true,
+			lsp_saga = true,
+			gitgutter = true,
+			gitsigns = true,
+			telescope = false,
+			nvimtree = {
+				enabled = true,
+				show_root = true,
+			},
+			which_key = true,
+			indent_blankline = {
+				enabled = true,
+				colored_indent_levels = true,
+			},
+			dashboard = true,
+			neogit = false,
+			vim_sneak = false,
+			fern = true,
+			barbar = true,
+			bufferline = true,
+			markdown = true,
+			lightspeed = true,
+			ts_rainbow = true,
+			hop = true,
+		}
+	}
+)
+
+cmd 'colorscheme neon_latte'
 
 local notify = require("notify")
 
