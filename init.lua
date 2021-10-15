@@ -114,7 +114,7 @@ require('packer').startup(function()
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
-  use 'rafamadriz/friendly-snippets'
+  -- use 'rafamadriz/friendly-snippets'
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -161,7 +161,7 @@ require('packer').startup(function()
       require("better_escape").setup()
     end,
   }
-  use 'RRethy/vim-illuminate'
+  -- use 'RRethy/vim-illuminate'
   use {
     'akinsho/toggleterm.nvim',
     config = function()
@@ -614,7 +614,7 @@ local on_attach = function(client, bufnr)
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
-  require 'illuminate'.on_attach(client)
+  -- require 'illuminate'.on_attach(client)
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
