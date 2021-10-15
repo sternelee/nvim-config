@@ -466,8 +466,7 @@ cmp.setup({
     { name = 'spell' },
   },
   formatting = {
-    format = lspkind.cmp_format()
-    --[[ format = function(entry, vim_item)
+    format = function(entry, vim_item)
       vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
       vim_item.menu = ({
         path = "   [Path]",
@@ -481,7 +480,7 @@ cmp.setup({
         cmp_tabnine = "⦿ [Tn]"
       })[entry.source.name]
       return vim_item
-    end ]]
+    end
   },
   experimental = {
     ghost_text = true
