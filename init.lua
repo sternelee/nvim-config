@@ -94,7 +94,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'f3fora/cmp-spell'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
@@ -152,15 +152,15 @@ require('packer').startup(function()
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   -- use 'metakirby5/codi.vim'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
-  use {
+  --[[ use {
     "max397574/better-escape.nvim",
     event = 'InsertEnter',
     config = function()
       require("better_escape").setup()
     end,
-  }
+  } ]]
   -- use 'RRethy/vim-illuminate'
   use {
     'akinsho/toggleterm.nvim',
@@ -497,7 +497,7 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
