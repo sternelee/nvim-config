@@ -54,7 +54,11 @@ require('packer').startup(function()
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'bluz71/vim-nightfly-guicolors'
-  use 'sunjon/shade.nvim' -- 高亮当前tab窗口
+  -- use 'sunjon/shade.nvim' -- 高亮当前tab窗口,但跟indent-blankline有冲突
+  use { 'lukas-reineke/indent-blankline.nvim',
+    config = function()
+    end
+  }
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use {'kevinhwang91/nvim-hlslens'}
@@ -97,7 +101,7 @@ require('packer').startup(function()
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
   use 'onsails/lspkind-nvim'
-  use 'simrat39/symbols-outline.nvim'
+  use 'liuchengxu/vista.vim'
   use 'ray-x/lsp_signature.nvim'
   use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
     config = function()
@@ -115,8 +119,12 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  use 'b3nj5m1n/kommentary' -- 注释
-  -- use 'numToStr/Comment.nvim'
+  -- 注释
+  use { 'b3nj5m1n/kommentary',
+      config = function ()
+        require('kommentary.config').use_extended_mappings()
+      end
+  }
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use {
     "blackCauldron7/surround.nvim",
@@ -143,13 +151,8 @@ require('packer').startup(function()
     end
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
-  use 'metakirby5/codi.vim'
-  use {
-    'karb94/neoscroll.nvim',
-    config = function ()
-      require('neoscroll').setup()
-    end
-  }
+  -- use 'metakirby5/codi.vim'
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
   use {
     "max397574/better-escape.nvim",
@@ -159,6 +162,19 @@ require('packer').startup(function()
     end,
   }
   use 'RRethy/vim-illuminate'
+  use {
+    'akinsho/toggleterm.nvim',
+    config = function()
+        require('toggleterm').setup()
+    end
+  }
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+    config = function()
+      require("dapui").setup()
+    end
+  }
+  -- use 'gennaro-tedesco/nvim-jqx'
+  use 'rmagatti/auto-session'
 end)
 
 --settings
@@ -263,7 +279,7 @@ map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      -
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('t', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzN
+map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -284,6 +300,12 @@ cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove 
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
 cmd([[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]])
+cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -336,12 +358,28 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
+g.vista_default_executive = 'nvim_lsp'
+
+require("indent_blankline").setup {
+    buftype_exclude = {"terminal", "telescope", "nvim-tree"},
+    space_char_blankline = " ",
+    char_highlight_list = {
+        "IndentBlanklineIndent1",
+        "IndentBlanklineIndent2",
+        "IndentBlanklineIndent3",
+        "IndentBlanklineIndent4",
+        "IndentBlanklineIndent5",
+        "IndentBlanklineIndent6",
+    },
+}
+-- auto-session
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
+require('auto-session').setup()
+
 --theme
 cmd 'colorscheme nightfly'
 local notify = require("notify")
 
-require('kommentary.config').use_extended_mappings()
--- require('Comment').setup()
 require'lightspeed'.setup {
   jump_to_first_match = true,
   jump_on_partial_input_safety_timeout = 400,
@@ -609,14 +647,13 @@ setup_servers()
 vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
-require('symbols-outline').setup()
 require'diffview'.setup{}
 require('nvim-autopairs').setup()
 
 --colorizer
 require'colorizer'.setup()
 
-require'shade'.setup({
+--[[ require'shade'.setup({
   overlay_opacity = 50,
   opacity_step = 1,
   keys = {
@@ -624,7 +661,7 @@ require'shade'.setup({
     brightness_down  = '<C-Down>',
     toggle           = '<Leader>s',
   }
-})
+}) ]]
 
 --nvim-tree
 g.nvim_tree_side = "left"
