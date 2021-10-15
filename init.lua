@@ -26,10 +26,11 @@ require('packer').startup(function()
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
+  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -273,11 +274,11 @@ map('n', '<leader>b', '<cmd>BufferPick<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gl', '<cmd>Git pull<CR>')
-map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Ginastatus<CR>')
+map('n', '<leader>gl', '<cmd>Gina pull<CR>')
+map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
@@ -480,6 +481,9 @@ cmp.setup({
       })[entry.source.name]
       return vim_item
     end
+  },
+  experimental = {
+    ghost_text = true
   }
 })
 
@@ -497,7 +501,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
-vim.lsp.protocol.CompletionItemKind = {
+-- just use lspkind
+--[[ vim.lsp.protocol.CompletionItemKind = {
   "   (Text) ",
   "   (Method)",
   "   (Function)",
@@ -523,7 +528,7 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (Event)",
   "   (Operator)",
   "   (TypeParameter)"
-}
+} ]]
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -807,10 +812,12 @@ local vi_mode_hl = function()
   }
 end
 
---[[ local gps = require("nvim-gps")
+local gps = require("nvim-gps")
+gps.setup()
+
 local gps_provider = function()
   return gps.get_location()
-end ]]
+end
 
 require'feline'.setup {
   colors = {
@@ -852,7 +859,7 @@ require'feline'.setup {
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        -- { provider = gps_provider, enabled = gps.is_available() }
+        { provider = gps_provider, enabled = gps.is_available() }
       },
       {},
       {
