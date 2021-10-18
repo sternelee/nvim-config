@@ -161,7 +161,7 @@ require('packer').startup(function()
       require("better_escape").setup()
     end,
   }
-  -- use 'RRethy/vim-illuminate'
+  use 'RRethy/vim-illuminate'
   use {
     'akinsho/toggleterm.nvim',
     config = function()
@@ -614,7 +614,7 @@ local on_attach = function(client, bufnr)
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
-  -- require 'illuminate'.on_attach(client)
+  require 'illuminate'.on_attach(client)
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
