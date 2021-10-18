@@ -890,8 +890,8 @@ require'feline'.setup {
         { provider = 'git_branch' , icon = ' ', right_sep = '  ',
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
+        { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end }
       },
       {},
       {
