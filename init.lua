@@ -152,7 +152,7 @@ require('packer').startup(function()
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   -- use 'metakirby5/codi.vim'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
   use {
     "max397574/better-escape.nvim",
@@ -849,12 +849,7 @@ local vi_mode_hl = function()
   }
 end
 
-local gps = require("nvim-gps")
-gps.setup()
-
-local gps_provider = function()
-  return gps.get_location()
-end
+require("nvim-gps").setup()
 
 require'feline'.setup {
   colors = {
@@ -896,7 +891,7 @@ require'feline'.setup {
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        { provider = gps_provider, enabled = gps.is_available() }
+        { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end }
       },
       {},
       {
