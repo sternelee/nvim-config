@@ -123,9 +123,9 @@ require('packer').startup(function()
         require('kommentary.config').use_extended_mappings()
       end
   }
-  use "windwp/nvim-autopairs" -- 自动符号匹配
+  -- use "windwp/nvim-autopairs" -- 自动符号匹配
   use 'windwp/nvim-ts-autotag'
-  -- use '9mm/vim-closer'
+  use '9mm/vim-closer'
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -648,7 +648,7 @@ vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
-require('nvim-autopairs').setup()
+-- require('nvim-autopairs').setup()
 
 --colorizer
 require'colorizer'.setup()
