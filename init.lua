@@ -42,8 +42,6 @@ require('packer').startup(function()
   --     require("treesitter-context").setup {}
   --   end
   -- }
-  use 'windwp/nvim-ts-autotag'
-  use '9mm/vim-closer'
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
@@ -126,6 +124,8 @@ require('packer').startup(function()
       end
   }
   use "windwp/nvim-autopairs" -- 自动符号匹配
+  use 'windwp/nvim-ts-autotag'
+  -- use '9mm/vim-closer'
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -141,15 +141,15 @@ require('packer').startup(function()
           require('todo-comments').setup{}
       end
   }
-  use 'konfekt/fastfold' -- 性能更好的语法折叠
+  -- use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use {
+  --[[ use {
     'NTBBloodbath/rest.nvim',
     config = function()
         require('rest-nvim').setup()
     end
-  }
+  } ]]
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   -- use 'metakirby5/codi.vim'
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
@@ -161,7 +161,7 @@ require('packer').startup(function()
       require("better_escape").setup()
     end,
   }
-  use 'RRethy/vim-illuminate'
+  -- use 'RRethy/vim-illuminate'
   use {
     'akinsho/toggleterm.nvim',
     config = function()
@@ -334,7 +334,7 @@ let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'tel
 ]], false)
 
 -- fastfold
-g.fastfold_savehook = 1
+--[[ g.fastfold_savehook = 1
 g.fastfold_fold_command_suffixes =  {'x','X','a','A','o','O','c','C'}
 g.fastfold_fold_movement_commands = {']z', '[z', 'zj', 'zk'}
 g.markdown_folding = 1
@@ -348,7 +348,7 @@ g.perl_fold = 1
 g.perl_fold_blocks = 1
 g.r_syntax_folding = 1
 g.rust_fold = 1
-g.php_folding = 1
+g.php_folding = 1 ]]
 
 --barbar
 nvim_exec([[
@@ -614,7 +614,7 @@ local on_attach = function(client, bufnr)
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
-  require 'illuminate'.on_attach(client)
+  -- require 'illuminate'.on_attach(client)
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
