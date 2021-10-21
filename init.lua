@@ -113,7 +113,7 @@ require('packer').startup(function()
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
-  -- use 'rafamadriz/friendly-snippets'
+  use 'rafamadriz/friendly-snippets'
   -- 方便操作
   use { 'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Rename', 'Mkdir'} }
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -145,30 +145,29 @@ require('packer').startup(function()
   -- use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  --[[ use {
+  use {
     'NTBBloodbath/rest.nvim',
     config = function()
         require('rest-nvim').setup()
     end
-  } ]]
+  }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   -- use 'metakirby5/codi.vim'
-  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
-  --[[ use {
+  use {
     "max397574/better-escape.nvim",
     event = 'InsertEnter',
     config = function()
       require("better_escape").setup()
     end,
-  } ]]
-  -- use 'RRethy/vim-illuminate'
-  --[[ use {
+  }
+  use {
     'akinsho/toggleterm.nvim',
     config = function()
         require('toggleterm').setup()
     end
-  } ]]
+  }
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
     opt = true,
     config = function()
@@ -616,7 +615,6 @@ local on_attach = function(client, bufnr)
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
-  -- require 'illuminate'.on_attach(client)
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
