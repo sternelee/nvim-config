@@ -59,7 +59,7 @@ require('packer').startup(function()
   }
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
-  use {'kevinhwang91/nvim-hlslens'}
+  use 'kevinhwang91/nvim-hlslens'
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
@@ -73,6 +73,7 @@ require('packer').startup(function()
   }
   use {
       "AckslD/nvim-neoclip.lua",
+      requires = {'tami5/sqlite.lua', module = 'sqlite'},
       config = function()
           require('neoclip').setup({
               history = 1000,
@@ -91,7 +92,7 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'f3fora/cmp-spell'},
+    -- {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   use { 'Saecki/crates.nvim', ft = {'toml'} }
@@ -114,7 +115,7 @@ require('packer').startup(function()
   use 'hrsh7th/vim-vsnip-integ'
   -- use 'rafamadriz/friendly-snippets'
   -- 方便操作
-  use 'tpope/vim-eunuch'
+  use { 'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Rename', 'Mkdir'} }
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
@@ -123,9 +124,9 @@ require('packer').startup(function()
         require('kommentary.config').use_extended_mappings()
       end
   }
-  -- use "windwp/nvim-autopairs" -- 自动符号匹配
+  use "windwp/nvim-autopairs" -- 自动符号匹配
   use 'windwp/nvim-ts-autotag'
-  use '9mm/vim-closer'
+  -- use '9mm/vim-closer'
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -154,21 +155,22 @@ require('packer').startup(function()
   -- use 'metakirby5/codi.vim'
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
-  use {
+  --[[ use {
     "max397574/better-escape.nvim",
     event = 'InsertEnter',
     config = function()
       require("better_escape").setup()
     end,
-  }
+  } ]]
   -- use 'RRethy/vim-illuminate'
-  use {
+  --[[ use {
     'akinsho/toggleterm.nvim',
     config = function()
         require('toggleterm').setup()
     end
-  }
+  } ]]
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+    opt = true,
     config = function()
       require("dapui").setup()
     end
@@ -501,7 +503,7 @@ cmp.setup({
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'spell' },
+    -- { name = 'spell' },
   },
   formatting = {
     format = function(entry, vim_item)
@@ -648,7 +650,7 @@ vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
--- require('nvim-autopairs').setup()
+require('nvim-autopairs').setup()
 
 --colorizer
 require'colorizer'.setup()
