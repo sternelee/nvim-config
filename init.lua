@@ -108,8 +108,12 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  use 'jose-elias-alvarez/null-ls.nvim'
+  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
+      config = function ()
+        require("null-ls").config {}
+        require("lspconfig")["null-ls"].setup {}
+      end
+  }
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -293,9 +297,7 @@ map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Gina add .<CR>')
 map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Telescope git_status<CR>')
-map('n', '<leader>gb', '<cmd>Telescope git_branches<CR>')
-map('n', '<leader>gc', '<cmd>Telescope git_bcommits<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
