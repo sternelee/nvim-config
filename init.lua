@@ -12,7 +12,7 @@ local remap = vim.api.nvim_set_keymap
 -- https://github.com/rohit-px2/nvui
 -- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar
 if g.nvui then
-  cm [[NvuiCmdCenterYPos 0.3]]
+  cmd [[NvuiCmdCenterYPos 0.3]]
 end
 
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
