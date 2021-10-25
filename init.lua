@@ -5,16 +5,9 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
---gui
--- g.neovide_fullscreen = true
--- g.neovide_cursor_vfx_mode = "sonicboom"
--- g.neovide_remember_window_size = true
--- g.neovide_input_use_logo = true
--- g.neovide_cursor_antialiasing = true
--- g.neovide_cursor_vfx_mode = "pixiedust"
 
 -- https://github.com/rohit-px2/nvui
--- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar
+-- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar --detached
 if g.nvui then
   cmd [[NvuiCmdCenterYPos 0.3]]
 end
@@ -639,7 +632,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
-  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
+  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "volar", "jsonls", "dockerls" }
   -- local nvim_lsp = require'lspconfig'
   local lsp_installer = require("nvim-lsp-installer")
   local opts = {
