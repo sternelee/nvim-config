@@ -7,8 +7,11 @@ local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 --gui
 -- g.neovide_fullscreen = true
--- g.neovide_cursor_vfx_mode = "pixiedust"
-nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+-- g.neovide_cursor_vfx_mode = "sonicboom"
+-- g.neovide_remember_window_size = true
+-- g.neovide_input_use_logo = true
+-- g.neovide_cursor_antialiasing = true
+nvim_exec([[set guifont=VictorMono\ NF:h20]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
