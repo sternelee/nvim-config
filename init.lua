@@ -11,6 +11,14 @@ local remap = vim.api.nvim_set_keymap
 -- g.neovide_remember_window_size = true
 -- g.neovide_input_use_logo = true
 -- g.neovide_cursor_antialiasing = true
+-- g.neovide_cursor_vfx_mode = "pixiedust"
+
+-- https://github.com/rohit-px2/nvui
+-- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar
+if g.nvui then
+  cmd [[NvuiCmdCenterYPos 0.3]]
+end
+
 nvim_exec([[set guifont=VictorMono\ NF:h20]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
