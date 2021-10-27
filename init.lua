@@ -123,7 +123,7 @@ require('packer').startup(function()
   use 'hrsh7th/vim-vsnip-integ'
   use 'rafamadriz/friendly-snippets'
   -- 方便操作
-  use { 'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Rename', 'Mkdir'} }
+  use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
@@ -184,6 +184,13 @@ require('packer').startup(function()
   }
   -- use 'gennaro-tedesco/nvim-jqx'
   use 'rmagatti/auto-session'
+  use({
+      "vuki656/package-info.nvim",
+      requires = "MunifTanjim/nui.nvim",
+      config = function()
+        require('package-info').setup()
+      end
+  })
 end)
 
 --settings
