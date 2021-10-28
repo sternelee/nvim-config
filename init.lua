@@ -5,10 +5,14 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
---gui
--- g.neovide_fullscreen = true
--- g.neovide_cursor_vfx_mode = "pixiedust"
-nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+
+-- https://github.com/rohit-px2/nvui
+-- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar --detached
+if g.nvui then
+  cmd [[NvuiCmdCenterYPos 0.3]]
+end
+
+nvim_exec([[set guifont=VictorMono\ NF:h20]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -20,66 +24,69 @@ cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
+  use 'nathom/filetype.nvim'
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'glepnir/dashboard-nvim'
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
+  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
-  use 'windwp/nvim-ts-autotag'
-  use '9mm/vim-closer'
+  --[[ use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require("treesitter-context").setup {}
+    end
+  } ]]
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
     config = function()
       require("twilight").setup {
-      }
+    }
     end
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'bluz71/vim-nightfly-guicolors'
-  use 'sunjon/shade.nvim' -- 高亮当前tab窗口
-  -- 导航finder操作
-  use 'mg979/vim-visual-multi'
-  use {'kevinhwang91/nvim-hlslens'}
-  use 'phaazon/hop.nvim'
-  use 'ggandor/lightspeed.nvim'
-  use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
-  use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
-  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
-  use {
-    'nvim-telescope/telescope-project.nvim',
+  -- use 'sunjon/shade.nvim' -- 高亮当前tab窗口,但跟indent-blankline有冲突
+  use { 'lukas-reineke/indent-blankline.nvim',
     config = function()
-      require"telescope".load_extension("project")
     end
   }
+  -- 导航finder操作
+  use 'mg979/vim-visual-multi'
+  use 'kevinhwang91/nvim-hlslens'
+  use 'phaazon/hop.nvim'
+  use 'ggandor/lightspeed.nvim'
+  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
+  -- use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
+  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
-      "AckslD/nvim-neoclip.lua",
-      config = function()
-          require('neoclip').setup({
-              history = 1000,
-              filter = nil,
-          })
-      end,
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup {}
+      require('telescope').load_extension('projects')
+    end
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'}
+  use 'williamboman/nvim-lsp-installer'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
   use 'onsails/lspkind-nvim'
-  use 'simrat39/symbols-outline.nvim'
+  use 'liuchengxu/vista.vim'
   use 'ray-x/lsp_signature.nvim'
   use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
     config = function()
@@ -87,8 +94,12 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  use 'jose-elias-alvarez/null-ls.nvim'
+  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
+      config = function ()
+        require("null-ls").config {}
+        require("lspconfig")["null-ls"].setup {}
+      end
+  }
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -97,9 +108,15 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  use 'b3nj5m1n/kommentary' -- 注释
-  -- use 'numToStr/Comment.nvim'
+  -- 注释
+  use { 'b3nj5m1n/kommentary',
+      config = function ()
+        require('kommentary.config').use_extended_mappings()
+      end
+  }
   use "windwp/nvim-autopairs" -- 自动符号匹配
+  use 'windwp/nvim-ts-autotag'
+  -- use '9mm/vim-closer'
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -115,7 +132,7 @@ require('packer').startup(function()
           require('todo-comments').setup{}
       end
   }
-  use 'konfekt/fastfold' -- 性能更好的语法折叠
+  -- use 'konfekt/fastfold' -- 性能更好的语法折叠
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use {
@@ -125,15 +142,37 @@ require('packer').startup(function()
     end
   }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
-  use 'metakirby5/codi.vim'
-  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
+  -- use 'metakirby5/codi.vim'
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use 'simnalamburt/vim-mundo'
   use {
-    'karb94/neoscroll.nvim',
-    config = function ()
-      require('neoscroll').setup()
+    "max397574/better-escape.nvim",
+    event = 'InsertEnter',
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
+  use {
+    'akinsho/toggleterm.nvim',
+    config = function()
+        require('toggleterm').setup()
     end
   }
-  use 'simnalamburt/vim-mundo'
+  --[[ use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+    opt = true,
+    config = function()
+      require("dapui").setup()
+    end
+  } ]]
+  -- use 'gennaro-tedesco/nvim-jqx'
+  use 'rmagatti/auto-session'
+  --[[ use({
+      "vuki656/package-info.nvim",
+      requires = "MunifTanjim/nui.nvim",
+      config = function()
+        require('package-info').setup()
+      end
+  }) ]]
 end)
 
 --settings
@@ -213,6 +252,7 @@ local function map(mode, lhs, rhs, opts)
   remap(mode, lhs, rhs, options)
 end
 
+g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('i', 'jk', '<esc>')                                               --jk to exit
@@ -236,8 +276,8 @@ map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>o', '<cmd>SymbolsOutline<CR>')                   --fuzzy
+map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -248,16 +288,23 @@ map('n', '<leader>b', '<cmd>BufferPick<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gl', '<cmd>Git pull<CR>')
-map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gl', '<cmd>Gina pull<CR>')
+map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>mn', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
 cmd([[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]])
+cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -265,15 +312,15 @@ for _, num in pairs(numbers) do
 end
 
 g.loaded_python_provider = 0
--- g.loaded_python3_provider = 0
+g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- LeaderF
-g.Lf_WindowPosition = 'popup'
-g.Lf_PreviewInPopup = 1
-g.Lf_ShortcutF = '<C-P>'
-execute("call wilder#setup({'modes': [':', '/', '?']})")
+-- g.Lf_WindowPosition = 'popup'
+-- g.Lf_PreviewInPopup = 1
+-- g.Lf_ShortcutF = '<C-P>'
+-- execute("call wilder#setup({'modes': [':', '/', '?']})")
 
 --visual multi
 nvim_exec([[
@@ -286,7 +333,7 @@ let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'tel
 ]], false)
 
 -- fastfold
-g.fastfold_savehook = 1
+--[[ g.fastfold_savehook = 1
 g.fastfold_fold_command_suffixes =  {'x','X','a','A','o','O','c','C'}
 g.fastfold_fold_movement_commands = {']z', '[z', 'zj', 'zk'}
 g.markdown_folding = 1
@@ -300,7 +347,7 @@ g.perl_fold = 1
 g.perl_fold_blocks = 1
 g.r_syntax_folding = 1
 g.rust_fold = 1
-g.php_folding = 1
+g.php_folding = 1 ]]
 
 --barbar
 nvim_exec([[
@@ -310,13 +357,27 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
+g.vista_default_executive = 'nvim_lsp'
+
+require("indent_blankline").setup {
+    buftype_exclude = {"terminal", "telescope", "nvim-tree"},
+    space_char_blankline = " ",
+    char_highlight_list = {
+        "IndentBlanklineIndent1",
+        "IndentBlanklineIndent2",
+        "IndentBlanklineIndent3",
+        "IndentBlanklineIndent4",
+        "IndentBlanklineIndent5",
+        "IndentBlanklineIndent6",
+    },
+}
+-- auto-session
+vim.o.sessionoptions="buffers,curdir"
+require('auto-session').setup()
+
 --theme
 cmd 'colorscheme nightfly'
-
 local notify = require("notify")
-
-require('kommentary.config').use_extended_mappings()
--- require('Comment').setup()
 
 require'lightspeed'.setup {
   jump_to_first_match = true,
@@ -422,7 +483,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
-vim.lsp.protocol.CompletionItemKind = {
+-- just use lspkind
+--[[ vim.lsp.protocol.CompletionItemKind = {
   "   (Text) ",
   "   (Method)",
   "   (Function)",
@@ -448,7 +510,7 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (Event)",
   "   (Operator)",
   "   (TypeParameter)"
-}
+} ]]
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -521,33 +583,31 @@ vim.g.coq_settings = {
 }
 
 local function setup_servers()
-  local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "vuels", "jsonls", "dockerls" }
-  local nvim_lsp = require'lspconfig'
   local coq = require "coq"
+  local lsp_installer = require("nvim-lsp-installer")
   local config = {
     on_attach = on_attach,
-    capcapabilities = capabilities
+    capabilities = capabilities
   }
-  for _, server in pairs(servers) do
-    nvim_lsp[server].setup(
-      coq.lsp_ensure_capabilities(config)
-    )
-  end
+  lsp_installer.on_server_ready(function(server)
+      server:setup(
+        coq.lsp_ensure_capabilities(config)
+      )
+  end)
 end
 
 setup_servers()
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
-require('symbols-outline').setup()
 require'diffview'.setup{}
 require('nvim-autopairs').setup()
 
 --colorizer
 require'colorizer'.setup()
 
-require'shade'.setup({
+--[[ require'shade'.setup({
   overlay_opacity = 50,
   opacity_step = 1,
   keys = {
@@ -555,7 +615,7 @@ require'shade'.setup({
     brightness_down  = '<C-Down>',
     toggle           = '<Leader>s',
   }
-})
+}) ]]
 
 --nvim-tree
 g.nvim_tree_side = "left"
@@ -601,6 +661,17 @@ g.nvim_tree_icons = {
         error = "",
       }
 }
+
+-- for projects
+g.nvim_tree_respect_buf_cwd = 1
+
+require("nvim-tree").setup({
+  update_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_cwd = true
+  },
+})
 
 --gitsigns
 require('gitsigns').setup {
@@ -662,7 +733,12 @@ fn.sign_define(
 
 g.dashboard_session_directory = '~/.sessions'
 g.dashboard_default_executive = 'telescope'
-cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
+
+if vim.fn.has 'win32' == 1 then
+  cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
+else
+  cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
+end
 
 nvim_exec([[
     let g:dashboard_custom_footer = ['LuaJIT loaded '..packages..' packages']
@@ -738,10 +814,7 @@ local vi_mode_hl = function()
   }
 end
 
---[[ local gps = require("nvim-gps")
-local gps_provider = function()
-  return gps.get_location()
-end ]]
+require("nvim-gps").setup()
 
 require'feline'.setup {
   colors = {
@@ -782,8 +855,8 @@ require'feline'.setup {
         { provider = 'git_branch' , icon = ' ', right_sep = '  ',
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
         { provider = 'file_info' },
+        { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-        -- { provider = gps_provider, enabled = gps.is_available() }
       },
       {},
       {
