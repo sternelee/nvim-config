@@ -40,12 +40,12 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   config = function()
-  --     require("treesitter-context").setup {}
-  --   end
-  -- }
+  --[[ use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require("treesitter-context").setup {}
+    end
+  } ]]
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
@@ -70,20 +70,11 @@ require('packer').startup(function()
   -- use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
-    'nvim-telescope/telescope-project.nvim',
+    "ahmedkhalf/project.nvim",
     config = function()
-      require"telescope".load_extension("project")
+      require("project_nvim").setup {}
+      require('telescope').load_extension('projects')
     end
-  }
-  use {
-      "AckslD/nvim-neoclip.lua",
-      requires = {'tami5/sqlite.lua', module = 'sqlite'},
-      config = function()
-          require('neoclip').setup({
-              history = 1000,
-              filter = nil,
-          })
-      end,
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
@@ -176,21 +167,21 @@ require('packer').startup(function()
         require('toggleterm').setup()
     end
   }
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+  --[[ use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
     opt = true,
     config = function()
       require("dapui").setup()
     end
-  }
+  } ]]
   -- use 'gennaro-tedesco/nvim-jqx'
   use 'rmagatti/auto-session'
-  use({
+  --[[ use({
       "vuki656/package-info.nvim",
       requires = "MunifTanjim/nui.nvim",
       config = function()
         require('package-info').setup()
       end
-  })
+  }) ]]
 end)
 
 --settings
@@ -312,6 +303,7 @@ map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>mn', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
@@ -389,7 +381,7 @@ require("indent_blankline").setup {
     },
 }
 -- auto-session
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
+vim.o.sessionoptions="buffers,curdir"
 require('auto-session').setup()
 
 --theme
@@ -504,16 +496,16 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
   },
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
+    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'cmp_tabnine'},
     { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
@@ -722,6 +714,17 @@ g.nvim_tree_icons = {
         error = "",
       }
 }
+
+-- for projects
+g.nvim_tree_respect_buf_cwd = 1
+
+require("nvim-tree").setup({
+  update_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_cwd = true
+  },
+})
 
 --gitsigns
 require('gitsigns').setup {
