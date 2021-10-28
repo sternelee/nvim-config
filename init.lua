@@ -34,7 +34,7 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use 'lambdalisue/gina.vim'
+  -- use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -90,7 +90,6 @@ require('packer').startup(function()
     -- {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
-  use { 'Saecki/crates.nvim', ft = {'toml'} }
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   use 'glepnir/lspsaga.nvim'
@@ -103,12 +102,12 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
+  --[[ use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
       config = function ()
         require("null-ls").config {}
         require("lspconfig")["null-ls"].setup {}
       end
-  }
+  } ]]
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -154,19 +153,13 @@ require('packer').startup(function()
   -- use 'metakirby5/codi.vim'
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'simnalamburt/vim-mundo'
-  use {
+  --[[ use {
     "max397574/better-escape.nvim",
     event = 'InsertEnter',
     config = function()
       require("better_escape").setup()
     end,
-  }
-  use {
-    'akinsho/toggleterm.nvim',
-    config = function()
-        require('toggleterm').setup()
-    end
-  }
+  } ]]
   --[[ use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
     opt = true,
     config = function()
@@ -297,13 +290,12 @@ map('n', '<leader>b', '<cmd>BufferPick<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gl', '<cmd>Gina pull<CR>')
-map('n', '<leader>gu', '<cmd>Gina push<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gl', '<cmd>Git pull<CR>')
+map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
-map('n', '<leader>mn', '<cmd>TroubleToggle<CR>')
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
@@ -506,7 +498,6 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'crates' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
