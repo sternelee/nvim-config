@@ -87,6 +87,12 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
+    {'hrsh7th/cmp-cmdline'},
+    {'octaltree/cmp-look'},
+    {'cmp-nvim-lsp-document-symbol'},
+    {'lukas-reineke/cmp-under-comparator'},
+    {'vappolinario/cmp-clippy'},
+    {'saecki/crates.nvim'},
     -- {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
@@ -296,16 +302,17 @@ map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
-cmd([[autocmd BufWritePre * %s/\s\+$//e]])                             --remove trailing whitespaces
-cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
-cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
-cmd([[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]])
+cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+cmd [[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -330,7 +337,7 @@ let g:VM_default_mappings = 0
 let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
-let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope']
+let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope', 'packer']
 ]], false)
 
 -- fastfold
@@ -500,6 +507,15 @@ cmp.setup({
     { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
+    { name = 'rg' },
+    {name='look', keyword_length=2, opts={convert_case=true, loud=true}},
+    { name = 'npm', keyword_length = 4 },
+    { name = 'cmp-clippy',
+      opts = {
+        model = "EleutherAI/gpt-neo-2.7B", -- check code clippy vscode repo for options
+        key = "", -- huggingface.co api key
+      }
+    },
     -- { name = 'spell' },
   },
   formatting = {
@@ -514,14 +530,40 @@ cmp.setup({
         calc = "   [Calc]",
         spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
-        cmp_tabnine = "⦿ [Tn]"
+        cmp_tabnine = "⦿ [Tn]",
       })[entry.source.name]
       return vim_item
     end
   },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require "cmp-under-comparator".under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   experimental = {
     ghost_text = true
   }
+})
+
+cmp.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' }
+  }
+})
+
+cmp.setup.cmdline('/', {
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp_document_symbol' }
+  }, {
+    { name = 'buffer' }
+  })
 })
 
 -- Signature help
