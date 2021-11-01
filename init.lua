@@ -89,7 +89,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
-    {'cmp-nvim-lsp-document-symbol'},
+    {'hrsh7th/cmp-nvim-lsp-document-symbol'},
     {'lukas-reineke/cmp-under-comparator'},
     {'vappolinario/cmp-clippy'},
     {'saecki/crates.nvim'},
