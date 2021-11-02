@@ -34,7 +34,7 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use 'lambdalisue/gina.vim'
+  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -76,7 +76,7 @@ require('packer').startup(function()
       require('telescope').load_extension('projects')
     end
   }
-  -- 语法建议
+  -- 语法建议load_extension
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/nvim-cmp'
@@ -88,9 +88,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
-    {'octaltree/cmp-look'},
     {'hrsh7th/cmp-nvim-lsp-document-symbol'},
-    {'lukas-reineke/cmp-under-comparator'},
     {'vappolinario/cmp-clippy'},
     {'saecki/crates.nvim'},
     -- {'f3fora/cmp-spell'},
@@ -236,8 +234,8 @@ opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
-opt('o', 'timeoutlen', 500)
-opt('o', 'ttimeoutlen', 10)
+opt('o', 'timeoutlen', 1000)
+opt('o', 'ttimeoutlen', 50)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 5)
 opt('o', 'undofile', true)
@@ -296,11 +294,11 @@ map('n', '<leader>b', '<cmd>BufferPick<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gl', '<cmd>Git pull<CR>')
-map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gl', '<cmd>Gina pull<CR>')
+map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -508,7 +506,6 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'rg' },
-    {name='look', keyword_length=2, opts={convert_case=true, loud=true}},
     { name = 'npm', keyword_length = 4 },
     { name = 'cmp-clippy',
       opts = {
@@ -534,18 +531,6 @@ cmp.setup({
       })[entry.source.name]
       return vim_item
     end
-  },
-  sorting = {
-    comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      require "cmp-under-comparator".under,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    },
   },
   experimental = {
     ghost_text = true
@@ -579,35 +564,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     underline = true,
   }
 )
-
--- just use lspkind
---[[ vim.lsp.protocol.CompletionItemKind = {
-  "   (Text) ",
-  "   (Method)",
-  "   (Function)",
-  "   (Constructor)",
-  " ﴲ  (Field)",
-  "[] (Variable)",
-  "   (Class)",
-  " ﰮ  (Interface)",
-  "   (Module)",
-  " 襁 (Property)",
-  "   (Unit)",
-  "   (Value)",
-  " 練 (Enum)",
-  "   (Keyword)",
-  "   (Snippet)",
-  "   (Color)",
-  "   (File)",
-  "   (Reference)",
-  "   (Folder)",
-  "   (EnumMember)",
-  " ﲀ  (Constant)",
-  " ﳤ  (Struct)",
-  "   (Event)",
-  "   (Operator)",
-  "   (TypeParameter)"
-} ]]
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
