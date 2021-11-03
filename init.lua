@@ -87,11 +87,6 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-cmdline'},
-    {'hrsh7th/cmp-nvim-lsp-document-symbol'},
-    {'vappolinario/cmp-clippy'},
-    {'saecki/crates.nvim'},
-    -- {'f3fora/cmp-spell'},
     {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
@@ -310,7 +305,6 @@ cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -505,14 +499,6 @@ cmp.setup({
     { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'rg' },
-    { name = 'npm', keyword_length = 4 },
-    { name = 'cmp-clippy',
-      opts = {
-        model = "EleutherAI/gpt-neo-2.7B", -- check code clippy vscode repo for options
-        key = "", -- huggingface.co api key
-      }
-    },
     -- { name = 'spell' },
   },
   formatting = {
@@ -535,20 +521,6 @@ cmp.setup({
   experimental = {
     ghost_text = true
   }
-})
-
-cmp.setup.cmdline(':', {
-  sources = {
-    { name = 'cmdline' }
-  }
-})
-
-cmp.setup.cmdline('/', {
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp_document_symbol' }
-  }, {
-    { name = 'buffer' }
-  })
 })
 
 -- Signature help
