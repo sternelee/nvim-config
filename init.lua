@@ -229,10 +229,10 @@ opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
-opt('o', 'timeoutlen', 1000)
-opt('o', 'ttimeoutlen', 50)
+opt('o', 'timeoutlen', 500)
+opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
-opt('o', 'scrolljump', 5)
+opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
 -- opt('o', 'undodir', '~/.vim/undo')
 
@@ -298,7 +298,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 2000})]]
+cmd [[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 1000})]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
