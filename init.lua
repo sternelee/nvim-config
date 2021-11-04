@@ -6,6 +6,11 @@ local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 
+g.loaded_python_provider = 0
+g.loaded_python3_provider = 0
+g.loaded_ruby_provider = 0
+g.loaded_perl_provider = 0
+
 -- https://github.com/rohit-px2/nvui
 -- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar --detached
 if g.nvui then
@@ -56,7 +61,6 @@ require('packer').startup(function()
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'bluz71/vim-nightfly-guicolors'
-  -- use 'sunjon/shade.nvim' -- 高亮当前tab窗口,但跟indent-blankline有冲突
   use { 'lukas-reineke/indent-blankline.nvim',
     config = function()
     end
@@ -66,8 +70,6 @@ require('packer').startup(function()
   use 'kevinhwang91/nvim-hlslens'
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
-  -- use { 'Yggdroot/LeaderF', run = ':LeaderfInstallCExtension' }
-  -- use { 'gelguy/wilder.nvim', run = ':UpdateRemotePlugins'}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use {
     "ahmedkhalf/project.nvim",
@@ -119,11 +121,14 @@ require('packer').startup(function()
   use { 'b3nj5m1n/kommentary',
       config = function ()
         require('kommentary.config').use_extended_mappings()
+        require('kommentary.config').configure_language("vue", {
+            single_line_comment_string = "//",
+            multi_line_comment_strings = {"/*", "*/"},
+        })
       end
   }
   use "windwp/nvim-autopairs" -- 自动符号匹配
   use 'windwp/nvim-ts-autotag'
-  -- use '9mm/vim-closer'
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -133,13 +138,7 @@ require('packer').startup(function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use {
-      'folke/todo-comments.nvim',
-      config = function ()
-          require('todo-comments').setup{}
-      end
-  }
-  -- use 'konfekt/fastfold' -- 性能更好的语法折叠
+  use 'folke/todo-comments.nvim'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use {
@@ -151,29 +150,6 @@ require('packer').startup(function()
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
   -- use 'metakirby5/codi.vim'
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
-  use 'simnalamburt/vim-mundo'
-  --[[ use {
-    "max397574/better-escape.nvim",
-    event = 'InsertEnter',
-    config = function()
-      require("better_escape").setup()
-    end,
-  } ]]
-  --[[ use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
-    opt = true,
-    config = function()
-      require("dapui").setup()
-    end
-  } ]]
-  -- use 'gennaro-tedesco/nvim-jqx'
-  use 'rmagatti/auto-session'
-  --[[ use({
-      "vuki656/package-info.nvim",
-      requires = "MunifTanjim/nui.nvim",
-      config = function()
-        require('package-info').setup()
-      end
-  }) ]]
 end)
 
 --settings
@@ -234,7 +210,6 @@ opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
--- opt('o', 'undodir', '~/.vim/undo')
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -265,11 +240,11 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader>p', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>fp', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fp', '<cmd>Telescope project<CR>')
@@ -277,7 +252,8 @@ map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tn', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -294,7 +270,7 @@ map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
-map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>tq', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -311,18 +287,6 @@ for _, num in pairs(numbers) do
   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
 end
 
-g.loaded_python_provider = 0
-g.loaded_python3_provider = 0
-g.loaded_ruby_provider = 0
-g.loaded_perl_provider = 0
-
--- LeaderF
--- g.Lf_WindowPosition = 'popup'
--- g.Lf_PreviewInPopup = 1
--- g.Lf_ShortcutF = '<C-P>'
--- execute("call wilder#setup({'modes': [':', '/', '?']})")
-
---visual multi
 nvim_exec([[
 let g:VM_maps = {}
 let g:VM_default_mappings = 0
@@ -331,23 +295,6 @@ let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
 let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope', 'packer']
 ]], false)
-
--- fastfold
---[[ g.fastfold_savehook = 1
-g.fastfold_fold_command_suffixes =  {'x','X','a','A','o','O','c','C'}
-g.fastfold_fold_movement_commands = {']z', '[z', 'zj', 'zk'}
-g.markdown_folding = 1
-g.tex_fold_enabled = 1
-g.vimsyn_folding = 'af'
-g.xml_syntax_folding = 1
-g.javaScript_fold = 1
-g.sh_fold_enabled= 7
-g.ruby_fold = 1
-g.perl_fold = 1
-g.perl_fold_blocks = 1
-g.r_syntax_folding = 1
-g.rust_fold = 1
-g.php_folding = 1 ]]
 
 --barbar
 nvim_exec([[
@@ -371,9 +318,6 @@ require("indent_blankline").setup {
         "IndentBlanklineIndent6",
     },
 }
--- auto-session
-vim.o.sessionoptions="buffers,curdir"
-require('auto-session').setup()
 
 --theme
 cmd 'colorscheme nightfly'
@@ -619,25 +563,16 @@ require'diffview'.setup{}
 require('nvim-autopairs').setup()
 
 --colorizer
-require'colorizer'.setup()
-
---[[ require'shade'.setup({
-  overlay_opacity = 50,
-  opacity_step = 1,
-  keys = {
-    brightness_up    = '<C-Up>',
-    brightness_down  = '<C-Down>',
-    toggle           = '<Leader>s',
-  }
-}) ]]
+require'colorizer'.setup{
+  '*',
+  css = { rgb_fn = true; }
+}
 
 --nvim-tree
 g.nvim_tree_side = "left"
 g.nvim_tree_width = 25
--- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
 g.nvim_tree_quit_on_open = 0
 g.nvim_tree_indent_markers = 1
-g.nvim_tree_hide_dotfiles = 1
 g.nvim_tree_git_hl = 1
 g.nvim_tree_root_folder_modifier = ":~"
 g.nvim_tree_allow_resize = 1
@@ -685,6 +620,7 @@ require("nvim-tree").setup({
     enable = true,
     update_cwd = true
   },
+  nvim_tree_ignore = {".git", "node_modules", ".cache"}
 })
 
 --gitsigns
@@ -745,6 +681,7 @@ fn.sign_define(
     {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
 )
 
+g.dashboard_disable_statusline = 1
 g.dashboard_session_directory = '~/.sessions'
 g.dashboard_default_executive = 'telescope'
 
@@ -759,12 +696,12 @@ nvim_exec([[
 ]], false)
 
 g.dashboard_custom_section = {
-    a = {description = {'  Reload Last Session            SPC q l'}, command = 'SessionLoad'},
-    b = {description = {'  Recently Opened Files          SPC f r'}, command = 'Telescope oldfiles'},
-    c = {description = {'  Open Project                   SPC f p'}, command = 'Telescope Project'},
-    d = {description = {'  Jump to Bookmark               SPC f m'}, command = 'Telescope marks'},
-    e = {description = {'  Find File                      SPC f  '}, command = 'Telescope find_files'},
-    f = {description = {'  Find Word                      SPC g  '}, command = 'Telescope live_grep'},
+    a = {description = {"  Find File                 SPC f f"}, command = "Telescope find_files"},
+    b = {description = {"  Recents                   SPC f r"}, command = "Telescope oldfiles"},
+    c = {description = {"  Find Word                 SPC f w"}, command = "Telescope live_grep"},
+    d = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
+    e = {description = {"  Bookmarks                 SPC f m"}, command = "Telescope marks"},
+    f = {description = {"  Load Last Session         SPC s l"}, command = "SessionLoad"},
     g = {description = {'  Open Neovim Configuration      SPC f e'}, command = ':e ~/AppData/Local/nvim/init.lua'},
 }
 
@@ -949,4 +886,61 @@ require'nvim-tree'.setup {
       list = {}
     }
   }
+}
+
+require('todo-comments').setup{
+  signs = true, -- show icons in the signs column
+    sign_priority = 8, -- sign priority
+    -- keywords recognized as todo comments
+    keywords = {
+      FIX = {
+        icon = " ", -- icon used for the sign, and in search results
+        color = "error", -- can be a hex color, or a named color (see below)
+        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+        -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        },
+    merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+    -- highlighting of the line containing the todo comment
+    -- * before: highlights before the keyword (typically comment characters)
+    -- * keyword: highlights of the keyword
+    -- * after: highlights after the keyword (todo text)
+    highlight = {
+      before = "", -- "fg" or "bg" or empty
+      keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+      after = "fg", -- "fg" or "bg" or empty
+      --pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+      pattern = [[(KEYWORDS)]], -- pattern or table of patterns, used for highlightng (vim regex)
+      comments_only = true, -- uses treesitter to match keywords in comments only
+      max_line_len = 400, -- ignore lines longer than this
+      exclude = {}, -- list of file types to exclude highlighting
+    },
+    -- list of named colors where we try to extract the guifg from the
+    -- list of hilight groups or use the hex color if hl not found as a fallback
+    colors = {
+      error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
+      warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
+      info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
+      hint = { "LspDiagnosticsDefaultHint", "#10B981" },
+      default = { "Identifier", "#7C3AED" },
+    },
+    search = {
+      command = "rg",
+      args = {
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+      },
+      -- regex that will be used to match keywords.
+      -- don't replace the (KEYWORDS) placeholder
+      -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+      pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+    },
 }
