@@ -252,7 +252,7 @@ map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
-map('n', '<leader>tn', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -614,14 +614,37 @@ g.nvim_tree_icons = {
 -- for projects
 g.nvim_tree_respect_buf_cwd = 1
 
-require("nvim-tree").setup({
-  update_cwd = true,
-  update_focused_file = {
-    enable = true,
-    update_cwd = true
+require'nvim-tree'.setup {
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  ignore_ft_on_setup  = {},
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  diagnostics     = {
+    enable = true
   },
-  nvim_tree_ignore = {".git", "node_modules", ".cache"}
-})
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+
+  view = {
+    width = 30,
+    side = 'left',
+    auto_resize = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    }
+  }
+}
 
 --gitsigns
 require('gitsigns').setup {
@@ -702,7 +725,6 @@ g.dashboard_custom_section = {
     d = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
     e = {description = {"  Bookmarks                 SPC f m"}, command = "Telescope marks"},
     f = {description = {"  Load Last Session         SPC s l"}, command = "SessionLoad"},
-    g = {description = {'  Open Neovim Configuration      SPC f e'}, command = ':e ~/AppData/Local/nvim/init.lua'},
 }
 
 local prettier = function ()
@@ -854,39 +876,6 @@ require'feline'.setup {
 }
 
 require("which-key").setup {}
-
-
-require'nvim-tree'.setup {
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  ignore_ft_on_setup  = {},
-  open_on_tab         = false,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  diagnostics     = {
-    enable = true
-  },
-  update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
-    ignore_list = {}
-  },
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-
-  view = {
-    width = 30,
-    side = 'left',
-    auto_resize = false,
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  }
-}
 
 require('todo-comments').setup{
   signs = true, -- show icons in the signs column
