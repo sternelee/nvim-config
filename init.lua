@@ -71,13 +71,6 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
-  use {
-    "ahmedkhalf/project.nvim",
-    config = function()
-      require("project_nvim").setup {}
-      require('telescope').load_extension('projects')
-    end
-  }
   -- 语法建议load_extension
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -89,7 +82,7 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
@@ -139,17 +132,10 @@ require('packer').startup(function()
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
+  use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use {
-    'NTBBloodbath/rest.nvim',
-    config = function()
-        require('rest-nvim').setup()
-    end
-  }
   use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
-  -- use 'metakirby5/codi.vim'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 end)
 
 --settings
@@ -247,7 +233,6 @@ map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>fp', '<cmd>Telescope project<CR>')
 map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
@@ -321,7 +306,10 @@ require("indent_blankline").setup {
 
 --theme
 cmd 'colorscheme nightfly'
+
 local notify = require("notify")
+
+require'hop'.setup()
 
 require'lightspeed'.setup {
   jump_to_first_match = true,
@@ -437,7 +425,7 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
@@ -610,9 +598,6 @@ g.nvim_tree_icons = {
         error = "",
       }
 }
-
--- for projects
-g.nvim_tree_respect_buf_cwd = 1
 
 require'nvim-tree'.setup {
   disable_netrw       = true,
@@ -933,3 +918,31 @@ require('todo-comments').setup{
       pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
     },
 }
+
+_G.whitespace_disabled_file_types = {
+    'lsp-installer',
+    'lspinfo',
+    'TelescopePrompt',
+    'dashboard'
+}
+function _G.whitespace_visibility(file_types)
+    local better_whitespace_status = 1
+    local current_file_type = vim.api.nvim_eval('&ft')
+    for k,v in ipairs(file_types) do
+        if current_file_type == "" or current_file_type == v then
+            better_whitespace_status = 0
+        end
+    end
+
+    -- vim.cmd('DisableWhitespace')
+    if better_whitespace_status == 0 then
+        vim.cmd('execute "DisableWhitespace"')
+    else
+        vim.cmd('execute "EnableWhitespace"')
+    end
+end
+
+vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_types)')
+--[[ BUG: I don't know why but it seems we must again specifcly run function for FileType dashboard.
+we must have it in both whitespace_disabled_file_types and here.]]
+vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
