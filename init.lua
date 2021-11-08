@@ -60,6 +60,7 @@ require('packer').startup(function()
     end
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
+  use {"ellisonleao/glow.nvim"}
   use 'bluz71/vim-nightfly-guicolors'
   use { 'lukas-reineke/indent-blankline.nvim',
     config = function()
