@@ -71,6 +71,11 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
+  use { 'ibhagwan/fzf-lua',
+    requires = {
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons' } -- optional for icons
+  }
   -- 语法建议load_extension
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -226,15 +231,18 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader>fp', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>fs', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>tr', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
+map('n', '<leader>tf', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>tb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>tw', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
+map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
+map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
+map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>f', '<cmd>FzfLua files<CR>')
+map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
+map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
@@ -246,7 +254,7 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
-map('n', '<leader>b', '<cmd>BufferPick<CR>')
+-- map('n', '<leader>b', '<cmd>BufferPick<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
@@ -326,6 +334,16 @@ require'lightspeed'.setup {
   labels = nil,
   cycle_group_fwd_key = nil,
   cycle_group_bwd_key = nil,
+}
+
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = require('telescope.actions').close
+      }
+    }
+  }
 }
 
 --nvim treesitter
