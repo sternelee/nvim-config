@@ -102,12 +102,12 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  --[[ use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
+  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
       config = function ()
         require("null-ls").config {}
         require("lspconfig")["null-ls"].setup {}
       end
-  } ]]
+  }
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -132,6 +132,14 @@ require('packer').startup(function()
     "blackCauldron7/surround.nvim",
     config = function()
       require "surround".setup {}
+    end
+  }
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'info',
+      }
     end
   }
   use 'folke/which-key.nvim' -- 提示leader按键
@@ -583,6 +591,8 @@ g.nvim_tree_indent_markers = 1
 g.nvim_tree_git_hl = 1
 g.nvim_tree_root_folder_modifier = ":~"
 g.nvim_tree_allow_resize = 1
+g.nvim_tree_gitignore = 1
+g.nvim_tree_ignore = { ".git", "node_modules", ".cache" }
 
 g.nvim_tree_show_icons = {
     git = 1,
