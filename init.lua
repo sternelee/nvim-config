@@ -63,9 +63,9 @@ require('packer').startup(function()
     end
   }
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  use {"ellisonleao/glow.nvim"}
+  use 'ellisonleao/glow.nvim'
   use 'bluz71/vim-nightfly-guicolors'
-  use { 'lukas-reineke/indent-blankline.nvim'}
+  use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens'
@@ -127,11 +127,11 @@ require('packer').startup(function()
         })
       end
   }
-  use "windwp/nvim-autopairs" -- 自动符号匹配
+  use 'windwp/nvim-autopairs' -- 自动符号匹配
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use {
-    "blackCauldron7/surround.nvim",
+    'blackCauldron7/surround.nvim',
     config = function()
       require "surround".setup {}
     end
@@ -151,7 +151,7 @@ require('packer').startup(function()
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' }
+  use { 'rcarriga/nvim-notify', config = 'vim.notify = require("notify")' }
 end)
 
 --settings
