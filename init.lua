@@ -62,14 +62,12 @@ require('packer').startup(function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {"ellisonleao/glow.nvim"}
   use 'bluz71/vim-nightfly-guicolors'
-  use { 'lukas-reineke/indent-blankline.nvim',
-    config = function()
-    end
-  }
+  use { 'lukas-reineke/indent-blankline.nvim'}
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens'
   use 'phaazon/hop.nvim'
+  use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
   use { 'ibhagwan/fzf-lua',
@@ -77,7 +75,7 @@ require('packer').startup(function()
       'vijaymarupudi/nvim-fzf',
       'kyazdani42/nvim-web-devicons' } -- optional for icons
   }
-  -- 语法建议load_extension
+  -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/nvim-cmp'
@@ -575,7 +573,9 @@ vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
-require('nvim-autopairs').setup()
+require('nvim-autopairs').setup{
+  disable_filetype = { "TelescopePrompt" , "vim" },
+}
 
 --colorizer
 require'colorizer'.setup{
@@ -584,65 +584,22 @@ require'colorizer'.setup{
 }
 
 --nvim-tree
-g.nvim_tree_side = "left"
-g.nvim_tree_width = 25
-g.nvim_tree_quit_on_open = 0
-g.nvim_tree_indent_markers = 1
-g.nvim_tree_git_hl = 1
-g.nvim_tree_root_folder_modifier = ":~"
-g.nvim_tree_allow_resize = 1
-g.nvim_tree_gitignore = 1
-g.nvim_tree_ignore = { ".git", "node_modules", ".cache" }
-
-g.nvim_tree_show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1
-}
-
-g.nvim_tree_icons = {
-    default = '',
-    symlink = '',
-    git  = {
-      unstaged = "",
-      staged = "✓",
-      unmerged = "",
-      renamed = "",
-      untracked = "",
-      deleted = "",
-      ignored = ""
-      },
-    folder  = {
-      default = "",
-      open = "",
-      empty = "",
-      empty_open = "",
-      symlink = "",
-      symlink_open = "",
-      },
-      lsp  = {
-        hint = "",
-        info = "",
-        warning = "",
-        error = "",
-      }
-}
-
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
-  ignore_ft_on_setup  = {},
+  ignore_ft_on_setup  = {".git", "node_modules", ".cache"},
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
+  auto_close          = true,
   diagnostics     = {
     enable = true
   },
   update_focused_file = {
     enable      = false,
     update_cwd  = false,
-    ignore_list = {}
+    ignore_list = { ".git", "node_modules", ".cache" },
   },
   system_open = {
     cmd  = nil,
@@ -651,7 +608,7 @@ require'nvim-tree'.setup {
 
   view = {
     width = 30,
-    side = 'left',
+    side = 'right',
     auto_resize = false,
     mappings = {
       custom_only = false,
