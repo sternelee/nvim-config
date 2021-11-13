@@ -29,6 +29,7 @@ cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
+  use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
   -- 状态栏
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
@@ -39,8 +40,10 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use 'lambdalisue/gina.vim'
+  -- use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
+  use 'jreybert/vimagit'
+  -- use 'samoshkin/vim-mergetool'
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -69,7 +72,7 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
-  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
+  -- use 'nvim-telescope/telescope.nvim'
   use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
@@ -83,7 +86,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
-    {'ray-x/cmp-treesitter'},
+    -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}
@@ -100,12 +103,12 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
+  --[[ use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
       config = function ()
         require("null-ls").config {}
         require("lspconfig")["null-ls"].setup {}
       end
-  }
+  } ]]
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -125,6 +128,7 @@ require('packer').startup(function()
       end
   }
   use "windwp/nvim-autopairs" -- 自动符号匹配
+  -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use {
     "blackCauldron7/surround.nvim",
@@ -238,7 +242,7 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
+--[[ map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>tr', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
 map('n', '<leader>tf', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>tb', '<cmd>Telescope buffers<CR>')
@@ -246,12 +250,13 @@ map('n', '<leader>tw', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
 map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
-map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
-map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>')
+map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
+--[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
+map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
@@ -265,11 +270,11 @@ map('n', '<c-x>', '<cmd>BufferClose<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gl', '<cmd>Gina pull<CR>')
-map('n', '<leader>gu', '<cmd>Gina push<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gl', '<cmd>Git pull<CR>')
+map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>tq', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -343,7 +348,7 @@ require'lightspeed'.setup {
   cycle_group_bwd_key = nil,
 }
 
-require('telescope').setup {
+--[[ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
@@ -351,7 +356,7 @@ require('telescope').setup {
       }
     }
   }
-}
+} ]]
 
 --nvim treesitter
 require('nvim-treesitter.configs').setup {
@@ -453,7 +458,7 @@ cmp.setup({
     -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name = 'treesitter' },
+    -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
@@ -539,7 +544,7 @@ local on_attach = function(client, bufnr)
   end
 
   local msg = string.format("Language server %s started!", client.name)
-  notify(msg, 'info', {title = 'LSP Notify', timeout = 1000})
+  notify(msg, 'info', {title = 'LSP Notify', timeout = 300})
 end
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
@@ -677,7 +682,7 @@ fn.sign_define(
 
 g.dashboard_disable_statusline = 1
 g.dashboard_session_directory = '~/.sessions'
-g.dashboard_default_executive = 'telescope'
+-- g.dashboard_default_executive = 'telescope'
 
 if vim.fn.has 'win32' == 1 then
   cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
@@ -690,12 +695,11 @@ nvim_exec([[
 ]], false)
 
 g.dashboard_custom_section = {
-    a = {description = {"  Find File                 SPC f f"}, command = "Telescope find_files"},
-    b = {description = {"  Recents                   SPC f r"}, command = "Telescope oldfiles"},
-    c = {description = {"  Find Word                 SPC f w"}, command = "Telescope live_grep"},
-    d = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
-    e = {description = {"  Bookmarks                 SPC f m"}, command = "Telescope marks"},
-    f = {description = {"  Load Last Session         SPC s l"}, command = "SessionLoad"},
+    a = {description = {"  Find File                 SPC f"}, command = "FzfLua files"},
+    b = {description = {"  Recents                   SPC b"}, command = "FzfLua buffers"},
+    c = {description = {"  Find Word                 SPC g"}, command = "FzfLua live_grep"},
+    d = {description = {"  Bookmarks                 SPC f m"}, command = "FzfLua marks"},
+    e = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
 }
 
 local prettier = function ()
