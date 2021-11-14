@@ -152,6 +152,7 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use { 'rcarriga/nvim-notify', config = 'vim.notify = require("notify")' }
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 end)
 
 --settings
@@ -593,7 +594,8 @@ require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
-  ignore_ft_on_setup  = {".git", "node_modules", ".cache"},
+  ignore              = {".git", "node_modules", ".cache"},
+  hide_dotfiles       = 1,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
