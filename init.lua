@@ -89,7 +89,7 @@ require('packer').startup(function()
     -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}
+    {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
@@ -456,7 +456,7 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    -- { name = 'cmp_tabnine'},
+    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     -- { name = 'treesitter' },
