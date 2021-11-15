@@ -43,7 +43,7 @@ require('packer').startup(function()
   -- use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'jreybert/vimagit'
-  -- use 'samoshkin/vim-mergetool'
+  use 'samoshkin/vim-mergetool'
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -70,7 +70,7 @@ require('packer').startup(function()
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens'
   use 'phaazon/hop.nvim'
-  use 'easymotion/vim-easymotion'
+  -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
   -- use 'nvim-telescope/telescope.nvim'
   use { 'ibhagwan/fzf-lua',
@@ -89,7 +89,7 @@ require('packer').startup(function()
     -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
@@ -127,7 +127,8 @@ require('packer').startup(function()
         })
       end
   }
-  use 'windwp/nvim-autopairs' -- 自动符号匹配
+  -- use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
+  use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use {
@@ -148,6 +149,16 @@ require('packer').startup(function()
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
+  -- 方便写注释
+  use {
+      "danymat/neogen",
+      config = function()
+          require('neogen').setup {
+              enabled = true
+          }
+      end,
+      requires = "nvim-treesitter/nvim-treesitter"
+  }
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
@@ -456,7 +467,7 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     -- { name = 'treesitter' },
@@ -579,9 +590,9 @@ vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
-require('nvim-autopairs').setup{
+--[[ require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" , "vim" },
-}
+} ]]
 
 --colorizer
 require'colorizer'.setup{
@@ -719,6 +730,12 @@ require('formatter').setup({
     typescript = {
       prettier
     },
+    vue = {
+      prettier
+    },
+    json = {
+      prettier
+    }
   }
 })
 
