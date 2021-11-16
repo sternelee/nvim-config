@@ -89,6 +89,7 @@ require('packer').startup(function()
     -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
+    {'hrsh7th/cmp-cmdline'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
@@ -495,6 +496,20 @@ cmp.setup({
   experimental = {
     ghost_text = true
   }
+})
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
 })
 
 -- Signature help
