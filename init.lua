@@ -270,7 +270,7 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
-map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -288,7 +288,7 @@ map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
-map('n', '<leader>tq', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -323,6 +323,9 @@ let bufferline.icons = 'both'
 ]], false)
 
 g.vista_default_executive = 'nvim_lsp'
+
+
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
 
 require("indent_blankline").setup {
     buftype_exclude = {"terminal", "telescope", "nvim-tree"},
