@@ -165,6 +165,7 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use { 'rcarriga/nvim-notify', config = 'vim.notify = require("notify")' }
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use 'wfxr/minimap.vim'
 end)
 
 --settings
@@ -270,7 +271,7 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -726,9 +727,9 @@ nvim_exec([[
 ]], false)
 
 g.dashboard_custom_section = {
-    a = {description = {"  Find File                 SPC f"}, command = "FzfLua files"},
-    b = {description = {"  Recents                   SPC b"}, command = "FzfLua buffers"},
-    c = {description = {"  Find Word                 SPC g"}, command = "FzfLua live_grep"},
+    a = {description = {"  Find File                 SPC f  "}, command = "FzfLua files"},
+    b = {description = {"  Recents                   SPC b  "}, command = "FzfLua buffers"},
+    c = {description = {"  Find Word                 SPC g  "}, command = "FzfLua live_grep"},
     d = {description = {"  Bookmarks                 SPC f m"}, command = "FzfLua marks"},
     e = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
 }
