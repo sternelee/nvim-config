@@ -35,7 +35,11 @@ require('packer').startup(function()
   use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
-  use 'glepnir/dashboard-nvim'
+  -- use 'glepnir/dashboard-nvim'
+  use {
+      'goolord/alpha-nvim',
+      requires = { 'kyazdani42/nvim-web-devicons' }
+  }
   use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
@@ -86,6 +90,7 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
+  -- use {'kevinhwang91/nvim-bqf'}
   use 'glepnir/lspsaga.nvim'
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
@@ -120,8 +125,8 @@ require('packer').startup(function()
         })
       end
   }
-  -- use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
-  use 'jiangmiao/auto-pairs'
+  use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
+  -- use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use {
@@ -158,6 +163,8 @@ require('packer').startup(function()
   use { 'rcarriga/nvim-notify', config = 'vim.notify = require("notify")' }
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'wfxr/minimap.vim'
+  -- use 'lewis6991/impatient.nvim'
+  use 'numToStr/FTerm.nvim'
 end)
 
 --settings
@@ -197,7 +204,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', false)
+opt('o', 'wrap', true)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -259,12 +266,16 @@ map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
 map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
+map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
+map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
+map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
@@ -304,7 +315,7 @@ let g:VM_default_mappings = 0
 let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
-let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope', 'packer']
+let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha']
 ]], false)
 
 --barbar
@@ -519,7 +530,7 @@ vim.g.coq_settings = {
   auto_start = true,
   clients = {
     tabnine = {
-      enabled = false
+      enabled = true
     }
   }
 }
@@ -544,9 +555,9 @@ vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
---[[ require('nvim-autopairs').setup{
+require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" , "vim" },
-} ]]
+}
 
 --colorizer
 require'colorizer'.setup{
@@ -647,27 +658,29 @@ fn.sign_define(
     {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
 )
 
-g.dashboard_disable_statusline = 1
-g.dashboard_session_directory = '~/.sessions'
--- g.dashboard_default_executive = 'telescope'
+-- g.dashboard_disable_statusline = 1
+-- g.dashboard_session_directory = '~/.sessions'
+-- -- g.dashboard_default_executive = 'telescope'
+--
+-- if vim.fn.has 'win32' == 1 then
+--   cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
+-- else
+--   cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
+-- end
+--
+-- nvim_exec([[
+--     let g:dashboard_custom_footer = ['LuaJIT loaded '..packages..' packages']
+-- ]], false)
+--
+-- g.dashboard_custom_section = {
+--     a = {description = {"  Find File                 SPC f  "}, command = "FzfLua files"},
+--     b = {description = {"  Buffers                   SPC b  "}, command = "FzfLua buffers"},
+--     c = {description = {"  Find Word                 SPC g  "}, command = "FzfLua live_grep"},
+--     d = {description = {"  Bookmarks                 SPC f m"}, command = "FzfLua marks"},
+--     e = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
+-- }
 
-if vim.fn.has 'win32' == 1 then
-  cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
-else
-  cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
-end
-
-nvim_exec([[
-    let g:dashboard_custom_footer = ['LuaJIT loaded '..packages..' packages']
-]], false)
-
-g.dashboard_custom_section = {
-    a = {description = {"  Find File                 SPC f  "}, command = "FzfLua files"},
-    b = {description = {"  Recents                   SPC b  "}, command = "FzfLua buffers"},
-    c = {description = {"  Find Word                 SPC g  "}, command = "FzfLua live_grep"},
-    d = {description = {"  Bookmarks                 SPC f m"}, command = "FzfLua marks"},
-    e = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
-}
+require'alpha'.setup(require'alpha.themes.startify'.opts)
 
 local prettier = function ()
   return {
@@ -909,3 +922,11 @@ vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_t
 --[[ BUG: I don't know why but it seems we must again specifcly run function for FileType dashboard.
 we must have it in both whitespace_disabled_file_types and here.]]
 vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
+
+require'FTerm'.setup({
+    border = 'double',
+    dimensions  = {
+        height = 0.9,
+        width = 0.9,
+    },
+})
