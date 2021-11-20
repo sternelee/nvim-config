@@ -165,6 +165,12 @@ require('packer').startup(function()
   use 'wfxr/minimap.vim'
   -- use 'lewis6991/impatient.nvim'
   use 'numToStr/FTerm.nvim'
+  use {
+    'VonHeikemen/fine-cmdline.nvim',
+    requires = {
+      {'MunifTanjim/nui.nvim'}
+    }
+  }
 end)
 
 --settings
@@ -271,6 +277,7 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
@@ -378,7 +385,7 @@ require'lightspeed'.setup {
   }
 } ]]
 
---nvim treesitter
+--nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
@@ -930,3 +937,5 @@ require'FTerm'.setup({
         width = 0.9,
     },
 })
+
+require'fine-cmdline'.setup()
