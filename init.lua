@@ -84,10 +84,21 @@ require('packer').startup(function()
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  use {'ms-jpq/coq_nvim', branch =  'coq' }
+  --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
-  use {'ms-jpq/coq.thirdparty', branch = '3p'}
+  use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
   use 'williamboman/nvim-lsp-installer'
+  use 'hrsh7th/nvim-cmp'
+  use {'hrsh7th/cmp-nvim-lsp', requires = {
+    {'hrsh7th/cmp-path'},
+    {'hrsh7th/cmp-buffer'},
+    {'hrsh7th/cmp-vsnip'},
+    {'ray-x/cmp-treesitter'},
+    {'hrsh7th/cmp-calc'},
+    {'hrsh7th/cmp-emoji'},
+    {'hrsh7th/cmp-cmdline'},
+    {'tzachar/cmp-tabnine', run='./install.sh'}
+  }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
@@ -461,6 +472,74 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+local lspkind = require('lspkind')
+local cmp = require'cmp'
+
+cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noselect',
+  },
+  snippet = {
+    expand = function(args)
+      -- For `vsnip` user.
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+  },
+  sources = {
+    { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'cmp_tabnine'},
+    { name = 'vsnip' },
+    { name = 'buffer' },
+    { name = 'treesitter' },
+    { name = 'calc' },
+    { name = 'emoji' },
+    -- { name = 'spell' },
+  },
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+      vim_item.menu = ({
+        path = "   [Path]",
+        buffer = "   [Buffer]",
+        nvim_lsp = "   [LSP]",
+        vsnip = "   [Vsnip]",
+        treesitter = "   [Ts]",
+        calc = "   [Calc]",
+        spell = "   [Spell]",
+        emoji = " ﲃ  [Emoji]",
+        cmp_tabnine = "⦿ [Tn]",
+      })[entry.source.name]
+      return vim_item
+    end
+  },
+  experimental = {
+    ghost_text = true
+  }
+})
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
 -- Signature help
 require('lsp_signature').on_attach()
 
@@ -536,7 +615,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- can use rls or rust_analyzer
 
 -- coq
-vim.g.coq_settings = {
+--[[ vim.g.coq_settings = {
   auto_start = true,
   clients = {
     tabnine = {
@@ -557,6 +636,28 @@ local function setup_servers()
         coq.lsp_ensure_capabilities(config)
       )
   end)
+end ]]
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local function setup_servers()
+  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "volar", "jsonls", "dockerls" }
+  -- local nvim_lsp = require'lspconfig'
+  local lsp_installer = require("nvim-lsp-installer")
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities
+  }
+  lsp_installer.on_server_ready(function(server)
+      server:setup(opts)
+  end)
+  -- for _, server in pairs(servers) do
+  --   nvim_lsp[server].setup{
+  --     on_attach = on_attach,
+  --     capabilities = capabilities
+  --   }
+  -- end
 end
 
 setup_servers()
