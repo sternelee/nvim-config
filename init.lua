@@ -497,7 +497,7 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     -- { name = 'treesitter' },
@@ -819,6 +819,9 @@ require('formatter').setup({
 })
 
 -- feline config
+
+require("nvim-gps").setup()
+
 local get_diag = function(str)
   local count = vim.lsp.diagnostic.get_count(0, str)
   return (count > 0) and ' '..count..' ' or ''
@@ -860,7 +863,14 @@ local vi_mode_hl = function()
   }
 end
 
-require("nvim-gps").setup()
+local file_info_component = {
+  provider = {
+    name = 'file_info',
+    opts = {
+      type = 'short-path'
+    }
+  }
+}
 
 require'feline'.setup {
   colors = {
@@ -900,7 +910,7 @@ require'feline'.setup {
         { provider = vi_mode_provider, hl = vi_mode_hl, right_sep = ' ' },
         { provider = 'git_branch' , icon = ' ', right_sep = '  ',
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
-        { provider = 'file_info' },
+        file_info_component,
         { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end },
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
       },
@@ -930,7 +940,7 @@ require'feline'.setup {
         { provider = vi_mode_provider, hl = vi_mode_hl, right_sep = ' ' },
         { provider = 'git_branch' , icon = ' ', right_sep = '  ',
           enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
-        { provider = 'file_info' },
+        file_info_component,
         { provider = '' , hl = { fg = 'bg', bg = 'black' }},
       },
       {},
