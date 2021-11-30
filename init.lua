@@ -179,6 +179,13 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
+  use {
+    'VonHeikemen/searchbox.nvim',
+    requires = {
+      {'MunifTanjim/nui.nvim'}
+    }
+  }
+
 end)
 
 --settings
@@ -278,17 +285,19 @@ map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
-map('n', '<leader>f', '<cmd>FzfLua files<CR>')
-map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
-map('n', '<leader>s', '<cmd>FzfLua grep_cword<CR>')
+map('n', '<leader>ff', '<cmd>FzfLua files<CR>')
+map('n', '<leader>fg', '<cmd>FzfLua live_grep<CR>')
+map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
-map('n', '<leader>m', '<cmd>FzfLua marks<CR>')
+map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>')
 map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
+map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
+map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
@@ -494,10 +503,10 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name = 'treesitter' },
+    -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
@@ -703,9 +712,6 @@ require'nvim-tree'.setup {
   hijack_cursor       = false,
   update_cwd          = false,
   auto_close          = true,
-  diagnostics     = {
-    enable = true
-  },
   update_focused_file = {
     enable      = false,
     update_cwd  = false,
