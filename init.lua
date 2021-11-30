@@ -179,12 +179,12 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  use {
+  --[[ use {
     'VonHeikemen/searchbox.nvim',
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
-  }
+  } ]]
 
 end)
 
