@@ -85,6 +85,7 @@ require('packer').startup(function()
   }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
+  use 'nvim-lua/lsp_extensions.nvim'
   --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
@@ -94,7 +95,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
-    -- {'ray-x/cmp-treesitter'},
+    {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
@@ -113,12 +114,7 @@ require('packer').startup(function()
     end
   }
   use 'kosayoda/nvim-lightbulb'
-  --[[ use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' },
-      config = function ()
-        require("null-ls").config {}
-        require("lspconfig")["null-ls"].setup {}
-      end
-  } ]]
+  -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
   -- snippet相关
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
@@ -172,9 +168,9 @@ require('packer').startup(function()
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use { 'rcarriga/nvim-notify', config = 'vim.notify = require("notify")' }
+  use 'rcarriga/nvim-notify'
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
-  use 'wfxr/minimap.vim'
+  -- use 'wfxr/minimap.vim'
   -- use 'lewis6991/impatient.nvim'
   use 'numToStr/FTerm.nvim'
   use {
@@ -317,8 +313,9 @@ map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
-cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 1000})]]
+cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 1000})]]
+-- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
@@ -497,10 +494,10 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    -- { name = 'cmp_tabnine'},
+    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    -- { name = 'treesitter' },
+    { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
@@ -598,6 +595,9 @@ local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("v", "<space>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
+  -- use null-ls for format
+  -- client.resolved_capabilities.document_formatting = false
+  -- client.resolved_capabilities.document_range_formatting = false
 
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = 300})
@@ -612,6 +612,21 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     'additionalTextEdits',
   }
 }
+
+-- require('null-ls').config({
+--   sources = {
+--     require('null-ls').builtins.formatting.prettier,
+--     require('null-ls').builtins.formatting.eslint
+--   },
+--   debug = true,
+-- })
+-- require('lspconfig')["null-ls"].setup{}
+
+require('fzf-lua').setup({
+  lsp = {
+    async_or_timeout = 3000,
+  }
+})
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
