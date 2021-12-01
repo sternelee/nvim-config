@@ -24,6 +24,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
 -- https://github.com/rockerBOO/awesome-neovim
+-- https://jdhao.github.io/2021/07/11/from_vim_plug_to_packer
 --setup packer
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
@@ -135,7 +136,6 @@ require('packer').startup(function()
       end
   }
   use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
-  -- use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
@@ -145,14 +145,14 @@ require('packer').startup(function()
       require "surround".setup {}
     end
   }
-  --[[ use {
+  use {
     'rmagatti/auto-session',
     config = function()
       require('auto-session').setup {
         log_level = 'info',
       }
     end
-  } ]]
+  }
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
@@ -360,7 +360,7 @@ let bufferline.icons = 'both'
 g.vista_default_executive = 'nvim_lsp'
 
 
--- vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
 
 require("indent_blankline").setup {
     buftype_exclude = {"terminal", "telescope", "nvim-tree"},
