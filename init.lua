@@ -48,17 +48,18 @@ require('packer').startup(function()
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'jreybert/vimagit'
   use 'samoshkin/vim-mergetool'
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
   -- use 'mfussenegger/nvim-ts-hint-textobject'
-  --[[ use {
+  use {
     'romgrk/nvim-treesitter-context',
     config = function()
       require("treesitter-context").setup {}
     end
-  } ]]
+  }
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
@@ -99,7 +100,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
@@ -137,6 +138,7 @@ require('packer').startup(function()
   -- use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
+  use 'vigoux/architext.nvim'
   use {
     'blackCauldron7/surround.nvim',
     config = function()
@@ -179,12 +181,13 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  --[[ use {
+  use {
     'VonHeikemen/searchbox.nvim',
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
-  } ]]
+  }
+  use 'mfussenegger/nvim-dap'
 
 end)
 
@@ -285,9 +288,9 @@ map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
-map('n', '<leader>ff', '<cmd>FzfLua files<CR>')
-map('n', '<leader>fg', '<cmd>FzfLua live_grep<CR>')
-map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
+map('n', '<leader>f', '<cmd>FzfLua files<CR>')
+map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
+map('n', '<leader>e', '<cmd>FzfLua grep_cword<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
@@ -687,7 +690,7 @@ end
 
 setup_servers()
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
@@ -1075,3 +1078,5 @@ require'FTerm'.setup({
 })
 
 require'fine-cmdline'.setup()
+local neogit = require('neogit')
+neogit.setup {}
