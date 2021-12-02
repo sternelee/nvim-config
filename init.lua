@@ -145,14 +145,14 @@ require('packer').startup(function()
       require "surround".setup {}
     end
   }
-  use {
+  --[[ use {
     'rmagatti/auto-session',
     config = function()
       require('auto-session').setup {
         log_level = 'info',
       }
     end
-  }
+  } ]]
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
@@ -290,7 +290,7 @@ map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
 map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
-map('n', '<leader>e', '<cmd>FzfLua grep_cword<CR>')
+map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
@@ -360,7 +360,7 @@ let bufferline.icons = 'both'
 g.vista_default_executive = 'nvim_lsp'
 
 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
+-- vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
 
 require("indent_blankline").setup {
     buftype_exclude = {"terminal", "telescope", "nvim-tree"},
