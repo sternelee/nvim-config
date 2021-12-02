@@ -48,8 +48,8 @@ require('packer').startup(function()
   -- use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'jreybert/vimagit'
-  use 'samoshkin/vim-mergetool'
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  -- use 'samoshkin/vim-mergetool'
+  -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -135,7 +135,8 @@ require('packer').startup(function()
         })
       end
   }
-  use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
+  -- use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
+  use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
@@ -484,6 +485,8 @@ require('nvim-treesitter.configs').setup {
 
 local lspkind = require('lspkind')
 local cmp = require'cmp'
+--[[ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } })) ]]
 
 cmp.setup({
   completion = {
@@ -607,6 +610,18 @@ local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("v", "<space>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd([[
+      hi link LspReferenceRead Visual
+      hi link LspReferenceText Visual
+      hi link LspReferenceWrite Visual
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]])
+  end
   -- use null-ls for format
   -- client.resolved_capabilities.document_formatting = false
   -- client.resolved_capabilities.document_range_formatting = false
@@ -694,9 +709,9 @@ setup_servers()
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
-require('nvim-autopairs').setup{
-  disable_filetype = { "TelescopePrompt" , "vim" },
-}
+--[[ require('nvim-autopairs').setup{
+  disable_filetype = { "TelescopePrompt" },
+} ]]
 
 --colorizer
 require'colorizer'.setup{
@@ -1078,5 +1093,5 @@ require'FTerm'.setup({
 })
 
 require'fine-cmdline'.setup()
-local neogit = require('neogit')
-neogit.setup {}
+--[[ local neogit = require('neogit')
+neogit.setup {} ]]
