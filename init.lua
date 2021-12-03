@@ -135,8 +135,8 @@ require('packer').startup(function()
         })
       end
   }
-  -- use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
-  use 'jiangmiao/auto-pairs'
+  use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
+  -- use 'jiangmiao/auto-pairs'
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
@@ -709,9 +709,9 @@ setup_servers()
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
---[[ require('nvim-autopairs').setup{
+require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" },
-} ]]
+}
 
 --colorizer
 require'colorizer'.setup{
