@@ -173,6 +173,7 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use 'metakirby5/codi.vim'
   -- use 'wfxr/minimap.vim'
   -- use 'lewis6991/impatient.nvim'
   use 'numToStr/FTerm.nvim'
@@ -1092,6 +1093,28 @@ require'FTerm'.setup({
     },
 })
 
-require'fine-cmdline'.setup()
+require'fine-cmdline'.setup({
+  cmdline = {
+    enable_keymaps = true,
+    smart_history = true
+  },
+  popup = {
+    position = {
+      row = '30%',
+      col = '50%',
+    },
+    size = {
+      width = '60%',
+      height = 1
+    },
+    border = {
+      style = 'rounded',
+      highlight = 'FloatBorder',
+    },
+    win_options = {
+      winhighlight = 'Normal:Normal',
+    },
+  },
+})
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
