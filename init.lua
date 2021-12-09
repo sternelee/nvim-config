@@ -100,7 +100,7 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-cmdline'},
+    -- {'hrsh7th/cmp-cmdline'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}
   }}
   -- 语法提示
@@ -177,12 +177,12 @@ require('packer').startup(function()
   -- use 'wfxr/minimap.vim'
   -- use 'lewis6991/impatient.nvim'
   use 'numToStr/FTerm.nvim'
-  use {
+  --[[ use {
     'VonHeikemen/fine-cmdline.nvim',
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
-  }
+  } ]]
   use {
     'VonHeikemen/searchbox.nvim',
     requires = {
@@ -230,7 +230,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', true)
+opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -299,8 +299,8 @@ map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>')
 map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
-map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
-map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
+-- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
+-- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
 map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
@@ -535,22 +535,28 @@ cmp.setup({
   }
 })
 
-cmp.setup.cmdline('/', {
+--[[ cmp.setup.cmdline('/', {
   sources = {
     { name = 'buffer' }
   }
-})
+}) ]]
 
-cmp.setup.cmdline(':', {
+--[[ cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
     { name = 'cmdline' }
   })
-})
+}) ]]
 
 -- Signature help
 require('lsp_signature').on_attach()
+
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -787,23 +793,6 @@ require('gitsigns').setup {
     internal = false
   }
 }
-
-fn.sign_define(
-    "LspDiagnosticsSignError",
-    {texthl = "LspDiagnosticsSignError", text = "", numhl = "LspDiagnosticsSignError"}
-)
-fn.sign_define(
-    "LspDiagnosticsSignWarning",
-    {texthl = "LspDiagnosticsSignWarning", text = "", numhl = "LspDiagnosticsSignWarning"}
-)
-fn.sign_define(
-    "LspDiagnosticsSignHint",
-    {texthl = "LspDiagnosticsSignHint", text = "", numhl = "LspDiagnosticsSignHint"}
-)
-fn.sign_define(
-    "LspDiagnosticsSignInformation",
-    {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
-)
 
 -- g.dashboard_disable_statusline = 1
 -- g.dashboard_session_directory = '~/.sessions'
@@ -1056,7 +1045,8 @@ _G.whitespace_disabled_file_types = {
     'lsp-installer',
     'lspinfo',
     'TelescopePrompt',
-    'dashboard'
+    'dashboard',
+    'alpha'
 }
 function _G.whitespace_visibility(file_types)
     local better_whitespace_status = 1
@@ -1088,7 +1078,7 @@ require'FTerm'.setup({
     },
 })
 
-require'fine-cmdline'.setup({
+--[[ require'fine-cmdline'.setup({
   cmdline = {
     enable_keymaps = true,
     smart_history = true
@@ -1110,6 +1100,6 @@ require'fine-cmdline'.setup({
       winhighlight = 'Normal:Normal',
     },
   },
-})
+}) ]]
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
