@@ -64,27 +64,47 @@ require('packer').startup(function()
   use 'nvim-treesitter/playground'
   use {
     "folke/twilight.nvim",
+    event = {'InsertEnter *'},
     config = function()
       require("twilight").setup {
     }
     end
   }
-  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  use 'ellisonleao/glow.nvim'
+  use {
+    'norcalli/nvim-colorizer.lua',
+    event = {"InsertEnter *"},
+    config = function()
+      require'colorizer'.setup{
+        '*',
+        css = { rgb_fn = true; }
+      }
+
+    end
+  } -- 色值高亮
+  use {
+    'ellisonleao/glow.nvim',
+    ft = 'markdown'
+  }
   use 'bluz71/vim-nightfly-guicolors'
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens'
-  use 'phaazon/hop.nvim'
+  use {
+    'phaazon/hop.nvim',
+    event = {"InsertEnter *"},
+    config = function()
+      require'hop'.setup()
+    end
+  }
   -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
-  -- use 'nvim-telescope/telescope.nvim'
-  use { 'ibhagwan/fzf-lua',
+  use 'nvim-telescope/telescope.nvim'
+  --[[ use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
       'kyazdani42/nvim-web-devicons' } -- optional for icons
-  }
+  } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/lsp_extensions.nvim'
@@ -92,8 +112,8 @@ require('packer').startup(function()
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
   use 'williamboman/nvim-lsp-installer'
-  use 'hrsh7th/nvim-cmp'
-  use {'hrsh7th/cmp-nvim-lsp', requires = {
+  use {'hrsh7th/nvim-cmp', requires = {
+    {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
@@ -102,19 +122,17 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     -- {'hrsh7th/cmp-cmdline'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}
+    {'David-Kunz/cmp-npm'}
   }}
+  use 'jubnzv/virtual-types.nvim'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
-  use 'glepnir/lspsaga.nvim'
+  use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
-  use 'ray-x/lsp_signature.nvim'
-  use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
-    config = function()
-      require'navigator'.setup()
-    end
-  }
+  -- use 'ray-x/lsp_signature.nvim'
+  -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
   -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
   -- snippet相关
@@ -126,12 +144,13 @@ require('packer').startup(function()
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
   use { 'b3nj5m1n/kommentary',
       config = function ()
         require('kommentary.config').use_extended_mappings()
         require('kommentary.config').configure_language("vue", {
             single_line_comment_string = "//",
-            multi_line_comment_strings = {"/*", "*/"},
+            multi_line_comment_strings = {"<--", "-->"},
         })
       end
   }
@@ -142,6 +161,7 @@ require('packer').startup(function()
   use 'vigoux/architext.nvim'
   use {
     'blackCauldron7/surround.nvim',
+    event = {"InsertEnter *"},
     config = function()
       require "surround".setup {}
     end
@@ -160,13 +180,14 @@ require('packer').startup(function()
   use 'folke/todo-comments.nvim'
   -- 方便写注释
   use {
-      "danymat/neogen",
-      config = function()
-          require('neogen').setup {
-              enabled = true
-          }
-      end,
-      requires = "nvim-treesitter/nvim-treesitter"
+    "danymat/neogen",
+    event = {"InsertEnter *"},
+    config = function()
+        require('neogen').setup {
+            enabled = true
+        }
+    end,
+    requires = "nvim-treesitter/nvim-treesitter"
   }
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
@@ -185,11 +206,36 @@ require('packer').startup(function()
   } ]]
   use {
     'VonHeikemen/searchbox.nvim',
+    event = {"InsertEnter *"},
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
   }
-  use 'mfussenegger/nvim-dap'
+  use {
+    'rcarriga/nvim-dap-ui',
+    event = {"InsertEnter *"},
+    requires = { 'mfussenegger/nvim-dap'},
+    config = function()
+      require("dapui").setup()
+    end
+  }
+  use {
+    "vuki656/package-info.nvim",
+    event = {"BufRead package.json"},
+    requires = "MunifTanjim/nui.nvim",
+    config = function()
+      require('package-info').setup()
+    end
+  }
+  -- rust
+  use 'simrat39/rust-tools.nvim'
+  use {
+    'Saecki/crates.nvim',
+    event = {"BufRead Cargo.toml"},
+    config = function()
+      require('crates').setup()
+    end
+  }
 
 end)
 
@@ -281,28 +327,33 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
---[[ map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>tr', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>tf', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>tb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>tw', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>tw', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>to', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
 map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree ]]
-map('n', '<leader>f', '<cmd>FzfLua files<CR>')
+map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>ug', '<cmd>Telescope resume<CR>')
+--[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
 map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
-map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>')
+map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
 map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 -- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 -- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
 map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
+map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
@@ -328,7 +379,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', 'timeout': 1000})]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
 cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -382,8 +433,6 @@ cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 
-require'hop'.setup()
-
 require'lightspeed'.setup {
   jump_to_first_match = true,
   jump_on_partial_input_safety_timeout = 400,
@@ -396,7 +445,7 @@ require'lightspeed'.setup {
   cycle_group_bwd_key = nil,
 }
 
---[[ require('telescope').setup {
+require('telescope').setup {
   defaults = {
     mappings = {
       i = {
@@ -404,7 +453,7 @@ require'lightspeed'.setup {
       }
     }
   }
-} ]]
+}
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
@@ -477,7 +526,13 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+  }
 }
+
+require('cmp-npm').setup({})
 
 local lspkind = require('lspkind')
 local cmp = require'cmp'
@@ -512,6 +567,8 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
+    { name = 'npm', keyword_length = 4 },
+    { name = 'crates' }
   },
   formatting = {
     format = function(entry, vim_item)
@@ -548,9 +605,6 @@ cmp.setup({
     { name = 'cmdline' }
   })
 }) ]]
-
--- Signature help
-require('lsp_signature').on_attach()
 
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 for type, icon in pairs(signs) do
@@ -629,7 +683,12 @@ local on_attach = function(client, bufnr)
   -- client.resolved_capabilities.document_range_formatting = false
 
   local msg = string.format("Language server %s started!", client.name)
-  notify(msg, 'info', {title = 'LSP Notify', timeout = 300})
+  notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+
+  -- Signature help
+  -- require('lsp_signature').on_attach()
+  require'virtualtypes'.on_attach()
+
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -651,11 +710,11 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- })
 -- require('lspconfig')["null-ls"].setup{}
 
-require('fzf-lua').setup({
+--[[ require('fzf-lua').setup({
   lsp = {
     async_or_timeout = 3000,
   }
-})
+}) ]]
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
@@ -708,18 +767,15 @@ end
 setup_servers()
 
 -- vim.lsp.set_log_level("debug")
+-- require "lsp_signature".setup()
+-- require'navigator'.setup()
 require("trouble").setup {}
 require("lspkind").init()
 require'diffview'.setup{}
 require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" },
 }
-
---colorizer
-require'colorizer'.setup{
-  '*',
-  css = { rgb_fn = true; }
-}
+require('rust-tools').setup({})
 
 --nvim-tree
 require'nvim-tree'.setup {
@@ -741,7 +797,11 @@ require'nvim-tree'.setup {
     cmd  = nil,
     args = {}
   },
-
+  update_focused_file = {
+    enable      = true,
+    update_cwd  = true,
+    ignore_list = {}
+  },
   view = {
     width = 30,
     side = 'right',
@@ -993,6 +1053,7 @@ local default = {
         { sep.right_rounded, hl_list.Black },
         basic.lsp_diagnos,
         basic.git,
+        { ' ', hl_list.Black },
         b_components.gps,
         basic.divider,
         { git_comps.git_branch({ icon = '  ' }), { 'green', 'black' }, 90 },
@@ -1175,5 +1236,6 @@ require'FTerm'.setup({
     },
   },
 }) ]]
+
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
