@@ -33,7 +33,7 @@ require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
   -- 状态栏
-  use {'famiu/feline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
   -- use 'glepnir/dashboard-nvim'
@@ -842,145 +842,219 @@ require('formatter').setup({
   }
 })
 
--- feline config
-
 require("nvim-gps").setup()
 
-local get_diag = function(str)
-  local count = vim.lsp.diagnostic.get_count(0, str)
-  return (count > 0) and ' '..count..' ' or ''
-end
+-- windline config
 
-local vi_mode_provider = function()
-    local mode_alias = {
-      n = 'NORMAL',
-      no = 'NORMAL',
-      i = 'INSERT',
-      v = 'VISUAL',
-      V = 'V-LINE',
-      [''] = 'V-BLOCK',
-      c = 'COMMAND',
-      cv = 'COMMAND',
-      ce = 'COMMAND',
-      R = 'REPLACE',
-      Rv = 'REPLACE',
-      s = 'SELECT',
-      S = 'SELECT',
-      [''] = 'SELECT',
-      t = 'TERMINAL',
-    }
-    return ' ' .. mode_alias[vim.fn.mode()] .. ' '
-end
+local windline = require('windline')
+local helper = require('windline.helpers')
+local sep = helper.separators
+local vim_components = require('windline.components.vim')
 
-local percentage_provider = function()
-  local cursor = require 'feline.providers.cursor'
-  return ' ' .. cursor.line_percentage() .. ' '
-end
+local b_components = require('windline.components.basic')
+local state = _G.WindLine.state
 
-local vi_mode_hl = function()
-  local vi_mode = require 'feline.providers.vi_mode'
-  return {
-    name = vi_mode.get_mode_highlight_name(),
-    fg = 'bg',
-    bg = vi_mode.get_mode_color(),
-    style = 'bold',
-  }
-end
+local lsp_comps = require('windline.components.lsp')
+local git_comps = require('windline.components.git')
+local gps = require("nvim-gps")
 
-local file_info_component = {
-  provider = {
-    name = 'file_info',
-    opts = {
-      type = 'short-path'
-    }
-  }
+b_components.gps = {
+	function()
+		if gps.is_available() then
+			return gps.get_location()
+		end
+		return ''
+	end,
+	{"white", "black"}
 }
 
-require'feline'.setup {
-  colors = {
-    black = '#434C5E',
-    skyblue = '#81A1C1',
-    cyan = '#88C0D0',
-    green  = '#8FBCBB',
-    oceanblue = '#5E81AC',
-    magenta = '#B48EAD',
-    orange = '#D08770',
-    red = '#EC5F67',
-    violet = '#B48EAD',
-    white  = '#ECEFF4',
-    yellow = '#EBCB8B',
-    fg = '#8FBCBB',
-    bg = '#2E3440',
-  },
-  vi_mode_colors = {
-    NORMAL = 'cyan',
-    OP = 'cyan',
-    INSERT = 'white',
-    VISUAL = 'green',
-    BLOCK = 'green',
-    REPLACE = 'yellow',
-    ['V-REPLACE'] = 'yellow',
-    ENTER = 'cyan',
-    MORE = 'cyan',
-    SELECT = 'magenta',
-    COMMAND = 'cyan',
-    SHELL = 'skyblue',
-    TERM = 'skyblue',
-    NONE = 'orange',
-  },
-  components = {
+local hl_list = {
+    Black = { 'white', 'black' },
+    White = { 'black', 'white' },
+    Inactive = { 'InactiveFg', 'InactiveBg' },
+    Active = { 'ActiveFg', 'ActiveBg' },
+}
+local basic = {}
+
+basic.divider = { b_components.divider, '' }
+basic.file_name_inactive = { b_components.full_file_name, hl_list.Inactive }
+basic.line_col_inactive = { b_components.line_col, hl_list.Inactive }
+basic.progress_inactive = { b_components.progress, hl_list.Inactive }
+
+basic.vi_mode = {
+    name = 'vi_mode',
+    hl_colors = {
+        Normal = { 'black', 'red', 'bold' },
+        Insert = { 'black', 'green', 'bold' },
+        Visual = { 'black', 'yellow', 'bold' },
+        Replace = { 'black', 'blue_light', 'bold' },
+        Command = { 'black', 'magenta', 'bold' },
+        NormalBefore = { 'red', 'black' },
+        InsertBefore = { 'green', 'black' },
+        VisualBefore = { 'yellow', 'black' },
+        ReplaceBefore = { 'blue_light', 'black' },
+        CommandBefore = { 'magenta', 'black' },
+        NormalAfter = { 'white', 'red' },
+        InsertAfter = { 'white', 'green' },
+        VisualAfter = { 'white', 'yellow' },
+        ReplaceAfter = { 'white', 'blue_light' },
+        CommandAfter = { 'white', 'magenta' },
+    },
+    text = function()
+        return {
+            { sep.left_rounded, state.mode[2] .. 'Before' },
+            { state.mode[1] .. ' ', state.mode[2] },
+            { sep.left_rounded, state.mode[2] .. 'After' },
+        }
+    end,
+}
+
+basic.lsp_diagnos = {
+    name = 'diagnostic',
+    hl_colors = {
+        red = { 'red', 'black' },
+        yellow = { 'yellow', 'black' },
+        blue = { 'blue', 'black' },
+    },
+    width = 90,
+    text = function(bufnr)
+        if lsp_comps.check_lsp(bufnr) then
+            return {
+                { lsp_comps.lsp_error({ format = '  %s' }), 'red' },
+                { lsp_comps.lsp_warning({ format = '  %s' }), 'yellow' },
+                { lsp_comps.lsp_hint({ format = '  %s' }), 'blue' },
+            }
+        end
+        return ''
+    end,
+}
+
+basic.file = {
+    name = 'file',
+    hl_colors = {
+        default = hl_list.White,
+    },
+    text = function()
+        return {
+            {b_components.cache_file_icon({ default = '' }), 'default'},
+            { ' ', 'default' },
+            { b_components.cache_file_name('[No Name]', 'unique') },
+            { b_components.file_modified(' ')},
+            { b_components.cache_file_size()},
+        }
+    end,
+}
+
+basic.right = {
+    hl_colors = {
+        sep_before = { 'black_light', 'black' },
+        sep_after = { 'black_light', 'black' },
+        text = { 'white', 'black_light' },
+    },
+    text = function()
+        return {
+            { sep.left_rounded, 'sep_before' },
+            { 'l/n', 'text' },
+            { b_components.line_col_lua },
+            { '' },
+            { b_components.progress_lua },
+            { sep.right_rounded, 'sep_after' },
+        }
+    end,
+}
+basic.git = {
+    name = 'git',
+    width = 90,
+    hl_colors = {
+        green = { 'green', 'black' },
+        red = { 'red', 'black' },
+        blue = { 'blue', 'black' },
+    },
+    text = function(bufnr)
+        if git_comps.is_git(bufnr) then
+            return {
+                { ' ' },
+                { git_comps.diff_added({ format = ' %s' }), 'green' },
+                { git_comps.diff_removed({ format = '  %s' }), 'red' },
+                { git_comps.diff_changed({ format = ' 柳%s' }), 'blue' },
+            }
+        end
+        return ''
+    end,
+}
+
+local default = {
+    filetypes = { 'default' },
     active = {
-      {
-        { provider = vi_mode_provider, hl = vi_mode_hl, right_sep = ' ' },
-        { provider = 'git_branch' , icon = ' ', right_sep = '  ',
-          enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
-        file_info_component,
-        { provider = function() return require('nvim-gps').get_location() end, enabled = function() return require('nvim-gps') .is_available() end },
-        { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-      },
-      {},
-      {
-        { provider = function() return get_diag("Error") end,
-          hl = { fg = 'bg', bg = 'red', style = 'bold' },
-          left_sep = { str = '', hl = { fg = 'red', bg = 'black' }},
-          right_sep = { str = '', hl = { fg = 'yellow', bg = 'red' }}},
-        { provider = function() return get_diag("Warning") end,
-          hl = { fg = 'bg', bg = 'yellow', style = 'bold'  },
-          right_sep = { str = '', hl = { fg = 'cyan', bg = 'yellow' }}},
-        { provider = function() return get_diag("Information") end,
-          hl = { fg = 'bg', bg = 'cyan', style = 'bold' },
-          right_sep = { str = '', hl = { fg = 'oceanblue', bg = 'cyan' }}},
-        { provider = function() return get_diag("Hint") end,
-          hl = { fg = 'bg', bg = 'oceanblue', style = 'bold' },
-          right_sep = { str = '', hl = { fg = 'bg', bg = 'oceanblue', }}},
-        { provider = 'file_encoding', left_sep = ' ' },
-        { provider = 'position', left_sep = ' ', right_sep = ' ' },
-        { provider = percentage_provider,
-          hl = { fg = 'bg', bg = 'skyblue', style = 'bold' }},
-      }
+        { ' ', hl_list.Black },
+        basic.vi_mode,
+        basic.file,
+        { vim_components.search_count(), { 'red', 'white' } },
+        { sep.right_rounded, hl_list.Black },
+        basic.lsp_diagnos,
+        basic.git,
+        b_components.gps,
+        basic.divider,
+        { git_comps.git_branch({ icon = '  ' }), { 'green', 'black' }, 90 },
+        { ' ', hl_list.Black },
+        basic.right,
+        { ' ', hl_list.Black },
     },
     inactive = {
-      {
-        { provider = vi_mode_provider, hl = vi_mode_hl, right_sep = ' ' },
-        { provider = 'git_branch' , icon = ' ', right_sep = '  ',
-          enabled = function() return vim.b.gitsigns_status_dict ~= nil end },
-        file_info_component,
-        { provider = '' , hl = { fg = 'bg', bg = 'black' }},
-      },
-      {},
-      {}
+        basic.file_name_inactive,
+        basic.divider,
+        basic.divider,
+        basic.line_col_inactive,
+        { '', hl_list.Inactive },
+        basic.progress_inactive,
     },
-  },
-  force_inactive = {
-    filetypes = {
-      'NvimTree',
-      'packer',
-      'LspTrouble',
-    },
-    buftypes = {'terminal'},
-    bufnames = {},
-  }
 }
+
+local quickfix = {
+    filetypes = { 'qf', 'Trouble' },
+    active = {
+        { '🚦 Quickfix ', { 'white', 'black' } },
+        { helper.separators.slant_right, { 'black', 'black_light' } },
+        {
+            function()
+                return vim.fn.getqflist({ title = 0 }).title
+            end,
+            { 'cyan', 'black_light' },
+        },
+        { ' Total : %L ', { 'cyan', 'black_light' } },
+        { helper.separators.slant_right, { 'black_light', 'InactiveBg' } },
+        { ' ', { 'InactiveFg', 'InactiveBg' } },
+        basic.divider,
+        { helper.separators.slant_right, { 'InactiveBg', 'black' } },
+        { '🧛 ', { 'white', 'black' } },
+    },
+    always_active = true,
+    show_last_status = true
+}
+
+local explorer = {
+    filetypes = { 'fern', 'NvimTree', 'lir' },
+    active = {
+        { '  ', { 'white', 'black_light' } },
+        { helper.separators.slant_right, { 'black_light', 'NormalBg' } },
+        { b_components.divider, '' },
+        { b_components.file_name(''), { 'NormalFg', 'NormalBg' } },
+    },
+    always_active = true,
+    show_last_status = true
+}
+
+windline.setup({
+    colors_name = function(colors)
+        -- ADD MORE COLOR HERE ----
+        return colors
+    end,
+    statuslines = {
+        default,
+        explorer,
+        quickfix,
+    },
+})
 
 require("which-key").setup {}
 
