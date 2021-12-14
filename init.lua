@@ -62,25 +62,8 @@ require('packer').startup(function()
     end
   }
   use 'nvim-treesitter/playground'
-  use {
-    "folke/twilight.nvim",
-    event = {'InsertEnter *'},
-    config = function()
-      require("twilight").setup {
-    }
-    end
-  }
-  use {
-    'norcalli/nvim-colorizer.lua',
-    event = {"InsertEnter *"},
-    config = function()
-      require'colorizer'.setup{
-        '*',
-        css = { rgb_fn = true; }
-      }
-
-    end
-  } -- 色值高亮
+  use "folke/twilight.nvim"
+  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {
     'ellisonleao/glow.nvim',
     ft = 'markdown'
@@ -90,13 +73,7 @@ require('packer').startup(function()
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens'
-  use {
-    'phaazon/hop.nvim',
-    event = {"InsertEnter *"},
-    config = function()
-      require'hop'.setup()
-    end
-  }
+  use 'phaazon/hop.nvim'
   -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
@@ -150,7 +127,7 @@ require('packer').startup(function()
         require('kommentary.config').use_extended_mappings()
         require('kommentary.config').configure_language("vue", {
             single_line_comment_string = "//",
-            multi_line_comment_strings = {"<--", "-->"},
+            multi_line_comment_strings = {"<!--", "-->"},
         })
       end
   }
@@ -159,13 +136,7 @@ require('packer').startup(function()
   -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
-  use {
-    'blackCauldron7/surround.nvim',
-    event = {"InsertEnter *"},
-    config = function()
-      require "surround".setup {}
-    end
-  }
+  use 'blackCauldron7/surround.nvim'
   --[[ use {
     'rmagatti/auto-session',
     config = function()
@@ -181,12 +152,6 @@ require('packer').startup(function()
   -- 方便写注释
   use {
     "danymat/neogen",
-    event = {"InsertEnter *"},
-    config = function()
-        require('neogen').setup {
-            enabled = true
-        }
-    end,
     requires = "nvim-treesitter/nvim-treesitter"
   }
   use 'ntpeters/vim-better-whitespace'
@@ -206,36 +171,21 @@ require('packer').startup(function()
   } ]]
   use {
     'VonHeikemen/searchbox.nvim',
-    event = {"InsertEnter *"},
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
   }
   use {
     'rcarriga/nvim-dap-ui',
-    event = {"InsertEnter *"},
-    requires = { 'mfussenegger/nvim-dap'},
-    config = function()
-      require("dapui").setup()
-    end
+    requires = { 'mfussenegger/nvim-dap'}
   }
   use {
     "vuki656/package-info.nvim",
-    event = {"BufRead package.json"},
     requires = "MunifTanjim/nui.nvim",
-    config = function()
-      require('package-info').setup()
-    end
   }
   -- rust
   use 'simrat39/rust-tools.nvim'
-  use {
-    'Saecki/crates.nvim',
-    event = {"BufRead Cargo.toml"},
-    config = function()
-      require('crates').setup()
-    end
-  }
+  use 'Saecki/crates.nvim'
 
 end)
 
@@ -434,7 +384,6 @@ cmd 'colorscheme nightfly'
 local notify = require("notify")
 
 require'lightspeed'.setup {
-  jump_to_first_match = true,
   jump_on_partial_input_safety_timeout = 400,
   highlight_unique_chars = false,
   grey_out_search_area = true,
@@ -533,6 +482,8 @@ require('nvim-treesitter.configs').setup {
 }
 
 require('cmp-npm').setup({})
+require('crates').setup()
+require('package-info').setup()
 
 local lspkind = require('lspkind')
 local cmp = require'cmp'
@@ -1118,6 +1069,10 @@ windline.setup({
 })
 
 require("which-key").setup {}
+require'colorizer'.setup{
+  '*',
+  css = { rgb_fn = true; }
+}
 
 require('todo-comments').setup{
   signs = true, -- show icons in the signs column
@@ -1239,3 +1194,11 @@ require'FTerm'.setup({
 
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
+
+require("dapui").setup()
+require('neogen').setup {
+    enabled = true
+}
+require("surround").setup {}
+require("twilight").setup {}
+require'hop'.setup()
