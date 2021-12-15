@@ -126,7 +126,7 @@ require('packer').startup(function()
         require('kommentary.config').use_extended_mappings()
         require('kommentary.config').configure_language("vue", {
             single_line_comment_string = "//",
-            multi_line_comment_strings = {"<!--", "-->"},
+            multi_line_comment_strings = "//",
         })
       end
   }
@@ -294,8 +294,8 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
-map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
-map('t', '<A-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+map('n', '<c-i>', '<cmd>lua require("FTerm").toggle()<CR>')
+map('t', '<c-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 -- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 -- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
 map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
