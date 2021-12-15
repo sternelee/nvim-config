@@ -45,7 +45,7 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use 'lambdalisue/gina.vim'
+  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'jreybert/vimagit'
   -- use 'samoshkin/vim-mergetool'
@@ -64,10 +64,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/playground'
   use "folke/twilight.nvim"
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  use {
-    'ellisonleao/glow.nvim',
-    ft = 'markdown'
-  }
+  use 'ellisonleao/glow.nvim' -- markdown 文件预览
   use 'bluz71/vim-nightfly-guicolors'
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -77,6 +74,7 @@ require('packer').startup(function()
   -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
+  -- use 'nvim-telescope/telescope-media-files.nvim'
   --[[ use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
@@ -108,7 +106,8 @@ require('packer').startup(function()
   use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
-  -- use 'ray-x/lsp_signature.nvim'
+  -- use 'ray-x/lsp_signature.nvim' -- 有些问题
+  use 'folke/lsp-colors.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
   -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
@@ -320,11 +319,11 @@ map('n', '<c-x>', '<cmd>BufferClose<CR>')
 map('n', '<leader>bj', '<cmd>bprevious<CR>')
 map('n', '<leader>bn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gl', '<cmd>Git pull<CR>')
-map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gl', '<cmd>Gina pull<CR>')
+map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -393,7 +392,7 @@ require'lightspeed'.setup {
   cycle_group_fwd_key = nil,
   cycle_group_bwd_key = nil,
 }
-
+-- require('telescope').load_extension('media_files')
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -401,7 +400,13 @@ require('telescope').setup {
         ["<esc>"] = require('telescope.actions').close
       }
     }
-  }
+  },
+  --[[ extensions = {
+    media_files = {
+      filetypes = {"png", "webp", "jpg", "jpeg"},
+      find_cmd = "rg" -- find command (defaults to `fd`)
+    }
+  }, ]]
 }
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
@@ -487,8 +492,8 @@ require('package-info').setup()
 
 local lspkind = require('lspkind')
 local cmp = require'cmp'
---[[ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } })) ]]
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 
 cmp.setup({
   completion = {
@@ -718,7 +723,12 @@ end
 setup_servers()
 
 -- vim.lsp.set_log_level("debug")
--- require "lsp_signature".setup()
+--[[ require "lsp_signature".setup{
+  debug = false,
+  hint_enable = false,
+  handler_opts = { border = "single" },
+  max_width = 80,
+} ]]
 -- require'navigator'.setup()
 require("trouble").setup {}
 require("lspkind").init()
@@ -727,6 +737,12 @@ require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" },
 }
 require('rust-tools').setup({})
+require("lsp-colors").setup({
+  Error = "#db4b4b",
+  Warning = "#e0af68",
+  Information = "#0db9d7",
+  Hint = "#10B981"
+})
 
 --nvim-tree
 require'nvim-tree'.setup {
