@@ -24,7 +24,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
 -- https://github.com/rockerBOO/awesome-neovim
--- https://jdhao.github.io/2021/07/11/from_vim_plug_to_packer
 --setup packer
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
@@ -136,14 +135,14 @@ require('packer').startup(function()
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
   use 'blackCauldron7/surround.nvim'
-  --[[ use {
+  use {
     'rmagatti/auto-session',
     config = function()
       require('auto-session').setup {
         log_level = 'info',
       }
     end
-  } ]]
+  }
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
@@ -174,10 +173,10 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  use {
+  --[[ use {
     'rcarriga/nvim-dap-ui',
     requires = { 'mfussenegger/nvim-dap'}
-  }
+  } ]]
   use {
     "vuki656/package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
@@ -280,12 +279,12 @@ map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>tw', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>to', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>ts', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader>tc', '<cmd>Telescope commands<CR>')
+map('n', '<leader>gw', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
+map('n', '<leader>gs', '<cmd>Telescope treesitter<CR>')
+map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>te', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', '<leader>ug', '<cmd>Telescope resume<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
@@ -363,6 +362,7 @@ g.vista_default_executive = 'nvim_lsp'
 
 
 -- vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
+vim.o.sessionoptions="buffers"
 
 require("indent_blankline").setup {
     buftype_exclude = {"terminal", "telescope", "nvim-tree"},
@@ -1211,7 +1211,7 @@ require'FTerm'.setup({
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
-require("dapui").setup()
+-- require("dapui").setup()
 require('neogen').setup {
     enabled = true
 }
