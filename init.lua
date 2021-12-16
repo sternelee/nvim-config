@@ -106,7 +106,7 @@ require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
   -- use 'ray-x/lsp_signature.nvim' -- 有些问题
-  use 'folke/lsp-colors.nvim'
+  -- use 'folke/lsp-colors.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
   -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
@@ -156,7 +156,7 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   -- use 'rcarriga/nvim-notify'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
   -- use 'wfxr/minimap.vim'
   -- use 'lewis6991/impatient.nvim'
@@ -182,7 +182,7 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
-  use 'simrat39/rust-tools.nvim'
+  -- use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
 
 end)
@@ -240,7 +240,7 @@ opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
-opt('o', 'timeoutlen', 2000)
+opt('o', 'timeoutlen', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 6)
@@ -736,13 +736,13 @@ require'diffview'.setup{}
 require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" },
 }
-require('rust-tools').setup({})
-require("lsp-colors").setup({
+-- require('rust-tools').setup({})
+--[[ require("lsp-colors").setup({
   Error = "#db4b4b",
   Warning = "#e0af68",
   Information = "#0db9d7",
   Hint = "#10B981"
-})
+}) ]]
 
 --nvim-tree
 require'nvim-tree'.setup {
