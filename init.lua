@@ -155,7 +155,7 @@ require('packer').startup(function()
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  use 'rcarriga/nvim-notify'
+  -- use 'rcarriga/nvim-notify'
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
   -- use 'wfxr/minimap.vim'
@@ -240,7 +240,7 @@ opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
-opt('o', 'timeoutlen', 500)
+opt('o', 'timeoutlen', 2000)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 6)
@@ -275,17 +275,17 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader>tp', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>gw', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader><leader>p', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader><leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader><leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader><leader>g', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader><leader>r', '<cmd>Telescope resume<CR>')
+map('n', '<leader><leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>fw', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
 map('n', '<leader>gs', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>tm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', '<leader>ug', '<cmd>Telescope resume<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
@@ -327,7 +327,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+-- cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
 cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -380,7 +380,7 @@ require("indent_blankline").setup {
 --theme
 cmd 'colorscheme nightfly'
 
-local notify = require("notify")
+-- local notify = require("notify")
 
 require'lightspeed'.setup {
   jump_on_partial_input_safety_timeout = 400,
@@ -639,7 +639,7 @@ local on_attach = function(client, bufnr)
   -- client.resolved_capabilities.document_range_formatting = false
 
   local msg = string.format("Language server %s started!", client.name)
-  notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+  -- notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
 
   -- Signature help
   -- require('lsp_signature').on_attach()
