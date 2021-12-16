@@ -281,11 +281,11 @@ map('n', '<leader><leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader><leader>g', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader><leader>r', '<cmd>Telescope resume<CR>')
 map('n', '<leader><leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>fw', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>gs', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader><leader>o', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
+map('n', '<leader><leader>w', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader><leader>t', '<cmd>Telescope treesitter<CR>')
+map('n', '<leader><leader>c', '<cmd>Telescope commands<CR>')
+map('n', '<leader><leader>e', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
@@ -293,8 +293,8 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
-map('n', '<c-i>', '<cmd>lua require("FTerm").toggle()<CR>')
-map('t', '<c-i>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
+map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 -- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 -- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
 map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
