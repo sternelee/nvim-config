@@ -54,6 +54,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
   -- use 'mfussenegger/nvim-ts-hint-textobject'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -81,7 +82,7 @@ require('packer').startup(function()
   } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp_extensions.nvim'
+  -- use 'nvim-lua/lsp_extensions.nvim'
   --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
@@ -119,7 +120,6 @@ require('packer').startup(function()
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
   use { 'b3nj5m1n/kommentary',
       config = function ()
         require('kommentary.config').use_extended_mappings()
@@ -131,7 +131,6 @@ require('packer').startup(function()
   }
   use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
   -- use 'jiangmiao/auto-pairs'
-  -- use 'steelsojka/pears.nvim'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
   use 'blackCauldron7/surround.nvim'
@@ -147,11 +146,10 @@ require('packer').startup(function()
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
-  -- 方便写注释
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
-  }
+  } -- 方便写注释
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
@@ -328,7 +326,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 -- cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
-cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+-- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
