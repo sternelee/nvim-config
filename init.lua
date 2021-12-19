@@ -273,17 +273,17 @@ map('n', 'q', '<cmd>q<CR>')
 map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', '<leader>l', '<cmd>HopLine<CR>')
 map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader><leader>p', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader><leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader><leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader><leader>g', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader><leader>r', '<cmd>Telescope resume<CR>')
-map('n', '<leader><leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader><leader>o', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader><leader>w', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader><leader>t', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader><leader>c', '<cmd>Telescope commands<CR>')
-map('n', '<leader><leader>e', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>fp', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>fr', '<cmd>Telescope resume<CR>')
+map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
+map('n', '<leader>fw', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>ft', '<cmd>Telescope treesitter<CR>')
+map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
@@ -302,10 +302,11 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 --[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
-map('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('t', '<leader>o', '<cmd>Vista<CR>')                   --fuzzN
+map('t', '<leader>va', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -321,7 +322,7 @@ map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
-map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>tg', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -588,20 +589,20 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', ']i', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', ']h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', ']w', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', ']r', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', ']l', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', ']y', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', ']n', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', ']a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', ']r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', ']q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', ']f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '[f', '<cmd>Lspsaga lsp_finder<CR>', opts)
   buf_set_keymap('n', '[a', '<cmd>Lspsaga code_action<CR>', opts)
@@ -615,10 +616,10 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']g', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>fo", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
   if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("v", "<space>fo", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    buf_set_keymap("v", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
   if client.resolved_capabilities.document_highlight then
     vim.cmd([[
