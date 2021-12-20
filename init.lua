@@ -15,6 +15,7 @@ g.loaded_perl_provider = 0
 -- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar --detached
 if g.nvui then
   cmd [[NvuiCmdCenterYPos 0.3]]
+  cmd [[NvuiCmdFontSize 30.0]]
 end
 
 nvim_exec([[set guifont=VictorMono\ NF:h20]], false)
