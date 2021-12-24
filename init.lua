@@ -67,6 +67,7 @@ require('packer').startup(function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   use 'bluz71/vim-nightfly-guicolors'
+  use 'rebelot/kanagawa.nvim'
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
@@ -112,7 +113,7 @@ require('packer').startup(function()
   -- use 'folke/lsp-colors.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
-  -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
+  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -143,6 +144,7 @@ require('packer').startup(function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
+  use 'Pocco81/HighStr.nvim' -- 高亮单词
   use 'folke/todo-comments.nvim'
   use {
     "danymat/neogen",
@@ -654,13 +656,13 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
--- require('null-ls').config({
---   sources = {
---     require('null-ls').builtins.formatting.prettier,
---     require('null-ls').builtins.formatting.eslint
---   },
---   debug = true,
--- })
+require('null-ls').setup({
+  sources = {
+    require('null-ls').builtins.formatting.prettier,
+    require('null-ls').builtins.formatting.eslint
+  },
+  debug = true,
+})
 -- require('lspconfig')["null-ls"].setup{}
 
 --[[ require('fzf-lua').setup({
@@ -774,6 +776,12 @@ require'nvim-tree'.setup {
       custom_only = false,
       list = {}
     }
+  },
+  diagnostic = {
+    enable = true
+  },
+  git = {
+    enable = true
   }
 }
 
@@ -849,19 +857,27 @@ local prettier = function ()
     stdin = true
   }
 end
+-- npm install -g @fsouza/prettierd
+local prettierd = function ()
+  return {
+    exe = "prettierd",
+    args = {vim.api.nvim_buf_get_name(0)},
+    stdin = true
+  }
+end
 require('formatter').setup({
   filetype = {
     javascript = {
-      prettier
+      prettierd
     },
     typescript = {
-      prettier
+      prettierd
     },
     vue = {
-      prettier
+      prettierd
     },
     json = {
-      prettier
+      prettierd
     }
   }
 })
@@ -1215,3 +1231,22 @@ require('neogen').setup {
 require("surround").setup {}
 require("twilight").setup {}
 require'hop'.setup()
+local high_str = require("high-str")
+
+high_str.setup({
+	verbosity = 0,
+	saving_path = "/tmp/highstr/",
+	highlight_colors = {
+		-- color_id = {"bg_hex_code",<"fg_hex_code"/"smart">}
+		color_0 = {"#0c0d0e", "smart"},	-- Cosmic charcoal
+		color_1 = {"#e5c07b", "smart"},	-- Pastel yellow
+		color_2 = {"#7FFFD4", "smart"},	-- Aqua menthe
+		color_3 = {"#8A2BE2", "smart"},	-- Proton purple
+		color_4 = {"#FF4500", "smart"},	-- Orange red
+		color_5 = {"#008000", "smart"},	-- Office green
+		color_6 = {"#0000FF", "smart"},	-- Just blue
+		color_7 = {"#FFC0CB", "smart"},	-- Blush pink
+		color_8 = {"#FFF9E3", "smart"},	-- Cosmic latte
+		color_9 = {"#7d5c34", "smart"},	-- Fallow brown
+	}
+})
