@@ -84,7 +84,7 @@ require('packer').startup(function()
   } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  -- use 'nvim-lua/lsp_extensions.nvim'
+  use 'nvim-lua/lsp_extensions.nvim'
   --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
@@ -98,7 +98,7 @@ require('packer').startup(function()
     {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/cmp-cmdline'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}
     {'David-Kunz/cmp-npm'}
   }}
@@ -110,7 +110,6 @@ require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
   -- use 'ray-x/lsp_signature.nvim' -- 有些问题
-  -- use 'folke/lsp-colors.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
   use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
@@ -153,11 +152,10 @@ require('packer').startup(function()
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
-  -- use 'rcarriga/nvim-notify'
+  use 'rcarriga/nvim-notify'
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
-  -- use 'wfxr/minimap.vim'
-  -- use 'lewis6991/impatient.nvim'
+  use 'lewis6991/impatient.nvim'
   use 'numToStr/FTerm.nvim'
   --[[ use {
     'VonHeikemen/fine-cmdline.nvim',
@@ -180,7 +178,7 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
-  -- use 'simrat39/rust-tools.nvim'
+  use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
 
 end)
@@ -326,8 +324,8 @@ map('n', '<leader>tg', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
--- cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
--- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
@@ -379,7 +377,7 @@ require("indent_blankline").setup {
 --theme
 cmd 'colorscheme nightfly'
 
--- local notify = require("notify")
+local notify = require("notify")
 
 require'lightspeed'.setup {
   jump_on_partial_input_safety_timeout = 400,
@@ -547,19 +545,19 @@ cmp.setup({
   }
 })
 
---[[ cmp.setup.cmdline('/', {
+cmp.setup.cmdline('/', {
   sources = {
     { name = 'buffer' }
   }
-}) ]]
+})
 
---[[ cmp.setup.cmdline(':', {
+cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
     { name = 'cmdline' }
   })
-}) ]]
+})
 
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 for type, icon in pairs(signs) do
@@ -638,7 +636,7 @@ local on_attach = function(client, bufnr)
   -- client.resolved_capabilities.document_range_formatting = false
 
   local msg = string.format("Language server %s started!", client.name)
-  -- notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+  notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
 
   -- Signature help
   -- require('lsp_signature').on_attach()
@@ -735,13 +733,7 @@ require'diffview'.setup{}
 require('nvim-autopairs').setup{
   disable_filetype = { "TelescopePrompt" },
 }
--- require('rust-tools').setup({})
---[[ require("lsp-colors").setup({
-  Error = "#db4b4b",
-  Warning = "#e0af68",
-  Information = "#0db9d7",
-  Hint = "#10B981"
-}) ]]
+require('rust-tools').setup({})
 
 --nvim-tree
 require'nvim-tree'.setup {
@@ -1231,8 +1223,8 @@ require('neogen').setup {
 require("surround").setup {}
 require("twilight").setup {}
 require'hop'.setup()
-local high_str = require("high-str")
 
+local high_str = require("high-str")
 high_str.setup({
 	verbosity = 0,
 	saving_path = "/tmp/highstr/",
