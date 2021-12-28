@@ -870,6 +870,21 @@ require('formatter').setup({
     },
     json = {
       prettierd
+    },
+    html = {
+      prettierd
+    },
+    css = {
+      prettierd
+    },
+    sass = {
+      prettierd
+    },
+    scss = {
+      prettierd
+    },
+    less = {
+      prettierd
     }
   }
 })
