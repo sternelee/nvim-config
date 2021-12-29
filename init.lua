@@ -99,7 +99,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}
+    {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
   use 'jubnzv/virtual-types.nvim'
@@ -513,13 +513,13 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    -- { name = 'cmp_tabnine'},
+    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    -- { name = 'treesitter' },
+    { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
-    -- { name = 'spell' },
+    { name = 'spell' },
     { name = 'npm', keyword_length = 4 },
     { name = 'crates' }
   },
