@@ -47,7 +47,7 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
-  use 'jreybert/vimagit'
+  -- use 'jreybert/vimagit'
   -- use 'samoshkin/vim-mergetool'
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
@@ -71,7 +71,7 @@ require('packer').startup(function()
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
-  use 'kevinhwang91/nvim-hlslens'
+  use 'kevinhwang91/nvim-hlslens' -- 显示高亮的按键位置
   use 'phaazon/hop.nvim'
   -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
@@ -84,7 +84,7 @@ require('packer').startup(function()
   } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp_extensions.nvim'
+  -- use 'nvim-lua/lsp_extensions.nvim'
   --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
@@ -112,7 +112,7 @@ require('packer').startup(function()
   -- use 'ray-x/lsp_signature.nvim' -- 有些问题
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
-  use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
+  -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -156,7 +156,8 @@ require('packer').startup(function()
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
   use 'lewis6991/impatient.nvim'
-  use 'numToStr/FTerm.nvim'
+  -- use 'numToStr/FTerm.nvim'
+  use 'akinsho/toggleterm.nvim'
   --[[ use {
     'VonHeikemen/fine-cmdline.nvim',
     requires = {
@@ -282,6 +283,8 @@ map('n', '<leader>fw', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>ft', '<cmd>Telescope treesitter<CR>')
 map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
 map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
+map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
@@ -289,12 +292,11 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
-map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
-map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+-- map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
+-- map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+map('n', '<c-o>', '<cmd>ToggleTerm<CR>')
 -- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
 -- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
-map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
-map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -325,7 +327,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
-cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+-- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
@@ -640,6 +642,7 @@ local on_attach = function(client, bufnr)
 
   -- Signature help
   -- require('lsp_signature').on_attach()
+  -- virtual-types
   require'virtualtypes'.on_attach()
 
 end
@@ -654,13 +657,13 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
-require('null-ls').setup({
+--[[ require('null-ls').setup({
   sources = {
     require('null-ls').builtins.formatting.prettier,
     require('null-ls').builtins.formatting.eslint
   },
   debug = true,
-})
+}) ]]
 -- require('lspconfig')["null-ls"].setup{}
 
 --[[ require('fzf-lua').setup({
@@ -1196,13 +1199,15 @@ vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_t
 we must have it in both whitespace_disabled_file_types and here.]]
 vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
-require'FTerm'.setup({
+--[[ require'FTerm'.setup({
     border = 'double',
     dimensions  = {
         height = 0.9,
         width = 0.9,
     },
-})
+}) ]]
+
+require'toggleterm'.setup({})
 
 --[[ require'fine-cmdline'.setup({
   cmdline = {
