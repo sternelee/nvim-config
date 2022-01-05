@@ -36,7 +36,6 @@ require('packer').startup(function()
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
-  -- use 'glepnir/dashboard-nvim'
   use {
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
@@ -47,8 +46,6 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
-  -- use 'jreybert/vimagit'
-  -- use 'samoshkin/vim-mergetool'
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -73,7 +70,6 @@ require('packer').startup(function()
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens' -- 显示高亮的按键位置
   use 'phaazon/hop.nvim'
-  -- use 'easymotion/vim-easymotion'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
   -- use 'nvim-telescope/telescope-media-files.nvim'
@@ -112,7 +108,6 @@ require('packer').startup(function()
   -- use 'ray-x/lsp_signature.nvim' -- 有些问题
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
-  -- use { 'jose-elias-alvarez/nvim-lsp-ts-utils', requires = { 'jose-elias-alvarez/null-ls.nvim' }}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -155,15 +150,8 @@ require('packer').startup(function()
   use 'rcarriga/nvim-notify'
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
-  use 'lewis6991/impatient.nvim'
-  -- use 'numToStr/FTerm.nvim'
-  use 'akinsho/toggleterm.nvim'
-  --[[ use {
-    'VonHeikemen/fine-cmdline.nvim',
-    requires = {
-      {'MunifTanjim/nui.nvim'}
-    }
-  } ]]
+  -- use 'lewis6991/impatient.nvim'
+  use 'numToStr/FTerm.nvim'
   use {
     'VonHeikemen/searchbox.nvim',
     requires = {
@@ -269,22 +257,20 @@ map('n', ';', ':')                                                     --semicol
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
-map('n', '<leader>w', '<cmd>HopWord<CR>')                              --easymotion/hop
-map('n', '<leader>l', '<cmd>HopLine<CR>')
-map('n', '<leader>/', '<cmd>HopPattern<CR>')
-map('n', '<leader>fp', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>fr', '<cmd>Telescope resume<CR>')
-map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>')                   --fuzzy
-map('n', '<leader>fw', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>ft', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', '<leader>fs', '<cmd>lua require("searchbox").incsearch()<CR>')
-map('n', '<leader>fh', '<cmd>lua require("searchbox").replace()<CR>')
+map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+map('n', 'gl', '<cmd>HopLine<CR>')
+map('n', 'g/', '<cmd>HopPattern<CR>')
+-- map('n', '<leader>p', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
+map('n', 'ft', '<cmd>Telescope treesitter<CR>')
+map('n', 'fc', '<cmd>Telescope commands<CR>')
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
+map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
 map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
 map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
@@ -292,11 +278,8 @@ map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
 map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
 map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
 map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
--- map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
--- map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
-map('n', '<c-o>', '<cmd>ToggleTerm<CR>')
--- map('n', '<C-p>', '<cmd>lua require("fine-cmdline").open()<CR>')
--- map('n', '<leader>p', '<cmd>lua require("fine-cmdline").open()<CR>')
+map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
+map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -304,25 +287,25 @@ map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
-map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('t', '<leader>va', '<cmd>Vista<CR>')                   --fuzzN
+-- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
+-- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
+map('t', '<leader>s', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
--- map('n', '<leader>b', '<cmd>BufferPick<CR>')
-map('n', '<leader>bj', '<cmd>bprevious<CR>')
-map('n', '<leader>bn', '<cmd>bnext<CR>')
+map('n', 'gb', '<cmd>BufferPick<CR>')
+map('n', 'gp', '<cmd>bprevious<CR>')
+map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Gina add .<CR>')
 map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
-map('n', '<leader>tg', '<cmd>TroubleToggle<CR>')
+map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -378,6 +361,8 @@ require("indent_blankline").setup {
 
 --theme
 cmd 'colorscheme nightfly'
+
+-- require'impatient'.enable_profile()
 
 local notify = require("notify")
 
@@ -489,10 +474,14 @@ require('cmp-npm').setup({})
 require('crates').setup()
 require('package-info').setup()
 
+require('nvim-autopairs').setup{
+  disable_filetype = { "TelescopePrompt" },
+}
+
 local lspkind = require('lspkind')
 local cmp = require'cmp'
--- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
--- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 
 cmp.setup({
   completion = {
@@ -500,7 +489,6 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      -- For `vsnip` user.
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
     end,
   },
@@ -588,39 +576,33 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', ']i', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', ']h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', ']w', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', ']r', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', ']l', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', ']y', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', ']n', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', ']a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', ']r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', ']q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', ']f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  buf_set_keymap('n', '[f', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', '[a', '<cmd>Lspsaga code_action<CR>', opts)
-  buf_set_keymap('x', '[a', '<cmd>Lspsaga range_code_action<CR>', opts)
-  buf_set_keymap('n', '[o', '<cmd>Lspsaga hover_doc<CR>', opts)
-  buf_set_keymap('n', '[s', '<cmd>Lspsaga signature_help<CR>', opts)
-  buf_set_keymap('n', '[n', '<cmd>Lspsaga rename<CR>', opts)
-  buf_set_keymap('n', '[p', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', '[l', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
-  buf_set_keymap('n', '[g', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
-  buf_set_keymap('n', ']g', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
+  buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
+  buf_set_keymap('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', opts)
+  buf_set_keymap('x', '<leader>A', '<cmd>Lspsaga range_code_action<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
+  buf_set_keymap('n', '<leader>k', '<cmd>Lspsaga signature_help<CR>', opts)
+  buf_set_keymap('n', '<leader>r', '<cmd>Lspsaga rename<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>Lspsaga preview_definition<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  end
-  if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("v", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
   if client.resolved_capabilities.document_highlight then
     vim.cmd([[
       hi link LspReferenceRead Visual
@@ -633,10 +615,6 @@ local on_attach = function(client, bufnr)
       augroup END
     ]])
   end
-  -- use null-ls for format
-  -- client.resolved_capabilities.document_formatting = false
-  -- client.resolved_capabilities.document_range_formatting = false
-
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
 
@@ -657,20 +635,12 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
---[[ require('null-ls').setup({
-  sources = {
-    require('null-ls').builtins.formatting.prettier,
-    require('null-ls').builtins.formatting.eslint
-  },
-  debug = true,
-}) ]]
--- require('lspconfig')["null-ls"].setup{}
-
 --[[ require('fzf-lua').setup({
   lsp = {
     async_or_timeout = 3000,
   }
 }) ]]
+
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
@@ -702,8 +672,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
-  -- local servers = { "cssls", "html", "rust_analyzer", "tsserver",  "graphql", "volar", "jsonls", "dockerls" }
-  -- local nvim_lsp = require'lspconfig'
   local lsp_installer = require("nvim-lsp-installer")
   local opts = {
     on_attach = on_attach,
@@ -712,12 +680,6 @@ local function setup_servers()
   lsp_installer.on_server_ready(function(server)
       server:setup(opts)
   end)
-  -- for _, server in pairs(servers) do
-  --   nvim_lsp[server].setup{
-  --     on_attach = on_attach,
-  --     capabilities = capabilities
-  --   }
-  -- end
 end
 
 setup_servers()
@@ -730,13 +692,10 @@ setup_servers()
   max_width = 80,
 } ]]
 -- require'navigator'.setup()
-require("trouble").setup {}
-require("lspkind").init()
+require'trouble'.setup {}
+require'lspkind'.init()
 require'diffview'.setup{}
-require('nvim-autopairs').setup{
-  disable_filetype = { "TelescopePrompt" },
-}
-require('rust-tools').setup({})
+require'rust-tools'.setup{}
 
 --nvim-tree
 require'nvim-tree'.setup {
@@ -820,28 +779,6 @@ require('gitsigns').setup {
     internal = false
   }
 }
-
--- g.dashboard_disable_statusline = 1
--- g.dashboard_session_directory = '~/.sessions'
--- -- g.dashboard_default_executive = 'telescope'
---
--- if vim.fn.has 'win32' == 1 then
---   cmd("let packages = len(globpath('~/AppData/Local/nvim-data/site/pack/packer/start', '*', 0, 1))")
--- else
---   cmd("let packages = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))")
--- end
---
--- nvim_exec([[
---     let g:dashboard_custom_footer = ['LuaJIT loaded '..packages..' packages']
--- ]], false)
---
--- g.dashboard_custom_section = {
---     a = {description = {"  Find File                 SPC f  "}, command = "FzfLua files"},
---     b = {description = {"  Buffers                   SPC b  "}, command = "FzfLua buffers"},
---     c = {description = {"  Find Word                 SPC g  "}, command = "FzfLua live_grep"},
---     d = {description = {"  Bookmarks                 SPC f m"}, command = "FzfLua marks"},
---     e = {description = {"洛 New File                  SPC f n"}, command = "DashboardNewFile"},
--- }
 
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 
@@ -1199,53 +1136,26 @@ vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_t
 we must have it in both whitespace_disabled_file_types and here.]]
 vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
---[[ require'FTerm'.setup({
+require'FTerm'.setup({
     border = 'double',
     dimensions  = {
         height = 0.9,
         width = 0.9,
     },
-}) ]]
-
-require'toggleterm'.setup({})
-
---[[ require'fine-cmdline'.setup({
-  cmdline = {
-    enable_keymaps = true,
-    smart_history = true
-  },
-  popup = {
-    position = {
-      row = '30%',
-      col = '50%',
-    },
-    size = {
-      width = '60%',
-      height = 1
-    },
-    border = {
-      style = 'rounded',
-      highlight = 'FloatBorder',
-    },
-    win_options = {
-      winhighlight = 'Normal:Normal',
-    },
-  },
-}) ]]
+})
 
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
 -- require("dapui").setup()
-require('neogen').setup {
+require'neogen'.setup {
     enabled = true
 }
-require("surround").setup {}
-require("twilight").setup {}
+require'surround'.setup {}
+require'twilight'.setup {}
 require'hop'.setup()
 
-local high_str = require("high-str")
-high_str.setup({
+require'high-str'.setup({
 	verbosity = 0,
 	saving_path = "/tmp/highstr/",
 	highlight_colors = {
