@@ -122,8 +122,7 @@ require('packer').startup(function()
         })
       end
   }
-  use 'windwp/nvim-autopairs' -- 自动符号匹配, 但vue兼容有问题
-  -- use 'jiangmiao/auto-pairs'
+  use 'jiangmiao/auto-pairs'
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
   use 'blackCauldron7/surround.nvim'
@@ -474,14 +473,8 @@ require('cmp-npm').setup({})
 require('crates').setup()
 require('package-info').setup()
 
-require('nvim-autopairs').setup{
-  disable_filetype = { "TelescopePrompt" },
-}
-
 local lspkind = require('lspkind')
 local cmp = require'cmp'
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 
 cmp.setup({
   completion = {
