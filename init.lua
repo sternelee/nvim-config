@@ -91,10 +91,11 @@ require('packer').startup(function()
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip'},
-    {'ray-x/cmp-treesitter'},
+    -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
+    {'octaltree/cmp-look'},
     {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
@@ -341,7 +342,6 @@ let bufferline.icons = 'both'
 
 g.vista_default_executive = 'nvim_lsp'
 
-
 -- vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winpos,terminal"
 vim.o.sessionoptions="buffers"
 
@@ -499,7 +499,8 @@ cmp.setup({
     { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name = 'treesitter' },
+    { name='look', keyword_length=2, option={convert_case=true, loud=true}},
+    -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'spell' },
@@ -519,9 +520,21 @@ cmp.setup({
         spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
         cmp_tabnine = "⦿ [Tn]",
+        look = "↩︎ [Look]"
       })[entry.source.name]
       return vim_item
     end
+  },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    }
   },
   experimental = {
     ghost_text = true
