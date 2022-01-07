@@ -80,7 +80,6 @@ require('packer').startup(function()
   } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  -- use 'nvim-lua/lsp_extensions.nvim'
   --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
   use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
@@ -99,7 +98,6 @@ require('packer').startup(function()
     {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
-  use 'jubnzv/virtual-types.nvim'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
@@ -167,6 +165,7 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
+  use 'nvim-lua/lsp_extensions.nvim'
   use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
 
@@ -310,7 +309,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
--- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
@@ -626,8 +625,6 @@ local on_attach = function(client, bufnr)
 
   -- Signature help
   -- require('lsp_signature').on_attach()
-  -- virtual-types
-  require'virtualtypes'.on_attach()
 
 end
 
