@@ -72,7 +72,9 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
-  -- use 'nvim-telescope/telescope-media-files.nvim'
+  use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'nvim-telescope/telescope-media-files.nvim'
+  use 'nvim-telescope/telescope-project.nvim'
   --[[ use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
@@ -268,6 +270,7 @@ map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', 'fp', '<cmd>lua require("telescope").extensions.project.project{}<CR>')                      --nvimtree
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
@@ -316,6 +319,39 @@ cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+-- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
+cmd [[
+  highlight DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+  highlight DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+  highlight DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+  highlight DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+
+  sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
+  sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
+  sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
+  sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
+]]
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '■', -- Could be '●', '▎', 'x'
+    source = "always",  -- Or "if_many" spacing = 0,
+  },
+  float = {
+    source = "always",  -- Or "if_many"
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -383,13 +419,35 @@ require('telescope').setup {
       }
     }
   },
-  --[[ extensions = {
+  extensions = {
+    project = {
+      base_dirs = {
+        '~/www/xunlei',
+        {'~/www'},
+      },
+      hidden_files = true, -- default: false
+    },
+    file_browser = {
+      theme = "ivy",
+      mappings = {
+        ["i"] = {
+          -- your custom insert mode mappings
+        },
+        ["n"] = {
+          -- your custom normal mode mappings
+        },
+      },
+    },
     media_files = {
       filetypes = {"png", "webp", "jpg", "jpeg"},
       find_cmd = "rg" -- find command (defaults to `fd`)
-    }
-  }, ]]
+    },
+  },
 }
+
+require'telescope'.load_extension('file_browser')
+require'telescope'.load_extension('project')
+require'telescope'.load_extension('media_files')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
@@ -554,23 +612,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = {
-      prefix = "",
-      spacing = 0,
-    },
-    signs = true,
-    underline = true,
-  }
-)
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -726,9 +767,9 @@ require'nvim-tree'.setup {
     ignore_list = {}
   },
   view = {
-    width = 30,
-    side = 'right',
-    auto_resize = false,
+    width = 20,
+    side = 'left',
+    auto_resize = true,
     mappings = {
       custom_only = false,
       list = {}
