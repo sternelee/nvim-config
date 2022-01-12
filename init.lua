@@ -52,7 +52,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
   -- use 'mfussenegger/nvim-ts-hint-textobject'
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  -- use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -73,8 +73,6 @@ require('packer').startup(function()
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
-  use 'nvim-telescope/telescope-media-files.nvim'
-  use 'nvim-telescope/telescope-project.nvim'
   --[[ use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
@@ -270,7 +268,6 @@ map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fp', '<cmd>lua require("telescope").extensions.project.project{}<CR>')                      --nvimtree
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 --[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
@@ -321,16 +318,17 @@ cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
+cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 cmd [[
   highlight DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
   highlight DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
   highlight DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
   highlight DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
 
-  sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
-  sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
-  sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
-  sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
+  sign define DiagnosticSignError text=  texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
+  sign define DiagnosticSignWarn text=  texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
+  sign define DiagnosticSignInfo text=  texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
+  sign define DiagnosticSignHint text=  texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
 ]]
 
 vim.diagnostic.config({
@@ -346,12 +344,6 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = false,
 })
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -420,34 +412,13 @@ require('telescope').setup {
     }
   },
   extensions = {
-    project = {
-      base_dirs = {
-        '~/www/xunlei',
-        {'~/www'},
-      },
-      hidden_files = true, -- default: false
-    },
     file_browser = {
       theme = "ivy",
-      mappings = {
-        ["i"] = {
-          -- your custom insert mode mappings
-        },
-        ["n"] = {
-          -- your custom normal mode mappings
-        },
-      },
-    },
-    media_files = {
-      filetypes = {"png", "webp", "jpg", "jpeg"},
-      find_cmd = "rg" -- find command (defaults to `fd`)
     },
   },
 }
 
 require'telescope'.load_extension('file_browser')
-require'telescope'.load_extension('project')
-require'telescope'.load_extension('media_files')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
@@ -520,10 +491,10 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-  context_commentstring = {
+  --[[ context_commentstring = {
     enable = true,
     enable_autocmd = false,
-  }
+  } ]]
 }
 
 require('cmp-npm').setup({})
