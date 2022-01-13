@@ -270,13 +270,6 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
---[[ map('n', '<leader>f', '<cmd>FzfLua files<CR>')
-map('n', '<leader>g', '<cmd>FzfLua live_grep<CR>')
-map('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>')
-map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
-map('n', '<leader>fm', '<cmd>FzfLua marks<CR>')
-map('n', '<leader>uf', '<cmd>FzfLua files_resume<CR>')
-map('n', '<leader>ug', '<cmd>FzfLua live_grep_resume<CR>') ]]
 map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
@@ -308,7 +301,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+-- cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
 cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -318,19 +311,6 @@ cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
-cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
-cmd [[
-  highlight DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
-  highlight DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
-  highlight DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
-  highlight DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
-
-  sign define DiagnosticSignError text=  texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
-  sign define DiagnosticSignWarn text=  texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
-  sign define DiagnosticSignInfo text=  texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
-  sign define DiagnosticSignHint text=  texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
-]]
-
 vim.diagnostic.config({
   virtual_text = {
     prefix = '■', -- Could be '●', '▎', 'x'
@@ -344,6 +324,12 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = false,
 })
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
