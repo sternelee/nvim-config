@@ -24,8 +24,8 @@ local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
+
 -- https://github.com/rockerBOO/awesome-neovim
---setup packer
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -51,8 +51,7 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
-  -- use 'mfussenegger/nvim-ts-hint-textobject'
-  -- use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -80,9 +79,6 @@ require('packer').startup(function()
   } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
-  --[[ use {'ms-jpq/coq_nvim', branch =  'coq' }
-  use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
-  use {'ms-jpq/coq.thirdparty', branch = '3p'} ]]
   use 'williamboman/nvim-lsp-installer'
   use {'hrsh7th/nvim-cmp', requires = {
     {'hrsh7th/cmp-nvim-lsp'},
@@ -95,7 +91,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
-    {'tzachar/cmp-tabnine', run='./install.sh'},
+    -- {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
@@ -104,8 +100,6 @@ require('packer').startup(function()
   use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
-  -- use 'ray-x/lsp_signature.nvim' -- 有些问题
-  -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   use 'kosayoda/nvim-lightbulb'
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -388,7 +382,7 @@ require'lightspeed'.setup {
   cycle_group_fwd_key = nil,
   cycle_group_bwd_key = nil,
 }
--- require('telescope').load_extension('media_files')
+
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -477,10 +471,10 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-  --[[ context_commentstring = {
+  context_commentstring = {
     enable = true,
     enable_autocmd = false,
-  } ]]
+  }
 }
 
 require('cmp-npm').setup({})
@@ -510,14 +504,14 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
+    -- { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name='look', keyword_length=2, option={convert_case=true, loud=true}},
+    { name='look', keyword_length=3, option={convert_case=true, loud=true}},
     -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'spell' },
+    -- { name = 'spell' },
     { name = 'npm', keyword_length = 4 },
     { name = 'crates' }
   },
@@ -621,9 +615,6 @@ local on_attach = function(client, bufnr)
   local msg = string.format("Language server %s started!", client.name)
   notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
 
-  -- Signature help
-  -- require('lsp_signature').on_attach()
-
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -645,30 +636,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
 
--- coq
---[[ vim.g.coq_settings = {
-  auto_start = true,
-  clients = {
-    tabnine = {
-      enabled = true
-    }
-  }
-}
-
-local function setup_servers()
-  local coq = require "coq"
-  local lsp_installer = require("nvim-lsp-installer")
-  local config = {
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
-  lsp_installer.on_server_ready(function(server)
-      server:setup(
-        coq.lsp_ensure_capabilities(config)
-      )
-  end)
-end ]]
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
@@ -686,13 +653,6 @@ end
 setup_servers()
 
 -- vim.lsp.set_log_level("debug")
---[[ require "lsp_signature".setup{
-  debug = false,
-  hint_enable = false,
-  handler_opts = { border = "single" },
-  max_width = 80,
-} ]]
--- require'navigator'.setup()
 require'trouble'.setup {}
 require'lspkind'.init()
 require'diffview'.setup{}
@@ -790,6 +750,7 @@ local prettier = function ()
     stdin = true
   }
 end
+
 -- npm install -g @fsouza/prettierd
 local prettierd = function ()
   return {
@@ -798,6 +759,7 @@ local prettierd = function ()
     stdin = true
   }
 end
+
 require('formatter').setup({
   filetype = {
     javascript = {
@@ -833,7 +795,6 @@ require('formatter').setup({
 require("nvim-gps").setup()
 
 -- windline config
-
 local windline = require('windline')
 local helper = require('windline.helpers')
 local sep = helper.separators
