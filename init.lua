@@ -36,6 +36,7 @@ require('packer').startup(function()
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
+  use 'sidebar-nvim/sidebar.nvim'
   use {
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
@@ -58,12 +59,19 @@ require('packer').startup(function()
       require("treesitter-context").setup {}
     end
   }
+  use 'haringsrob/nvim_context_vt'
   use 'nvim-treesitter/playground'
   use "folke/twilight.nvim"
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
+  -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
   use 'rebelot/kanagawa.nvim'
+  use({
+  	'catppuccin/nvim',
+  	as = 'catppuccin'
+  })
+  -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
@@ -80,6 +88,7 @@ require('packer').startup(function()
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
+  use 'b0o/schemastore.nvim' -- json server
   use {'hrsh7th/nvim-cmp', requires = {
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -143,7 +152,7 @@ require('packer').startup(function()
   -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
   -- use 'lewis6991/impatient.nvim'
-  use 'numToStr/FTerm.nvim'
+  -- use 'numToStr/FTerm.nvim'
   use {
     'VonHeikemen/searchbox.nvim',
     requires = {
@@ -264,8 +273,8 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
-map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
-map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
+-- map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
+-- map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -273,6 +282,7 @@ map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('t', '<leader>s', '<cmd>Vista<CR>')                   --fuzzN
@@ -366,7 +376,10 @@ require("indent_blankline").setup {
 }
 
 --theme
-cmd 'colorscheme nightfly'
+-- cmd 'colorscheme nightfly'
+local catppuccin = require("catppuccin")
+catppuccin.setup({})
+cmd 'colorscheme catppuccin'
 
 -- require'impatient'.enable_profile()
 
@@ -646,7 +659,14 @@ local function setup_servers()
     capabilities = capabilities
   }
   lsp_installer.on_server_ready(function(server)
-      server:setup(opts)
+    if server.name == "jsonls" then
+      opts.settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+        },
+      }
+    end
+    server:setup(opts)
   end)
 end
 
@@ -699,6 +719,15 @@ require'nvim-tree'.setup {
     enable = true
   }
 }
+
+-- sidebar-nvim
+local sidebar = require("sidebar-nvim")
+local opts = {
+  open = false,
+  initial_width = 30,
+  bindings = { ["q"] = function() sidebar.close() end }
+}
+sidebar.setup(opts)
 
 --gitsigns
 require('gitsigns').setup {
@@ -1098,13 +1127,13 @@ vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_t
 we must have it in both whitespace_disabled_file_types and here.]]
 vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
-require'FTerm'.setup({
+--[[ require'FTerm'.setup({
     border = 'double',
     dimensions  = {
         height = 0.9,
         width = 0.9,
     },
-})
+}) ]]
 
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
@@ -1133,4 +1162,40 @@ require'high-str'.setup({
 		color_8 = {"#FFF9E3", "smart"},	-- Cosmic latte
 		color_9 = {"#7d5c34", "smart"},	-- Fallow brown
 	}
+})
+require'nvim_context_vt'.setup({
+  -- Custom virtual text node parser callback
+  -- Default: nil
+  custom_parser = function(node, ft, ts_utils)
+    -- If you return `nil`, no virtual text will be displayed.
+    if node:type() == 'function' then
+      return nil
+    end
+
+    -- This is the standard text
+    return '--> ' .. ts_utils.get_node_text(node)[1]
+  end,
+
+  -- Custom node validator callback
+  -- Default: nil
+  custom_validator = function(node, ft)
+    -- Internally a node is matched against min_rows and configured targets
+    local default_validator = require('nvim_context_vt').default_validator
+    if default_validator(node, ft) then
+      -- Custom behaviour after using the internal validator
+      if node:type() == 'function' then
+        return false
+      end
+    end
+
+    return false
+  end,
+
+
+  -- Custom node virtual text resolver callback
+  -- Default: nil
+  custom_resolver = function(nodes, ft)
+    -- By default the last node is used
+    return nodes[#nodes]
+  end,
 })
