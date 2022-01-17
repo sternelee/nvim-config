@@ -103,6 +103,7 @@ require('packer').startup(function()
     -- {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
+  use 'mfussenegger/nvim-lint'
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
@@ -159,10 +160,10 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  --[[ use {
+  use {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap'}
-  } ]]
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim'}
+  }
   use {
     "vuki656/package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
@@ -171,6 +172,10 @@ require('packer').startup(function()
   use 'nvim-lua/lsp_extensions.nvim'
   use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
+  use {
+    "NTBBloodbath/rest.nvim",
+    requires = { "nvim-lua/plenary.nvim" }
+  }
 
 end)
 
@@ -302,11 +307,14 @@ map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
--- cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+cmd [[au BufWritePost <buffer> lua require('lint').try_lint()]]
 cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
@@ -384,6 +392,7 @@ cmd 'colorscheme catppuccin'
 -- require'impatient'.enable_profile()
 
 local notify = require("notify")
+vim.notify = notify
 
 require'lightspeed'.setup {
   jump_on_partial_input_safety_timeout = 400,
@@ -412,10 +421,11 @@ require('telescope').setup {
 }
 
 require'telescope'.load_extension('file_browser')
+require("telescope").load_extension("notify")
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,
   },
@@ -1138,7 +1148,12 @@ vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLea
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
--- require("dapui").setup()
+require("dapui").setup()
+local dap_install = require("dap-install")
+dap_install.setup({
+	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+})
+
 require'neogen'.setup {
     enabled = true
 }
@@ -1199,3 +1214,26 @@ require'nvim_context_vt'.setup({
     return nodes[#nodes]
   end,
 })
+
+require'rest-nvim'.setup({
+  result_split_horizontal = false,
+  skip_ssl_verification = false,
+  highlight = {
+    enabled = true,
+    timeout = 150,
+  },
+  result = {
+    show_url = true,
+    show_http_info = true,
+    show_headers = true,
+  },
+  jump_to_request = false,
+  env_file = '.env',
+  custom_dynamic_variables = {},
+  yank_dry_run = true,
+})
+
+require('lint').linters_by_ft = {
+  javascript = {'eslint'},
+  typescript = {'eslint'}
+}
