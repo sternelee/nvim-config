@@ -1178,42 +1178,7 @@ require'high-str'.setup({
 		color_9 = {"#7d5c34", "smart"},	-- Fallow brown
 	}
 })
-require'nvim_context_vt'.setup({
-  -- Custom virtual text node parser callback
-  -- Default: nil
-  custom_parser = function(node, ft, ts_utils)
-    -- If you return `nil`, no virtual text will be displayed.
-    if node:type() == 'function' then
-      return nil
-    end
-
-    -- This is the standard text
-    return '--> ' .. ts_utils.get_node_text(node)[1]
-  end,
-
-  -- Custom node validator callback
-  -- Default: nil
-  custom_validator = function(node, ft)
-    -- Internally a node is matched against min_rows and configured targets
-    local default_validator = require('nvim_context_vt').default_validator
-    if default_validator(node, ft) then
-      -- Custom behaviour after using the internal validator
-      if node:type() == 'function' then
-        return false
-      end
-    end
-
-    return false
-  end,
-
-
-  -- Custom node virtual text resolver callback
-  -- Default: nil
-  custom_resolver = function(nodes, ft)
-    -- By default the last node is used
-    return nodes[#nodes]
-  end,
-})
+require'nvim_context_vt'.setup({})
 
 require'rest-nvim'.setup({
   result_split_horizontal = false,
