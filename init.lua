@@ -162,7 +162,7 @@ require('packer').startup(function()
   }
   use {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim'}
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
   }
   use {
     "vuki656/package-info.nvim",
@@ -735,7 +735,18 @@ local sidebar = require("sidebar-nvim")
 local opts = {
   open = false,
   initial_width = 30,
-  bindings = { ["q"] = function() sidebar.close() end }
+  bindings = { ["q"] = function() sidebar.close() end },
+  sections = {
+      "datetime",
+      "git",
+      "diagnostics",
+      require("dap-sidebar-nvim.breakpoints")
+  },
+  dap = {
+      breakpoints = {
+          icon = "🔍"
+      }
+  }
 }
 sidebar.setup(opts)
 
