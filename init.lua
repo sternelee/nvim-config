@@ -103,7 +103,7 @@ require('packer').startup(function()
     -- {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
-  use 'mfussenegger/nvim-lint'
+  -- use 'mfussenegger/nvim-lint' -- 跟lsp重复
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
@@ -312,7 +312,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
-cmd [[au BufWritePost <buffer> lua require('lint').try_lint()]]
+-- cmd [[au BufWritePost <buffer> lua require('lint').try_lint()]]
 cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
@@ -1209,7 +1209,7 @@ require'rest-nvim'.setup({
   yank_dry_run = true,
 })
 
-require('lint').linters_by_ft = {
+--[[ require('lint').linters_by_ft = {
   javascript = {'eslint'},
   typescript = {'eslint'}
-}
+} ]]
