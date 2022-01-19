@@ -100,7 +100,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'},
+    {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
   -- use 'mfussenegger/nvim-lint' -- 跟lsp重复
@@ -527,7 +527,7 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    -- { name = 'cmp_tabnine'},
+    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     { name='look', keyword_length=3, option={convert_case=true, loud=true}},
@@ -558,13 +558,13 @@ cmp.setup({
   },
   sorting = {
     comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
       cmp.config.compare.score,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
+      cmp.config.compare.offset,
+      -- cmp.config.compare.exact,
+      -- cmp.config.compare.kind,
+      -- cmp.config.compare.sort_text,
+      -- cmp.config.compare.length,
+      -- cmp.config.compare.order,
     }
   },
   experimental = {
