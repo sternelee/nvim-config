@@ -66,10 +66,6 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
-  use({
-  	'catppuccin/nvim',
-  	as = 'catppuccin'
-  })
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -383,10 +379,7 @@ require("indent_blankline").setup {
 }
 
 --theme
--- cmd 'colorscheme nightfly'
-local catppuccin = require("catppuccin")
-catppuccin.setup({})
-cmd 'colorscheme catppuccin'
+cmd 'colorscheme nightfly'
 
 -- require'impatient'.enable_profile()
 
