@@ -18,7 +18,7 @@ if g.nvui then
   cmd [[NvuiCmdFontSize 30.0]]
 end
 
-nvim_exec([[set guifont=VictorMono\ NF:h20]], false)
+nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h20]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -66,7 +66,6 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
-  use 'rebelot/kanagawa.nvim'
   use({
   	'catppuccin/nvim',
   	as = 'catppuccin'
