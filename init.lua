@@ -318,6 +318,28 @@ cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
+cmd [[highlight CmpItemAbbrMath guibg=NONE guifg=#569CD6]]
+cmd [[highlight CmpItemAbbrMathFuzzy guibg=NONE guifg=#569CD6]]
+cmd [[highlight CmpItemKindFunction guibg=NONE guifg=#C586C0]]
+cmd [[highlight CmpItemKindMethod guibg=NONE guifg=#C586C0]]
+cmd [[highlight CmpItemKindVariable guibg=NONE guifg=#9CDCFE]]
+cmd [[highlight CmpItemKindKeyword guibg=NONE guifg=#D4D4D4]]
+cmd [[highlight link CmpItemAbbrMathFuzzy Aqua]]
+cmd [[highlight link CmpItemKindText Fg]]
+cmd [[highlight link CmpItemKindMethod Purple]]
+cmd [[highlight link CmpItemKindFunction Purple]]
+cmd [[highlight link CmpItemKindConstruction Green]]
+cmd [[highlight link CmpItemKindField Aqua]]
+cmd [[highlight link CmpItemKindVariable Blue]]
+cmd [[highlight link CmpItemKindClass Green]]
+cmd [[highlight link CmpItemKindInterface Green]]
+cmd [[highlight link CmpItemKindValue Orange]]
+cmd [[highlight link CmpItemKindKeyword Keyword]]
+cmd [[highlight link CmpItemKindSnippet Red]]
+cmd [[highlight link CmpItemKindFile Orange]]
+cmd [[highlight link CmpItemKindFolder Orange]]
+cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
+
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
   virtual_text = {
@@ -421,7 +443,7 @@ require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 
---nvim treesitter 编辑大文件卡顿时最好关闭
+--nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
