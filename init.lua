@@ -74,6 +74,7 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   --[[ use { 'ibhagwan/fzf-lua',
     requires = {
@@ -406,14 +407,19 @@ require('telescope').setup {
     }
   },
   extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    },
     file_browser = {
       theme = "ivy",
     },
   },
 }
 
+require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
-require("telescope").load_extension("notify")
+require'telescope'.load_extension('notify')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭
 require('nvim-treesitter.configs').setup {
