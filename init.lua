@@ -11,8 +11,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- https://github.com/rohit-px2/nvui
--- nvui --ext_multigrid --ext_popupmenu --ext_cmdline --titlebar --detached
 if g.nvui then
   cmd [[NvuiCmdCenterYPos 0.3]]
   cmd [[NvuiCmdFontSize 30.0]]
@@ -66,6 +64,10 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
+  use({
+  	'catppuccin/nvim',
+  	as = 'catppuccin'
+  })
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -99,7 +101,6 @@ require('packer').startup(function()
     {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
-  -- use 'mfussenegger/nvim-lint' -- 跟lsp重复
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
   -- use {'kevinhwang91/nvim-bqf'}
@@ -146,10 +147,7 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
-  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use 'metakirby5/codi.vim'
-  -- use 'lewis6991/impatient.nvim'
-  -- use 'numToStr/FTerm.nvim'
   use {
     'VonHeikemen/searchbox.nvim',
     requires = {
@@ -165,7 +163,7 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
-  use 'nvim-lua/lsp_extensions.nvim'
+  -- use 'nvim-lua/lsp_extensions.nvim'
   use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
   use {
@@ -274,8 +272,6 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
--- map('n', '<c-o>', '<cmd>lua require("FTerm").toggle()<CR>')
--- map('t', '<c-o>', '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -308,8 +304,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
--- cmd [[au BufWritePost <buffer> lua require('lint').try_lint()]]
-cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
+-- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -317,27 +312,6 @@ cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-
-cmd [[highlight CmpItemAbbrMath guibg=NONE guifg=#569CD6]]
-cmd [[highlight CmpItemAbbrMathFuzzy guibg=NONE guifg=#569CD6]]
-cmd [[highlight CmpItemKindFunction guibg=NONE guifg=#C586C0]]
-cmd [[highlight CmpItemKindMethod guibg=NONE guifg=#C586C0]]
-cmd [[highlight CmpItemKindVariable guibg=NONE guifg=#9CDCFE]]
-cmd [[highlight CmpItemKindKeyword guibg=NONE guifg=#D4D4D4]]
-cmd [[highlight link CmpItemAbbrMathFuzzy Aqua]]
-cmd [[highlight link CmpItemKindText Fg]]
-cmd [[highlight link CmpItemKindMethod Purple]]
-cmd [[highlight link CmpItemKindFunction Purple]]
-cmd [[highlight link CmpItemKindConstruction Green]]
-cmd [[highlight link CmpItemKindField Aqua]]
-cmd [[highlight link CmpItemKindVariable Blue]]
-cmd [[highlight link CmpItemKindClass Green]]
-cmd [[highlight link CmpItemKindInterface Green]]
-cmd [[highlight link CmpItemKindValue Orange]]
-cmd [[highlight link CmpItemKindKeyword Keyword]]
-cmd [[highlight link CmpItemKindSnippet Red]]
-cmd [[highlight link CmpItemKindFile Orange]]
-cmd [[highlight link CmpItemKindFolder Orange]]
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
@@ -402,9 +376,10 @@ require("indent_blankline").setup {
 }
 
 --theme
-cmd 'colorscheme nightfly'
-
--- require'impatient'.enable_profile()
+-- cmd 'colorscheme nightfly'
+local catppuccin = require("catppuccin")
+catppuccin.setup({})
+cmd 'colorscheme catppuccin'
 
 local notify = require("notify")
 vim.notify = notify
@@ -550,7 +525,7 @@ cmp.setup({
     { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
-    { name='look', keyword_length=3, option={convert_case=true, loud=true}},
+    { name='look', keyword_length=4, option={convert_case=true, loud=true}},
     -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
@@ -1168,14 +1143,6 @@ vim.cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_t
 we must have it in both whitespace_disabled_file_types and here.]]
 vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
---[[ require'FTerm'.setup({
-    border = 'double',
-    dimensions  = {
-        height = 0.9,
-        width = 0.9,
-    },
-}) ]]
-
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
@@ -1228,8 +1195,3 @@ require'rest-nvim'.setup({
   custom_dynamic_variables = {},
   yank_dry_run = true,
 })
-
---[[ require('lint').linters_by_ft = {
-  javascript = {'eslint'},
-  typescript = {'eslint'}
-} ]]
