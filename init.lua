@@ -16,7 +16,7 @@ if g.nvui then
   cmd [[NvuiCmdFontSize 30.0]]
 end
 
-nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h20]], false)
+nvim_exec([[set guifont=Victor\ Mono:h18,VictorMono\ NF:h18]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -139,6 +139,7 @@ require('packer').startup(function()
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'Pocco81/HighStr.nvim' -- 高亮单词
   use 'folke/todo-comments.nvim'
+  -- use 'LudoPinelli/comment-box.nvim'
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
@@ -170,6 +171,23 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = { "nvim-lua/plenary.nvim" }
   }
+  use({
+    "themercorp/themer.lua",
+	  event = "BufEnter",
+      config = function()
+        require("themer").setup({
+          colorscheme = "catppuccin",
+          styles = {
+		      comment = { style = 'italic' },
+          	["function"] = { style = 'italic' },
+           	functionbuiltin = { style = 'italic' },
+           	variable = { style = 'italic' },
+            variableBuiltIn = { style = 'italic' },
+          	parameter  = { style = 'italic' },
+          },
+        })
+      end
+    })
 
 end)
 
@@ -423,13 +441,22 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,
+    disable = function (lang, bufnr)
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+    end
   },
   rainbow = {
     enable = true,
+    disable = function (lang, bufnr)
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+    end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
+    disable = function (lang, bufnr)
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+    end,
   },
   refactor = {
     highlight_definitions = { enable = true },
