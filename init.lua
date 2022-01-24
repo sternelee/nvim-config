@@ -439,20 +439,20 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end
   },
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
   },
   refactor = {
