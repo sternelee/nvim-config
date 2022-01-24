@@ -16,7 +16,7 @@ if g.nvui then
   cmd [[NvuiCmdFontSize 30.0]]
 end
 
-nvim_exec([[set guifont=Victor\ Mono:h18,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h18]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -64,10 +64,10 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
-  use({
+  --[[ use({
   	'catppuccin/nvim',
   	as = 'catppuccin'
-  })
+  }) ]]
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -126,14 +126,14 @@ require('packer').startup(function()
   use 'windwp/nvim-ts-autotag'
   use 'vigoux/architext.nvim'
   use 'blackCauldron7/surround.nvim'
-  use {
+  --[[ use {
     'rmagatti/auto-session',
     config = function()
       require('auto-session').setup {
         log_level = 'info',
       }
     end
-  }
+  } ]]
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
@@ -171,7 +171,7 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = { "nvim-lua/plenary.nvim" }
   }
-  use({
+  --[[ use({
     "themercorp/themer.lua",
 	  event = "BufEnter",
       config = function()
@@ -187,7 +187,7 @@ require('packer').startup(function()
           },
         })
       end
-    })
+    }) ]]
 
 end)
 
@@ -394,18 +394,15 @@ require("indent_blankline").setup {
 }
 
 --theme
--- cmd 'colorscheme nightfly'
-local catppuccin = require("catppuccin")
+cmd 'colorscheme nightfly'
+--[[ local catppuccin = require("catppuccin")
 catppuccin.setup({})
-cmd 'colorscheme catppuccin'
+cmd 'colorscheme catppuccin' ]]
 
 local notify = require("notify")
 vim.notify = notify
 
 require'lightspeed'.setup {
-  jump_on_partial_input_safety_timeout = 400,
-  highlight_unique_chars = false,
-  grey_out_search_area = true,
   match_only_the_start_of_same_char_seqs = true,
   limit_ft_matches = 5,
   labels = nil,
