@@ -11,7 +11,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Monoid,VictorMono\ NF:h18]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
