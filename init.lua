@@ -11,11 +11,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-if g.nvui then
-  cmd [[NvuiCmdCenterYPos 0.3]]
-  cmd [[NvuiCmdFontSize 30.0]]
-end
-
 nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h18]], false)
 --Install packer
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -29,7 +24,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use 'nathom/filetype.nvim'
+  -- use 'nathom/filetype.nvim'
   -- 状态栏
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
@@ -43,14 +38,11 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/nvim-treesitter-refactor'
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -64,10 +56,6 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
-  --[[ use({
-  	'catppuccin/nvim',
-  	as = 'catppuccin'
-  }) ]]
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -78,11 +66,6 @@ require('packer').startup(function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
-  --[[ use { 'ibhagwan/fzf-lua',
-    requires = {
-      'vijaymarupudi/nvim-fzf',
-      'kyazdani42/nvim-web-devicons' } -- optional for icons
-  } ]]
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -93,17 +76,14 @@ require('packer').startup(function()
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip'},
-    -- {'ray-x/cmp-treesitter'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
-    {'tzachar/cmp-tabnine', run='./install.sh'},
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
-  -- use {'kevinhwang91/nvim-bqf'}
   use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
@@ -124,22 +104,11 @@ require('packer').startup(function()
   }
   use 'jiangmiao/auto-pairs'
   use 'windwp/nvim-ts-autotag'
-  use 'vigoux/architext.nvim'
   use 'blackCauldron7/surround.nvim'
-  --[[ use {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'info',
-      }
-    end
-  } ]]
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use 'Pocco81/HighStr.nvim' -- 高亮单词
   use 'folke/todo-comments.nvim'
-  -- use 'LudoPinelli/comment-box.nvim'
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
@@ -171,23 +140,6 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = { "nvim-lua/plenary.nvim" }
   }
-  --[[ use({
-    "themercorp/themer.lua",
-	  event = "BufEnter",
-      config = function()
-        require("themer").setup({
-          colorscheme = "catppuccin",
-          styles = {
-		      comment = { style = 'italic' },
-          	["function"] = { style = 'italic' },
-           	functionbuiltin = { style = 'italic' },
-           	variable = { style = 'italic' },
-            variableBuiltIn = { style = 'italic' },
-          	parameter  = { style = 'italic' },
-          },
-        })
-      end
-    }) ]]
 
 end)
 
@@ -257,7 +209,6 @@ nvim_exec([[
 filetype on
 filetype plugin on
 filetype indent on
-command! -nargs=0 Dap :lua require("dapui").toggle()
 ]], false)
 
 --mappings
@@ -311,18 +262,17 @@ map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gl', '<cmd>Gina pull<CR>')
-map('n', '<leader>gu', '<cmd>Gina push<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gl', '<cmd>Git pull<CR>')
+map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
--- cmd [[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints()]]
 
 cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -395,9 +345,6 @@ require("indent_blankline").setup {
 
 --theme
 cmd 'colorscheme nightfly'
---[[ local catppuccin = require("catppuccin")
-catppuccin.setup({})
-cmd 'colorscheme catppuccin' ]]
 
 local notify = require("notify")
 vim.notify = notify
@@ -439,20 +386,20 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end
   },
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
   },
   refactor = {
@@ -468,54 +415,33 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<S-TAB>',
     }
   },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        ["iF"] = {
-          javascript = "(function_definition) @function",
-          typescript = "(function_definition) @function",
-          rust = "(function_definition) @function",
-        },
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
+  lsp_interop = {
+    enable = true,
+    border = 'none',
+    peek_definition_code = {
+      ["df"] = "@function.outer",
+      ["dF"] = "@class.outer",
     },
   },
-  context_commentstring = {
+  move = {
     enable = true,
-    enable_autocmd = false,
+    set_jumps = true, -- whether to set jumps in the jumplist
+    goto_next_start = {
+      ["]m"] = "@function.outer",
+      ["]]"] = "@class.outer",
+    },
+    goto_next_end = {
+      ["]M"] = "@function.outer",
+      ["]["] = "@class.outer",
+    },
+    goto_previous_start = {
+      ["[m"] = "@function.outer",
+      ["[["] = "@class.outer",
+    },
+    goto_previous_end = {
+      ["[M"] = "@function.outer",
+      ["[]"] = "@class.outer",
+    },
   }
 }
 
@@ -546,14 +472,11 @@ cmp.setup({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine'},
     { name = 'vsnip' },
     { name = 'buffer' },
     { name='look', keyword_length=4, option={convert_case=true, loud=true}},
-    -- { name = 'treesitter' },
     { name = 'calc' },
     { name = 'emoji' },
-    -- { name = 'spell' },
     { name = 'npm', keyword_length = 4 },
     { name = 'crates' }
   },
@@ -565,11 +488,9 @@ cmp.setup({
         buffer = "   [Buffer]",
         nvim_lsp = "   [LSP]",
         vsnip = "   [Vsnip]",
-        treesitter = "   [Ts]",
         calc = "   [Calc]",
         spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
-        cmp_tabnine = "⦿ [Tn]",
         look = "↩︎ [Look]"
       })[entry.source.name]
       return vim_item
@@ -668,12 +589,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     'additionalTextEdits',
   }
 }
-
---[[ require('fzf-lua').setup({
-  lsp = {
-    async_or_timeout = 3000,
-  }
-}) ]]
 
 -- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
 -- can use rls or rust_analyzer
@@ -812,13 +727,13 @@ require('gitsigns').setup {
 
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 
-local prettier = function ()
+--[[ local prettier = function ()
   return {
     exe = "prettier",
     args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
     stdin = true
   }
-end
+end ]]
 
 -- npm install -g @fsouza/prettierd
 local prettierd = function ()
@@ -1183,23 +1098,6 @@ require'surround'.setup {}
 require'twilight'.setup {}
 require'hop'.setup()
 
-require'high-str'.setup({
-	verbosity = 0,
-	saving_path = "/tmp/highstr/",
-	highlight_colors = {
-		-- color_id = {"bg_hex_code",<"fg_hex_code"/"smart">}
-		color_0 = {"#0c0d0e", "smart"},	-- Cosmic charcoal
-		color_1 = {"#e5c07b", "smart"},	-- Pastel yellow
-		color_2 = {"#7FFFD4", "smart"},	-- Aqua menthe
-		color_3 = {"#8A2BE2", "smart"},	-- Proton purple
-		color_4 = {"#FF4500", "smart"},	-- Orange red
-		color_5 = {"#008000", "smart"},	-- Office green
-		color_6 = {"#0000FF", "smart"},	-- Just blue
-		color_7 = {"#FFC0CB", "smart"},	-- Blush pink
-		color_8 = {"#FFF9E3", "smart"},	-- Cosmic latte
-		color_9 = {"#7d5c34", "smart"},	-- Fallow brown
-	}
-})
 require'nvim_context_vt'.setup({})
 
 require'rest-nvim'.setup({
