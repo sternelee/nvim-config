@@ -55,6 +55,7 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
+  use({'catppuccin/nvim', as = 'catppuccin'})
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -101,7 +102,7 @@ require('packer').startup(function()
         })
       end
   }
-  use 'jiangmiao/auto-pairs'
+  use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   use 'blackCauldron7/surround.nvim'
   use 'folke/which-key.nvim' -- 提示leader按键
@@ -330,7 +331,32 @@ require("indent_blankline").setup {
 }
 
 --theme
-cmd 'colorscheme nightfly'
+-- cmd 'colorscheme nightfly'
+local catppuccin = require("catppuccin")
+catppuccin.setup{
+  integrations = {
+  	lsp_trouble = true,
+  	lsp_saga = true,
+  	gitsigns = true,
+  	telescope = true,
+  	nvimtree = {
+  		enabled = true,
+  		show_root = true,
+  		transparent_panel = true,
+  	},
+  	which_key = true,
+  	indent_blankline = {
+  		enabled = true,
+  		colored_indent_levels = true,
+  	},
+  	dashboard = true,
+  	barbar = true,
+  	lightspeed = true,
+  	ts_rainbow = true,
+  	hop = true,
+  }
+}
+cmd 'colorscheme catppuccin'
 
 local notify = require("notify")
 vim.notify = notify
@@ -555,7 +581,6 @@ local on_attach = function(client, bufnr)
       hi link LspReferenceText Visual
       hi link LspReferenceWrite Visual
       augroup lsp_document_highlight
-        autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
@@ -1079,6 +1104,9 @@ dap_install.setup({
 
 require'neogen'.setup {
     enabled = true
+}
+require'nvim-autopairs'.setup{
+  disable_filetype = { "TelescopePrompt" , "vim" },
 }
 require'surround'.setup {}
 require'twilight'.setup {}
