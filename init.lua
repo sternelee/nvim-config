@@ -313,7 +313,8 @@ let g:VM_default_mappings = 0
 let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
-let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha', 'nvim-lsp-installer']
+let g:indent_blankline_filetype_exclude = ['help', 'lspinfo', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha']
+let g:indent_blankline_buftype_exclude = ['nvim-lsp-installer', 'registers']
 ]], false)
 
 --barbar
@@ -327,7 +328,6 @@ let bufferline.icons = 'both'
 g.vista_default_executive = 'nvim_lsp'
 
 require("indent_blankline").setup {
-    buftype_exclude = {"terminal", "telescope", "nvim-tree"},
     space_char_blankline = " ",
     show_current_context = true,
     show_current_context_start = true,
