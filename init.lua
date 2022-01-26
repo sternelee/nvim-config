@@ -42,6 +42,7 @@ require('packer').startup(function()
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -55,7 +56,6 @@ require('packer').startup(function()
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   use 'bluz71/vim-nightfly-guicolors'
-  use({'catppuccin/nvim', as = 'catppuccin'})
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -331,32 +331,7 @@ require("indent_blankline").setup {
 }
 
 --theme
--- cmd 'colorscheme nightfly'
-local catppuccin = require("catppuccin")
-catppuccin.setup{
-  integrations = {
-  	lsp_trouble = true,
-  	lsp_saga = true,
-  	gitsigns = true,
-  	telescope = true,
-  	nvimtree = {
-  		enabled = true,
-  		show_root = true,
-  		transparent_panel = true,
-  	},
-  	which_key = true,
-  	indent_blankline = {
-  		enabled = true,
-  		colored_indent_levels = true,
-  	},
-  	dashboard = true,
-  	barbar = true,
-  	lightspeed = true,
-  	ts_rainbow = true,
-  	hop = true,
-  }
-}
-cmd 'colorscheme catppuccin'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
@@ -417,6 +392,47 @@ require('nvim-treesitter.configs').setup {
   refactor = {
     highlight_definitions = { enable = true },
   },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["df"] = "@function.outer",
+        ["dF"] = "@class.outer",
+      },
+    },
+  },
   incremental_selection = {
     enable = true,
     disable = { "cpp", "lua" },
@@ -427,34 +443,6 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<S-TAB>',
     }
   },
-  lsp_interop = {
-    enable = true,
-    border = 'none',
-    peek_definition_code = {
-      ["df"] = "@function.outer",
-      ["dF"] = "@class.outer",
-    },
-  },
-  move = {
-    enable = true,
-    set_jumps = true, -- whether to set jumps in the jumplist
-    goto_next_start = {
-      ["]m"] = "@function.outer",
-      ["]]"] = "@class.outer",
-    },
-    goto_next_end = {
-      ["]M"] = "@function.outer",
-      ["]["] = "@class.outer",
-    },
-    goto_previous_start = {
-      ["[m"] = "@function.outer",
-      ["[["] = "@class.outer",
-    },
-    goto_previous_end = {
-      ["[M"] = "@function.outer",
-      ["[]"] = "@class.outer",
-    },
-  }
 }
 
 require('cmp-npm').setup({})
