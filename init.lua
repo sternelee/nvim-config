@@ -109,6 +109,7 @@ require('packer').startup(function()
   use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
+  use 'yamatsum/nvim-cursorline'
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
@@ -133,13 +134,13 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
-  -- use 'nvim-lua/lsp_extensions.nvim'
   use 'simrat39/rust-tools.nvim'
   use 'Saecki/crates.nvim'
   use {
     "NTBBloodbath/rest.nvim",
-    requires = { "nvim-lua/plenary.nvim" }
+    requires = {"nvim-lua/plenary.nvim" }
   }
+  use 'Pocco81/AutoSave.nvim'
 
 end)
 
@@ -244,14 +245,13 @@ map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
---[[ map('n', '<leader>z', '<cmd>TZAtaraxis<CR>')                           --ataraxis
-map('n', '<leader>x', '<cmd>TZAtaraxis l45 r45 t2 b2<CR>') ]]
 map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('t', '<leader>s', '<cmd>Vista<CR>')                   --fuzzN
+map('t', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -272,7 +272,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'("File changed on disk. Buffer reloaded!", 'warn', {'title': 'File Notify', timeout: '400'})]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 
@@ -1119,3 +1119,22 @@ require'rest-nvim'.setup({
   custom_dynamic_variables = {},
   yank_dry_run = true,
 })
+
+local autosave = require("autosave")
+autosave.setup(
+  {
+    enabled = true,
+    execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+    events = {"InsertLeave", "TextChanged"},
+    conditions = {
+        exists = true,
+        filename_is_not = {},
+        filetype_is_not = {},
+        modifiable = true
+    },
+    write_all_buffers = false,
+    on_off_commands = true,
+    clean_command_line_interval = 0,
+    debounce_delay = 135
+  }
+)
