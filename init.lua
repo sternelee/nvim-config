@@ -369,7 +369,7 @@ require'telescope'.load_extension('notify')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   disable_tokenziation_after_line = 3000,
   highlight = {
     enable = true,
@@ -380,14 +380,14 @@ require('nvim-treesitter.configs').setup {
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript"
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript"
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
   },
   refactor = {
