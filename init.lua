@@ -98,7 +98,7 @@ require('packer').startup(function()
         require('kommentary.config').use_extended_mappings()
         require('kommentary.config').configure_language("vue", {
             single_line_comment_string = "//",
-            multi_line_comment_strings = "//",
+            multi_line_comment_strings = "<--",
         })
       end
   }
@@ -140,7 +140,7 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = {"nvim-lua/plenary.nvim" }
   }
-  use 'Pocco81/AutoSave.nvim'
+  -- use 'Pocco81/AutoSave.nvim'
 
 end)
 
@@ -269,10 +269,10 @@ map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+-- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+-- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
+-- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 
@@ -369,24 +369,25 @@ require'telescope'.load_extension('notify')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "css", "scss", "json", "jsonc", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  disable_tokenziation_after_line = 3000,
   highlight = {
     enable = true,
     disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
+      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
     end
   },
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
+      return lang == "javascript"
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
+      return lang == "javascript"
     end,
   },
   refactor = {
@@ -1126,7 +1127,7 @@ require'rest-nvim'.setup({
   yank_dry_run = true,
 })
 
-local autosave = require("autosave")
+--[[ local autosave = require("autosave")
 autosave.setup(
   {
     enabled = true,
@@ -1143,4 +1144,4 @@ autosave.setup(
     clean_command_line_interval = 0,
     debounce_delay = 3000
   }
-)
+) ]]
