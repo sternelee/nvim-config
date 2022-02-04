@@ -617,7 +617,9 @@ local function setup_servers()
         },
       }
     end
-    server:setup(opts)
+    if vim.api.nvim_buf_line_count(0) < 6000 then
+      server:setup(opts)
+    end
   end)
 end
 
