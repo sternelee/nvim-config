@@ -28,7 +28,8 @@ require('packer').startup(function()
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-tree.lua'
-  use 'sidebar-nvim/sidebar.nvim'
+  -- use 'nvim-neo-tree/neo-tree'
+  -- use 'sidebar-nvim/sidebar.nvim'
   use {
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
@@ -38,6 +39,8 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'f-person/git-blame.nvim' -- 显示git message
+  use 'tanvirtin/vgit.nvim'
+  use 'sindrets/diffview.nvim' -- diff对比
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -55,7 +58,10 @@ require('packer').startup(function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
+  use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
+  use 'Iron-E/nvim-highlite'
+  -- use 'ThemerCorp/themer.lua'
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -84,7 +90,7 @@ require('packer').startup(function()
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
-  use { 'tami5/lspsaga.nvim', branch = 'nvim51' }
+  use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
   use 'liuchengxu/vista.vim'
   use 'kosayoda/nvim-lightbulb'
@@ -106,10 +112,9 @@ require('packer').startup(function()
   use 'windwp/nvim-ts-autotag'
   use 'blackCauldron7/surround.nvim'
   use 'folke/which-key.nvim' -- 提示leader按键
-  use 'sindrets/diffview.nvim' -- diff对比
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
-  use 'yamatsum/nvim-cursorline'
+  -- use 'yamatsum/nvim-cursorline'
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
@@ -125,10 +130,10 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  use {
+  --[[ use {
     'rcarriga/nvim-dap-ui',
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
-  }
+  } ]]
   use {
     "vuki656/package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
@@ -332,6 +337,7 @@ require("indent_blankline").setup {
 
 --theme
 cmd 'colorscheme nightfly'
+-- g.sonokai_style = 'andromeda'
 
 local notify = require("notify")
 vim.notify = notify
@@ -374,20 +380,21 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      -- return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 6000
     end
   },
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 6000
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+      return vim.api.nvim_buf_line_count(bufnr) > 6000
     end,
   },
   refactor = {
@@ -665,7 +672,7 @@ require'nvim-tree'.setup {
 }
 
 -- sidebar-nvim
-local sidebar = require("sidebar-nvim")
+--[[ local sidebar = require("sidebar-nvim")
 local opts = {
   open = false,
   initial_width = 30,
@@ -682,7 +689,7 @@ local opts = {
       }
   }
 }
-sidebar.setup(opts)
+-- sidebar.setup(opts) ]]
 
 --gitsigns
 require('gitsigns').setup {
@@ -724,6 +731,8 @@ require('gitsigns').setup {
     internal = false
   }
 }
+
+require'vgit'.setup()
 
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 
@@ -1091,11 +1100,11 @@ vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLea
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
-require("dapui").setup()
+--[[ require("dapui").setup()
 local dap_install = require("dap-install")
 dap_install.setup({
 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-})
+}) ]]
 
 require'neogen'.setup {
     enabled = true
