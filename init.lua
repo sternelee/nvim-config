@@ -27,7 +27,7 @@ require('packer').startup(function()
   -- 状态栏
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  use 'kyazdani42/nvim-tree.lua'
+  -- use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
   -- use 'sidebar-nvim/sidebar.nvim'
   use {
@@ -39,7 +39,7 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'f-person/git-blame.nvim' -- 显示git message
-  use 'tanvirtin/vgit.nvim'
+  -- use 'tanvirtin/vgit.nvim'
   use 'sindrets/diffview.nvim' -- diff对比
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
@@ -54,13 +54,13 @@ require('packer').startup(function()
   }
   use 'haringsrob/nvim_context_vt'
   use 'nvim-treesitter/playground'
-  use "folke/twilight.nvim"
+  use 'folke/twilight.nvim'
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
-  use 'sainnhe/sonokai'
+  -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
-  use 'Iron-E/nvim-highlite'
+  -- use 'Iron-E/nvim-highlite'
   -- use 'ThemerCorp/themer.lua'
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
@@ -92,7 +92,8 @@ require('packer').startup(function()
   use 'folke/lsp-trouble.nvim'
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
-  use 'liuchengxu/vista.vim'
+  -- use 'liuchengxu/vista.vim'
+  use 'stevearc/aerial.nvim'
   use 'kosayoda/nvim-lightbulb'
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -119,6 +120,7 @@ require('packer').startup(function()
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
   } -- 方便写注释
+  -- use 'renerocksai/telekasten.nvim'
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
@@ -250,13 +252,14 @@ map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
-map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+-- map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+-- map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+-- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('t', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
+-- map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
+map('n', '<leader>S', '<cmd>AerialToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -325,7 +328,7 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
-g.vista_default_executive = 'nvim_lsp'
+-- g.vista_default_executive = 'nvim_lsp'
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
@@ -582,8 +585,12 @@ local on_attach = function(client, bufnr)
       augroup END
     ]])
   end
-  local msg = string.format("Language server %s started!", client.name)
-  notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+
+  if client.name ~= 'jsonls' then
+    local msg = string.format("Language server %s started!", client.name)
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+    require('aerial').on_attach(client, bufnr)
+  end
 
 end
 
@@ -632,7 +639,7 @@ require'diffview'.setup{}
 require'rust-tools'.setup{}
 
 --nvim-tree
-require'nvim-tree'.setup {
+--[[ require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -671,7 +678,7 @@ require'nvim-tree'.setup {
   git = {
     enable = true
   }
-}
+} ]]
 
 -- sidebar-nvim
 --[[ local sidebar = require("sidebar-nvim")
@@ -734,7 +741,7 @@ require('gitsigns').setup {
   }
 }
 
-require'vgit'.setup()
+-- require'vgit'.setup()
 
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 
