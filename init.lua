@@ -384,20 +384,20 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     disable = function (lang, bufnr)
       -- return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
-      return vim.api.nvim_buf_line_count(bufnr) > 6000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end
   },
   rainbow = {
     enable = true,
     disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 6000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
     disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 6000
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
   },
   refactor = {
@@ -588,7 +588,7 @@ local on_attach = function(client, bufnr)
 
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
-    notify(msg, 'info', {title = 'LSP Notify', timeout = '400'})
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
     require('aerial').on_attach(client, bufnr)
   end
 
