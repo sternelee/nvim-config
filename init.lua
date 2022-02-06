@@ -10,7 +10,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Victor\ Mono:h18,VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -18,16 +18,17 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
+-- https://aca.github.io/neovim_startuptime.html
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  -- use 'nathom/filetype.nvim'
+  use 'nathom/filetype.nvim'
   -- 状态栏
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'romgrk/barbar.nvim'
-  -- use 'kyazdani42/nvim-tree.lua'
+  use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
   -- use 'sidebar-nvim/sidebar.nvim'
   use {
@@ -38,8 +39,8 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
+  use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
-  -- use 'tanvirtin/vgit.nvim'
   use 'sindrets/diffview.nvim' -- diff对比
   -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
@@ -61,7 +62,10 @@ require('packer').startup(function()
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'Iron-E/nvim-highlite'
-  -- use 'ThemerCorp/themer.lua'
+  use({
+  	"catppuccin/nvim",
+  	as = "catppuccin"
+  })
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -270,15 +274,15 @@ map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gl', '<cmd>Git pull<CR>')
-map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gl', '<cmd>Gina pull<CR>')
+map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 
--- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
--- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 -- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
@@ -339,8 +343,67 @@ require("indent_blankline").setup {
 }
 
 --theme
-cmd 'colorscheme nightfly'
+-- cmd 'colorscheme nightfly'
 -- g.sonokai_style = 'andromeda'
+cmd 'colorscheme catppuccin'
+local catppuccin = require("catppuccin")
+catppuccin.setup{
+  transparent_background = false,
+  term_colors = false,
+  styles = {
+  	comments = "italic",
+  	functions = "NONE",
+  	keywords = "italic",
+  	strings = "NONE",
+  	variables = "NONE",
+  },
+  integrations = {
+  	treesitter = true,
+  	native_lsp = {
+  		enabled = true,
+  		virtual_text = {
+  			errors = "italic",
+  			hints = "italic",
+  			warnings = "italic",
+  			information = "italic",
+  		},
+  		underlines = {
+  			errors = "underline",
+  			hints = "underline",
+  			warnings = "underline",
+  			information = "underline",
+  		},
+  	},
+  	lsp_trouble = true,
+  	cmp = true,
+  	lsp_saga = true,
+  	gitgutter = false,
+  	gitsigns = true,
+  	telescope = true,
+  	nvimtree = {
+  		enabled = true,
+  		show_root = false,
+  		transparent_panel = false,
+  	},
+  	which_key = true,
+  	indent_blankline = {
+  		enabled = true,
+  		colored_indent_levels = false,
+  	},
+  	dashboard = false,
+  	neogit = false,
+  	vim_sneak = false,
+  	fern = false,
+  	barbar = true,
+  	bufferline = true,
+  	markdown = true,
+  	lightspeed = true,
+  	ts_rainbow = true,
+  	hop = true,
+  	notify = true,
+  	telekasten = true,
+  }
+}
 
 local notify = require("notify")
 vim.notify = notify
@@ -379,26 +442,26 @@ require'telescope'.load_extension('notify')
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  disable_tokenziation_after_line = 3000,
+  disable_tokenziation_after_line = 10000,
   highlight = {
     enable = true,
-    disable = function (lang, bufnr)
+    --[[ disable = function (lang, bufnr)
       -- return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end
+    end ]]
   },
   rainbow = {
     enable = true,
-    disable = function (lang, bufnr)
+    --[[ disable = function (lang, bufnr)
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end,
+    end, ]]
     extended_mode = true,
   },
   autotag = {
     enable = true,
-    disable = function (lang, bufnr)
+    --[[ disable = function (lang, bufnr)
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end,
+    end, ]]
   },
   refactor = {
     highlight_definitions = { enable = true },
