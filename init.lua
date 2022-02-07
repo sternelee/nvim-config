@@ -10,7 +10,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Victor\ Mono:h18,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Monoid:h20,VictorMono\ NF:h20]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -19,6 +19,7 @@ end
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://aca.github.io/neovim_startuptime.html
+-- https://github.com/glepnir/nvim-lua-guide-zh
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -61,11 +62,12 @@ require('packer').startup(function()
   -- theme 主题
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
+  use 'Mofiqul/vscode.nvim'
   -- use 'Iron-E/nvim-highlite'
-  use({
+  --[[ use({
   	"catppuccin/nvim",
   	as = "catppuccin"
-  })
+  }) ]]
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -84,7 +86,9 @@ require('packer').startup(function()
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
+    {'rafamadriz/friendly-snippets'},
     {'hrsh7th/cmp-vsnip'},
+    {'hrsh7th/vim-vsnip-integ'},
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
@@ -256,8 +260,8 @@ map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
--- map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
--- map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 -- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
@@ -343,10 +347,12 @@ require("indent_blankline").setup {
 }
 
 --theme
--- cmd 'colorscheme nightfly'
+cmd 'colorscheme nightfly'
+g.vscode_style = "dark"
+g.vscode_transparent = 1
+g.vscode_italic_comment = 1
 -- g.sonokai_style = 'andromeda'
-cmd 'colorscheme catppuccin'
-local catppuccin = require("catppuccin")
+--[[ local catppuccin = require("catppuccin")
 catppuccin.setup{
   transparent_background = false,
   term_colors = false,
@@ -358,7 +364,7 @@ catppuccin.setup{
   	variables = "NONE",
   },
   integrations = {
-  	treesitter = true,
+  	treesitter = false,
   	native_lsp = {
   		enabled = true,
   		virtual_text = {
@@ -404,6 +410,7 @@ catppuccin.setup{
   	telekasten = true,
   }
 }
+cmd 'colorscheme catppuccin' ]]
 
 local notify = require("notify")
 vim.notify = notify
@@ -443,6 +450,7 @@ require'telescope'.load_extension('notify')
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   disable_tokenziation_after_line = 10000,
+  additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
     --[[ disable = function (lang, bufnr)
@@ -700,7 +708,7 @@ require'diffview'.setup{}
 require'rust-tools'.setup{}
 
 --nvim-tree
---[[ require'nvim-tree'.setup {
+require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -739,7 +747,7 @@ require'rust-tools'.setup{}
   git = {
     enable = true
   }
-} ]]
+}
 
 -- sidebar-nvim
 --[[ local sidebar = require("sidebar-nvim")
