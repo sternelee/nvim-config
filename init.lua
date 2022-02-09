@@ -94,10 +94,14 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
+    -- {'tzachar/cmp-tabnine', run='./install.sh'},
+    -- {'ray-x/cmp-treesitter'},
+    -- {'f3fora/cmp-spell'},
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
   use 'folke/lsp-trouble.nvim'
+  -- use {'kevinhwang91/nvim-bqf'}
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
   -- use 'liuchengxu/vista.vim'
@@ -252,6 +256,7 @@ map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
@@ -288,7 +293,7 @@ map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
--- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 
@@ -555,11 +560,14 @@ cmp.setup({
     { name = 'path' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
-    { name = 'buffer' },
-    { name='look', keyword_length=4, option={convert_case=true, loud=true}},
+    { name = 'buffer', option={keyword_length=2} },
+    { name = 'look', keyword_length=2, option={convert_case=true, loud=true}},
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'npm', keyword_length = 4 },
+    { name = 'npm', keyword_length = 3 },
+    -- { name = 'spell' },
+    -- { name = 'cmp_tabnine' },
+    -- { name = 'treesitter' },
     { name = 'crates' }
   },
   formatting = {
@@ -573,7 +581,8 @@ cmp.setup({
         calc = "   [Calc]",
         spell = "   [Spell]",
         emoji = " ﲃ  [Emoji]",
-        look = "↩︎ [Look]"
+        look = "👀 [Look]",
+        cmp_tabnine = "⦿ [TabNine]"
       })[entry.source.name]
       return vim_item
     end
