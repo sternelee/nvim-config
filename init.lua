@@ -27,34 +27,34 @@ require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
   -- 状态栏
-  use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
-  use 'romgrk/barbar.nvim'
+  use 'nvim-lualine/lualine.nvim'
+  use 'arkav/lualine-lsp-progress'
+  use 'kdheepak/tabline.nvim'
   use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
-  -- use 'sidebar-nvim/sidebar.nvim'
   use {
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
   }
   use 'SmiteshP/nvim-gps'
+  use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
-  use 'tpope/vim-fugitive'
+  -- use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'sindrets/diffview.nvim' -- diff对比
-  -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use {
+  --[[ use {
     'romgrk/nvim-treesitter-context',
     config = function()
       require("treesitter-context").setup {}
     end
-  }
-  use 'haringsrob/nvim_context_vt'
+  } -- treesitter导航太长，有gps就够了 ]]
+  -- use 'haringsrob/nvim_context_vt' -- TODO: 太多提示了很乱
   use 'nvim-treesitter/playground'
   use 'folke/twilight.nvim'
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
@@ -62,7 +62,7 @@ require('packer').startup(function()
   -- theme 主题
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
-  use 'Mofiqul/vscode.nvim'
+  -- use 'Mofiqul/vscode.nvim'
   -- use 'Iron-E/nvim-highlite'
   --[[ use({
   	"catppuccin/nvim",
@@ -86,7 +86,6 @@ require('packer').startup(function()
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
-    {'rafamadriz/friendly-snippets'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip-integ'},
     {'hrsh7th/vim-vsnip'},
@@ -94,9 +93,9 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'},
+    {'tzachar/cmp-tabnine', run='./install.sh'},
     -- {'ray-x/cmp-treesitter'},
-    -- {'f3fora/cmp-spell'},
+    -- {'f3fora/cmp-spell'}, -- look更好
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
@@ -107,12 +106,14 @@ require('packer').startup(function()
   -- use 'liuchengxu/vista.vim'
   use 'stevearc/aerial.nvim'
   use 'kosayoda/nvim-lightbulb'
+  use 'ray-x/lsp_signature.nvim'
+  -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
-  use { 'b3nj5m1n/kommentary',
+  --[[ use { 'b3nj5m1n/kommentary',
       config = function ()
         require('kommentary.config').use_extended_mappings()
         require('kommentary.config').configure_language("vue", {
@@ -120,14 +121,14 @@ require('packer').startup(function()
             multi_line_comment_strings = "<--",
         })
       end
-  }
+  } ]]
+  use 'numToStr/Comment.nvim'
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   use 'blackCauldron7/surround.nvim'
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
-  -- use 'yamatsum/nvim-cursorline'
   use {
     "danymat/neogen",
     requires = "nvim-treesitter/nvim-treesitter"
@@ -144,10 +145,10 @@ require('packer').startup(function()
       {'MunifTanjim/nui.nvim'}
     }
   }
-  --[[ use {
+  use {
     'rcarriga/nvim-dap-ui',
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
-  } ]]
+  }
   use {
     "vuki656/package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
@@ -159,7 +160,7 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = {"nvim-lua/plenary.nvim" }
   }
-  -- use 'Pocco81/AutoSave.nvim'
+  use 'nanotee/sqls.nvim'
 
 end)
 
@@ -333,14 +334,6 @@ let g:indent_blankline_filetype_exclude = ['help', 'lspinfo', 'dashboard', 'Nvim
 let g:indent_blankline_buftype_exclude = ['nvim-lsp-installer', 'registers']
 ]], false)
 
---barbar
-nvim_exec([[
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.animation = v:false
-let bufferline.auto_hide = v:true
-let bufferline.icons = 'both'
-]], false)
-
 -- g.vista_default_executive = 'nvim_lsp'
 
 vim.opt.list = true
@@ -353,69 +346,95 @@ require("indent_blankline").setup {
 
 --theme
 cmd 'colorscheme nightfly'
-g.vscode_style = "dark"
-g.vscode_transparent = 1
-g.vscode_italic_comment = 1
+
+-- g.vscode_style = "dark"
+-- g.vscode_transparent = 1
+-- g.vscode_italic_comment = 1
 -- g.sonokai_style = 'andromeda'
---[[ local catppuccin = require("catppuccin")
-catppuccin.setup{
-  transparent_background = false,
-  term_colors = false,
-  styles = {
-  	comments = "italic",
-  	functions = "NONE",
-  	keywords = "italic",
-  	strings = "NONE",
-  	variables = "NONE",
+
+-- lualine
+local gps = require("nvim-gps")
+gps.setup()
+
+local colors = {
+  blue   = '#80a0ff',
+  cyan   = '#79dac8',
+  black  = '#080808',
+  white  = '#c6c6c6',
+  red    = '#ff5189',
+  violet = '#d183e8',
+  grey   = '#303030',
+}
+
+local bubbles_theme = {
+  normal = {
+    a = { fg = colors.black, bg = colors.violet },
+    b = { fg = colors.white, bg = colors.grey },
+    c = { fg = colors.black, bg = colors.black },
   },
-  integrations = {
-  	treesitter = false,
-  	native_lsp = {
-  		enabled = true,
-  		virtual_text = {
-  			errors = "italic",
-  			hints = "italic",
-  			warnings = "italic",
-  			information = "italic",
-  		},
-  		underlines = {
-  			errors = "underline",
-  			hints = "underline",
-  			warnings = "underline",
-  			information = "underline",
-  		},
-  	},
-  	lsp_trouble = true,
-  	cmp = true,
-  	lsp_saga = true,
-  	gitgutter = false,
-  	gitsigns = true,
-  	telescope = true,
-  	nvimtree = {
-  		enabled = true,
-  		show_root = false,
-  		transparent_panel = false,
-  	},
-  	which_key = true,
-  	indent_blankline = {
-  		enabled = true,
-  		colored_indent_levels = false,
-  	},
-  	dashboard = false,
-  	neogit = false,
-  	vim_sneak = false,
-  	fern = false,
-  	barbar = true,
-  	bufferline = true,
-  	markdown = true,
-  	lightspeed = true,
-  	ts_rainbow = true,
-  	hop = true,
-  	notify = true,
-  	telekasten = true,
+
+  insert = { a = { fg = colors.black, bg = colors.blue } },
+  visual = { a = { fg = colors.black, bg = colors.cyan } },
+  replace = { a = { fg = colors.black, bg = colors.red } },
+
+  inactive = {
+    a = { fg = colors.white, bg = colors.black },
+    b = { fg = colors.white, bg = colors.black },
+    c = { fg = colors.black, bg = colors.black },
+  },
+}
+
+require('lualine').setup {
+  options = {
+    theme = bubbles_theme,
+    component_separators = '|',
+    section_separators = { left = '', right = '' },
+  },
+  sections = {
+    lualine_a = {
+      { 'mode', separator = { left = '' }, right_padding = 2 },
+    },
+    lualine_b = { 'filename', 'branch' },
+    lualine_c = {
+      {'fileformat'},
+      { gps.get_location, cond = gps.is_available },
+    },
+    lualine_x = {},
+    lualine_y = { 'filetype', 'progress' },
+    lualine_z = {
+      { 'location', separator = { right = '' }, left_padding = 2 },
+    },
+  },
+  inactive_sections = {
+    lualine_a = { 'filename' },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { 'location' },
+  },
+  tabline = {},
+  extensions = {},
+}
+
+-- tabline
+require'tabline'.setup {
+  -- Defaults configuration options
+  enable = true,
+  options = {
+  -- If lualine is installed tabline will use separators configured in lualine by default.
+  -- These options can be used to override those settings.
+    section_separators = {'', ''},
+    component_separators = {'', ''},
+    max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
+    show_tabs_always = false, -- this shows tabs only when there are more than one tab or if the first tab is named
+    show_devicons = true, -- this shows devicons in buffer section
+    show_bufnr = false, -- this appends [bufnr] to buffer section,
+    show_filename_only = false, -- shows base filename only instead of relative path in filename
+    modified_icon = "+ ", -- change the default modified icon
+    modified_italic = false, -- set to true by default; this determines whether the filename turns italic if modified
   }
 }
-cmd 'colorscheme catppuccin' ]]
 
 local notify = require("notify")
 vim.notify = notify
@@ -458,23 +477,23 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    --[[ disable = function (lang, bufnr)
+    disable = function (lang, bufnr)
       -- return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end ]]
+    end
   },
   rainbow = {
     enable = true,
-    --[[ disable = function (lang, bufnr)
+    disable = function (lang, bufnr)
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end, ]]
+    end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
-    --[[ disable = function (lang, bufnr)
+    disable = function (lang, bufnr)
       return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end, ]]
+    end,
   },
   refactor = {
     highlight_definitions = { enable = true },
@@ -566,7 +585,7 @@ cmp.setup({
     { name = 'emoji' },
     { name = 'npm', keyword_length = 3 },
     -- { name = 'spell' },
-    -- { name = 'cmp_tabnine' },
+    { name = 'cmp_tabnine' },
     -- { name = 'treesitter' },
     { name = 'crates' }
   },
@@ -669,7 +688,13 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require('aerial').on_attach(client, bufnr)
+    require'aerial'.on_attach(client, bufnr)
+    require'lsp_signature'.on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr)
   end
 
 end
@@ -757,26 +782,6 @@ require'nvim-tree'.setup {
     enable = true
   }
 }
-
--- sidebar-nvim
---[[ local sidebar = require("sidebar-nvim")
-local opts = {
-  open = false,
-  initial_width = 30,
-  bindings = { ["q"] = function() sidebar.close() end },
-  sections = {
-      "datetime",
-      "git",
-      "diagnostics",
-      require("dap-sidebar-nvim.breakpoints")
-  },
-  dap = {
-      breakpoints = {
-          icon = "🔍"
-      }
-  }
-}
--- sidebar.setup(opts) ]]
 
 --gitsigns
 require('gitsigns').setup {
@@ -878,220 +883,6 @@ require('formatter').setup({
   }
 })
 
-require("nvim-gps").setup()
-
--- windline config
-local windline = require('windline')
-local helper = require('windline.helpers')
-local sep = helper.separators
-local vim_components = require('windline.components.vim')
-
-local b_components = require('windline.components.basic')
-local state = _G.WindLine.state
-
-local lsp_comps = require('windline.components.lsp')
-local git_comps = require('windline.components.git')
-local gps = require("nvim-gps")
-
-b_components.gps = {
-	function()
-		if gps.is_available() then
-			return gps.get_location()
-		end
-		return ''
-	end,
-	{"white", "black"}
-}
-
-local hl_list = {
-    Black = { 'white', 'black' },
-    White = { 'black', 'white' },
-    Inactive = { 'InactiveFg', 'InactiveBg' },
-    Active = { 'ActiveFg', 'ActiveBg' },
-}
-local basic = {}
-
-basic.divider = { b_components.divider, '' }
-basic.file_name_inactive = { b_components.full_file_name, hl_list.Inactive }
-basic.line_col_inactive = { b_components.line_col, hl_list.Inactive }
-basic.progress_inactive = { b_components.progress, hl_list.Inactive }
-
-basic.vi_mode = {
-    name = 'vi_mode',
-    hl_colors = {
-        Normal = { 'black', 'red', 'bold' },
-        Insert = { 'black', 'green', 'bold' },
-        Visual = { 'black', 'yellow', 'bold' },
-        Replace = { 'black', 'blue_light', 'bold' },
-        Command = { 'black', 'magenta', 'bold' },
-        NormalBefore = { 'red', 'black' },
-        InsertBefore = { 'green', 'black' },
-        VisualBefore = { 'yellow', 'black' },
-        ReplaceBefore = { 'blue_light', 'black' },
-        CommandBefore = { 'magenta', 'black' },
-        NormalAfter = { 'white', 'red' },
-        InsertAfter = { 'white', 'green' },
-        VisualAfter = { 'white', 'yellow' },
-        ReplaceAfter = { 'white', 'blue_light' },
-        CommandAfter = { 'white', 'magenta' },
-    },
-    text = function()
-        return {
-            { sep.left_rounded, state.mode[2] .. 'Before' },
-            { state.mode[1] .. ' ', state.mode[2] },
-            { sep.left_rounded, state.mode[2] .. 'After' },
-        }
-    end,
-}
-
-basic.lsp_diagnos = {
-    name = 'diagnostic',
-    hl_colors = {
-        red = { 'red', 'black' },
-        yellow = { 'yellow', 'black' },
-        blue = { 'blue', 'black' },
-    },
-    width = 90,
-    text = function(bufnr)
-        if lsp_comps.check_lsp(bufnr) then
-            return {
-                { lsp_comps.lsp_error({ format = '  %s' }), 'red' },
-                { lsp_comps.lsp_warning({ format = '  %s' }), 'yellow' },
-                { lsp_comps.lsp_hint({ format = '  %s' }), 'blue' },
-            }
-        end
-        return ''
-    end,
-}
-
-basic.file = {
-    name = 'file',
-    hl_colors = {
-        default = hl_list.White,
-    },
-    text = function()
-        return {
-            {b_components.cache_file_icon({ default = '' }), 'default'},
-            { ' ', 'default' },
-            { b_components.cache_file_name('[No Name]', 'unique') },
-            { b_components.file_modified(' ')},
-            { b_components.cache_file_size()},
-        }
-    end,
-}
-
-basic.right = {
-    hl_colors = {
-        sep_before = { 'black_light', 'black' },
-        sep_after = { 'black_light', 'black' },
-        text = { 'white', 'black_light' },
-    },
-    text = function()
-        return {
-            { sep.left_rounded, 'sep_before' },
-            { 'l/n', 'text' },
-            { b_components.line_col_lua },
-            { '' },
-            { b_components.progress_lua },
-            { sep.right_rounded, 'sep_after' },
-        }
-    end,
-}
-basic.git = {
-    name = 'git',
-    width = 90,
-    hl_colors = {
-        green = { 'green', 'black' },
-        red = { 'red', 'black' },
-        blue = { 'blue', 'black' },
-    },
-    text = function(bufnr)
-        if git_comps.is_git(bufnr) then
-            return {
-                { ' ' },
-                { git_comps.diff_added({ format = ' %s' }), 'green' },
-                { git_comps.diff_removed({ format = '  %s' }), 'red' },
-                { git_comps.diff_changed({ format = ' 柳%s' }), 'blue' },
-            }
-        end
-        return ''
-    end,
-}
-
-local default = {
-    filetypes = { 'default' },
-    active = {
-        { ' ', hl_list.Black },
-        basic.vi_mode,
-        basic.file,
-        { vim_components.search_count(), { 'red', 'white' } },
-        { sep.right_rounded, hl_list.Black },
-        basic.lsp_diagnos,
-        basic.git,
-        { ' ', hl_list.Black },
-        b_components.gps,
-        basic.divider,
-        { git_comps.git_branch({ icon = '  ' }), { 'green', 'black' }, 90 },
-        { ' ', hl_list.Black },
-        basic.right,
-        { ' ', hl_list.Black },
-    },
-    inactive = {
-        basic.file_name_inactive,
-        basic.divider,
-        basic.divider,
-        basic.line_col_inactive,
-        { '', hl_list.Inactive },
-        basic.progress_inactive,
-    },
-}
-
-local quickfix = {
-    filetypes = { 'qf', 'Trouble' },
-    active = {
-        { '🚦 Quickfix ', { 'white', 'black' } },
-        { helper.separators.slant_right, { 'black', 'black_light' } },
-        {
-            function()
-                return vim.fn.getqflist({ title = 0 }).title
-            end,
-            { 'cyan', 'black_light' },
-        },
-        { ' Total : %L ', { 'cyan', 'black_light' } },
-        { helper.separators.slant_right, { 'black_light', 'InactiveBg' } },
-        { ' ', { 'InactiveFg', 'InactiveBg' } },
-        basic.divider,
-        { helper.separators.slant_right, { 'InactiveBg', 'black' } },
-        { '🧛 ', { 'white', 'black' } },
-    },
-    always_active = true,
-    show_last_status = true
-}
-
-local explorer = {
-    filetypes = { 'fern', 'NvimTree', 'lir' },
-    active = {
-        { '  ', { 'white', 'black_light' } },
-        { helper.separators.slant_right, { 'black_light', 'NormalBg' } },
-        { b_components.divider, '' },
-        { b_components.file_name(''), { 'NormalFg', 'NormalBg' } },
-    },
-    always_active = true,
-    show_last_status = true
-}
-
-windline.setup({
-    colors_name = function(colors)
-        -- ADD MORE COLOR HERE ----
-        return colors
-    end,
-    statuslines = {
-        default,
-        explorer,
-        quickfix,
-    },
-})
-
 require("which-key").setup {}
 require'colorizer'.setup{
   '*',
@@ -1187,23 +978,61 @@ vim.cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLea
 --[[ local neogit = require('neogit')
 neogit.setup {} ]]
 
---[[ require("dapui").setup()
+require("dapui").setup()
 local dap_install = require("dap-install")
 dap_install.setup({
 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-}) ]]
+})
 
 require'neogen'.setup {
     enabled = true
 }
 require'nvim-autopairs'.setup{
-  disable_filetype = { "TelescopePrompt" , "vim" },
+  check_ts = true,
+  ts_config = {
+    lua = { "string", "source" },
+    javascript = { "string", "template_string" },
+    java = false,
+  },
+  disable_filetype = { "TelescopePrompt", "spectre_panel" },
+  fast_wrap = {
+    map = "<M-e>",
+    chars = { "{", "[", "(", '"', "'" },
+    pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+    offset = 0, -- Offset from pattern match
+    end_key = "$",
+    keys = "qwertyuiopzxcvbnmasdfghjkl",
+    check_comma = true,
+    highlight = "PmenuSel",
+    highlight_grey = "LineNr",
+  },
 }
+
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
+
 require'surround'.setup {}
 require'twilight'.setup {}
 require'hop'.setup()
+require'comment'.setup {
+  pre_hook = function(ctx)
+    local U = require "Comment.utils"
 
-require'nvim_context_vt'.setup({})
+    local location = nil
+    if ctx.ctype == U.ctype.block then
+      location = require("ts_context_commentstring.utils").get_cursor_location()
+    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+      location = require("ts_context_commentstring.utils").get_visual_start_location()
+    end
+
+    return require("ts_context_commentstring.internal").calculate_commentstring {
+      key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
+      location = location,
+    }
+  end,
+}
+
+-- require'nvim_context_vt'.setup({})
 
 require'rest-nvim'.setup({
   result_split_horizontal = false,
@@ -1223,21 +1052,21 @@ require'rest-nvim'.setup({
   yank_dry_run = true,
 })
 
---[[ local autosave = require("autosave")
-autosave.setup(
-  {
-    enabled = true,
-    execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-    events = {"InsertLeave", "TextChanged"},
-    conditions = {
-        exists = true,
-        filename_is_not = {},
-        filetype_is_not = {},
-        modifiable = true
-    },
-    write_all_buffers = false,
-    on_off_commands = true,
-    clean_command_line_interval = 0,
-    debounce_delay = 3000
+local sidebar = require("sidebar-nvim")
+local opts = {
+  open = false,
+  initial_width = 30,
+  bindings = { ["q"] = function() sidebar.close() end },
+  sections = {
+      "datetime",
+      "git",
+      "diagnostics",
+      require("dap-sidebar-nvim.breakpoints")
+  },
+  dap = {
+      breakpoints = {
+          icon = "🔍"
+      }
   }
-) ]]
+}
+sidebar.setup(opts)
