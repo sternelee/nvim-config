@@ -27,8 +27,7 @@ require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
   -- 状态栏
-  use 'nvim-lualine/lualine.nvim'
-  use 'arkav/lualine-lsp-progress'
+  use {'nvim-lualine/lualine.nvim', requires = {'arkav/lualine-lsp-progress'}}
   use 'kdheepak/tabline.nvim'
   use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
@@ -36,7 +35,7 @@ require('packer').startup(function()
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  use 'SmiteshP/nvim-gps'
+  -- use 'SmiteshP/nvim-gps'
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
@@ -48,12 +47,12 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  --[[ use {
+  use {
     'romgrk/nvim-treesitter-context',
     config = function()
       require("treesitter-context").setup {}
     end
-  } -- treesitter导航太长，有gps就够了 ]]
+  }
   -- use 'haringsrob/nvim_context_vt' -- TODO: 太多提示了很乱
   use 'nvim-treesitter/playground'
   use 'folke/twilight.nvim'
@@ -122,7 +121,7 @@ require('packer').startup(function()
         })
       end
   } ]]
-  use 'numToStr/Comment.nvim'
+  use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   use 'blackCauldron7/surround.nvim'
@@ -279,8 +278,9 @@ map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
-map('n', '<c-x>', '<cmd>BufferClose<CR>')
-map('n', 'gb', '<cmd>BufferPick<CR>')
+-- map('n', '<c-x>', '<cmd>BufferClose<CR>')
+-- map('n', 'gb', '<cmd>BufferPick<CR>')
+map('n', '<c-x>', '<cmd>bufdo bd<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
@@ -319,10 +319,10 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
-for _, num in pairs(numbers) do
-  map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
-end
+-- local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+-- for _, num in pairs(numbers) do
+--   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
+-- end
 
 nvim_exec([[
 let g:VM_maps = {}
@@ -353,9 +353,6 @@ cmd 'colorscheme nightfly'
 -- g.sonokai_style = 'andromeda'
 
 -- lualine
-local gps = require("nvim-gps")
-gps.setup()
-
 local colors = {
   blue   = '#80a0ff',
   cyan   = '#79dac8',
@@ -395,10 +392,7 @@ require('lualine').setup {
       { 'mode', separator = { left = '' }, right_padding = 2 },
     },
     lualine_b = { 'filename', 'branch' },
-    lualine_c = {
-      {'fileformat'},
-      { gps.get_location, cond = gps.is_available },
-    },
+    lualine_c = { 'fileformat', 'lsp_progress' },
     lualine_x = {},
     lualine_y = { 'filetype', 'progress' },
     lualine_z = {
