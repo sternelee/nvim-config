@@ -574,14 +574,14 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer', option={keyword_length=2} },
-    { name = 'look', keyword_length=2, option={convert_case=true, loud=true}},
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'npm', keyword_length = 3 },
     -- { name = 'spell' },
     { name = 'cmp_tabnine' },
     -- { name = 'treesitter' },
-    { name = 'crates' }
+    { name = 'crates' },
+    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = function(entry, vim_item)
