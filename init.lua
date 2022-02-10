@@ -27,15 +27,15 @@ require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
   -- 状态栏
-  use {'nvim-lualine/lualine.nvim', requires = {'arkav/lualine-lsp-progress'}}
-  use 'kdheepak/tabline.nvim'
+  use 'romgrk/barbar.nvim'
+  use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
   use {
       'goolord/alpha-nvim',
       requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
@@ -267,7 +267,7 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
--- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
@@ -278,9 +278,8 @@ map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
--- map('n', '<c-x>', '<cmd>BufferClose<CR>')
--- map('n', 'gb', '<cmd>BufferPick<CR>')
-map('n', '<c-x>', '<cmd>bufdo bd<CR>')
+map('n', '<c-x>', '<cmd>BufferClose<CR>')
+map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
@@ -319,10 +318,10 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
--- for _, num in pairs(numbers) do
---   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
--- end
+local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+for _, num in pairs(numbers) do
+  map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
+end
 
 nvim_exec([[
 let g:VM_maps = {}
@@ -332,6 +331,14 @@ let g:VM_maps["Add Cursor Up"] = '<A-k>'
 let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
 let g:indent_blankline_filetype_exclude = ['help', 'lspinfo', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha']
 let g:indent_blankline_buftype_exclude = ['nvim-lsp-installer', 'registers']
+]], false)
+
+--barbar
+nvim_exec([[
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.animation = v:false
+let bufferline.auto_hide = v:true
+let bufferline.icons = 'both'
 ]], false)
 
 -- g.vista_default_executive = 'nvim_lsp'
@@ -352,83 +359,219 @@ cmd 'colorscheme nightfly'
 -- g.vscode_italic_comment = 1
 -- g.sonokai_style = 'andromeda'
 
--- lualine
-local colors = {
-  blue   = '#80a0ff',
-  cyan   = '#79dac8',
-  black  = '#080808',
-  white  = '#c6c6c6',
-  red    = '#ff5189',
-  violet = '#d183e8',
-  grey   = '#303030',
+-- windline config
+local windline = require('windline')
+local helper = require('windline.helpers')
+local sep = helper.separators
+local vim_components = require('windline.components.vim')
+
+local b_components = require('windline.components.basic')
+local state = _G.WindLine.state
+
+local lsp_comps = require('windline.components.lsp')
+local git_comps = require('windline.components.git')
+local gps = require("nvim-gps")
+gps.setup()
+
+b_components.gps = {
+  function()
+    if gps.is_available() then
+      return gps.get_location()
+    end
+    return ''
+  end,
+  {"white", "black"}
 }
 
-local bubbles_theme = {
-  normal = {
-    a = { fg = colors.black, bg = colors.violet },
-    b = { fg = colors.white, bg = colors.grey },
-    c = { fg = colors.black, bg = colors.black },
-  },
-
-  insert = { a = { fg = colors.black, bg = colors.blue } },
-  visual = { a = { fg = colors.black, bg = colors.cyan } },
-  replace = { a = { fg = colors.black, bg = colors.red } },
-
-  inactive = {
-    a = { fg = colors.white, bg = colors.black },
-    b = { fg = colors.white, bg = colors.black },
-    c = { fg = colors.black, bg = colors.black },
-  },
+local hl_list = {
+    Black = { 'white', 'black' },
+    White = { 'black', 'white' },
+    Inactive = { 'InactiveFg', 'InactiveBg' },
+    Active = { 'ActiveFg', 'ActiveBg' },
 }
+local basic = {}
 
-require('lualine').setup {
-  options = {
-    theme = bubbles_theme,
-    component_separators = '|',
-    section_separators = { left = '', right = '' },
-  },
-  sections = {
-    lualine_a = {
-      { 'mode', separator = { left = '' }, right_padding = 2 },
+basic.divider = { b_components.divider, '' }
+basic.file_name_inactive = { b_components.full_file_name, hl_list.Inactive }
+basic.line_col_inactive = { b_components.line_col, hl_list.Inactive }
+basic.progress_inactive = { b_components.progress, hl_list.Inactive }
+
+basic.vi_mode = {
+    name = 'vi_mode',
+    hl_colors = {
+        Normal = { 'black', 'red', 'bold' },
+        Insert = { 'black', 'green', 'bold' },
+        Visual = { 'black', 'yellow', 'bold' },
+        Replace = { 'black', 'blue_light', 'bold' },
+        Command = { 'black', 'magenta', 'bold' },
+        NormalBefore = { 'red', 'black' },
+        InsertBefore = { 'green', 'black' },
+        VisualBefore = { 'yellow', 'black' },
+        ReplaceBefore = { 'blue_light', 'black' },
+        CommandBefore = { 'magenta', 'black' },
+        NormalAfter = { 'white', 'red' },
+        InsertAfter = { 'white', 'green' },
+        VisualAfter = { 'white', 'yellow' },
+        ReplaceAfter = { 'white', 'blue_light' },
+        CommandAfter = { 'white', 'magenta' },
     },
-    lualine_b = { 'filename', 'branch' },
-    lualine_c = { 'fileformat', 'lsp_progress' },
-    lualine_x = {},
-    lualine_y = { 'filetype', 'progress' },
-    lualine_z = {
-      { 'location', separator = { right = '' }, left_padding = 2 },
-    },
-  },
-  inactive_sections = {
-    lualine_a = { 'filename' },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = { 'location' },
-  },
-  tabline = {},
-  extensions = {},
+    text = function()
+        return {
+            { sep.left_rounded, state.mode[2] .. 'Before' },
+            { state.mode[1] .. ' ', state.mode[2] },
+            { sep.left_rounded, state.mode[2] .. 'After' },
+        }
+    end,
 }
 
--- tabline
-require'tabline'.setup {
-  -- Defaults configuration options
-  enable = true,
-  options = {
-  -- If lualine is installed tabline will use separators configured in lualine by default.
-  -- These options can be used to override those settings.
-    section_separators = {'', ''},
-    component_separators = {'', ''},
-    max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
-    show_tabs_always = false, -- this shows tabs only when there are more than one tab or if the first tab is named
-    show_devicons = true, -- this shows devicons in buffer section
-    show_bufnr = false, -- this appends [bufnr] to buffer section,
-    show_filename_only = false, -- shows base filename only instead of relative path in filename
-    modified_icon = "+ ", -- change the default modified icon
-    modified_italic = false, -- set to true by default; this determines whether the filename turns italic if modified
-  }
+basic.lsp_diagnos = {
+    name = 'diagnostic',
+    hl_colors = {
+        red = { 'red', 'black' },
+        yellow = { 'yellow', 'black' },
+        blue = { 'blue', 'black' },
+    },
+    width = 90,
+    text = function(bufnr)
+        if lsp_comps.check_lsp(bufnr) then
+            return {
+                { lsp_comps.lsp_error({ format = '  %s' }), 'red' },
+                { lsp_comps.lsp_warning({ format = '  %s' }), 'yellow' },
+                { lsp_comps.lsp_hint({ format = '  %s' }), 'blue' },
+            }
+        end
+        return ''
+    end,
 }
+
+basic.file = {
+    name = 'file',
+    hl_colors = {
+        default = hl_list.White,
+    },
+    text = function()
+        return {
+            {b_components.cache_file_icon({ default = '' }), 'default'},
+            { ' ', 'default' },
+            { b_components.cache_file_name('[No Name]', 'unique') },
+            { b_components.file_modified(' ')},
+            { b_components.cache_file_size()},
+        }
+    end,
+}
+
+basic.right = {
+    hl_colors = {
+        sep_before = { 'black_light', 'black' },
+        sep_after = { 'black_light', 'black' },
+        text = { 'white', 'black_light' },
+    },
+    text = function()
+        return {
+            { sep.left_rounded, 'sep_before' },
+            { 'l/n', 'text' },
+            { b_components.line_col_lua },
+            { '' },
+            { b_components.progress_lua },
+            { sep.right_rounded, 'sep_after' },
+        }
+    end,
+}
+basic.git = {
+    name = 'git',
+    width = 90,
+    hl_colors = {
+        green = { 'green', 'black' },
+        red = { 'red', 'black' },
+        blue = { 'blue', 'black' },
+    },
+    text = function(bufnr)
+        if git_comps.is_git(bufnr) then
+            return {
+                { ' ' },
+                { git_comps.diff_added({ format = ' %s' }), 'green' },
+                { git_comps.diff_removed({ format = '  %s' }), 'red' },
+                { git_comps.diff_changed({ format = ' 柳%s' }), 'blue' },
+            }
+        end
+        return ''
+    end,
+}
+
+local default = {
+    filetypes = { 'default' },
+    active = {
+        { ' ', hl_list.Black },
+        basic.vi_mode,
+        basic.file,
+        { vim_components.search_count(), { 'red', 'white' } },
+        { sep.right_rounded, hl_list.Black },
+        basic.lsp_diagnos,
+        basic.git,
+        { ' ', hl_list.Black },
+        b_components.gps,
+        basic.divider,
+        { git_comps.git_branch({ icon = '  ' }), { 'green', 'black' }, 90 },
+        { ' ', hl_list.Black },
+        basic.right,
+        { ' ', hl_list.Black },
+    },
+    inactive = {
+        basic.file_name_inactive,
+        basic.divider,
+        basic.divider,
+        basic.line_col_inactive,
+        { '', hl_list.Inactive },
+        basic.progress_inactive,
+    },
+}
+
+local quickfix = {
+    filetypes = { 'qf', 'Trouble' },
+    active = {
+        { '🚦 Quickfix ', { 'white', 'black' } },
+        { helper.separators.slant_right, { 'black', 'black_light' } },
+        {
+            function()
+                return vim.fn.getqflist({ title = 0 }).title
+            end,
+            { 'cyan', 'black_light' },
+        },
+        { ' Total : %L ', { 'cyan', 'black_light' } },
+        { helper.separators.slant_right, { 'black_light', 'InactiveBg' } },
+        { ' ', { 'InactiveFg', 'InactiveBg' } },
+        basic.divider,
+        { helper.separators.slant_right, { 'InactiveBg', 'black' } },
+        { '🧛 ', { 'white', 'black' } },
+    },
+    always_active = true,
+    show_last_status = true
+}
+
+local explorer = {
+    filetypes = { 'fern', 'NvimTree', 'lir' },
+    active = {
+        { '  ', { 'white', 'black_light' } },
+        { helper.separators.slant_right, { 'black_light', 'NormalBg' } },
+        { b_components.divider, '' },
+        { b_components.file_name(''), { 'NormalFg', 'NormalBg' } },
+    },
+    always_active = true,
+    show_last_status = true
+}
+
+windline.setup({
+    colors_name = function(colors)
+        -- ADD MORE COLOR HERE ----
+        return colors
+    end,
+    statuslines = {
+        default,
+        explorer,
+        quickfix,
+    },
+})
+
 
 local notify = require("notify")
 vim.notify = notify
