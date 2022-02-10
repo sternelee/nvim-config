@@ -39,7 +39,7 @@ require('packer').startup(function()
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
-  -- use 'tpope/vim-fugitive'
+  use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
   use 'sindrets/diffview.nvim' -- diff对比
