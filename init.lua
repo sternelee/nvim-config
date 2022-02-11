@@ -61,7 +61,6 @@ require('packer').startup(function()
   -- theme 主题
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
-  -- use 'Mofiqul/vscode.nvim'
   -- use 'Iron-E/nvim-highlite'
   --[[ use({
   	"catppuccin/nvim",
@@ -102,8 +101,8 @@ require('packer').startup(function()
   -- use {'kevinhwang91/nvim-bqf'}
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
-  -- use 'liuchengxu/vista.vim'
-  use 'stevearc/aerial.nvim'
+  use 'liuchengxu/vista.vim'
+  -- use 'stevearc/aerial.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'ray-x/lsp_signature.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
@@ -271,8 +270,8 @@ map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
--- map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
-map('n', '<leader>S', '<cmd>AerialToggle<CR>')
+map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
+-- map('n', '<leader>S', '<cmd>AerialToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -341,22 +340,20 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
--- g.vista_default_executive = 'nvim_lsp'
+g.vista_default_executive = 'nvim_lsp'
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 require("indent_blankline").setup {
     space_char_blankline = " ",
     show_current_context = true,
-    show_current_context_start = true
+    show_current_context_start = true,
+    use_treesitter = true
 }
 
 --theme
 cmd 'colorscheme nightfly'
 
--- g.vscode_style = "dark"
--- g.vscode_transparent = 1
--- g.vscode_italic_comment = 1
 -- g.sonokai_style = 'andromeda'
 
 -- windline config
@@ -825,13 +822,14 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require'aerial'.on_attach(client, bufnr)
+    -- require'aerial'.on_attach(client, bufnr)
     require'lsp_signature'.on_attach({
       bind = true,
       handler_opts = {
         border = "rounded"
       }
     }, bufnr)
+    require('sqls').on_attach(client, bufnr)
   end
 
 end
