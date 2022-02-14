@@ -18,7 +18,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
--- https://aca.github.io/neovim_startuptime.html
 -- https://github.com/glepnir/nvim-lua-guide-zh
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
@@ -31,10 +30,7 @@ require('packer').startup(function()
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   -- use 'nvim-neo-tree/neo-tree'
-  use {
-      'goolord/alpha-nvim',
-      requires = { 'kyazdani42/nvim-web-devicons' }
-  }
+  use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
@@ -74,7 +70,7 @@ require('packer').startup(function()
   use 'phaazon/hop.nvim'
   use 'ggandor/lightspeed.nvim'
   use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-fzy-native.nvim'
+  -- use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
   use 'neovim/nvim-lspconfig'
@@ -90,10 +86,10 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
-    {'octaltree/cmp-look'},
-    {'tzachar/cmp-tabnine', run='./install.sh'},
+    -- {'octaltree/cmp-look'},
+    -- {'tzachar/cmp-tabnine', run='./install.sh'},
     -- {'ray-x/cmp-treesitter'},
-    -- {'f3fora/cmp-spell'}, -- look更好
+    {'f3fora/cmp-spell'}, -- look更好
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
@@ -158,7 +154,8 @@ require('packer').startup(function()
     "NTBBloodbath/rest.nvim",
     requires = {"nvim-lua/plenary.nvim" }
   }
-  use 'nanotee/sqls.nvim'
+  -- use 'nanotee/sqls.nvim'
+  -- use 'hoschi/yode-nvim'
 
 end)
 
@@ -199,7 +196,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', false)
+opt('o', 'wrap', true)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -220,6 +217,7 @@ opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
+opt('o', 'showtabline', 2)
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -289,11 +287,19 @@ map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+-- map('n', '<leader>yc', '<cmd>YodeCreateSeditorFloating<CR>')
+-- map('n', '<leader>yr', '<cmd>YodeCreateSeditorReplace<CR>')
+-- map('n', '<leader>bd', '<cmd>YodeBufferDelete<CR>')
+-- map('i', '<leader>bd', '<cmd>YodeBufferDelete<CR>')
+-- map('n', '<C-W>r', '<cmd>YodeLayoutShiftWinDown<CR>')
+-- map('n', '<C-W>R', '<cmd>YodeLayoutShiftWinUp<CR>')
+-- map('n', '<C-W>J', '<cmd>YodeLayoutShiftWinBottom<CR>')
+-- map('n', '<C-W>K', '<cmd>YodeLayoutShiftWinTop<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+-- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+-- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
+-- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 
@@ -591,17 +597,17 @@ require('telescope').setup {
     }
   },
   extensions = {
-    fzy_native = {
-      override_generic_sorter = false,
-      override_file_sorter = true,
-    },
+    -- fzy_native = {
+    --   override_generic_sorter = false,
+    --   override_file_sorter = true,
+    -- },
     file_browser = {
       theme = "ivy",
     },
   },
 }
 
-require'telescope'.load_extension('fzy_native')
+-- require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 
@@ -718,11 +724,11 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'npm', keyword_length = 3 },
-    -- { name = 'spell' },
-    { name = 'cmp_tabnine' },
+    { name = 'spell' },
+    -- { name = 'cmp_tabnine' },
     -- { name = 'treesitter' },
     { name = 'crates' },
-    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
+    -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = function(entry, vim_item)
@@ -830,7 +836,7 @@ local on_attach = function(client, bufnr)
         border = "rounded"
       }
     }, bufnr)
-    require('sqls').on_attach(client, bufnr)
+    -- require('sqls').on_attach(client, bufnr)
   end
 
 end
@@ -877,7 +883,6 @@ require'lspkind'.init()
 require'diffview'.setup{}
 require'rust-tools'.setup{}
 
---nvim-tree
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
@@ -1122,6 +1127,7 @@ dap_install.setup({
 require'neogen'.setup {
     enabled = true
 }
+
 require'nvim-autopairs'.setup{
   check_ts = true,
   ts_config = {
@@ -1205,3 +1211,5 @@ local opts = {
   }
 }
 sidebar.setup(opts)
+
+-- require'yode-nvim'.setup({})
