@@ -58,10 +58,10 @@ require('packer').startup(function()
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'Iron-E/nvim-highlite'
-  use({
-  	"catppuccin/nvim",
-  	as = "catppuccin"
-  })
+  -- use({
+  -- 	"catppuccin/nvim",
+  -- 	as = "catppuccin"
+  -- })
   -- 显示导航线
   use 'lukas-reineke/indent-blankline.nvim'
   -- 导航finder操作
@@ -119,7 +119,8 @@ require('packer').startup(function()
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
-  use 'blackCauldron7/surround.nvim'
+  -- use 'blackCauldron7/surround.nvim' -- 改用vim-sandwich
+  use 'machakann/vim-sandwich'
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
@@ -1203,7 +1204,7 @@ require'nvim-autopairs'.setup{
 -- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
-require'surround'.setup {}
+-- require'surround'.setup {}
 require'twilight'.setup {}
 require'hop'.setup()
 require'comment'.setup {
