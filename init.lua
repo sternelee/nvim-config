@@ -68,7 +68,7 @@ require('packer').startup(function()
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens' -- 显示高亮的按键位置
   use 'phaazon/hop.nvim'
-  use 'ggandor/lightspeed.nvim'
+  -- use 'ggandor/lightspeed.nvim' -- 与hop重复
   use 'nvim-telescope/telescope.nvim'
   -- use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -85,7 +85,7 @@ require('packer').startup(function()
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-cmdline'},
+    -- {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'},
     -- {'ray-x/cmp-treesitter'},
@@ -632,13 +632,13 @@ windline.setup({
 local notify = require("notify")
 vim.notify = notify
 
-require'lightspeed'.setup {
-  match_only_the_start_of_same_char_seqs = true,
-  limit_ft_matches = 5,
-  labels = nil,
-  cycle_group_fwd_key = nil,
-  cycle_group_bwd_key = nil,
-}
+-- require'lightspeed'.setup {
+--   match_only_the_start_of_same_char_seqs = true,
+--   limit_ft_matches = 5,
+--   labels = nil,
+--   cycle_group_fwd_key = nil,
+--   cycle_group_bwd_key = nil,
+-- }
 
 require('telescope').setup {
   defaults = {
@@ -815,19 +815,21 @@ cmp.setup({
   }
 })
 
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
 
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- 在代码屏幕显示太多显示存在困扰
+-- cmp.setup.cmdline('/', {
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+--
+-- cmp.setup.cmdline(':', {
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
