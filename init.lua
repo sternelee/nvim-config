@@ -38,21 +38,21 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use 'f-person/git-blame.nvim' -- 显示git message
-  use 'sindrets/diffview.nvim' -- diff对比
+  use {'sindrets/diffview.nvim', event = 'InsertEnter', config = function() require('diffview'):setup() end} -- diff对比
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require("treesitter-context").setup {}
-    end
-  }
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end
+  -- }
   -- use 'haringsrob/nvim_context_vt' -- TODO: 太多提示了很乱
   use 'nvim-treesitter/playground'
-  use 'folke/twilight.nvim'
-  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
+  use {'folke/twilight.nvim', event = 'InsertEnter', config = function() require('twilight'):setup() end}
+use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use 'ellisonleao/glow.nvim' -- markdown 文件预览
   -- theme 主题
   -- use 'sainnhe/sonokai'
@@ -67,7 +67,7 @@ require('packer').startup(function()
   -- 导航finder操作
   use 'mg979/vim-visual-multi'
   use 'kevinhwang91/nvim-hlslens' -- 显示高亮的按键位置
-  use 'phaazon/hop.nvim'
+  use {'phaazon/hop.nvim', event = 'InsertEnter', config = function() require('hop'):setup() end}
   -- use 'ggandor/lightspeed.nvim' -- 与hop重复
   use 'nvim-telescope/telescope.nvim'
   -- use 'nvim-telescope/telescope-fzy-native.nvim'
@@ -93,7 +93,7 @@ require('packer').startup(function()
     {'David-Kunz/cmp-npm'}
   }}
   -- 语法提示
-  use 'folke/lsp-trouble.nvim'
+  use {'folke/lsp-trouble.nvim', event = 'InsertEnter', config = function() require('trouble'):setup() end}
   -- use {'kevinhwang91/nvim-bqf'}
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
@@ -117,7 +117,8 @@ require('packer').startup(function()
       end
   } ]]
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use 'windwp/nvim-autopairs'
+  use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  -- use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   -- use 'blackCauldron7/surround.nvim' -- 改用vim-sandwich
   use 'machakann/vim-sandwich'
@@ -125,8 +126,14 @@ require('packer').startup(function()
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
   use {
-    "danymat/neogen",
-    requires = "nvim-treesitter/nvim-treesitter"
+    'danymat/neogen',
+    requires = 'nvim-treesitter/nvim-treesitter',
+    event = 'InsertEnter',
+    config = function()
+      require'neogen'.setup {
+          enabled = true
+      }
+    end
   } -- 方便写注释
   -- use 'renerocksai/telekasten.nvim'
   use 'ntpeters/vim-better-whitespace'
@@ -149,13 +156,14 @@ require('packer').startup(function()
     requires = "MunifTanjim/nui.nvim",
   }
   -- rust
-  use 'simrat39/rust-tools.nvim'
+  use {'simrat39/rust-tools.nvim', event = 'InsertEnter', config = function() require('rust-tools'):setup() end}
   use 'Saecki/crates.nvim'
   use {
     "NTBBloodbath/rest.nvim",
     requires = {"nvim-lua/plenary.nvim" }
   }
   -- use 'nanotee/sqls.nvim'
+  -- use 'KenN7/vim-arsync'
 
 end)
 
@@ -268,6 +276,7 @@ map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', '<leader>:', '<cmd>terminal<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
@@ -933,10 +942,7 @@ end
 setup_servers()
 
 -- vim.lsp.set_log_level("debug")
-require'trouble'.setup {}
 require'lspkind'.init()
-require'diffview'.setup{}
-require'rust-tools'.setup{}
 
 require'nvim-tree'.setup {
   disable_netrw       = true,
@@ -1179,37 +1185,32 @@ dap_install.setup({
 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
 })
 
-require'neogen'.setup {
-    enabled = true
-}
-
-require'nvim-autopairs'.setup{
-  check_ts = true,
-  ts_config = {
-    lua = { "string", "source" },
-    javascript = { "string", "template_string" },
-    java = false,
-  },
-  disable_filetype = { "TelescopePrompt", "spectre_panel" },
-  fast_wrap = {
-    map = "<M-e>",
-    chars = { "{", "[", "(", '"', "'" },
-    pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-    offset = 0, -- Offset from pattern match
-    end_key = "$",
-    keys = "qwertyuiopzxcvbnmasdfghjkl",
-    check_comma = true,
-    highlight = "PmenuSel",
-    highlight_grey = "LineNr",
-  },
-}
+-- require'nvim-autopairs'.setup{
+--   check_ts = true,
+--   ts_config = {
+--     lua = { "string", "source" },
+--     javascript = { "string", "template_string" },
+--     java = false,
+--   },
+--   disable_filetype = { "TelescopePrompt", "spectre_panel" },
+--   fast_wrap = {
+--     map = "<M-e>",
+--     chars = { "{", "[", "(", '"', "'" },
+--     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+--     offset = 0, -- Offset from pattern match
+--     end_key = "$",
+--     keys = "qwertyuiopzxcvbnmasdfghjkl",
+--     check_comma = true,
+--     highlight = "PmenuSel",
+--     highlight_grey = "LineNr",
+--   },
+-- }
 
 -- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
 -- require'surround'.setup {}
-require'twilight'.setup {}
-require'hop'.setup()
+
 require'comment'.setup {
   pre_hook = function(ctx)
     local U = require "Comment.utils"
