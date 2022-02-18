@@ -19,6 +19,7 @@ end
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
+-- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -37,7 +38,7 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
-  use 'f-person/git-blame.nvim' -- 显示git message
+  use {'f-person/git-blame.nvim', event = 'InsertEnter'}-- 显示git message
   use {'sindrets/diffview.nvim', event = 'InsertEnter', config = function() require('diffview'):setup() end} -- diff对比
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -49,11 +50,11 @@ require('packer').startup(function()
   --     require('treesitter-context').setup {}
   --   end
   -- }
-  -- use 'haringsrob/nvim_context_vt' -- TODO: 太多提示了很乱
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
-  use {'folke/twilight.nvim', event = 'InsertEnter', config = function() require('twilight'):setup() end}
-use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  use 'ellisonleao/glow.nvim' -- markdown 文件预览
+  use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
+  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
+  use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
@@ -63,44 +64,53 @@ use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- 	as = "catppuccin"
   -- })
   -- 显示导航线
-  use 'lukas-reineke/indent-blankline.nvim'
-  -- 导航finder操作
+  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
+    config = function() -- 导航finder操作
+      require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+        use_treesitter = true
+      }
+    end
+  }
   use 'mg979/vim-visual-multi'
-  use 'kevinhwang91/nvim-hlslens' -- 显示高亮的按键位置
-  use {'phaazon/hop.nvim', event = 'InsertEnter', config = function() require('hop'):setup() end}
+  use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
+  use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   -- use 'ggandor/lightspeed.nvim' -- 与hop重复
   use 'nvim-telescope/telescope.nvim'
-  -- use 'nvim-telescope/telescope-fzy-native.nvim'
+  use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'b0o/schemastore.nvim' -- json server
   use {'hrsh7th/nvim-cmp', requires = {
+    {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
+    {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip-integ'},
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'hrsh7th/cmp-cmdline'},
-    -- {'octaltree/cmp-look'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'},
+    {'hrsh7th/cmp-cmdline'},
+    -- {'octaltree/cmp-look'}, -- 太多了
+    {'tzachar/cmp-tabnine', run='./install.sh'},
     -- {'ray-x/cmp-treesitter'},
-    {'f3fora/cmp-spell'}, -- look更好
-    {'David-Kunz/cmp-npm'}
+    -- {'f3fora/cmp-spell'}, -- look更好
   }}
   -- 语法提示
-  use {'folke/lsp-trouble.nvim', event = 'InsertEnter', config = function() require('trouble'):setup() end}
+  use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   -- use {'kevinhwang91/nvim-bqf'}
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
-  use 'liuchengxu/vista.vim'
+  use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   -- use 'stevearc/aerial.nvim'
   use 'kosayoda/nvim-lightbulb'
-  use 'ray-x/lsp_signature.nvim'
+  -- use 'ray-x/lsp_signature.nvim' -- 改用 cmp-nvim-lsp-signature-help
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -121,7 +131,7 @@ use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   -- use 'blackCauldron7/surround.nvim' -- 改用vim-sandwich
-  use 'machakann/vim-sandwich'
+  use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'folke/todo-comments.nvim'
@@ -152,14 +162,29 @@ use 'norcalli/nvim-colorizer.lua' -- 色值高亮
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
   }
   use {
-    "vuki656/package-info.nvim",
-    requires = "MunifTanjim/nui.nvim",
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup()
+    end
   }
   -- rust
   use {'simrat39/rust-tools.nvim', event = 'InsertEnter', config = function() require('rust-tools'):setup() end}
-  use 'Saecki/crates.nvim'
+  use {'Saecki/crates.nvim',
+     event = { "BufRead Cargo.toml" },
+    config = function()
+        require('crates').setup()
+    end
+  }
+  use {'David-Kunz/cmp-npm',
+    event = 'BufRead package.json',
+    config = function()
+      require('cmp-npm').setup({})
+    end
+  }
   use {
-    "NTBBloodbath/rest.nvim",
+    'NTBBloodbath/rest.nvim',
     requires = {"nvim-lua/plenary.nvim" }
   }
   -- use 'nanotee/sqls.nvim'
@@ -304,6 +329,15 @@ cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_light
 -- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
+cmd[[
+augroup highlight_yank
+autocmd!
+au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+augroup END
+]]
+
+cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
+cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
@@ -353,12 +387,7 @@ g.vista_default_executive = 'nvim_lsp'
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
-require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
-    show_current_context_start = true,
-    use_treesitter = true
-}
+
 
 --theme
 cmd 'colorscheme nightfly'
@@ -659,17 +688,17 @@ require('telescope').setup {
     }
   },
   extensions = {
-    -- fzy_native = {
-    --   override_generic_sorter = false,
-    --   override_file_sorter = true,
-    -- },
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    },
     file_browser = {
       theme = "ivy",
     },
   },
 }
 
--- require'telescope'.load_extension('fzy_native')
+require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 
@@ -754,10 +783,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-require('cmp-npm').setup({})
-require('crates').setup()
-require('package-info').setup()
-
 local lspkind = require('lspkind')
 local cmp = require'cmp'
 
@@ -771,25 +796,35 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
-  },
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable,
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end
+    },
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer', option={keyword_length=2} },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'npm', keyword_length = 3 },
     { name = 'spell' },
-    -- { name = 'cmp_tabnine' },
+    { name = 'cmp_tabnine' },
+    { name = 'cmp_git' },
     -- { name = 'treesitter' },
-    { name = 'crates' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
@@ -811,13 +846,14 @@ cmp.setup({
   },
   sorting = {
     comparators = {
-      cmp.config.compare.score,
       cmp.config.compare.offset,
-      -- cmp.config.compare.exact,
-      -- cmp.config.compare.kind,
-      -- cmp.config.compare.sort_text,
-      -- cmp.config.compare.length,
-      -- cmp.config.compare.order,
+      cmp.config.compare.exact,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.kind,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
     }
   },
   experimental = {
@@ -826,20 +862,27 @@ cmp.setup({
 })
 
 
--- 在代码屏幕显示太多显示存在困扰
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'cmp_git' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -894,12 +937,12 @@ local on_attach = function(client, bufnr)
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
     -- require'aerial'.on_attach(client, bufnr)
-    require'lsp_signature'.on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
-      }
-    }, bufnr)
+    -- require'lsp_signature'.on_attach({
+    --   bind = true,
+    --   handler_opts = {
+    --     border = "rounded"
+    --   }
+    -- }, bufnr)
     -- require('sqls').on_attach(client, bufnr)
   end
 
@@ -940,6 +983,8 @@ local function setup_servers()
 end
 
 setup_servers()
+
+require("cmp_git").setup()
 
 -- vim.lsp.set_log_level("debug")
 require'lspkind'.init()
@@ -1228,8 +1273,6 @@ require'comment'.setup {
     }
   end,
 }
-
--- require'nvim_context_vt'.setup({})
 
 require'rest-nvim'.setup({
   result_split_horizontal = false,

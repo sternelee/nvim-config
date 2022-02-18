@@ -99,10 +99,20 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-calc",
     url = "https://github.com/hrsh7th/cmp-calc"
   },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
   ["cmp-emoji"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-emoji",
     url = "https://github.com/hrsh7th/cmp-emoji"
+  },
+  ["cmp-git"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-git",
+    url = "https://github.com/petertriho/cmp-git"
   },
   ["cmp-npm"] = {
     loaded = true,
@@ -114,15 +124,20 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-nvim-lsp-signature-help"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
+  },
   ["cmp-path"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
-  ["cmp-spell"] = {
+  ["cmp-tabnine"] = {
     loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-spell",
-    url = "https://github.com/f3fora/cmp-spell"
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-tabnine",
+    url = "https://github.com/tzachar/cmp-tabnine"
   },
   ["cmp-vsnip"] = {
     loaded = true,
@@ -163,8 +178,10 @@ _G.packer_plugins = {
     url = "https://github.com/lambdalisue/gina.vim"
   },
   ["git-blame.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/git-blame.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/git-blame.nvim",
     url = "https://github.com/f-person/git-blame.nvim"
   },
   ["gitsigns.nvim"] = {
@@ -173,8 +190,10 @@ _G.packer_plugins = {
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["glow.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/glow.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/glow.nvim",
     url = "https://github.com/ellisonleao/glow.nvim"
   },
   ["hop.nvim"] = {
@@ -186,8 +205,10 @@ _G.packer_plugins = {
     url = "https://github.com/phaazon/hop.nvim"
   },
   ["indent-blankline.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["lsp-trouble.nvim"] = {
@@ -197,11 +218,6 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim",
     url = "https://github.com/folke/lsp-trouble.nvim"
-  },
-  ["lsp_signature.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
-    url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -252,8 +268,10 @@ _G.packer_plugins = {
     url = "https://github.com/SmiteshP/nvim-gps"
   },
   ["nvim-hlslens"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-hlslens",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/nvim-hlslens",
     url = "https://github.com/kevinhwang91/nvim-hlslens"
   },
   ["nvim-lightbulb"] = {
@@ -321,9 +339,19 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
+  nvim_context_vt = {
+    config = { "\27LJ\2\nA\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\2\18\2\0\0009\0\2\0B\0\2\1K\0\1\0\nsetup\20nvim_context_vt\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/nvim_context_vt",
+    url = "https://github.com/haringsrob/nvim_context_vt"
+  },
   ["package-info.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/package-info.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/package-info.nvim",
     url = "https://github.com/vuki656/package-info.nvim"
   },
   ["packer.nvim"] = {
@@ -392,6 +420,11 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
     url = "https://github.com/nvim-telescope/telescope-file-browser.nvim"
   },
+  ["telescope-fzy-native.nvim"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -436,8 +469,10 @@ _G.packer_plugins = {
     url = "https://github.com/bluz71/vim-nightfly-guicolors"
   },
   ["vim-sandwich"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-sandwich",
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/vim-sandwich",
     url = "https://github.com/machakann/vim-sandwich"
   },
   ["vim-translator"] = {
@@ -461,8 +496,11 @@ _G.packer_plugins = {
     url = "https://github.com/hrsh7th/vim-vsnip-integ"
   },
   ["vista.vim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vista.vim",
+    commands = { "Vista" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/vista.vim",
     url = "https://github.com/liuchengxu/vista.vim"
   },
   ["which-key.nvim"] = {
@@ -478,11 +516,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Vista lua require("packer.load")({'vista.vim'}, { cmd = "Vista", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'rust-tools.nvim', 'smart-pairs', 'diffview.nvim', 'neogen', 'hop.nvim', 'lsp-trouble.nvim', 'twilight.nvim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'git-blame.nvim', 'rust-tools.nvim', 'smart-pairs', 'diffview.nvim', 'neogen'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'glow.nvim', 'twilight.nvim', 'vim-sandwich', 'hop.nvim', 'indent-blankline.nvim', 'lsp-trouble.nvim', 'nvim_context_vt', 'nvim-hlslens', 'package-info.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
