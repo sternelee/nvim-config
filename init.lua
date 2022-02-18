@@ -10,7 +10,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Monoid:h18,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Lotion:h20,VictorMono\ NF:h20]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -98,7 +98,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
-    {'tzachar/cmp-tabnine', run='./install.sh'},
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
@@ -822,7 +822,7 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'spell' },
-    { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
     -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
