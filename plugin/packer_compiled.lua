@@ -115,8 +115,11 @@ _G.packer_plugins = {
     url = "https://github.com/petertriho/cmp-git"
   },
   ["cmp-npm"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-npm",
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fcmp-npm\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/cmp-npm",
     url = "https://github.com/David-Kunz/cmp-npm"
   },
   ["cmp-nvim-lsp"] = {
@@ -150,8 +153,12 @@ _G.packer_plugins = {
     url = "https://github.com/metakirby5/codi.vim"
   },
   ["crates.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/crates.nvim",
+    after_files = { "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/crates.nvim/after/plugin/cmp_crates.lua" },
+    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/crates.nvim",
     url = "https://github.com/Saecki/crates.nvim"
   },
   ["diffview.nvim"] = {
@@ -205,6 +212,7 @@ _G.packer_plugins = {
     url = "https://github.com/phaazon/hop.nvim"
   },
   ["indent-blankline.nvim"] = {
+    config = { "\27LJ\2\nž\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\19use_treesitter\2\31show_current_context_start\2\25show_current_context\2\25space_char_blankline\6 \nsetup\21indent_blankline\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -348,6 +356,7 @@ _G.packer_plugins = {
     url = "https://github.com/haringsrob/nvim_context_vt"
   },
   ["package-info.nvim"] = {
+    config = { "\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17package-info\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -526,8 +535,10 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'git-blame.nvim', 'rust-tools.nvim', 'smart-pairs', 'diffview.nvim', 'neogen'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'glow.nvim', 'twilight.nvim', 'vim-sandwich', 'hop.nvim', 'indent-blankline.nvim', 'lsp-trouble.nvim', 'nvim_context_vt', 'nvim-hlslens', 'package-info.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'git-blame.nvim', 'neogen', 'diffview.nvim', 'rust-tools.nvim', 'smart-pairs'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'glow.nvim', 'hop.nvim', 'indent-blankline.nvim', 'lsp-trouble.nvim', 'nvim_context_vt', 'nvim-hlslens', 'vim-sandwich', 'twilight.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
