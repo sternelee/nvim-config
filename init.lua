@@ -950,8 +950,9 @@ local on_attach = function(client, bufnr)
     -- }, bufnr)
     -- require('sqls').on_attach(client, bufnr)
     if client.name == 'tsserver' then
-      local ts_utils = require("nvim-lsp-ts-utils"),
-      ts_utils.setup()
+      local ts_utils = require("nvim-lsp-ts-utils")
+      local init_options = require("nvim-lsp-ts-utils").init_options
+      ts_utils.setup(init_options)
       ts_utils.setup_client(client)
     end
   end
