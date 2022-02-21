@@ -84,6 +84,7 @@ require('packer').startup(function()
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
@@ -113,7 +114,7 @@ require('packer').startup(function()
   -- use 'ray-x/lsp_signature.nvim' -- 改用 cmp-nvim-lsp-signature-help
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
-  use 'tpope/vim-eunuch'
+  -- use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
@@ -302,6 +303,10 @@ map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
+-- nvim-lsp-ts-utils
+map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
+map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
+map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 -- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 -- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
@@ -944,6 +949,11 @@ local on_attach = function(client, bufnr)
     --   }
     -- }, bufnr)
     -- require('sqls').on_attach(client, bufnr)
+    if client.name == 'tsserver' then
+      local ts_utils = require("nvim-lsp-ts-utils"),
+      ts_utils.setup()
+      ts_utils.setup_client(client)
+    end
   end
 
 end
