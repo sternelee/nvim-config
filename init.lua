@@ -79,7 +79,7 @@ require('packer').startup(function()
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   -- use 'ggandor/lightspeed.nvim' -- 与hop重复
   use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-fzy-native.nvim'
+  -- use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
   use 'neovim/nvim-lspconfig'
@@ -480,6 +480,23 @@ cmd 'colorscheme nightfly'
 local notify = require("notify")
 vim.notify = notify
 
+vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({
+    'ERROR',
+    'WARN',
+    'INFO',
+    'DEBUG',
+  })[result.type]
+  notify({ result.message }, lvl, {
+    title = 'LSP | ' .. client.name,
+    timeout = 10000,
+    keep = function()
+      return lvl == 'ERROR' or lvl == 'WARN'
+    end,
+  })
+end
+
 -- require'lightspeed'.setup {
 --   match_only_the_start_of_same_char_seqs = true,
 --   limit_ft_matches = 5,
@@ -497,17 +514,17 @@ require('telescope').setup {
     }
   },
   extensions = {
-    fzy_native = {
-      override_generic_sorter = false,
-      override_file_sorter = true,
-    },
+    -- fzy_native = {
+    --   override_generic_sorter = false,
+    --   override_file_sorter = true,
+    -- },
     file_browser = {
       theme = "ivy",
     },
   },
 }
 
-require'telescope'.load_extension('fzy_native')
+-- require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 
