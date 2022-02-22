@@ -271,7 +271,7 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages"
+vim.o.sessionoptions="buffers,help,tabpages"
 
 nvim_exec([[
 filetype on
@@ -324,8 +324,8 @@ map('n', '<leader>tw', '<cmd>Translate<CR>')
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
--- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
--- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
+map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
+map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
 -- map('n', '<leader>S', '<cmd>AerialToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
