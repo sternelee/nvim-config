@@ -114,7 +114,7 @@ require('packer').startup(function()
   -- use 'ray-x/lsp_signature.nvim' -- 改用 cmp-nvim-lsp-signature-help
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
-  -- use 'tpope/vim-eunuch'
+  use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   -- 注释
