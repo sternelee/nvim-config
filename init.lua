@@ -59,10 +59,10 @@ require('packer').startup(function()
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'Iron-E/nvim-highlite'
-  -- use({
-  -- 	"catppuccin/nvim",
-  -- 	as = "catppuccin"
-  -- })
+  use({
+  	"catppuccin/nvim",
+  	as = "catppuccin"
+  })
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function() -- 导航finder操作
@@ -412,67 +412,68 @@ vim.opt.listchars:append("space:⋅")
 
 
 --theme
-cmd 'colorscheme nightfly'
+-- cmd 'colorscheme nightfly'
 
--- local catppuccin = require("catppuccin")
--- catppuccin.setup{
---   transparent_background = false,
---   term_colors = false,
---   styles = {
---   	comments = "italic",
---   	functions = "NONE",
---   	keywords = "italic",
---   	strings = "NONE",
---   	variables = "NONE",
---   },
---   integrations = {
---   	treesitter = false,
---   	native_lsp = {
---   		enabled = true,
---   		virtual_text = {
---   			errors = "italic",
---   			hints = "italic",
---   			warnings = "italic",
---   			information = "italic",
---   		},
---   		underlines = {
---   			errors = "underline",
---   			hints = "underline",
---   			warnings = "underline",
---   			information = "underline",
---   		},
---   	},
---   	lsp_trouble = true,
---   	cmp = true,
---   	lsp_saga = true,
---   	gitgutter = false,
---   	gitsigns = true,
---   	telescope = true,
---   	nvimtree = {
---   		enabled = true,
---   		show_root = false,
---   		transparent_panel = false,
---   	},
---   	which_key = true,
---   	indent_blankline = {
---   		enabled = true,
---   		colored_indent_levels = false,
---   	},
---   	dashboard = false,
---   	neogit = false,
---   	vim_sneak = false,
---   	fern = false,
---   	barbar = true,
---   	bufferline = true,
---   	markdown = true,
---   	lightspeed = true,
---   	ts_rainbow = true,
---   	hop = true,
---   	notify = true,
---   	telekasten = true,
---   }
--- }
--- cmd 'colorscheme catppuccin'
+local catppuccin = require("catppuccin")
+catppuccin.setup{
+  transparent_background = false,
+  term_colors = false,
+  styles = {
+  	comments = "italic",
+  	functions = "NONE",
+  	keywords = "italic",
+  	strings = "NONE",
+  	variables = "NONE",
+  },
+  integrations = {
+  	treesitter = false,
+  	native_lsp = {
+  		enabled = true,
+  		virtual_text = {
+  			errors = "italic",
+  			hints = "italic",
+  			warnings = "italic",
+  			information = "italic",
+  		},
+  		underlines = {
+  			errors = "underline",
+  			hints = "underline",
+  			warnings = "underline",
+  			information = "underline",
+  		},
+  	},
+  	lsp_trouble = true,
+  	cmp = true,
+  	lsp_saga = true,
+  	gitgutter = false,
+  	gitsigns = true,
+  	telescope = true,
+  	nvimtree = {
+  		enabled = true,
+  		show_root = false,
+  		transparent_panel = false,
+  	},
+  	which_key = true,
+  	indent_blankline = {
+  		enabled = true,
+  		colored_indent_levels = false,
+  	},
+  	dashboard = false,
+  	neogit = false,
+  	vim_sneak = false,
+  	fern = false,
+  	barbar = true,
+  	bufferline = true,
+  	markdown = true,
+  	lightspeed = false,
+  	ts_rainbow = true,
+  	hop = true,
+  	notify = true,
+  	telekasten = true,
+  }
+}
+
+cmd 'colorscheme catppuccin'
 
 -- g.sonokai_style = 'andromeda'
 
@@ -792,9 +793,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
--- npm install --global vls @volar/server vscode-langservers-extracted typescript typescript-language-server graphql-language-service-cli dockerfile-language-server-nodejs stylelint-lsp yaml-language-server prettier
--- can use rls or rust_analyzer
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
@@ -831,11 +829,6 @@ require'nvim-tree'.setup {
   hijack_cursor       = false,
   update_cwd          = false,
   auto_close          = true,
-  update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
-    ignore_list = { ".git", "node_modules", ".cache" },
-  },
   system_open = {
     cmd  = nil,
     args = {}
@@ -843,12 +836,12 @@ require'nvim-tree'.setup {
   update_focused_file = {
     enable      = true,
     update_cwd  = true,
-    ignore_list = {}
+    ignore_list = { ".git", "node_modules", ".cache" },
   },
   view = {
     width = 20,
     side = 'left',
-    auto_resize = true,
+    auto_resize = false,
     mappings = {
       custom_only = false,
       list = {}
