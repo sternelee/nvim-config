@@ -49,7 +49,7 @@ require('packer').startup(function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end
-  -- }
+  -- } -- 使用 nvim_context_vt
   use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
@@ -61,7 +61,7 @@ require('packer').startup(function()
   -- use 'Iron-E/nvim-highlite'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
-    config = function() -- 导航finder操作
+    config = function()
       require("indent_blankline").setup {
         space_char_blankline = " ",
         show_current_context = true,
@@ -86,7 +86,6 @@ require('packer').startup(function()
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
-    {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip-integ'},
@@ -94,7 +93,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
-    -- {'octaltree/cmp-look'}, -- 太多了
+    {'octaltree/cmp-look'}, -- 太多了
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
@@ -105,9 +104,8 @@ require('packer').startup(function()
   use {'tami5/lspsaga.nvim', branch = 'nvim51'}
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
-  -- use 'stevearc/aerial.nvim'
   use 'kosayoda/nvim-lightbulb'
-  -- use 'ray-x/lsp_signature.nvim' -- 改用 cmp-nvim-lsp-signature-help
+  use 'ray-x/lsp_signature.nvim'
   -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -341,10 +339,10 @@ map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 
--- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
--- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
--- cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
+cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 cmd[[
@@ -582,14 +580,14 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer', option={keyword_length=2} },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'spell' },
     -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
     -- { name = 'treesitter' },
-    -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
+    { name = 'look', keyword_length=3, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = function(entry, vim_item)
@@ -700,13 +698,12 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- require'aerial'.on_attach(client, bufnr)
-    -- require'lsp_signature'.on_attach({
-    --   bind = true,
-    --   handler_opts = {
-    --     border = "rounded"
-    --   }
-    -- }, bufnr)
+    require'lsp_signature'.on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr)
     -- require('sqls').on_attach(client, bufnr)
     if client.name == 'tsserver' then
       local ts_utils = require("nvim-lsp-ts-utils")
@@ -1299,4 +1296,3 @@ windline.setup({
         quickfix,
     },
 })
-
