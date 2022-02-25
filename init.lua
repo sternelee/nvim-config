@@ -89,6 +89,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
     {'hrsh7th/vim-vsnip-integ'},
+    {'rafamadriz/friendly-snippets'},
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
@@ -129,6 +130,12 @@ require('packer').startup(function()
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
+  use{ 'anuvyklack/pretty-fold.nvim',
+     config = function()
+        require('pretty-fold').setup{}
+        require('pretty-fold.preview').setup()
+     end
+  }
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
@@ -338,6 +345,8 @@ map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
+map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
