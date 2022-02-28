@@ -107,15 +107,16 @@ require('packer').startup(function()
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
-  use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
+  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use 'windwp/nvim-ts-autotag'
+  use {'windwp/nvim-ts-autotag', event = 'BufRead'}
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use{ 'anuvyklack/pretty-fold.nvim',
+    event = 'BufRead',
      config = function()
         require('pretty-fold').setup{}
         require('pretty-fold.preview').setup()
@@ -137,9 +138,10 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
-  use 'metakirby5/codi.vim'
+  use {'metakirby5/codi.vim', event = 'BufRead'}
   use {
     'VonHeikemen/searchbox.nvim',
+    event = 'InsertEnter',
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
@@ -174,6 +176,13 @@ require('packer').startup(function()
     'NTBBloodbath/rest.nvim',
     requires = {"nvim-lua/plenary.nvim" }
   }
+  use { 'chipsenkbeil/distant.nvim',
+    event = 'InsertEnter',
+    config = function()
+      require('distant').setup {
+        ['*'] = require('distant.settings').chip_default()
+      }
+    end }
   -- use 'nanotee/sqls.nvim'
   -- use 'KenN7/vim-arsync'
   -- use {
@@ -449,23 +458,16 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    disable = function (lang, bufnr)
-      -- return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end
+    -- disable = function (lang, bufnr)
+    --   return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
+    -- end
   },
   rainbow = {
     enable = true,
-    disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end,
     extended_mode = true,
   },
   autotag = {
     enable = true,
-    disable = function (lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 10000
-    end,
   },
   refactor = {
     highlight_definitions = { enable = true },
