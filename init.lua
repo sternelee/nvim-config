@@ -96,13 +96,14 @@ require('packer').startup(function()
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   -- 语法提示
-  use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
-  -- use {'kevinhwang91/nvim-bqf'}
+  -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
   use 'ray-x/lsp_signature.nvim'
+  use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -327,7 +328,7 @@ map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
-map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
+-- map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -647,7 +648,7 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
