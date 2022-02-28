@@ -995,7 +995,7 @@ dap_install.setup({
 
 -- require'surround'.setup {}
 
-require'comment'.setup {
+require'Comment'.setup {
   pre_hook = function(ctx)
     local U = require "Comment.utils"
 
