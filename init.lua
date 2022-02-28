@@ -30,7 +30,6 @@ require('packer').startup(function()
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
-  -- use 'nvim-neo-tree/neo-tree'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   use 'sidebar-nvim/sidebar.nvim'
@@ -58,7 +57,6 @@ require('packer').startup(function()
   -- theme 主题
   -- use 'sainnhe/sonokai'
   use 'bluz71/vim-nightfly-guicolors'
-  -- use 'Iron-E/nvim-highlite'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -73,9 +71,7 @@ require('packer').startup(function()
   use 'mg979/vim-visual-multi'
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
-  -- use 'ggandor/lightspeed.nvim' -- 与hop重复
   use 'nvim-telescope/telescope.nvim'
-  -- use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
   use 'neovim/nvim-lspconfig'
@@ -88,7 +84,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
-    {'hrsh7th/vim-vsnip-integ'},
+    -- {'hrsh7th/vim-vsnip-integ'},
     {'rafamadriz/friendly-snippets'},
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
@@ -102,31 +98,18 @@ require('packer').startup(function()
   -- 语法提示
   use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   -- use {'kevinhwang91/nvim-bqf'}
-  use {'tami5/lspsaga.nvim', branch = 'nvim51'}
+  use {'tami5/lspsaga.nvim'}
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
   use 'ray-x/lsp_signature.nvim'
-  -- use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use 'gennaro-tedesco/nvim-peekup' -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
-  -- 注释
-  --[[ use { 'b3nj5m1n/kommentary',
-      config = function ()
-        require('kommentary.config').use_extended_mappings()
-        require('kommentary.config').configure_language("vue", {
-            single_line_comment_string = "//",
-            multi_line_comment_strings = "<--",
-        })
-      end
-  } ]]
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  -- use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
-  -- use 'blackCauldron7/surround.nvim' -- 改用vim-sandwich
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
@@ -416,9 +399,7 @@ vim.opt.listchars:append("space:⋅")
 
 --theme
 cmd 'colorscheme nightfly'
-
 -- g.sonokai_style = 'andromeda'
-
 
 local notify = require("notify")
 vim.notify = notify
@@ -440,14 +421,6 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   })
 end
 
--- require'lightspeed'.setup {
---   match_only_the_start_of_same_char_seqs = true,
---   limit_ft_matches = 5,
---   labels = nil,
---   cycle_group_fwd_key = nil,
---   cycle_group_bwd_key = nil,
--- }
-
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -457,10 +430,6 @@ require('telescope').setup {
     }
   },
   extensions = {
-    -- fzy_native = {
-    --   override_generic_sorter = false,
-    --   override_file_sorter = true,
-    -- },
     file_browser = {
       theme = "ivy",
     },
@@ -666,31 +635,35 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', opts)
-  buf_set_keymap('x', '<leader>A', '<cmd>Lspsaga range_code_action<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
+  buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
-  buf_set_keymap('n', '<leader>k', '<cmd>Lspsaga signature_help<CR>', opts)
-  buf_set_keymap('n', '<leader>r', '<cmd>Lspsaga rename<CR>', opts)
-  buf_set_keymap('n', '<leader>D', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>Lspsaga implement<CR>', opts)
+  buf_set_keymap('n', 'gE', '<cmd>Lspsaga preview_definition<CR>', opts)
+  buf_set_keymap('n', 'gc', '<cmd>Lspsaga show_cursor_diagnostics<CR>', opts)
+  buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
+  -- buf_set_keymap('n', '<C-o>', '<cmd>Lspsaga open_floaterm<CR>', opts)
+  -- buf_set_keymap('n', '<C-n>', '<cmd>Lspsaga close_floaterm<CR>', opts)
 
   if client.resolved_capabilities.document_highlight then
     vim.cmd([[

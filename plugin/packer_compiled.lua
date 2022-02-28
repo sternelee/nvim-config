@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-git",
     url = "https://github.com/petertriho/cmp-git"
   },
+  ["cmp-look"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-look",
+    url = "https://github.com/octaltree/cmp-look"
+  },
   ["cmp-npm"] = {
     config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fcmp-npm\frequire\0" },
     loaded = false,
@@ -127,20 +132,10 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
-  ["cmp-nvim-lsp-signature-help"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp-signature-help",
-    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
-  },
   ["cmp-path"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
-  },
-  ["cmp-tabnine"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-tabnine",
-    url = "https://github.com/tzachar/cmp-tabnine"
   },
   ["cmp-vsnip"] = {
     loaded = true,
@@ -179,6 +174,11 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
   },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
   ["gina.vim"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/gina.vim",
@@ -212,7 +212,7 @@ _G.packer_plugins = {
     url = "https://github.com/phaazon/hop.nvim"
   },
   ["indent-blankline.nvim"] = {
-    config = { "\27LJ\2\nž\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\19use_treesitter\2\31show_current_context_start\2\25show_current_context\2\25space_char_blankline\6 \nsetup\21indent_blankline\frequire\0" },
+    config = { "\27LJ\2\nž\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\31show_current_context_start\2\25show_current_context\2\25space_char_blankline\6 \19use_treesitter\2\nsetup\21indent_blankline\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -226,6 +226,11 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim",
     url = "https://github.com/folke/lsp-trouble.nvim"
+  },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -291,6 +296,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
     url = "https://github.com/williamboman/nvim-lsp-installer"
+  },
+  ["nvim-lsp-ts-utils"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-lsp-ts-utils",
+    url = "https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -383,6 +393,12 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["pretty-fold.nvim"] = {
+    config = { "\27LJ\2\ne\0\0\3\0\4\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\24pretty-fold.preview\nsetup\16pretty-fold\frequire\0" },
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/pretty-fold.nvim",
+    url = "https://github.com/anuvyklack/pretty-fold.nvim"
+  },
   ["rest.nvim"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/rest.nvim",
@@ -428,11 +444,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
     url = "https://github.com/nvim-telescope/telescope-file-browser.nvim"
-  },
-  ["telescope-fzy-native.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
-    url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -499,11 +510,6 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-vsnip",
     url = "https://github.com/hrsh7th/vim-vsnip"
   },
-  ["vim-vsnip-integ"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ",
-    url = "https://github.com/hrsh7th/vim-vsnip-integ"
-  },
   ["vista.vim"] = {
     commands = { "Vista" },
     loaded = false,
@@ -525,6 +531,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: pretty-fold.nvim
+time([[Config for pretty-fold.nvim]], true)
+try_loadstring("\27LJ\2\ne\0\0\3\0\4\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\24pretty-fold.preview\nsetup\16pretty-fold\frequire\0", "config", "pretty-fold.nvim")
+time([[Config for pretty-fold.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -535,10 +545,10 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'git-blame.nvim', 'neogen', 'diffview.nvim', 'rust-tools.nvim', 'smart-pairs'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'glow.nvim', 'hop.nvim', 'indent-blankline.nvim', 'lsp-trouble.nvim', 'nvim_context_vt', 'nvim-hlslens', 'vim-sandwich', 'twilight.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'twilight.nvim', 'glow.nvim', 'hop.nvim', 'indent-blankline.nvim', 'nvim-hlslens', 'nvim_context_vt', 'lsp-trouble.nvim', 'vim-sandwich'}, { event = "BufRead *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'git-blame.nvim', 'smart-pairs', 'diffview.nvim', 'rust-tools.nvim', 'neogen'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
