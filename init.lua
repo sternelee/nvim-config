@@ -39,6 +39,7 @@ require('packer').startup(function()
   use 'lambdalisue/gina.vim'
   use {'f-person/git-blame.nvim', event = 'InsertEnter'}-- 显示git message
   use {'sindrets/diffview.nvim', event = 'InsertEnter', config = function() require('diffview'):setup() end} -- diff对比
+  use {'tanvirtin/vgit.nvim', event = 'InsertEnter', config = function() require('vgit'):setup() end}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
