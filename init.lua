@@ -176,13 +176,13 @@ require('packer').startup(function()
     'NTBBloodbath/rest.nvim',
     requires = {"nvim-lua/plenary.nvim" }
   }
-  use { 'chipsenkbeil/distant.nvim',
-    event = 'InsertEnter',
-    config = function()
-      require('distant').setup {
-        ['*'] = require('distant.settings').chip_default()
-      }
-    end }
+  -- use { 'chipsenkbeil/distant.nvim',
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('distant').setup {
+  --       ['*'] = require('distant.settings').chip_default()
+  --     }
+  --   end }
   -- use 'nanotee/sqls.nvim'
   -- use 'KenN7/vim-arsync'
   -- use {
