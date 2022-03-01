@@ -37,9 +37,9 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
-  use {'f-person/git-blame.nvim', event = 'InsertEnter'}-- 显示git message
-  use {'sindrets/diffview.nvim', event = 'InsertEnter', config = function() require('diffview'):setup() end} -- diff对比
-  use {'tanvirtin/vgit.nvim', event = 'InsertEnter', config = function() require('vgit'):setup() end}
+  use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
+  use {'sindrets/diffview.nvim', event = 'BufRead', config = function() require('diffview'):setup() end} -- diff对比
+  use {'tanvirtin/vgit.nvim', event = 'BufRead', config = function() require('vgit'):setup() end}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-refactor'
@@ -55,8 +55,7 @@ require('packer').startup(function()
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
-  -- theme 主题
-  -- use 'sainnhe/sonokai'
+  -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -107,10 +106,10 @@ require('packer').startup(function()
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
-  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  use {'gennaro-tedesco/nvim-peekup', event = 'BufRead'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  use {'ZhiyuanLck/smart-pairs', event = 'BufRead', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'BufRead'}
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
@@ -126,7 +125,7 @@ require('packer').startup(function()
   use {
     'danymat/neogen',
     requires = 'nvim-treesitter/nvim-treesitter',
-    event = 'InsertEnter',
+    event = 'BufRead',
     config = function()
       require'neogen'.setup {
           enabled = true
@@ -141,7 +140,7 @@ require('packer').startup(function()
   use {'metakirby5/codi.vim', event = 'BufRead'}
   use {
     'VonHeikemen/searchbox.nvim',
-    event = 'InsertEnter',
+    event = 'BufRead',
     requires = {
       {'MunifTanjim/nui.nvim'}
     }
@@ -159,7 +158,7 @@ require('packer').startup(function()
     end
   }
   -- rust
-  use {'simrat39/rust-tools.nvim', event = 'InsertEnter', config = function() require('rust-tools'):setup() end}
+  use {'simrat39/rust-tools.nvim', event = 'BufRead', config = function() require('rust-tools'):setup() end}
   use {'Saecki/crates.nvim',
      event = { "BufRead Cargo.toml" },
     config = function()
@@ -225,7 +224,7 @@ opt('o', 'smartcase', true)                           -- Don't ignore case with 
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'clipboard', 'unnamed')
+opt('o', 'clipboard', 'unnamed')                   -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'scrolloff', 2 )
 opt('o', 'tabstop', 2)
