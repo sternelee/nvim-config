@@ -42,7 +42,7 @@ require('packer').startup(function()
   use {'tanvirtin/vgit.nvim', event = 'BufRead', config = function() require('vgit'):setup() end}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/nvim-treesitter-refactor'
+  use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use {
   --   'romgrk/nvim-treesitter-context',
@@ -84,17 +84,17 @@ require('packer').startup(function()
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-vsnip'},
-    -- {'hrsh7th/vim-vsnip-integ'},
     {'rafamadriz/friendly-snippets'},
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存太大
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
+  use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
   -- 语法提示
   -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
@@ -114,13 +114,13 @@ require('packer').startup(function()
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use{ 'anuvyklack/pretty-fold.nvim',
-    event = 'BufRead',
-     config = function()
-        require('pretty-fold').setup{}
-        require('pretty-fold.preview').setup()
-     end
-  }
+  -- use{ 'anuvyklack/pretty-fold.nvim',
+  --   event = 'BufRead',
+  --    config = function()
+  --       require('pretty-fold').setup{}
+  --       require('pretty-fold.preview').setup()
+  --    end
+  -- }
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
@@ -176,14 +176,13 @@ require('packer').startup(function()
     requires = {"nvim-lua/plenary.nvim" }
   }
   -- use { 'chipsenkbeil/distant.nvim',
-  --   event = 'InsertEnter',
+  --   event = 'BufRead',
   --   config = function()
   --     require('distant').setup {
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  -- use 'nanotee/sqls.nvim'
-  -- use 'KenN7/vim-arsync'
+  use 'nanotee/sqls.nvim'
   -- use {
   --   'rmagatti/auto-session',
   --   config = function()
@@ -341,6 +340,13 @@ map('n', '<leader>gu', '<cmd>Gina push<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
+map("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
+map("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
+map("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], {noremap = true, silent = true, expr = false})
+map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
+map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
+map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -449,6 +455,7 @@ require('telescope').setup {
 -- require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
+require'telescope'.load_extension("refactoring")
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
@@ -469,7 +476,11 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
   refactor = {
-    highlight_definitions = { enable = true },
+    highlight_definitions = {
+      enable = true,
+      -- Set to false if you have an `updatetime` of ~100.
+      clear_on_cursor_move = true,
+    },
   },
   textobjects = {
     select = {
@@ -689,7 +700,7 @@ local on_attach = function(client, bufnr)
         border = "rounded"
       }
     }, bufnr)
-    -- require('sqls').on_attach(client, bufnr)
+    require('sqls').on_attach(client, bufnr)
     if client.name == 'tsserver' then
       local ts_utils = require("nvim-lsp-ts-utils")
       local init_options = require("nvim-lsp-ts-utils").init_options
