@@ -58,6 +58,7 @@ require('packer').startup(function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
+  use 'Mofiqul/vscode.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -427,8 +428,10 @@ vim.opt.listchars:append("space:⋅")
 
 
 --theme
-cmd 'colorscheme gruvbox'
 -- g.sonokai_style = 'andromeda'
+g.vscode_style = "dark"
+g.vscode_italic_comment = 1
+cmd 'colorscheme vscode'
 
 local notify = require("notify")
 vim.notify = notify
