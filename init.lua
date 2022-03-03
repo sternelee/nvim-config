@@ -431,7 +431,7 @@ vim.opt.listchars:append("space:⋅")
 -- g.sonokai_style = 'andromeda'
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-cmd 'colorscheme vscode'
+cmd 'colorscheme gruvbox'
 
 local notify = require("notify")
 vim.notify = notify
