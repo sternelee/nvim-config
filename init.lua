@@ -10,7 +10,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Operator\ Mono\ Lig:h20,VictorMono\ NF:h20]], false)
+nvim_exec([[set guifont=Operator Mono Lig:h20,VictorMono NF:h20]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -263,7 +263,7 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+map('n', '<leader>'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
@@ -316,8 +316,8 @@ map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
 map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
 map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+cmd [[autocmd BufWritePre * %s/s+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/n+%$//e]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
@@ -561,8 +561,8 @@ require'gitsigns'.setup {
     noremap = true,
     buffer = true,
 
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
+    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require"gitsigns".next_hunk()<CR>'"},
+    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require"gitsigns".prev_hunk()<CR>'"},
 
     ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
     ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
@@ -677,7 +677,7 @@ require('todo-comments').setup{
       before = "", -- "fg" or "bg" or empty
       keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
       after = "fg", -- "fg" or "bg" or empty
-      --pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+      --pattern = [[.*<(KEYWORDS)s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
       pattern = [[(KEYWORDS)]], -- pattern or table of patterns, used for highlightng (vim regex)
       comments_only = true, -- uses treesitter to match keywords in comments only
       max_line_len = 400, -- ignore lines longer than this
@@ -703,8 +703,8 @@ require('todo-comments').setup{
       },
       -- regex that will be used to match keywords.
       -- don't replace the (KEYWORDS) placeholder
-      -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-      pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+      -- pattern = [[b(KEYWORDS):]], -- ripgrep regex
+      pattern = [[b(KEYWORDS)b]], -- match without the extra colon. You'll likely get false positives
     },
 }
 
@@ -1057,7 +1057,7 @@ local home = vim.fn.expand("~/zettelkasten")
 -- - don't use Windows
 -- - try WSL2 on Windows and pretend you're on Linux
 -- - if you **must** use Windows, use "/Users/myname/zettelkasten" instead of "~/zettelkasten"
--- - NEVER use "C:\Users\myname" style paths
+-- - NEVER use "C:Usersmyname" style paths
 require('telekasten').setup({
     home         = home,
 
@@ -1187,20 +1187,22 @@ hi tkTag ctermfg=175 guifg=#d3869B
 
 -- coc
 g.coc_global_extensions = {
-    'coc-css', --
-    'coc-dictionary', --
-    'coc-eslint',
-    'coc-html', --
-    'coc-json', --
-    'coc-markdownlint', --
-    'coc-rust-analyzer', --
-    'coc-snippets', --
-    'coc-sql', --
-    'coc-tsserver', --
-    'coc-word', --
-    'coc-xml', --
-    'coc-yaml' --
+   'coc-git',
+   'coc-html',
+   'coc-lists',
+   'coc-marketplace',
+   'coc-tsserver',
+   'coc-json',
+   'coc-css',
+   'coc-emmet',
+   'coc-gitignore',
+   'coc-toml',
+   'coc-lightbulb',
+   'coc-highlight',
+   'coc-spell-checker'
 }
+g.coc_start_at_startup=0
+-- g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 cmd [[
