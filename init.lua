@@ -10,8 +10,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Operator Mono Lig:h20,VictorMono NF:h20]], false)
-
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
@@ -263,7 +261,7 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>'', '<cmd>Telescope resume<CR>')
+map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
@@ -560,20 +558,6 @@ require'gitsigns'.setup {
   keymaps = {
     noremap = true,
     buffer = true,
-
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require"gitsigns".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require"gitsigns".prev_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-    -- Text objects
-    ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
   },
   watch_gitdir = {
     interval = 1000
@@ -1186,21 +1170,21 @@ hi tkTag ctermfg=175 guifg=#d3869B
 ]]
 
 -- coc
-g.coc_global_extensions = {
-   'coc-git',
-   'coc-html',
-   'coc-lists',
-   'coc-marketplace',
-   'coc-tsserver',
-   'coc-json',
-   'coc-css',
-   'coc-emmet',
-   'coc-gitignore',
-   'coc-toml',
-   'coc-lightbulb',
-   'coc-highlight',
-   'coc-spell-checker'
-}
+-- g.coc_global_extensions = {
+--    'coc-git',
+--    'coc-html',
+--    'coc-lists',
+--    'coc-marketplace',
+--    'coc-tsserver',
+--    'coc-json',
+--    'coc-css',
+--    'coc-emmet',
+--    'coc-gitignore',
+--    'coc-toml',
+--    'coc-lightbulb',
+--    'coc-highlight',
+--    'coc-spell-checker'
+-- }
 g.coc_start_at_startup=0
 -- g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
