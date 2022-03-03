@@ -37,7 +37,6 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
-  use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   use {'sindrets/diffview.nvim', event = 'BufRead', config = function() require('diffview'):setup() end} -- diff对比
   use {'tanvirtin/vgit.nvim', event = 'BufRead', config = function() require('vgit'):setup() end}
   -- 语法高亮
