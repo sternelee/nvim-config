@@ -76,36 +76,12 @@ require('packer').startup(function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  use 'b0o/schemastore.nvim' -- json server
-  use {'hrsh7th/nvim-cmp', requires = {
-    {'petertriho/cmp-git'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'hrsh7th/cmp-path'},
-    {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-vsnip'},
-    {'rafamadriz/friendly-snippets'},
-    {'hrsh7th/vim-vsnip'},
-    {'hrsh7th/cmp-calc'},
-    {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-cmdline'},
-    {'octaltree/cmp-look'}, -- 太多了
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    -- {'ray-x/cmp-treesitter'},
-    -- {'f3fora/cmp-spell'}, -- look更好
-  }}
+  use {'neoclide/coc.nvim', branch = 'release'}
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
   -- 语法提示
   -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  use {'tami5/lspsaga.nvim'}
-  use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
-  use 'kosayoda/nvim-lightbulb'
-  use 'ray-x/lsp_signature.nvim'
-  use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
   use {'gennaro-tedesco/nvim-peekup', event = 'BufRead'} -- 查看历史的复制和删除的寄存器,快捷键 ""
@@ -154,26 +130,11 @@ require('packer').startup(function()
     'rcarriga/nvim-dap-ui',
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
   }
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
-    event = 'BufRead package.json',
-    config = function()
-      require('package-info').setup()
-    end
-  }
   -- rust
-  use {'simrat39/rust-tools.nvim', event = 'BufRead', config = function() require('rust-tools'):setup() end}
   use {'Saecki/crates.nvim',
      event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
-    end
-  }
-  use {'David-Kunz/cmp-npm',
-    event = 'BufRead package.json',
-    config = function()
-      require('cmp-npm').setup({})
     end
   }
   use {
@@ -187,7 +148,6 @@ require('packer').startup(function()
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  use 'nanotee/sqls.nvim'
   -- use {
   --   'rmagatti/auto-session',
   --   config = function()
@@ -310,18 +270,11 @@ map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtre
 map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
 map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', 'fo', '<cmd>Format<CR>')
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
--- nvim-lsp-ts-utils
-map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
-map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
-map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
@@ -363,7 +316,6 @@ map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
-cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
 cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
@@ -373,9 +325,6 @@ autocmd!
 au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
 augroup END
 ]]
-
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
@@ -558,218 +507,6 @@ require('nvim-treesitter.configs').setup {
     }
   },
 }
-
-local lspkind = require('lspkind')
-local cmp = require'cmp'
-
-require("cmp_git").setup()
-
-cmp.setup({
-  completion = {
-    completeopt = 'menu,menuone,noselect',
-  },
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
-    end,
-  },
-  mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable,
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        else
-          fallback()
-        end
-      end
-    },
-  sources = {
-    { name = 'path' },
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'buffer', option={keyword_length=2} },
-    -- { name = 'nvim_lsp_signature_help' },
-    { name = 'calc' },
-    { name = 'emoji' },
-    { name = 'spell' },
-    -- { name = 'cmp_tabnine' },
-    { name = 'cmp_git' },
-    -- { name = 'treesitter' },
-    { name = 'look', keyword_length=3, option={convert_case=true, loud=true}},
-  },
-  formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
-      vim_item.menu = ({
-        path = "   [Path]",
-        buffer = "   [Buffer]",
-        nvim_lsp = "   [LSP]",
-        vsnip = "   [Vsnip]",
-        calc = "   [Calc]",
-        spell = "   [Spell]",
-        emoji = " ﲃ  [Emoji]",
-        look = "👀 [Look]",
-        cmp_tabnine = "⦿ [TabNine]"
-      })[entry.source.name]
-      return vim_item
-    end
-  },
-  sorting = {
-    comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.kind,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    }
-  },
-  experimental = {
-    ghost_text = true
-  }
-})
-
-
-cmp.setup.filetype('gitcommit', {
-  sources = cmp.config.sources({
-    { name = 'cmp_git' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
-
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
--- Mappings.
-  local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-  buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
-  buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>Lspsaga implement<CR>', opts)
-  buf_set_keymap('n', 'gE', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', 'gc', '<cmd>Lspsaga show_cursor_diagnostics<CR>', opts)
-  buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-  -- buf_set_keymap('n', '<C-o>', '<cmd>Lspsaga open_floaterm<CR>', opts)
-  -- buf_set_keymap('n', '<C-n>', '<cmd>Lspsaga close_floaterm<CR>', opts)
-
-  if client.resolved_capabilities.document_highlight then
-    vim.cmd([[
-      hi link LspReferenceRead Visual
-      hi link LspReferenceText Visual
-      hi link LspReferenceWrite Visual
-      augroup lsp_document_highlight
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]])
-  end
-
-  if client.name ~= 'jsonls' then
-    local msg = string.format("Language server %s started!", client.name)
-    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require'lsp_signature'.on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
-      }
-    }, bufnr)
-    require('sqls').on_attach(client, bufnr)
-    if client.name == 'tsserver' then
-      local ts_utils = require("nvim-lsp-ts-utils")
-      local init_options = require("nvim-lsp-ts-utils").init_options
-      ts_utils.setup(init_options)
-      ts_utils.setup_client(client)
-    end
-  end
-
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-local function setup_servers()
-  local lsp_installer = require("nvim-lsp-installer")
-  local opts = {
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
-  lsp_installer.on_server_ready(function(server)
-    if server.name == "jsonls" then
-      opts.settings = {
-        json = {
-          schemas = require('schemastore').json.schemas(),
-        },
-      }
-    end
-    server:setup(opts)
-  end)
-end
-
-setup_servers()
-
--- vim.lsp.set_log_level("debug")
-require'lspkind'.init()
 
 require'nvim-tree'.setup {
   disable_netrw       = true,
@@ -1025,11 +762,6 @@ dap_install.setup({
 --     highlight_grey = "LineNr",
 --   },
 -- }
-
--- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
--- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
-
--- require'surround'.setup {}
 
 require'Comment'.setup {
   pre_hook = function(ctx)
