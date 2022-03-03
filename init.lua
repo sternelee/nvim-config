@@ -79,7 +79,10 @@ require('packer').startup(function()
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
   -- 语法提示
   -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead',
+    config = function()
+      require('bqf'):setup()
+    end}
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -1180,4 +1183,28 @@ hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=dark
 hi link CalNavi CalRuler
 hi tkTagSep ctermfg=gray guifg=gray
 hi tkTag ctermfg=175 guifg=#d3869B
+]]
+
+-- coc
+g.coc_global_extensions = {
+    'coc-css', --
+    'coc-dictionary', --
+    'coc-eslint',
+    'coc-html', --
+    'coc-json', --
+    'coc-markdownlint', --
+    'coc-rust-analyzer', --
+    'coc-snippets', --
+    'coc-sql', --
+    'coc-tsserver', --
+    'coc-word', --
+    'coc-xml', --
+    'coc-yaml' --
+}
+g.coc_enable_locationlist = 0
+g.coc_selectmode_mapping = 0
+cmd [[
+  hi! link CocSemDefaultLibrary Special
+  hi! link CocSemDocumentation Number
+  hi! CocSemStatic gui=bold
 ]]
