@@ -38,8 +38,6 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'lambdalisue/gina.vim'
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
-  use {'sindrets/diffview.nvim', event = 'BufRead', config = function() require('diffview'):setup() end} -- diff对比
-  use {'tanvirtin/vgit.nvim', event = 'BufRead', config = function() require('vgit'):setup() end}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
@@ -428,10 +426,9 @@ vim.opt.listchars:append("space:⋅")
 
 
 --theme
--- g.sonokai_style = 'andromeda'
-g.vscode_style = "dark"
-g.vscode_italic_comment = 1
-cmd 'colorscheme gruvbox'
+-- g.vscode_style = "dark"
+-- g.vscode_italic_comment = 1
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
