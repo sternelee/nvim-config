@@ -114,6 +114,7 @@ require('packer').startup(function()
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
+  use 'RRethy/vim-illuminate'
   use{ 'anuvyklack/pretty-fold.nvim',
     event = 'BufRead',
      config = function()
@@ -339,6 +340,8 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
+map('n', '<c-o>', '<cmd>Lspsaga open_floaterm<CR>')
+map('n', '<c-n>', '<cmd>Lspsaga close_floaterm<CR>')
 map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
@@ -368,12 +371,15 @@ map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
 map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
 map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
+-- dapui
+map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
-cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
+-- cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 cmd[[
 augroup highlight_yank
 autocmd!
@@ -440,7 +446,7 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-cmd 'colorscheme nightfly'
+cmd 'colorscheme gruvbox'
 
 local notify = require("notify")
 vim.notify = notify
@@ -633,12 +639,12 @@ cmp.setup({
   },
   sorting = {
     comparators = {
+      cmp.config.compare.kind,
+      cmp.config.compare.score,
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.sort_text,
-      cmp.config.compare.score,
       cmp.config.compare.recently_used,
-      cmp.config.compare.kind,
       cmp.config.compare.length,
       cmp.config.compare.order,
     }
@@ -709,20 +715,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-  -- buf_set_keymap('n', '<C-o>', '<cmd>Lspsaga open_floaterm<CR>', opts)
-  -- buf_set_keymap('n', '<C-n>', '<cmd>Lspsaga close_floaterm<CR>', opts)
 
-  if client.resolved_capabilities.document_highlight then
-    vim.cmd([[
-      hi link LspReferenceRead Visual
-      hi link LspReferenceText Visual
-      hi link LspReferenceWrite Visual
-      augroup lsp_document_highlight
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]])
-  end
+  require 'illuminate'.on_attach(client)
 
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
@@ -1442,6 +1436,7 @@ require('telekasten').setup({
     rename_update_links = true,
 })
 
+-- telekasten 高亮
 cmd [[
 hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
 hi tkBrackets ctermfg=gray guifg=gray
