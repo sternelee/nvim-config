@@ -141,11 +141,19 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', event = 'BufRead'}
-  use {
-    'VonHeikemen/searchbox.nvim',
+  -- use {
+  --   'VonHeikemen/searchbox.nvim',
+  --   event = 'BufRead',
+  --   requires = {
+  --     {'MunifTanjim/nui.nvim'}
+  --   }
+  -- }
+  use { 'bennypowers/nvim-regexplainer',
     event = 'BufRead',
+    config = function() require'regexplainer'.setup()  end,
     requires = {
-      {'MunifTanjim/nui.nvim'}
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
     }
   }
   use {
@@ -305,8 +313,8 @@ map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
-map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
+-- map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
+-- map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
@@ -420,6 +428,9 @@ let bufferline.icons = 'both'
 ]], false)
 
 g.vista_default_executive = 'nvim_lsp'
+g.markdown_fenced_language = {
+  "ts=typescript"
+}
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
