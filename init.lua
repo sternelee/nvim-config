@@ -234,7 +234,7 @@ opt('o', 'smartcase', true)                           -- Don't ignore case with 
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'clipboard', 'unnamed')                   -- 与系统剪切板相通
+-- opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'scrolloff', 2 )
 opt('o', 'tabstop', 2)
@@ -440,7 +440,7 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-cmd 'colorscheme vscode'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
