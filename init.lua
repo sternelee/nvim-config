@@ -235,7 +235,7 @@ opt('o', 'smartcase', true)                           -- Don't ignore case with 
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
--- opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
+opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'scrolloff', 2 )
 opt('o', 'tabstop', 2)
