@@ -114,13 +114,13 @@ require('packer').startup(function()
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  -- use{ 'anuvyklack/pretty-fold.nvim',
-  --   event = 'BufRead',
-  --    config = function()
-  --       require('pretty-fold').setup{}
-  --       require('pretty-fold.preview').setup()
-  --    end
-  -- }
+  use{ 'anuvyklack/pretty-fold.nvim',
+    event = 'BufRead',
+     config = function()
+        require('pretty-fold').setup{}
+        require('pretty-fold.preview').setup()
+     end
+  }
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
@@ -194,21 +194,21 @@ require('packer').startup(function()
   --     }
   --   end }
   use 'nanotee/sqls.nvim'
-  -- use {
-  --   'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {
-  --       log_level = 'info',
-  --       auto_session_enable_last_session = false,
-  --       auto_session_root_dir = vim.fn.stdpath('data').."/sessions/",
-  --       auto_session_enabled = true,
-  --       auto_save_enabled = nil,
-  --       auto_restore_enabled = nil,
-  --       auto_session_suppress_dirs = nil,
-  --       bypass_session_save_file_types = nil
-  --     }
-  --   end
-  -- }
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'info',
+        auto_session_enable_last_session = false,
+        auto_session_root_dir = vim.fn.stdpath('data').."/sessions/",
+        auto_session_enabled = true,
+        auto_save_enabled = nil,
+        auto_restore_enabled = nil,
+        auto_session_suppress_dirs = nil,
+        bypass_session_save_file_types = nil
+      }
+    end
+  }
 
 end)
 
@@ -275,7 +275,8 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
--- vim.o.sessionoptions="buffers,help,tabpages"
+vim.o.sessionoptions="buffers,help,tabpages"
+vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype on
@@ -437,9 +438,9 @@ vim.opt.listchars:append("space:⋅")
 
 
 --theme
--- g.vscode_style = "dark"
--- g.vscode_italic_comment = 1
-cmd 'colorscheme nightfly'
+g.vscode_style = "dark"
+g.vscode_italic_comment = 1
+cmd 'colorscheme vscode'
 
 local notify = require("notify")
 vim.notify = notify
