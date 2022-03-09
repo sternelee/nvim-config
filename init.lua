@@ -461,7 +461,7 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-cmd 'colorscheme gruvbox'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
