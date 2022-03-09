@@ -43,13 +43,13 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end
-  -- } -- 使用 nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup {}
+    end
+  } -- 使用 nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
@@ -297,12 +297,12 @@ end
 g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'x', '"_x')
-map('n', 'X', '"_X')
-map('n', 'd', '"_d')  --- 删除不写剪切板
+-- map('n', 'x', '"_x')
+-- map('n', 'X', '"_X')
+-- map('n', 'd', '"_d')  --- 删除不写剪切板
 -- map('n', 'dd', '"_dd')
-map('n', 'D', '"_D')
-map('v', 'd', '"_d')
+-- map('n', 'D', '"_D')
+-- map('v', 'd', '"_d')
 -- map('v', 'dd', '"_dd')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
