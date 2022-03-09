@@ -19,6 +19,7 @@ end
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
+-- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
@@ -115,6 +116,7 @@ require('packer').startup(function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'RRethy/vim-illuminate'
+  use {'pechorin/any-jump.vim', event = 'BufRead'}
   use{ 'anuvyklack/pretty-fold.nvim',
     event = 'BufRead',
      config = function()
@@ -295,6 +297,13 @@ end
 g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
+map('n', 'x', '"_x')
+map('n', 'X', '"_X')
+map('n', 'd', '"_d')  --- 删除不写剪切板
+-- map('n', 'dd', '"_dd')
+map('n', 'D', '"_D')
+map('v', 'd', '"_d')
+-- map('v', 'dd', '"_dd')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -370,6 +379,12 @@ map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
 map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
 map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
 map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
+
+
+map('n', '<leader>j', '<cmd>AnyJump<CR>')
+map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
+map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
+map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
 -- dapui
 map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')

@@ -84,8 +84,15 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/alpha-nvim",
     url = "https://github.com/goolord/alpha-nvim"
   },
+  ["any-jump.vim"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/any-jump.vim",
+    url = "https://github.com/pechorin/any-jump.vim"
+  },
   ["auto-session"] = {
-    config = { "\27LJ\2\n›\1\0\0\6\0\n\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\3\14log_level\tinfo\25auto_session_enabled\2%auto_session_enable_last_session\1\nsetup\17auto-session\frequire\0" },
+    config = { "\27LJ\2\n›\1\0\0\6\0\n\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\3\25auto_session_enabled\2%auto_session_enable_last_session\1\14log_level\tinfo\nsetup\17auto-session\frequire\0" },
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/auto-session",
     url = "https://github.com/rmagatti/auto-session"
@@ -527,6 +534,11 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
+  ["vim-illuminate"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-illuminate",
+    url = "https://github.com/RRethy/vim-illuminate"
+  },
   ["vim-nightfly-guicolors"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/vim-nightfly-guicolors",
@@ -580,18 +592,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: refactoring.nvim
-time([[Config for refactoring.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16refactoring\frequire\0", "config", "refactoring.nvim")
-time([[Config for refactoring.nvim]], false)
 -- Config for: auto-session
 time([[Config for auto-session]], true)
-try_loadstring("\27LJ\2\n›\1\0\0\6\0\n\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\3\14log_level\tinfo\25auto_session_enabled\2%auto_session_enable_last_session\1\nsetup\17auto-session\frequire\0", "config", "auto-session")
+try_loadstring("\27LJ\2\n›\1\0\0\6\0\n\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\2B\0\2\1K\0\1\0\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\3\25auto_session_enabled\2%auto_session_enable_last_session\1\14log_level\tinfo\nsetup\17auto-session\frequire\0", "config", "auto-session")
 time([[Config for auto-session]], false)
 -- Config for: nvim-treesitter-refactor
 time([[Config for nvim-treesitter-refactor]], true)
 try_loadstring("\27LJ\2\nE\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\tinit\29nvim-treesitter-refactor\frequire\0", "config", "nvim-treesitter-refactor")
 time([[Config for nvim-treesitter-refactor]], false)
+-- Config for: refactoring.nvim
+time([[Config for refactoring.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16refactoring\frequire\0", "config", "refactoring.nvim")
+time([[Config for refactoring.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -606,9 +618,9 @@ vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = 
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'package-info.nvim', 'cmp-npm'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'codi.vim', 'pretty-fold.nvim', 'neogen', 'rust-tools.nvim', 'git-blame.nvim', 'glow.nvim', 'smart-pairs', 'hop.nvim', 'indent-blankline.nvim', 'twilight.nvim', 'nvim-bqf', 'vim-sandwich', 'nvim_context_vt', 'nvim-hlslens', 'nvim-peekup', 'nvim-regexplainer', 'fidget.nvim', 'nvim-ts-autotag'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'twilight.nvim', 'git-blame.nvim', 'vim-sandwich', 'nvim-hlslens', 'nvim-peekup', 'nvim-regexplainer', 'nvim-ts-autotag', 'codi.vim', 'pretty-fold.nvim', 'fidget.nvim', 'rust-tools.nvim', 'nvim-bqf', 'hop.nvim', 'smart-pairs', 'indent-blankline.nvim', 'any-jump.vim', 'glow.nvim', 'neogen', 'nvim_context_vt'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
