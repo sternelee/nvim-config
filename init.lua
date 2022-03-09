@@ -115,7 +115,7 @@ require('packer').startup(function()
   use {'machakann/vim-sandwich', event = 'BufRead'}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use 'RRethy/vim-illuminate'
+  use 'yamatsum/nvim-cursorline'
   use {'pechorin/any-jump.vim', event = 'BufRead'}
   use{ 'anuvyklack/pretty-fold.nvim',
     event = 'BufRead',
@@ -730,8 +730,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-
-  require 'illuminate'.on_attach(client)
 
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
