@@ -117,6 +117,7 @@ require('packer').startup(function()
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use 'yamatsum/nvim-cursorline'
   use {'pechorin/any-jump.vim', event = 'BufRead'}
+  use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use{ 'anuvyklack/pretty-fold.nvim',
     event = 'BufRead',
      config = function()
@@ -461,6 +462,7 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
+
 cmd 'colorscheme nightfly'
 
 local notify = require("notify")
