@@ -120,10 +120,10 @@ require('packer').startup(function()
   use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use{ 'anuvyklack/pretty-fold.nvim',
     event = 'BufRead',
-     config = function()
-        require('pretty-fold').setup{}
-        require('pretty-fold.preview').setup()
-     end
+    config = function()
+       require('pretty-fold').setup{}
+       require('pretty-fold.preview').setup()
+    end
   }
   use 'folke/todo-comments.nvim'
   use {
@@ -259,7 +259,8 @@ opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
-opt('o', 'foldmethod', 'manual')
+opt('o', 'foldmethod', 'indent')
+opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
