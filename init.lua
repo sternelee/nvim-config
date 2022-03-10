@@ -118,13 +118,6 @@ require('packer').startup(function()
   use 'yamatsum/nvim-cursorline'
   use {'pechorin/any-jump.vim', event = 'BufRead'}
   use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
-  use{ 'anuvyklack/pretty-fold.nvim',
-    event = 'BufRead',
-    config = function()
-       require('pretty-fold').setup{}
-       require('pretty-fold.preview').setup()
-    end
-  }
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
