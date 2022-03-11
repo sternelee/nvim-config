@@ -51,6 +51,13 @@ require('packer').startup(function()
   } -- 使用 nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
+  use {
+    'lewis6991/spellsitter.nvim',
+    event = 'BufRead',
+    config = function()
+      require('spellsitter').setup()
+    end
+  }
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
@@ -79,7 +86,7 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use {'hrsh7th/nvim-cmp', requires = {
+  use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -96,6 +103,13 @@ require('packer').startup(function()
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
+  use {
+    'narutoxy/dim.lua',
+    event = 'BufRead',
+    config = function()
+      require('dim').setup({})
+    end
+  }
   -- 语法提示
   -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
@@ -187,21 +201,6 @@ require('packer').startup(function()
   --     }
   --   end }
   use 'nanotee/sqls.nvim'
-  use {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'info',
-        auto_session_enable_last_session = false,
-        auto_session_root_dir = vim.fn.stdpath('data').."/sessions/",
-        auto_session_enabled = true,
-        auto_save_enabled = nil,
-        auto_restore_enabled = nil,
-        auto_session_suppress_dirs = nil,
-        bypass_session_save_file_types = nil
-      }
-    end
-  }
 
 end)
 
@@ -578,6 +577,8 @@ require("cmp_git").setup()
 cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noselect',
+    border = true,
+    scrollbar = true
   },
   snippet = {
     expand = function(args)
