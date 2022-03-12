@@ -103,15 +103,7 @@ require('packer').startup(function()
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
-  use {
-    'narutoxy/dim.lua',
-    event = 'BufRead',
-    config = function()
-      require('dim').setup({})
-    end
-  }
   -- 语法提示
-  -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use 'onsails/lspkind-nvim'
@@ -127,9 +119,15 @@ require('packer').startup(function()
   use {'ZhiyuanLck/smart-pairs', event = 'BufRead', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'BufRead'}
   use {'machakann/vim-sandwich', event = 'BufRead'}
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end
+  }
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use 'yamatsum/nvim-cursorline'
   use {'pechorin/any-jump.vim', event = 'BufRead'}
   use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
@@ -306,7 +304,8 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -330,7 +329,6 @@ map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
--- map('n', '<leader>S', '<cmd>AerialToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -348,7 +346,6 @@ map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
--- map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -371,14 +368,12 @@ map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
 
--- cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
 cmd[[
 augroup highlight_yank
-autocmd!
-au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
-augroup END
+  autocmd!
+  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+  augroup END
 ]]
 
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
@@ -387,8 +382,8 @@ cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '■', -- Could be '●', '▎', 'x'
-    source = "always",  -- Or "if_many" spacing = 0,
+    prefix = '●',
+    source = "always",
   },
   float = {
     source = "always",  -- Or "if_many"
@@ -475,21 +470,12 @@ require('telescope').setup {
     file_browser = {
       theme = "ivy",
     },
-    -- extensions = {
-    --   media_files = {
-    --     -- filetypes whitelist
-    --     -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-    --     filetypes = {"png", "webp", "jpg", "jpeg"},
-    --     find_cmd = "rg" -- find command (defaults to `fd`)
-    --   }
-    -- },
   },
 }
 
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
--- require'telescope'.load_extension('media_files')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
@@ -512,7 +498,6 @@ require('nvim-treesitter.configs').setup {
   refactor = {
     highlight_definitions = {
       enable = true,
-      -- Set to false if you have an `updatetime` of ~100.
       clear_on_cursor_move = true,
     },
   },
@@ -521,7 +506,6 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       lookahead = true,
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
@@ -582,7 +566,7 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
@@ -618,33 +602,10 @@ cmp.setup({
     { name = 'look', keyword_length=3, option={convert_case=true, loud=true}},
   },
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
-      vim_item.menu = ({
-        path = "   [Path]",
-        buffer = "   [Buffer]",
-        nvim_lsp = "   [LSP]",
-        vsnip = "   [Vsnip]",
-        calc = "   [Calc]",
-        spell = "   [Spell]",
-        emoji = " ﲃ  [Emoji]",
-        look = "👀 [Look]",
-        cmp_tabnine = "⦿ [TabNine]"
-      })[entry.source.name]
-      return vim_item
-    end
+    format = lspkind.cmp_format()
   },
-  sorting = {
-    comparators = {
-      cmp.config.compare.kind,
-      cmp.config.compare.score,
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    }
+  flags = {
+      debounce_text_changes = 150,
   },
   experimental = {
     ghost_text = true
@@ -678,10 +639,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
--- Mappings.
   local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -830,7 +788,6 @@ require'gitsigns'.setup {
     ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
     ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
 
-    -- Text objects
     ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
   },
@@ -911,39 +868,30 @@ require'colorizer'.setup{
 }
 
 require('todo-comments').setup{
-  signs = true, -- show icons in the signs column
-    sign_priority = 8, -- sign priority
-    -- keywords recognized as todo comments
+  signs = true,
+    sign_priority = 8,
     keywords = {
       FIX = {
-        icon = " ", -- icon used for the sign, and in search results
-        color = "error", -- can be a hex color, or a named color (see below)
-        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-        -- signs = false, -- configure signs for some keywords individually
-        },
-        TODO = { icon = " ", color = "info" },
-        HACK = { icon = " ", color = "warning" },
-        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        },
-    merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-    -- highlighting of the line containing the todo comment
-    -- * before: highlights before the keyword (typically comment characters)
-    -- * keyword: highlights of the keyword
-    -- * after: highlights after the keyword (todo text)
+        icon = " ",
+        color = "error",
+        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+      },
+      TODO = { icon = " ", color = "info" },
+      HACK = { icon = " ", color = "warning" },
+      WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    },
+    merge_keywords = true,
     highlight = {
       before = "", -- "fg" or "bg" or empty
       keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
       after = "fg", -- "fg" or "bg" or empty
-      --pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
       pattern = [[(KEYWORDS)]], -- pattern or table of patterns, used for highlightng (vim regex)
-      comments_only = true, -- uses treesitter to match keywords in comments only
-      max_line_len = 400, -- ignore lines longer than this
-      exclude = {}, -- list of file types to exclude highlighting
+      comments_only = true,
+      max_line_len = 400,
+      exclude = {},
     },
-    -- list of named colors where we try to extract the guifg from the
-    -- list of hilight groups or use the hex color if hl not found as a fallback
     colors = {
       error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
       warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
@@ -960,9 +908,6 @@ require('todo-comments').setup{
         "--line-number",
         "--column",
       },
-      -- regex that will be used to match keywords.
-      -- don't replace the (KEYWORDS) placeholder
-      -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
       pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
     },
 }
@@ -983,7 +928,6 @@ function _G.whitespace_visibility(file_types)
         end
     end
 
-    -- vim.cmd('DisableWhitespace')
     if better_whitespace_status == 0 then
         vim.cmd('execute "DisableWhitespace"')
     else
@@ -994,40 +938,11 @@ end
 cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_types)')
 cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
---[[ local neogit = require('neogit')
-neogit.setup {} ]]
-
 require("dapui").setup()
 local dap_install = require("dap-install")
 dap_install.setup({
 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
 })
-
--- require'nvim-autopairs'.setup{
---   check_ts = true,
---   ts_config = {
---     lua = { "string", "source" },
---     javascript = { "string", "template_string" },
---     java = false,
---   },
---   disable_filetype = { "TelescopePrompt", "spectre_panel" },
---   fast_wrap = {
---     map = "<M-e>",
---     chars = { "{", "[", "(", '"', "'" },
---     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
---     offset = 0, -- Offset from pattern match
---     end_key = "$",
---     keys = "qwertyuiopzxcvbnmasdfghjkl",
---     check_comma = true,
---     highlight = "PmenuSel",
---     highlight_grey = "LineNr",
---   },
--- }
-
--- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
--- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
-
--- require'surround'.setup {}
 
 require'Comment'.setup {
   pre_hook = function(ctx)
@@ -1082,25 +997,6 @@ sidebar.setup({
       }
   }
 })
-
--- local autosave = require("autosave")
--- autosave.setup(
---   {
---     enabled = true,
---     execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
---     events = {"InsertLeave", "TextChanged"},
---     conditions = {
---         exists = true,
---         filename_is_not = {},
---         filetype_is_not = {},
---         modifiable = true
---     },
---     write_all_buffers = false,
---     on_off_commands = true,
---     clean_command_line_interval = 0,
---     debounce_delay = 3000
---   }
--- )
 
 -- windline config
 local windline = require('windline')
@@ -1305,7 +1201,6 @@ local explorer = {
 
 windline.setup({
     colors_name = function(colors)
-        -- ADD MORE COLOR HERE ----
         return colors
     end,
     statuslines = {
