@@ -36,28 +36,28 @@ require('packer').startup(function()
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
-  use 'tpope/vim-fugitive'
-  use 'lambdalisue/gina.vim'
+  -- use 'tpope/vim-fugitive'
+  use {'lambdalisue/gina.vim'}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require('treesitter-context').setup {}
-    end
-  } -- 使用 nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end
+  -- } -- 使用 nvim_context_vt
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
-  use {
-    'lewis6991/spellsitter.nvim',
-    event = 'BufRead',
-    config = function()
-      require('spellsitter').setup()
-    end
-  }
+  -- use {
+  --   'lewis6991/spellsitter.nvim',
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('spellsitter').setup()
+  --   end
+  -- }
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
@@ -147,25 +147,10 @@ require('packer').startup(function()
       }
     end
   } -- 方便写注释
-  use {
-    'nvim-neorg/neorg',
-    ft = 'norg',
-    config = function()
-      require('neorg').setup {
-        load = {
-          ["core.defaults"] = {},
-          ["core.norg.dirman"] = {
-            config = {
-              workspaces = {
-                work = "~/nvim-norg/work",
-                home = "~/nvim-norg/home",
-              }
-            }
-          }
-        }
-      }
-    end
-  }
+  use {'renerocksai/telekasten.nvim', requires = {
+    'renerocksai/calendar-vim',
+    -- 'nvim-telescope/telescope-media-files.nvim'
+  }} -- 笔记
   use 'ntpeters/vim-better-whitespace'
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
@@ -376,6 +361,14 @@ map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline 
 map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
 map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 
+--- zettelkasten
+map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
+map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
+map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
+map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
+map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
+map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
+
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
 map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
@@ -498,27 +491,9 @@ require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
 
-local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
--- These two are optional and provide syntax highlighting
--- for Neorg tables and the @document.meta tag
-parser_configs.norg_meta = {
-    install_info = {
-        url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
-        files = { "src/parser.c" },
-        branch = "main"
-    },
-}
-
-parser_configs.norg_table = {
-    install_info = {
-        url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
-        files = { "src/parser.c" },
-        branch = "main"
-    },
-}
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "norg", "norg_meta", "norg_table"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   disable_tokenziation_after_line = 10000,
   additional_vim_regex_highlighting = false,
   highlight = {
@@ -1248,3 +1223,57 @@ windline.setup({
         quickfix,
     },
 })
+
+-- telekasten
+local home = vim.fn.expand("~/zettelkasten")
+require('telekasten').setup({
+    home         = home,
+    take_over_my_home = true,
+    auto_set_filetype = true,
+    dailies      = home .. '/' .. 'daily',
+    weeklies     = home .. '/' .. 'weekly',
+    templates    = home .. '/' .. 'templates',
+    image_subdir = "img",
+    extension    = ".md",
+    follow_creates_nonexisting = true,
+    dailies_create_nonexisting = true,
+    weeklies_create_nonexisting = true,
+    template_new_note = home .. '/' .. 'templates/new_note.md',
+    template_new_daily = home .. '/' .. 'templates/daily.md',
+    template_new_weekly= home .. '/' .. 'templates/weekly.md',
+    image_link_style = "markdown",
+    plug_into_calendar = true,
+    calendar_opts = {
+        weeknm = 4,
+        calendar_monday = 1,
+        calendar_mark = 'left-fit',
+    },
+    close_after_yanking = false,
+    insert_after_inserting = true,
+    tag_notation = "#tag",
+    command_palette_theme = "ivy",
+    show_tags_theme = "ivy",
+    subdirs_in_links = true,
+    template_handling = "smart",
+    new_note_location = "smart",
+    rename_update_links = true,
+})
+
+-- telekasten 高亮
+cmd [[
+hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
+hi tkBrackets ctermfg=gray guifg=gray
+
+" for gruvbox
+hi tklink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
+hi tkBrackets ctermfg=gray guifg=gray
+
+" real yellow
+hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=darkred gui=bold
+" gruvbox
+"hi tkHighlight ctermbg=214 ctermfg=124 cterm=bold guibg=#fabd2f guifg=#9d0006 gui=bold
+
+hi link CalNavi CalRuler
+hi tkTagSep ctermfg=gray guifg=gray
+hi tkTag ctermfg=175 guifg=#d3869B
+]]
