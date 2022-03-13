@@ -65,6 +65,7 @@ require('packer').startup(function()
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
+  use {'catppuccin/nvim', as = 'catppuccin'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -78,6 +79,11 @@ require('packer').startup(function()
   }
   use 'mg979/vim-visual-multi'
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
+  use {'m-demare/hlargs.nvim', event = 'BufRead',
+    config = function ()
+      require('hlargs').setup{}
+    end
+  }
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -99,7 +105,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    {'ray-x/cmp-treesitter'},
+    -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
@@ -334,6 +340,7 @@ map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
@@ -447,6 +454,8 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
+
+require'catppuccin'.setup{}
 
 cmd 'colorscheme nightfly'
 
@@ -628,7 +637,7 @@ cmp.setup({
     { name = 'spell' },
     -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
-    { name = 'treesitter' },
+    -- { name = 'treesitter' },
     { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
@@ -891,7 +900,7 @@ require('formatter').setup({
   }
 })
 
-require'which-key'.setup {}
+require'which-key'.setup{}
 require'colorizer'.setup{
   '*',
   css = { rgb_fn = true; }
