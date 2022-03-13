@@ -99,7 +99,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    -- {'ray-x/cmp-treesitter'},
+    {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
@@ -145,7 +145,19 @@ require('packer').startup(function()
     'nvim-neorg/neorg',
     ft = 'norg',
     config = function()
-        require('neorg').setup {}
+      require('neorg').setup {
+        load = {
+          ["core.defaults"] = {},
+          ["core.norg.dirman"] = {
+            config = {
+              workspaces = {
+                work = "~/nvim-norg/work",
+                home = "~/nvim-norg/home",
+              }
+            }
+          }
+        }
+      }
     end
   }
   use 'ntpeters/vim-better-whitespace'
@@ -477,9 +489,27 @@ require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
 
+local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+-- These two are optional and provide syntax highlighting
+-- for Neorg tables and the @document.meta tag
+parser_configs.norg_meta = {
+    install_info = {
+        url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+        files = { "src/parser.c" },
+        branch = "main"
+    },
+}
+
+parser_configs.norg_table = {
+    install_info = {
+        url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+        files = { "src/parser.c" },
+        branch = "main"
+    },
+}
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "norg", "norg_meta", "norg_table"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   disable_tokenziation_after_line = 10000,
   additional_vim_regex_highlighting = false,
   highlight = {
@@ -598,8 +628,8 @@ cmp.setup({
     { name = 'spell' },
     -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
-    -- { name = 'treesitter' },
-    { name = 'look', keyword_length=3, option={convert_case=true, loud=true}},
+    { name = 'treesitter' },
+    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = lspkind.cmp_format()
