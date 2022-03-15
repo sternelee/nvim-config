@@ -36,7 +36,7 @@ require('packer').startup(function()
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
-  -- use 'tpope/vim-fugitive'
+  use 'tpope/vim-fugitive'
   use {'lambdalisue/gina.vim'}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   -- 语法高亮
@@ -66,6 +66,8 @@ require('packer').startup(function()
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
   use {'catppuccin/nvim', as = 'catppuccin'}
+  -- use 'vv9k/bogster'
+  use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -450,7 +452,7 @@ g.vscode_italic_comment = 1
 
 require'catppuccin'.setup{}
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 local notify = require("notify")
 vim.notify = notify
