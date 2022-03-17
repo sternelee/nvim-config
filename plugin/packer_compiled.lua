@@ -283,6 +283,14 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/lush.nvim",
     url = "https://github.com/rktjmp/lush.nvim"
   },
+  ["marks.nvim"] = {
+    config = { "\27LJ\2\n¼\2\0\0\4\0\f\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0024\3\0\0=\3\b\0025\3\t\0=\3\n\0024\3\0\0=\3\v\2B\0\2\1K\0\1\0\rmappings\15bookmark_0\1\0\2\tsign\bâš‘\14virt_text\16hello world\23excluded_filetypes\18sign_priority\1\0\4\nlower\3\n\rbookmark\3\20\fbuiltin\3\b\nupper\3\15\18builtin_marks\1\5\0\0\6.\6<\6>\6^\1\0\4\21refresh_interval\3ú\1\22force_write_shada\1\vcyclic\2\21default_mappings\2\nsetup\nmarks\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/marks.nvim",
+    url = "https://github.com/chentau/marks.nvim"
+  },
   neogen = {
     config = { "\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fenabled\2\nsetup\vneogen\frequire\0" },
     loaded = false,
@@ -649,9 +657,9 @@ time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
 vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-regexplainer', 'twilight.nvim', 'fidget.nvim', 'git-blame.nvim', 'hlargs.nvim', 'hop.nvim', 'indent-blankline.nvim', 'yode-nvim', 'glow.nvim', 'nvim-bqf', 'reach.nvim', 'nvim-hlslens', 'rust-tools.nvim', 'nvim_context_vt'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-ts-autotag', 'codi.vim', 'nvim-peekup', 'neogen', 'any-jump.vim', 'nvim-dap-ui', 'vim-sandwich', 'better-escape.vim', 'smart-pairs'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'fidget.nvim', 'twilight.nvim', 'git-blame.nvim', 'glow.nvim', 'yode-nvim', 'hlargs.nvim', 'indent-blankline.nvim', 'marks.nvim', 'hop.nvim', 'nvim_context_vt', 'nvim-hlslens', 'reach.nvim', 'nvim-bqf', 'nvim-regexplainer', 'rust-tools.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'smart-pairs', 'codi.vim', 'neogen', 'vim-sandwich', 'nvim-ts-autotag', 'nvim-dap-ui', 'better-escape.vim', 'nvim-peekup', 'any-jump.vim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

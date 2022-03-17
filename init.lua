@@ -130,6 +130,23 @@ require('packer').startup(function()
         notifications = true
       })
     end}
+  use {'chentau/marks.nvim', event = 'BufRead',
+    config = function ()
+      require('marks').setup({
+        default_mappings = true,
+        builtin_marks = { ".", "<", ">", "^" },
+        cyclic = true,
+        force_write_shada = false,
+        refresh_interval = 250,
+        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+        excluded_filetypes = {},
+        bookmark_0 = {
+          sign = "⚑",
+          virt_text = "hello world"
+        },
+        mappings = {}
+      })
+    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use {'pechorin/any-jump.vim', event = 'InsertEnter'}
