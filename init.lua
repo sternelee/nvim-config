@@ -311,6 +311,7 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 -- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
