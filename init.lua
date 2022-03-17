@@ -47,8 +47,7 @@ require('packer').startup(function()
   --   'romgrk/nvim-treesitter-context',
   --   config = function()
   --     require('treesitter-context').setup {}
-  --   end
-  -- } -- 使用 nvim_context_vt
+  --   end} -- 使用 nvim_context_vt
   use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
   -- use {
@@ -56,8 +55,7 @@ require('packer').startup(function()
   --   event = 'BufRead',
   --   config = function()
   --     require('spellsitter').setup()
-  --   end
-  -- }
+  --   end}
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
@@ -77,15 +75,13 @@ require('packer').startup(function()
         show_current_context_start = true,
         use_treesitter = true
       }
-    end
-  }
+    end}
   use 'mg979/vim-visual-multi'
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
   use {'m-demare/hlargs.nvim', event = 'BufRead',
     config = function ()
       require('hlargs').setup{}
-    end
-  }
+    end}
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -121,34 +117,33 @@ require('packer').startup(function()
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
-  use {'gennaro-tedesco/nvim-peekup', event = 'BufRead'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'ZhiyuanLck/smart-pairs', event = 'BufRead', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', event = 'BufRead'}
-  use {'machakann/vim-sandwich', event = 'BufRead'}
+  use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
+  use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
         notifications = true
       })
-    end
-  }
+    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use {'pechorin/any-jump.vim', event = 'BufRead'}
+  use {'pechorin/any-jump.vim', event = 'InsertEnter'}
   use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
     requires = 'nvim-treesitter/nvim-treesitter',
-    event = 'BufRead',
+    event = 'InsertEnter',
     config = function()
       require'neogen'.setup {
           enabled = true
       }
-    end
-  } -- 方便写注释
+    end} -- 方便写注释
   use {'renerocksai/telekasten.nvim', requires = {
     'renerocksai/calendar-vim',
     -- 'nvim-telescope/telescope-media-files.nvim'
@@ -157,45 +152,39 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', event = 'BufRead'}
+  use {'metakirby5/codi.vim', event = 'InsertEnter'}
   use { 'bennypowers/nvim-regexplainer',
     event = 'BufRead',
     config = function() require'regexplainer'.setup()  end,
     requires = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
-    }
-  }
+    }}
   use {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
-  }
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
     event = 'BufRead package.json',
     config = function()
       require('package-info').setup()
-    end
-  }
+    end}
   -- rust
   use {'simrat39/rust-tools.nvim', event = 'BufRead', config = function() require('rust-tools'):setup() end}
   use {'Saecki/crates.nvim',
      event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
-    end
-  }
+    end}
   use {'David-Kunz/cmp-npm',
     event = 'BufRead package.json',
     config = function()
       require('cmp-npm').setup({})
-    end
-  }
+    end}
   use {
     'NTBBloodbath/rest.nvim',
-    requires = {"nvim-lua/plenary.nvim" }
-  }
+    requires = {"nvim-lua/plenary.nvim" }}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -203,7 +192,7 @@ require('packer').startup(function()
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  use 'nanotee/sqls.nvim'
+  use {'nanotee/sqls.nvim', event = 'BufRead'}
 
 end)
 
@@ -696,7 +685,11 @@ local on_attach = function(client, bufnr)
         border = "rounded"
       }
     }, bufnr)
-    require('sqls').on_attach(client, bufnr)
+
+    if client.name == 'sqls' then
+      require('sqls').on_attach(client, bufnr)
+    end
+
     if client.name == 'tsserver' then
       local ts_utils = require("nvim-lsp-ts-utils")
       local init_options = require("nvim-lsp-ts-utils").init_options
