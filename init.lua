@@ -17,6 +17,7 @@ end
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
+-- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
 require('packer').startup(function()
@@ -27,16 +28,12 @@ require('packer').startup(function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
-  use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   use 'sidebar-nvim/sidebar.nvim'
   -- git相关
-  use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use 'lambdalisue/gina.vim'
-  use {'sindrets/diffview.nvim', event = 'BufRead', config = function() require('diffview'):setup() end} -- diff对比
-  use {'tanvirtin/vgit.nvim', event = 'BufRead', config = function() require('vgit'):setup() end}
+  use {'lambdalisue/gina.vim'}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
@@ -45,10 +42,15 @@ require('packer').startup(function()
   --   'romgrk/nvim-treesitter-context',
   --   config = function()
   --     require('treesitter-context').setup {}
-  --   end
-  -- } -- 使用 nvim_context_vt
+  --   end} -- 使用 nvim_context_vt
   use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
+  -- use {
+  --   'lewis6991/spellsitter.nvim',
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('spellsitter').setup()
+  --   end}
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
@@ -56,6 +58,9 @@ require('packer').startup(function()
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
+  use {'catppuccin/nvim', as = 'catppuccin'}
+  -- use 'vv9k/bogster'
+  use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -65,51 +70,49 @@ require('packer').startup(function()
         show_current_context_start = true,
         use_treesitter = true
       }
-    end
-  }
+    end}
   use 'mg979/vim-visual-multi'
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
+  use {'m-demare/hlargs.nvim', event = 'BufRead',
+    config = function ()
+      require('hlargs').setup{}
+    end}
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   -- 语法建议
-  use {'neoclide/coc.nvim', branch = 'release'}
+  use 'neoclide/coc.nvim'
   use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
-  -- 语法提示
-  -- use {'folke/lsp-trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead',
-    config = function()
-      require('bqf'):setup()
-    end}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   -- 方便操作
   use 'tpope/vim-eunuch'
-  use {'gennaro-tedesco/nvim-peekup', event = 'BufRead'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'ZhiyuanLck/smart-pairs', event = 'BufRead', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', event = 'BufRead'}
-  use {'machakann/vim-sandwich', event = 'BufRead'}
+  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
+  use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  -- use{ 'anuvyklack/pretty-fold.nvim',
-  --   event = 'BufRead',
-  --    config = function()
-  --       require('pretty-fold').setup{}
-  --       require('pretty-fold.preview').setup()
-  --    end
-  -- }
+  use {'pechorin/any-jump.vim', event = 'InsertEnter'}
+  use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
     requires = 'nvim-treesitter/nvim-treesitter',
-    event = 'BufRead',
+    event = 'InsertEnter',
     config = function()
       require'neogen'.setup {
           enabled = true
       }
-    end
-  } -- 方便写注释
+    end} -- 方便写注释
   use {'renerocksai/telekasten.nvim', requires = {
     'renerocksai/calendar-vim',
     -- 'nvim-telescope/telescope-media-files.nvim'
@@ -118,29 +121,38 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', event = 'BufRead'}
-  use {
-    'VonHeikemen/searchbox.nvim',
+  use {'metakirby5/codi.vim', event = 'InsertEnter'}
+  use { 'bennypowers/nvim-regexplainer',
     event = 'BufRead',
+    config = function() require'regexplainer'.setup()  end,
     requires = {
-      {'MunifTanjim/nui.nvim'}
-    }
-  }
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+    }}
   use {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}
-  }
+    event = 'InsertEnter',
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'},
+    config = function()
+      require("dapui").setup()
+      local dap_install = require("dap-install")
+      dap_install.setup({
+      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+    end}
+  use {
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup()
+    end}
   -- rust
   use {'Saecki/crates.nvim',
      event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
-    end
-  }
-  use {
-    'NTBBloodbath/rest.nvim',
-    requires = {"nvim-lua/plenary.nvim" }
-  }
+    end}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -148,21 +160,6 @@ require('packer').startup(function()
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  -- use {
-  --   'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {
-  --       log_level = 'info',
-  --       auto_session_enable_last_session = false,
-  --       auto_session_root_dir = vim.fn.stdpath('data').."/sessions/",
-  --       auto_session_enabled = true,
-  --       auto_save_enabled = nil,
-  --       auto_restore_enabled = nil,
-  --       auto_session_suppress_dirs = nil,
-  --       bypass_session_save_file_types = nil
-  --     }
-  --   end
-  -- }
 
 end)
 
@@ -188,7 +185,7 @@ opt('o', 'smartcase', true)                           -- Don't ignore case with 
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'clipboard', 'unnamed')                   -- 与系统剪切板相通
+opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'scrolloff', 2 )
 opt('o', 'tabstop', 2)
@@ -203,13 +200,14 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', true)
+opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
-opt('o', 'foldmethod', 'manual')
+opt('o', 'foldmethod', 'indent')
+opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
@@ -229,7 +227,8 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
--- vim.o.sessionoptions="buffers,help,tabpages"
+vim.o.sessionoptions="buffers,help,tabpages"
+vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype on
@@ -247,6 +246,13 @@ end
 g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
+-- map('n', 'x', '"_x')
+-- map('n', 'X', '"_X')
+-- map('n', 'd', '"_d')  --- 删除不写剪切板
+-- map('n', 'dd', '"_dd')
+-- map('n', 'D', '"_D')
+-- map('v', 'd', '"_d')
+-- map('v', 'dd', '"_dd')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -259,7 +265,9 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -267,18 +275,13 @@ map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fs', '<cmd>lua require("searchbox").incsearch()<CR>')
-map('n', 'fr', '<cmd>lua require("searchbox").replace()<CR>')
 map('n', 'fo', '<cmd>Format<CR>')
-map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
--- map('n', '<leader>S', '<cmd>AerialToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -294,7 +297,6 @@ map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
 map('n', '<leader>gl', '<cmd>Gina pull<CR>')
 map('n', '<leader>gu', '<cmd>Gina push<CR>')
--- map('n', '<leader>q', '<cmd>TroubleToggle<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -306,7 +308,7 @@ map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline 
 map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
 map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 
--- zettelkasten
+--- zettelkasten
 map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
 map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
 map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
@@ -314,38 +316,23 @@ map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
 map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
 map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
-cmd [[autocmd BufWritePre * %s/s+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/n+%$//e]]
-cmd [[autocmd FileChangedShellPost * :lua require'notify'('File changed on disk. Buffer reloaded!', 'warn', {'title': 'File Changed Notify', timeout: '400'})]]
+map('n', '<leader>j', '<cmd>AnyJump<CR>')
+map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
+map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
+map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
-cmd [[autocmd CursorHold <buffer> lua vim.lsp.buf.hover()]]
+-- dapui
+map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+
+cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+
 cmd[[
 augroup highlight_yank
-autocmd!
-au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
-augroup END
+  autocmd!
+  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+  augroup END
 ]]
-
--- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = '■', -- Could be '●', '▎', 'x'
-    source = "always",  -- Or "if_many" spacing = 0,
-  },
-  float = {
-    source = "always",  -- Or "if_many"
-  },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = false,
-})
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -370,17 +357,22 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
-g.vista_default_executive = 'nvim_lsp'
+g.vista_default_executive = 'coc'
+g.markdown_fenced_language = {
+  "ts=typescript"
+}
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 
 
 --theme
--- g.sonokai_style = 'andromeda'
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-cmd 'colorscheme vscode'
+
+require'catppuccin'.setup{}
+
+cmd 'colorscheme bogsterish'
 
 local notify = require("notify")
 vim.notify = notify
@@ -414,21 +406,12 @@ require('telescope').setup {
     file_browser = {
       theme = "ivy",
     },
-    -- extensions = {
-    --   media_files = {
-    --     -- filetypes whitelist
-    --     -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-    --     filetypes = {"png", "webp", "jpg", "jpeg"},
-    --     find_cmd = "rg" -- find command (defaults to `fd`)
-    --   }
-    -- },
   },
 }
 
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
--- require'telescope'.load_extension('media_files')
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
@@ -451,7 +434,6 @@ require('nvim-treesitter.configs').setup {
   refactor = {
     highlight_definitions = {
       enable = true,
-      -- Set to false if you have an `updatetime` of ~100.
       clear_on_cursor_move = true,
     },
   },
@@ -460,7 +442,6 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       lookahead = true,
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
@@ -507,70 +488,6 @@ require('nvim-treesitter.configs').setup {
     }
   },
 }
-
-require'nvim-tree'.setup {
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  ignore              = {".git", "node_modules", ".cache"},
-  hide_dotfiles       = 1,
-  open_on_tab         = false,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  auto_close          = true,
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-  update_focused_file = {
-    enable      = true,
-    update_cwd  = true,
-    ignore_list = { ".git", "node_modules", ".cache" },
-  },
-  view = {
-    width = 20,
-    side = 'left',
-    auto_resize = false,
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  },
-  diagnostic = {
-    enable = true
-  },
-  git = {
-    enable = true
-  }
-}
-
---gitsigns
-require'gitsigns'.setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {
-    noremap = true,
-    buffer = true,
-  },
-  watch_gitdir = {
-    interval = 1000
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  diff_opts = {
-    internal = false
-  }
-}
-
 
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 
@@ -629,46 +546,37 @@ require('formatter').setup({
   }
 })
 
-require'which-key'.setup {}
+require'which-key'.setup{}
 require'colorizer'.setup{
   '*',
   css = { rgb_fn = true; }
 }
 
 require('todo-comments').setup{
-  signs = true, -- show icons in the signs column
-    sign_priority = 8, -- sign priority
-    -- keywords recognized as todo comments
+  signs = true,
+    sign_priority = 8,
     keywords = {
       FIX = {
-        icon = " ", -- icon used for the sign, and in search results
-        color = "error", -- can be a hex color, or a named color (see below)
-        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-        -- signs = false, -- configure signs for some keywords individually
-        },
-        TODO = { icon = " ", color = "info" },
-        HACK = { icon = " ", color = "warning" },
-        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        },
-    merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-    -- highlighting of the line containing the todo comment
-    -- * before: highlights before the keyword (typically comment characters)
-    -- * keyword: highlights of the keyword
-    -- * after: highlights after the keyword (todo text)
+        icon = " ",
+        color = "error",
+        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+      },
+      TODO = { icon = " ", color = "info" },
+      HACK = { icon = " ", color = "warning" },
+      WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    },
+    merge_keywords = true,
     highlight = {
       before = "", -- "fg" or "bg" or empty
       keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
       after = "fg", -- "fg" or "bg" or empty
-      --pattern = [[.*<(KEYWORDS)s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
       pattern = [[(KEYWORDS)]], -- pattern or table of patterns, used for highlightng (vim regex)
-      comments_only = true, -- uses treesitter to match keywords in comments only
-      max_line_len = 400, -- ignore lines longer than this
-      exclude = {}, -- list of file types to exclude highlighting
+      comments_only = true,
+      max_line_len = 400,
+      exclude = {},
     },
-    -- list of named colors where we try to extract the guifg from the
-    -- list of hilight groups or use the hex color if hl not found as a fallback
     colors = {
       error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
       warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
@@ -685,10 +593,7 @@ require('todo-comments').setup{
         "--line-number",
         "--column",
       },
-      -- regex that will be used to match keywords.
-      -- don't replace the (KEYWORDS) placeholder
-      -- pattern = [[b(KEYWORDS):]], -- ripgrep regex
-      pattern = [[b(KEYWORDS)b]], -- match without the extra colon. You'll likely get false positives
+      pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
     },
 }
 
@@ -708,7 +613,6 @@ function _G.whitespace_visibility(file_types)
         end
     end
 
-    -- vim.cmd('DisableWhitespace')
     if better_whitespace_status == 0 then
         vim.cmd('execute "DisableWhitespace"')
     else
@@ -718,36 +622,6 @@ end
 
 cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_types)')
 cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
-
---[[ local neogit = require('neogit')
-neogit.setup {} ]]
-
-require("dapui").setup()
-local dap_install = require("dap-install")
-dap_install.setup({
-	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-})
-
--- require'nvim-autopairs'.setup{
---   check_ts = true,
---   ts_config = {
---     lua = { "string", "source" },
---     javascript = { "string", "template_string" },
---     java = false,
---   },
---   disable_filetype = { "TelescopePrompt", "spectre_panel" },
---   fast_wrap = {
---     map = "<M-e>",
---     chars = { "{", "[", "(", '"', "'" },
---     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
---     offset = 0, -- Offset from pattern match
---     end_key = "$",
---     keys = "qwertyuiopzxcvbnmasdfghjkl",
---     check_comma = true,
---     highlight = "PmenuSel",
---     highlight_grey = "LineNr",
---   },
--- }
 
 require'Comment'.setup {
   pre_hook = function(ctx)
@@ -767,24 +641,6 @@ require'Comment'.setup {
   end,
 }
 
-require'rest-nvim'.setup({
-  result_split_horizontal = false,
-  skip_ssl_verification = false,
-  highlight = {
-    enabled = true,
-    timeout = 150,
-  },
-  result = {
-    show_url = true,
-    show_http_info = true,
-    show_headers = true,
-  },
-  jump_to_request = false,
-  env_file = '.env',
-  custom_dynamic_variables = {},
-  yank_dry_run = true,
-})
-
 local sidebar = require("sidebar-nvim")
 sidebar.setup({
   open = false,
@@ -802,25 +658,6 @@ sidebar.setup({
       }
   }
 })
-
--- local autosave = require("autosave")
--- autosave.setup(
---   {
---     enabled = true,
---     execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
---     events = {"InsertLeave", "TextChanged"},
---     conditions = {
---         exists = true,
---         filename_is_not = {},
---         filetype_is_not = {},
---         modifiable = true
---     },
---     write_all_buffers = false,
---     on_off_commands = true,
---     clean_command_line_interval = 0,
---     debounce_delay = 3000
---   }
--- )
 
 -- windline config
 local windline = require('windline')
@@ -1025,7 +862,6 @@ local explorer = {
 
 windline.setup({
     colors_name = function(colors)
-        -- ADD MORE COLOR HERE ----
         return colors
     end,
     statuslines = {
@@ -1037,120 +873,40 @@ windline.setup({
 
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
--- NOTE for Windows users:
--- - don't use Windows
--- - try WSL2 on Windows and pretend you're on Linux
--- - if you **must** use Windows, use "/Users/myname/zettelkasten" instead of "~/zettelkasten"
--- - NEVER use "C:Usersmyname" style paths
 require('telekasten').setup({
     home         = home,
-
-    -- if true, telekasten will be enabled when opening a note within the configured home
     take_over_my_home = true,
-
-    -- auto-set telekasten filetype: if false, the telekasten filetype will not be used
-    --                               and thus the telekasten syntax will not be loaded either
     auto_set_filetype = true,
-
-    -- dir names for special notes (absolute path or subdir name)
     dailies      = home .. '/' .. 'daily',
     weeklies     = home .. '/' .. 'weekly',
     templates    = home .. '/' .. 'templates',
-
-    -- image (sub)dir for pasting
-    -- dir name (absolute path or subdir name)
-    -- or nil if pasted images shouldn't go into a special subdir
     image_subdir = "img",
-
-    -- markdown file extension
     extension    = ".md",
-
-    -- following a link to a non-existing note will create it
     follow_creates_nonexisting = true,
     dailies_create_nonexisting = true,
     weeklies_create_nonexisting = true,
-
-    -- template for new notes (new_note, follow_link)
-    -- set to `nil` or do not specify if you do not want a template
     template_new_note = home .. '/' .. 'templates/new_note.md',
-
-    -- template for newly created daily notes (goto_today)
-    -- set to `nil` or do not specify if you do not want a template
     template_new_daily = home .. '/' .. 'templates/daily.md',
-
-    -- template for newly created weekly notes (goto_thisweek)
-    -- set to `nil` or do not specify if you do not want a template
     template_new_weekly= home .. '/' .. 'templates/weekly.md',
-
-    -- image link style
-    -- wiki:     ![[image name]]
-    -- markdown: ![](image_subdir/xxxxx.png)
     image_link_style = "markdown",
-
-    -- integrate with calendar-vim
     plug_into_calendar = true,
     calendar_opts = {
-        -- calendar week display mode: 1 .. 'WK01', 2 .. 'WK 1', 3 .. 'KW01', 4 .. 'KW 1', 5 .. '1'
         weeknm = 4,
-        -- use monday as first day of week: 1 .. true, 0 .. false
         calendar_monday = 1,
-        -- calendar mark: where to put mark for marked days: 'left', 'right', 'left-fit'
         calendar_mark = 'left-fit',
     },
-
-    -- telescope actions behavior
     close_after_yanking = false,
     insert_after_inserting = true,
-
-    -- tag notation: '#tag', ':tag:', 'yaml-bare'
     tag_notation = "#tag",
-
-    -- command palette theme: dropdown (window) or ivy (bottom panel)
     command_palette_theme = "ivy",
-
-    -- tag list theme:
-    -- get_cursor: small tag list at cursor; ivy and dropdown like above
     show_tags_theme = "ivy",
-
-    -- when linking to a note in subdir/, create a [[subdir/title]] link
-    -- instead of a [[title only]] link
     subdirs_in_links = true,
-
-    -- template_handling
-    -- What to do when creating a new note via `new_note()` or `follow_link()`
-    -- to a non-existing note
-    -- - prefer_new_note: use `new_note` template
-    -- - smart: if day or week is detected in title, use daily / weekly templates (default)
-    -- - always_ask: always ask before creating a note
     template_handling = "smart",
-
-    -- path handling:
-    --   this applies to:
-    --     - new_note()
-    --     - new_templated_note()
-    --     - follow_link() to non-existing note
-    --
-    --   it does NOT apply to:
-    --     - goto_today()
-    --     - goto_thisweek()
-    --
-    --   Valid options:
-    --     - smart: put daily-looking notes in daily, weekly-looking ones in weekly,
-    --              all other ones in home, except for notes/with/subdirs/in/title.
-    --              (default)
-    --
-    --     - prefer_home: put all notes in home except for goto_today(), goto_thisweek()
-    --                    except for notes with subdirs/in/title.
-    --
-    --     - same_as_current: put all new notes in the dir of the current note if
-    --                        present or else in home
-    --                        except for notes/with/subdirs/in/title.
     new_note_location = "smart",
-
-    -- should all links be updated when a file is renamed
     rename_update_links = true,
 })
 
+-- telekasten 高亮
 cmd [[
 hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
 hi tkBrackets ctermfg=gray guifg=gray
@@ -1170,23 +926,25 @@ hi tkTag ctermfg=175 guifg=#d3869B
 ]]
 
 -- coc
--- g.coc_global_extensions = {
---    'coc-git',
---    'coc-html',
---    'coc-lists',
---    'coc-marketplace',
---    'coc-tsserver',
---    'coc-json',
---    'coc-css',
---    'coc-emmet',
---    'coc-gitignore',
---    'coc-toml',
---    'coc-lightbulb',
---    'coc-highlight',
---    'coc-spell-checker'
--- }
+g.coc_global_extensions = {
+   'coc-git',
+   'coc-html',
+   'coc-lists',
+   'coc-marketplace',
+   'coc-tsserver',
+   'coc-json',
+   'coc-css',
+   'coc-emmet',
+   'coc-gitignore',
+   'coc-toml',
+   'coc-lightbulb',
+   'coc-highlight',
+   'coc-spell-checker',
+   'coc-pairs',
+   'coc-explorer'
+}
 g.coc_start_at_startup=0
--- g.coc_default_semantic_highlight_groups = 1
+g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 cmd [[
@@ -1194,3 +952,4 @@ cmd [[
   hi! link CocSemDocumentation Number
   hi! CocSemStatic gui=bold
 ]]
+cmd [[ source ~/.config/nvim/config.vim ]]
