@@ -320,8 +320,11 @@ _G.packer_plugins = {
     url = "https://github.com/mfussenegger/nvim-dap"
   },
   ["nvim-dap-ui"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    config = { "\27LJ\2\n­\1\0\0\a\0\v\0\0206\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\3\0B\0\2\0029\1\2\0005\3\t\0006\4\4\0009\4\5\0049\4\6\4'\6\a\0B\4\2\2'\5\b\0&\4\5\4=\4\n\3B\1\2\1K\0\1\0\22installation_path\1\0\0\17/dapinstall/\tdata\fstdpath\afn\bvim\16dap-install\nsetup\ndapui\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-gps"] = {
@@ -470,8 +473,11 @@ _G.packer_plugins = {
     url = "https://github.com/ThePrimeagen/refactoring.nvim"
   },
   ["rest.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/rest.nvim",
+    config = { "\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14rest-nvim\frequire\0" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/rest.nvim",
     url = "https://github.com/NTBBloodbath/rest.nvim"
   },
   ["rust-tools.nvim"] = {
@@ -506,10 +512,8 @@ _G.packer_plugins = {
     url = "https://github.com/ZhiyuanLck/smart-pairs"
   },
   ["sqls.nvim"] = {
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/sqls.nvim",
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/sqls.nvim",
     url = "https://github.com/nanotee/sqls.nvim"
   },
   ["telekasten.nvim"] = {
@@ -639,15 +643,21 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType http ++once lua require("packer.load")({'rest.nvim'}, { ft = "http" }, _G.packer_plugins)]]
 vim.cmd [[au FileType qf ++once lua require("packer.load")({'nvim-bqf'}, { ft = "qf" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'codi.vim', 'smart-pairs', 'neogen', 'any-jump.vim', 'vim-sandwich', 'nvim-peekup', 'better-escape.vim', 'nvim-ts-autotag'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'reach.nvim', 'git-blame.nvim', 'glow.nvim', 'hlargs.nvim', 'sqls.nvim', 'indent-blankline.nvim', 'nvim-bqf', 'nvim_context_vt', 'nvim-hlslens', 'hop.nvim', 'twilight.nvim', 'nvim-regexplainer', 'fidget.nvim', 'rust-tools.nvim', 'yode-nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-regexplainer', 'twilight.nvim', 'fidget.nvim', 'git-blame.nvim', 'hlargs.nvim', 'hop.nvim', 'indent-blankline.nvim', 'yode-nvim', 'glow.nvim', 'nvim-bqf', 'reach.nvim', 'nvim-hlslens', 'rust-tools.nvim', 'nvim_context_vt'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-ts-autotag', 'codi.vim', 'nvim-peekup', 'neogen', 'any-jump.vim', 'nvim-dap-ui', 'vim-sandwich', 'better-escape.vim', 'smart-pairs'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'cmp-npm', 'package-info.nvim'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /Users/sternelee/.local/share/nvim/site/pack/packer/opt/rest.nvim/ftdetect/http.vim]], true)
+vim.cmd [[source /Users/sternelee/.local/share/nvim/site/pack/packer/opt/rest.nvim/ftdetect/http.vim]]
+time([[Sourcing ftdetect script at: /Users/sternelee/.local/share/nvim/site/pack/packer/opt/rest.nvim/ftdetect/http.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

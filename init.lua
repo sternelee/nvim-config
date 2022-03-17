@@ -162,7 +162,15 @@ require('packer').startup(function()
     }}
   use {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'}}
+    event = 'InsertEnter',
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'},
+    config = function()
+      require("dapui").setup()
+      local dap_install = require("dap-install")
+      dap_install.setup({
+      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+    end}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
@@ -184,7 +192,10 @@ require('packer').startup(function()
     end}
   use {
     'NTBBloodbath/rest.nvim',
-    requires = {"nvim-lua/plenary.nvim" }}
+    ft = 'http',
+    requires = {"nvim-lua/plenary.nvim" },
+    config = function()
+      require'rest-nvim'.setup() end}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -192,7 +203,7 @@ require('packer').startup(function()
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  use {'nanotee/sqls.nvim', event = 'BufRead'}
+  use 'nanotee/sqls.nvim'
 
 end)
 
@@ -947,12 +958,6 @@ end
 cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_types)')
 cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
 
-require("dapui").setup()
-local dap_install = require("dap-install")
-dap_install.setup({
-	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-})
-
 require'Comment'.setup {
   pre_hook = function(ctx)
     local U = require "Comment.utils"
@@ -970,24 +975,6 @@ require'Comment'.setup {
     }
   end,
 }
-
-require'rest-nvim'.setup({
-  result_split_horizontal = false,
-  skip_ssl_verification = false,
-  highlight = {
-    enabled = true,
-    timeout = 150,
-  },
-  result = {
-    show_url = true,
-    show_http_info = true,
-    show_headers = true,
-  },
-  jump_to_request = false,
-  env_file = '.env',
-  custom_dynamic_variables = {},
-  yank_dry_run = true,
-})
 
 local sidebar = require("sidebar-nvim")
 sidebar.setup({
