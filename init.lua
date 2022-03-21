@@ -39,6 +39,8 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use {'lambdalisue/gina.vim'}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
+  use {'rbong/vim-flog', event = 'InsertEnter'}
+  use {'junegunn/gv.vim', event = 'InsertEnter'}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
@@ -64,7 +66,6 @@ require('packer').startup(function()
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
   use {'catppuccin/nvim', as = 'catppuccin'}
-  -- use 'vv9k/bogster'
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -76,7 +77,7 @@ require('packer').startup(function()
         use_treesitter = true
       }
     end}
-  use 'mg979/vim-visual-multi'
+  use {'mg979/vim-visual-multi', event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
   use {'m-demare/hlargs.nvim', event = 'BufRead',
     config = function ()
@@ -221,6 +222,8 @@ require('packer').startup(function()
   --     }
   --   end }
   use 'nanotee/sqls.nvim'
+  use {'brooth/far.vim', event = 'InsertEnter'}
+  use {'tpope/vim-repeat', event = 'InsertEnter'}
 
 end)
 
@@ -368,8 +371,9 @@ map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Gina add .<CR>')
 map('n', '<leader>gm', '<cmd>Gina commit<CR>')
 map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gl', '<cmd>Gina pull<CR>')
-map('n', '<leader>gu', '<cmd>Gina push<CR>')
+map('n', '<leader>gu', '<cmd>Gina pull<CR>')
+map('n', '<leader>gh', '<cmd>Gina push<CR>')
+map('n', '<leader>gl', '<cmd>Gina log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -470,7 +474,7 @@ g.vscode_italic_comment = 1
 
 require'catppuccin'.setup{}
 
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme vscode'
 
 local notify = require("notify")
 vim.notify = notify
@@ -511,6 +515,10 @@ require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
 
+local disableTS = function (lang, bufnr)
+  return vim.api.nvim_buf_line_count(bufnr) > 10000
+end
+
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -518,22 +526,23 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    -- disable = function (lang, bufnr)
-    --   return lang == "javascript" and vim.api.nvim_buf_line_count(bufnr) > 10000
-    -- end
+    disable = disableTS
   },
   rainbow = {
     enable = true,
     extended_mode = true,
+    disable = disableTS
   },
   autotag = {
     enable = true,
+    disable = disableTS
   },
   refactor = {
     highlight_definitions = {
       enable = true,
       clear_on_cursor_move = true,
     },
+    disable = disableTS
   },
   textobjects = {
     select = {
