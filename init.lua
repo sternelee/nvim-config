@@ -60,12 +60,12 @@ require('packer').startup(function()
   --   end}
   use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
+  -- use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
-  use {'catppuccin/nvim', as = 'catppuccin'}
+  -- use {'catppuccin/nvim', as = 'catppuccin'}
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -472,7 +472,7 @@ vim.opt.listchars:append("space:⋅")
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
 
-require'catppuccin'.setup{}
+-- require'catppuccin'.setup{}
 
 cmd 'colorscheme vscode'
 
