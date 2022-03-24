@@ -10,7 +10,10 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=Operator\ Mono\ Lig:h20,VictorMono\ NF:h20]], false)
+g.neovide_transparency=0.96
+g.neovide_cursor_vfx_mode = "sonicboom"
+
+nvim_exec([[set guifont=Iosevka\ NF:h20]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
