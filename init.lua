@@ -10,7 +10,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-g.neovide_transparency=0.96
+-- g.neovide_transparency=0.96
 g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=Iosevka\ NF:h20]], false)
@@ -128,7 +128,7 @@ require('packer').startup(function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'jdhao/better-escape.vim', event = 'InsertEnter'}
+  use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
@@ -175,6 +175,8 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', event = 'InsertEnter'}
+  -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
+  -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
   use { 'bennypowers/nvim-regexplainer',
     event = 'BufRead',
     config = function() require'regexplainer'.setup()  end,
@@ -185,8 +187,9 @@ require('packer').startup(function()
   use {
     'rcarriga/nvim-dap-ui',
     event = 'InsertEnter',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap'},
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
     config = function()
+      require("nvim-dap-virtual-text").setup()
       require("dapui").setup()
       local dap_install = require("dap-install")
       dap_install.setup({
@@ -228,6 +231,25 @@ require('packer').startup(function()
   use 'nanotee/sqls.nvim'
   use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'tpope/vim-repeat', event = 'InsertEnter'}
+  use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
+    config = function()
+      require('autosave').setup{
+        enabled = true,
+        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+        events = {"InsertLeave"},
+        conditions = {
+            exists = true,
+            filename_is_not = {},
+            filetype_is_not = {},
+            modifiable = true
+        },
+        write_all_buffers = false,
+        on_off_commands = true,
+        clean_command_line_interval = 0,
+        debounce_delay = 300
+      }
+    end
+  }
 
 end)
 
@@ -1300,4 +1322,24 @@ hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=dark
 hi link CalNavi CalRuler
 hi tkTagSep ctermfg=gray guifg=gray
 hi tkTag ctermfg=175 guifg=#d3869B
+]]
+
+
+cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
+cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
+cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
+cmd([[ let @c=":cd %:h \<CR>" ]])
+-- 按 @g 运行代码
+-- All previous macros have been changed to autocmd, @g macro will run current file
+cmd [[
+	augroup run_file
+		autocmd BufEnter *.java let @g=":w\<CR>:vsp | terminal java %\<CR>i"
+		autocmd BufEnter *.py let @g=":w\<CR>:vsp |terminal python %\<CR>i"
+		autocmd BufEnter *.asm let @g=":w\<CR> :!nasm -f elf64 -o out.o % && ld out.o -o a.out \<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ %\<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.c let @g=":w\<CR> :!gcc %\<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.go let @g=":w\<CR> :vsp | terminal go run % \<CR>i"
+		autocmd BufEnter *.js let @g=":w\<CR> :vsp | terminal node % \<CR>i"
+		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
+	augroup end
 ]]

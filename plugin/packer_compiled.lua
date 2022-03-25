@@ -69,6 +69,14 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["AutoSave.nvim"] = {
+    config = { "\27LJ\2\nò\2\0\0\a\0\16\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0'\3\4\0006\4\5\0009\4\6\0049\4\a\4'\6\b\0B\4\2\2&\3\4\3=\3\t\0025\3\n\0=\3\v\0025\3\f\0004\4\0\0=\4\r\0034\4\0\0=\4\14\3=\3\15\2B\0\2\1K\0\1\0\15conditions\20filetype_is_not\20filename_is_not\1\0\2\15modifiable\2\vexists\2\vevents\1\2\0\0\16InsertLeave\22execution_message\r%H:%M:%S\rstrftime\afn\bvim\24AutoSave: saved at \1\0\5\19debounce_delay\3¬\2\20on_off_commands\2 clean_command_line_interval\3\0\22write_all_buffers\1\fenabled\2\nsetup\rautosave\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/AutoSave.nvim",
+    url = "https://github.com/Pocco81/AutoSave.nvim"
+  },
   ["Comment.nvim"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/Comment.nvim",
@@ -123,11 +131,6 @@ _G.packer_plugins = {
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-calc",
     url = "https://github.com/hrsh7th/cmp-calc"
   },
-  ["cmp-cmdline"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
-    url = "https://github.com/hrsh7th/cmp-cmdline"
-  },
   ["cmp-emoji"] = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-emoji",
@@ -155,6 +158,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-lsp-signature-help"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
   },
   ["cmp-path"] = {
     loaded = true,
@@ -258,17 +266,12 @@ _G.packer_plugins = {
     url = "https://github.com/phaazon/hop.nvim"
   },
   ["indent-blankline.nvim"] = {
-    config = { "\27LJ\2\nž\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\19use_treesitter\2\31show_current_context_start\2\25show_current_context\2\25space_char_blankline\6 \nsetup\21indent_blankline\frequire\0" },
+    config = { "\27LJ\2\nž\1\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\25space_char_blankline\6 \19use_treesitter\2\31show_current_context_start\2\25show_current_context\2\nsetup\21indent_blankline\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
-  },
-  ["lsp_signature.nvim"] = {
-    loaded = true,
-    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
-    url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -286,7 +289,7 @@ _G.packer_plugins = {
     url = "https://github.com/rktjmp/lush.nvim"
   },
   ["marks.nvim"] = {
-    config = { "\27LJ\2\n¼\2\0\0\4\0\f\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0024\3\0\0=\3\b\0025\3\t\0=\3\n\0024\3\0\0=\3\v\2B\0\2\1K\0\1\0\rmappings\15bookmark_0\1\0\2\tsign\bâš‘\14virt_text\16hello world\23excluded_filetypes\18sign_priority\1\0\4\nlower\3\n\fbuiltin\3\b\rbookmark\3\20\nupper\3\15\18builtin_marks\1\5\0\0\6.\6<\6>\6^\1\0\4\vcyclic\2\21default_mappings\2\21refresh_interval\3ú\1\22force_write_shada\1\nsetup\nmarks\frequire\0" },
+    config = { "\27LJ\2\n¼\2\0\0\4\0\f\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0024\3\0\0=\3\b\0025\3\t\0=\3\n\0024\3\0\0=\3\v\2B\0\2\1K\0\1\0\rmappings\15bookmark_0\1\0\2\tsign\bâš‘\14virt_text\16hello world\23excluded_filetypes\18sign_priority\1\0\4\fbuiltin\3\b\nupper\3\15\nlower\3\n\rbookmark\3\20\18builtin_marks\1\5\0\0\6.\6<\6>\6^\1\0\4\21refresh_interval\3ú\1\22force_write_shada\1\vcyclic\2\21default_mappings\2\nsetup\nmarks\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -330,12 +333,17 @@ _G.packer_plugins = {
     url = "https://github.com/mfussenegger/nvim-dap"
   },
   ["nvim-dap-ui"] = {
-    config = { "\27LJ\2\n­\1\0\0\a\0\v\0\0206\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\3\0B\0\2\0029\1\2\0005\3\t\0006\4\4\0009\4\5\0049\4\6\4'\6\a\0B\4\2\2'\5\b\0&\4\5\4=\4\n\3B\1\2\1K\0\1\0\22installation_path\1\0\0\17/dapinstall/\tdata\fstdpath\afn\bvim\16dap-install\nsetup\ndapui\frequire\0" },
+    config = { "\27LJ\2\n×\1\0\0\a\0\f\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\3\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\4\0B\0\2\0029\1\2\0005\3\n\0006\4\5\0009\4\6\0049\4\a\4'\6\b\0B\4\2\2'\5\t\0&\4\5\4=\4\v\3B\1\2\1K\0\1\0\22installation_path\1\0\0\17/dapinstall/\tdata\fstdpath\afn\bvim\16dap-install\ndapui\nsetup\26nvim-dap-virtual-text\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/Users/sternelee/.local/share/nvim/site/pack/packer/opt/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/Users/sternelee/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
   ["nvim-gps"] = {
     loaded = true,
@@ -674,10 +682,10 @@ vim.cmd [[au FileType http ++once lua require("packer.load")({'rest.nvim'}, { ft
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'marks.nvim', 'git-blame.nvim', 'twilight.nvim', 'nvim-bqf', 'nvim-hlslens', 'hlargs.nvim', 'nvim_context_vt', 'hop.nvim', 'yode-nvim', 'nvim-regexplainer', 'indent-blankline.nvim', 'reach.nvim', 'rust-tools.nvim', 'fidget.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-peekup', 'gv.vim', 'any-jump.vim', 'vim-visual-multi', 'better-escape.vim', 'nvim-dap-ui', 'neogen', 'nvim-ts-autotag', 'codi.vim', 'vim-flog', 'far.vim', 'vim-repeat', 'smart-pairs', 'vim-sandwich'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead package.json ++once lua require("packer.load")({'package-info.nvim', 'cmp-npm'}, { event = "BufRead package.json" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-bqf', 'git-blame.nvim', 'nvim-hlslens', 'hlargs.nvim', 'nvim-regexplainer', 'fidget.nvim', 'reach.nvim', 'nvim_context_vt', 'rust-tools.nvim', 'hop.nvim', 'indent-blankline.nvim', 'twilight.nvim', 'yode-nvim', 'marks.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead Cargo.toml ++once lua require("packer.load")({'crates.nvim'}, { event = "BufRead Cargo.toml" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'vim-sandwich', 'vim-visual-multi', 'gv.vim', 'nvim-peekup', 'nvim-ts-autotag', 'nvim-dap-ui', 'neogen', 'any-jump.vim', 'better-escape.vim', 'smart-pairs', 'AutoSave.nvim', 'vim-flog', 'codi.vim', 'far.vim', 'vim-repeat'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
