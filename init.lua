@@ -763,27 +763,28 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
-  if client.name ~= 'jsonls' then
-    local msg = string.format("Language server %s started!", client.name)
-    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+
+  if client.name == 'sqls' then
+    require('sqls').on_attach(client, bufnr)
+  end
+
+  if client.name == 'tsserver' then
+    local ts_utils = require("nvim-lsp-ts-utils")
+    local init_options = require("nvim-lsp-ts-utils").init_options
+    ts_utils.setup(init_options)
+    ts_utils.setup_client(client)
+  end
+
+  -- if client.name ~= 'jsonls' then
+    -- local msg = string.format("Language server %s started!", client.name)
+    -- notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
     -- require'lsp_signature'.on_attach({
     --   bind = true,
     --   handler_opts = {
     --     border = "rounded"
     --   }
     -- }, bufnr)
-
-    if client.name == 'sqls' then
-      require('sqls').on_attach(client, bufnr)
-    end
-
-    if client.name == 'tsserver' then
-      local ts_utils = require("nvim-lsp-ts-utils")
-      local init_options = require("nvim-lsp-ts-utils").init_options
-      ts_utils.setup(init_options)
-      ts_utils.setup_client(client)
-    end
-  end
+  -- end
 
 end
 
