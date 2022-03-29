@@ -82,10 +82,10 @@ require('packer').startup(function()
     end}
   use {'mg979/vim-visual-multi', event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
-  use {'m-demare/hlargs.nvim', event = 'BufRead',
-    config = function ()
-      require('hlargs').setup{}
-    end}
+  -- use {'m-demare/hlargs.nvim', event = 'BufRead',
+  --   config = function ()
+  --     require('hlargs').setup{}
+  --   end} -- 和codi冲突
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -147,7 +147,7 @@ require('packer').startup(function()
         excluded_filetypes = {},
         bookmark_0 = {
           sign = "⚑",
-          virt_text = "hello world"
+          virt_text = "sterne"
         },
         mappings = {}
       })
@@ -155,7 +155,7 @@ require('packer').startup(function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
   use {'pechorin/any-jump.vim', event = 'InsertEnter'}
-  use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  -- use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
@@ -229,27 +229,34 @@ require('packer').startup(function()
   --     }
   --   end }
   use 'nanotee/sqls.nvim'
-  use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
+  -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
+  use 'windwp/nvim-spectre'
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
+  use {
+    'rmagatti/auto-session',
     config = function()
-      require('autosave').setup{
-        enabled = true,
-        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-        events = {"InsertLeave"},
-        conditions = {
-            exists = true,
-            filename_is_not = {},
-            filetype_is_not = {},
-            modifiable = true
-        },
-        write_all_buffers = false,
-        on_off_commands = true,
-        clean_command_line_interval = 0,
-        debounce_delay = 300
-      }
+      require('auto-session').setup {}
     end
   }
+  -- use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
+  --   config = function()
+  --     require('autosave').setup{
+  --       enabled = true,
+  --       execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+  --       events = {"InsertLeave"},
+  --       conditions = {
+  --           exists = true,
+  --           filename_is_not = {},
+  --           filetype_is_not = {},
+  --           modifiable = true
+  --       },
+  --       write_all_buffers = false,
+  --       on_off_commands = true,
+  --       clean_command_line_interval = 0,
+  --       debounce_delay = 600
+  --     }
+  --   end
+  -- }
 
 end)
 
@@ -290,7 +297,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', false)
+opt('o', 'wrap', true)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -423,6 +430,11 @@ map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
 map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
+
+-- spectre
+map('n', '<leader>rp', '<cmd>lua require("spectre").open()<CR>')
+map('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search()<CR>')
+map('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
 
 -- dapui
 map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
@@ -820,7 +832,6 @@ require'nvim-tree'.setup {
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
-  auto_close          = true,
   system_open = {
     cmd  = nil,
     args = {}
@@ -1269,6 +1280,134 @@ windline.setup({
         quickfix,
     },
 })
+
+-- spectre
+require'spectre'.setup{
+    color_devicons = true,
+    highlight = {
+      ui = "String",
+      search = "DiffChange",
+      replace = "DiffDelete",
+    },
+    mapping = {
+      ["toggle_line"] = {
+        map = "t",
+        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+        desc = "toggle current item",
+      },
+      ["enter_file"] = {
+        map = "<cr>",
+        cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
+        desc = "goto current file",
+      },
+      ["send_to_qf"] = {
+        map = "Q",
+        cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
+        desc = "send all item to quickfix",
+      },
+      ["replace_cmd"] = {
+        map = "c",
+        cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
+        desc = "input replace vim command",
+      },
+      ["show_option_menu"] = {
+        map = "o",
+        cmd = "<cmd>lua require('spectre').show_options()<CR>",
+        desc = "show option",
+      },
+      ["run_replace"] = {
+        map = "R",
+        cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
+        desc = "replace all",
+      },
+      ["change_view_mode"] = {
+        map = "m",
+        cmd = "<cmd>lua require('spectre').change_view()<CR>",
+        desc = "change result view mode",
+      },
+      ["toggle_ignore_case"] = {
+        map = "I",
+        cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
+        desc = "toggle ignore case",
+      },
+      ["toggle_ignore_hidden"] = {
+        map = "H",
+        cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
+        desc = "toggle search hidden",
+      },
+    },
+    find_engine = {
+      ["rg"] = {
+        cmd = "rg",
+        args = {
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+        },
+        options = {
+          ["ignore-case"] = {
+            value = "--ignore-case",
+            icon = "[I]",
+            desc = "ignore case",
+          },
+          ["hidden"] = {
+            value = "--hidden",
+            desc = "hidden file",
+            icon = "[H]",
+          },
+        },
+      },
+      ["ag"] = {
+        cmd = "ag",
+        args = {
+          "--vimgrep",
+          "-s",
+        },
+        options = {
+          ["ignore-case"] = {
+            value = "-i",
+            icon = "[I]",
+            desc = "ignore case",
+          },
+          ["hidden"] = {
+            value = "--hidden",
+            desc = "hidden file",
+            icon = "[H]",
+          },
+        },
+      },
+    },
+    replace_engine = {
+      ["sed"] = {
+        cmd = "sed",
+        args = sed_args,
+      },
+      options = {
+        ["ignore-case"] = {
+          value = "--ignore-case",
+          icon = "[I]",
+          desc = "ignore case",
+        },
+      },
+    },
+    default = {
+      find = {
+        cmd = "rg",
+        options = { "ignore-case" },
+      },
+      replace = {
+        cmd = "sed",
+      },
+    },
+    replace_vim_cmd = "cdo",
+    is_open_target_win = true, --open file on opener window
+    is_insert_mode = false, -- start open panel on is_insert_mode
+}
+require('windline').add_status(
+    require('spectre.state_utils').status_line()
+)
 
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
