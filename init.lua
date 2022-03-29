@@ -68,7 +68,7 @@ require('packer').startup(function()
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
-  -- use {'catppuccin/nvim', as = 'catppuccin'}
+  use {'catppuccin/nvim', as = 'catppuccin'}
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -509,11 +509,11 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
--- require'catppuccin'.setup{}
+require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 local notify = require("notify")
 vim.notify = notify
