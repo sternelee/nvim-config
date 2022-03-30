@@ -530,7 +530,7 @@ require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme vscode'
 
 local notify = require("notify")
 vim.notify = notify
@@ -768,9 +768,9 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  -- buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
   buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
-  buf_set_keymap('n', 'ga', '<cmd>CodeActionMenu<CR>', opts)
+  -- buf_set_keymap('n', 'ga', '<cmd>CodeActionMenu<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
