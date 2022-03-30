@@ -10,10 +10,10 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- g.neovide_transparency=0.96
+g.neovide_transparency=0.98
 g.neovide_cursor_vfx_mode = "sonicboom"
 
-nvim_exec([[set guifont=Iosevka\ NF:h20]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -115,6 +115,10 @@ require('packer').startup(function()
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
+  use {
+    'weilbith/nvim-code-action-menu',
+    cmd = 'CodeActionMenu',
+  }
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
@@ -257,6 +261,13 @@ require('packer').startup(function()
   --     }
   --   end
   -- }
+  use {
+    'rmagatti/goto-preview',
+    evnet = 'BufRead',
+    config = function()
+      require('goto-preview').setup {}
+    end
+  }
 
 end)
 
@@ -438,6 +449,12 @@ map('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=tru
 
 -- dapui
 map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+
+-- goto-preview
+map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
+map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
+map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
+map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -751,8 +768,9 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
+  -- buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
   buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>CodeActionMenu<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
