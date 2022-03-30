@@ -70,6 +70,7 @@ require('packer').startup(function()
   use 'Mofiqul/vscode.nvim'
   use {'catppuccin/nvim', as = 'catppuccin'}
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use 'sainnhe/sonokai'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -530,7 +531,10 @@ require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
-cmd 'colorscheme vscode'
+g.sonokai_style = 'andromeda'
+g.sonokai_better_performance = 1
+
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
