@@ -68,7 +68,7 @@ require('packer').startup(function()
   use 'bluz71/vim-nightfly-guicolors'
   use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
-  use {'catppuccin/nvim', as = 'catppuccin'}
+  -- use {'catppuccin/nvim', as = 'catppuccin'}
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -95,7 +95,7 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  -- use 'github/copilot.vim'
+  use 'github/copilot.vim'
   use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -118,10 +118,10 @@ require('packer').startup(function()
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
-  -- use {
-  --   'weilbith/nvim-code-action-menu',
-  --   cmd = 'CodeActionMenu',
-  -- } -- 多个lsp时有问题
+  use {
+    'weilbith/nvim-code-action-menu',
+    cmd = 'CodeActionMenu',
+  }
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
@@ -471,6 +471,12 @@ map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<
 map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
+-- copilot
+g.copilot_no_tab_map = true
+cmd [[
+  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+]]
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
@@ -541,7 +547,7 @@ vim.opt.listchars:append("space:⋅")
 --theme
 g.vscode_style = "dark"
 g.vscode_italic_comment = 1
-require'catppuccin'.setup{}
+-- require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
@@ -788,7 +794,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
   buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
   buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
-  -- buf_set_keymap('n', 'ga', '<cmd>CodeActionMenu<CR>', opts)
+  buf_set_keymap('n', 'gam', '<cmd>CodeActionMenu<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
