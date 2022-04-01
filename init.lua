@@ -95,7 +95,7 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use 'github/copilot.vim'
+  -- use 'github/copilot.vim'
   use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -710,9 +710,8 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     { name = 'spell' },
-    -- { name = 'cmp_tabnine' },
+    { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
-    { name = 'copilot' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
