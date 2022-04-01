@@ -40,7 +40,7 @@ require('packer').startup(function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use {'lambdalisue/gina.vim'}
+  -- use {'lambdalisue/gina.vim'}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   use {'rbong/vim-flog', event = 'InsertEnter'}
   use {'junegunn/gv.vim', event = 'InsertEnter'}
@@ -48,12 +48,12 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- 使用 nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup {}
+    end} -- 使用 nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use 'nvim-treesitter/playground'
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -107,7 +107,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    -- {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     {'dmitmel/cmp-digraphs'},
     {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -125,7 +125,7 @@ require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
-  -- use 'ray-x/lsp_signature.nvim'
+  use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use 'tpope/vim-eunuch'
@@ -240,12 +240,12 @@ require('packer').startup(function()
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use 'windwp/nvim-spectre'
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {}
-    end
-  }
+  -- use {
+  --   'rmagatti/auto-session',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- }
   -- use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
   --   config = function()
   --     require('autosave').setup{
@@ -344,11 +344,13 @@ opt('o', 'updatetime', 300)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
 opt('o', 'showtabline', 2)
+-- opt('o', 'spell', true)
+-- opt('o', 'spelllang', 'en_us')
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
-vim.o.sessionoptions="buffers,help,tabpages"
+-- vim.o.sessionoptions="buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
@@ -425,12 +427,12 @@ map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gu', '<cmd>Gina pull<CR>')
-map('n', '<leader>gh', '<cmd>Gina push<CR>')
-map('n', '<leader>gl', '<cmd>Gina log<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gu', '<cmd>Git pull<CR>')
+map('n', '<leader>gh', '<cmd>Git push<CR>')
+map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -544,7 +546,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
@@ -706,10 +708,10 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer', option={keyword_length=2} },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
-    { name = 'spell' },
+    -- { name = 'spell' },
     { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
     -- { name = 'digraphs' },
@@ -736,19 +738,19 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   vim.lsp.handlers.hover, {
     border = 'single'
@@ -809,16 +811,16 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
   end
 
-  -- if client.name ~= 'jsonls' then
-    -- local msg = string.format("Language server %s started!", client.name)
-    -- notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- require'lsp_signature'.on_attach({
-    --   bind = true,
-    --   handler_opts = {
-    --     border = "rounded"
-    --   }
-    -- }, bufnr)
-  -- end
+  if client.name ~= 'jsonls' then
+    local msg = string.format("Language server %s started!", client.name)
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+    require'lsp_signature'.on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr)
+  end
 
 end
 
