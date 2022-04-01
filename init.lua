@@ -110,8 +110,7 @@ require('packer').startup(function()
     -- {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     {'dmitmel/cmp-digraphs'},
-    {'hrsh7th/cmp-copilot'},
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
+    {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
@@ -714,9 +713,9 @@ cmp.setup({
     -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
     { name = 'copilot' },
-    { name = 'digraphs' },
+    -- { name = 'digraphs' },
     -- { name = 'treesitter' },
-    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
+    -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = lspkind.cmp_format()
