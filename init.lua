@@ -89,11 +89,13 @@ require('packer').startup(function()
   use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'nvim-telescope/telescope-packer.nvim'
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
+  use 'github/copilot.vim'
   use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -107,6 +109,8 @@ require('packer').startup(function()
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
     -- {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
+    {'dmitmel/cmp-digraphs'},
+    {'hrsh7th/cmp-copilot'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
@@ -179,6 +183,7 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', event = 'InsertEnter'}
+  use {'turbio/bracey.vim', cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
   use { 'bennypowers/nvim-regexplainer',
@@ -268,6 +273,15 @@ require('packer').startup(function()
       require('goto-preview').setup {}
     end
   }
+  use {
+    'willchao612/vim-diagon',
+    ft = 'markdown'
+  }
+  -- use {
+  -- 	'xeluxee/competitest.nvim',
+  -- 	requires = 'MunifTanjim/nui.nvim',
+  -- 	config = function() require'competitest'.setup() end
+  -- } -- 竞技编程
 
 end)
 
@@ -571,6 +585,7 @@ require('telescope').setup {
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('refactoring')
+require'telescope'.load_extension('packer')
 
 local disableTS = function (lang, bufnr)
   return vim.api.nvim_buf_line_count(bufnr) > 10000
@@ -698,6 +713,8 @@ cmp.setup({
     { name = 'spell' },
     -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
+    { name = 'copilot' },
+    { name = 'digraphs' },
     -- { name = 'treesitter' },
     { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
