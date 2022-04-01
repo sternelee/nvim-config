@@ -718,11 +718,11 @@ cmp.setup({
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
-    { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine' },
     { name = 'cmp_git' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
-    -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
+    { name = 'look', keyword_length=5, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = lspkind.cmp_format()
