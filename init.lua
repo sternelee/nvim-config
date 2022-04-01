@@ -118,10 +118,10 @@ require('packer').startup(function()
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
-  use {
-    'weilbith/nvim-code-action-menu',
-    cmd = 'CodeActionMenu',
-  }
+  -- use {
+  --   'weilbith/nvim-code-action-menu',
+  --   cmd = 'CodeActionMenu',
+  -- } -- 多个lsp时有问题
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
   use 'kosayoda/nvim-lightbulb'
