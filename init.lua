@@ -48,6 +48,7 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'nvim-treesitter/nvim-tree-docs'
   use {
     'romgrk/nvim-treesitter-context',
     config = function()
@@ -110,7 +111,7 @@ require('packer').startup(function()
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     {'dmitmel/cmp-digraphs'},
-    {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
+    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
@@ -275,6 +276,11 @@ require('packer').startup(function()
   use {
     'willchao612/vim-diagon',
     ft = 'markdown'
+  }
+  use {
+    'kkoomen/vim-doge',
+    evnet = 'BufRead',
+    run = ':call doge#install()'
   }
   -- use {
   -- 	'xeluxee/competitest.nvim',
@@ -623,6 +629,7 @@ require('nvim-treesitter.configs').setup {
     },
     disable = disableTS
   },
+  tree_docs = {enable = true},
   textobjects = {
     select = {
       enable = true,
