@@ -146,7 +146,7 @@ require('packer').startup(function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态
+  -- use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
@@ -398,6 +398,8 @@ g.maplocalleader = ","
 -- map('v', 'dd', '"_dd')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
+map('n', ';f', '<C-f>')
+map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
@@ -409,6 +411,7 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 -- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
 map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
