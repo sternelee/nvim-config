@@ -17,7 +17,8 @@ nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  -- execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  execute('!git clone --depth 1 https://hub.fastgit.xyz/wbthomason/packer.nvim.git '.. install_path)
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
@@ -25,6 +26,11 @@ end
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
+require('packer').init({
+  git = {
+    default_url_format = "https://hub.xn--p8jhe.tw/%s"
+  }
+})
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -42,8 +48,8 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive'
   -- use {'lambdalisue/gina.vim'}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
-  use {'rbong/vim-flog', event = 'InsertEnter'}
-  use {'junegunn/gv.vim', event = 'InsertEnter'}
+  use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
+  use {'junegunn/gv.vim', opt = true, cmd = {'GV'}}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
@@ -55,14 +61,14 @@ require('packer').startup(function()
       require('treesitter-context').setup {}
     end} -- 使用 nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use 'nvim-treesitter/playground'
+  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
   --   event = 'BufRead',
   --   config = function()
   --     require('spellsitter').setup()
   --   end}
-  use {'folke/twilight.nvim', event = 'BufRead', config = function() require('twilight'):setup() end}
+  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -81,13 +87,13 @@ require('packer').startup(function()
         use_treesitter = true
       }
     end}
-  use {'mg979/vim-visual-multi', event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
+  use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   -- use {'m-demare/hlargs.nvim', event = 'BufRead',
   --   config = function ()
   --     require('hlargs').setup{}
   --   end} -- 和codi冲突
-  use {'phaazon/hop.nvim', event = 'BufRead', config = function() require('hop'):setup() end}
+  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
@@ -96,7 +102,7 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use 'github/copilot.vim'
+  use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -107,31 +113,35 @@ require('packer').startup(function()
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-nvim-lsp-signature-help'},
+    -- {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
-    {'dmitmel/cmp-digraphs'},
+    -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
-  use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
+  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
+    require('refactoring').setup()
+    require'telescope'.load_extension('refactoring')
+    end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use {
     'weilbith/nvim-code-action-menu',
+    opt = true,
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
-  use 'kosayoda/nvim-lightbulb'
+  use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
+  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
-  use 'tpope/vim-eunuch'
+  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
-  use 'voldikss/vim-translator' -- npm install fanyi -g 安装翻译
+  use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
@@ -161,8 +171,8 @@ require('packer').startup(function()
       })
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
-  use 'p00f/nvim-ts-rainbow' -- 彩虹匹配
-  use {'pechorin/any-jump.vim', event = 'InsertEnter'}
+  use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
+  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   -- use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
   use {
@@ -182,8 +192,8 @@ require('packer').startup(function()
   use 'ThePrimeagen/vim-be-good'
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', event = 'InsertEnter'}
-  use {'turbio/bracey.vim', cmd = 'Bracey'}
+  use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
+  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
   use { 'bennypowers/nvim-regexplainer',
@@ -195,7 +205,7 @@ require('packer').startup(function()
     }}
   use {
     'rcarriga/nvim-dap-ui',
-    event = 'InsertEnter',
+    event = 'BufRead',
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
     config = function()
       require("nvim-dap-virtual-text").setup()
@@ -213,9 +223,9 @@ require('packer').startup(function()
       require('package-info').setup()
     end}
   -- rust
-  use {'simrat39/rust-tools.nvim', event = 'BufRead', config = function() require('rust-tools'):setup() end}
+  use {'simrat39/rust-tools.nvim', ft = 'rust', event = 'BufRead', config = function() require('rust-tools'):setup() end}
   use {'Saecki/crates.nvim',
-     event = { "BufRead Cargo.toml" },
+    event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
     end}
@@ -268,6 +278,7 @@ require('packer').startup(function()
   -- }
   use {
     'rmagatti/goto-preview',
+    opt = true,
     evnet = 'BufRead',
     config = function()
       require('goto-preview').setup {}
@@ -275,11 +286,13 @@ require('packer').startup(function()
   }
   use {
     'willchao612/vim-diagon',
+    opt = true,
     ft = 'markdown'
   }
   use {
     'kkoomen/vim-doge',
-    evnet = 'BufRead',
+    opt = true,
+    cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
     run = ':call doge#install()'
   }
   -- use {
@@ -408,7 +421,7 @@ map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
-map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
@@ -485,7 +498,6 @@ cmd [[
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
-cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 
 cmd[[
 augroup highlight_yank
@@ -522,6 +534,7 @@ local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
 end
+map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
 
 nvim_exec([[
 let g:VM_maps = {}
@@ -597,7 +610,6 @@ require('telescope').setup {
 
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
-require'telescope'.load_extension('refactoring')
 require'telescope'.load_extension('packer')
 
 local disableTS = function (lang, bufnr)
@@ -874,9 +886,10 @@ setup_servers()
 require'lspkind'.init()
 
 require'nvim-tree'.setup {
+  auto_reload_on_write = true,
   disable_netrw       = true,
   hijack_netrw        = true,
-  open_on_setup       = false,
+  open_on_setup       = true,
   ignore              = {".git", "node_modules", ".cache"},
   hide_dotfiles       = 1,
   open_on_tab         = false,
@@ -893,7 +906,7 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'left',
+    side = 'right',
     auto_resize = false,
     mappings = {
       custom_only = false,
