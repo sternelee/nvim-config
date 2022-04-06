@@ -1343,7 +1343,7 @@ basic.git = {
             return {
                 { git_comps.diff_added({ format = '  %s' }), 'green' },
                 { git_comps.diff_removed({ format = '  %s' }), 'red' },
-                { git_comps.diff_changed({ format = ' 柳%s' }), 'blue' },
+                { git_comps.diff_changed({ format = '  %s' }), 'blue' },
             }
         end
         return ''
