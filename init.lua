@@ -89,10 +89,10 @@ require('packer').startup(function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
-  use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
-    config = function ()
-      require('hlargs').setup{}
-    end} -- 和codi冲突
+  -- use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
+  --   config = function ()
+  --     require('hlargs').setup{}
+  --   end} -- 和codi冲突
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
