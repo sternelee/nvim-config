@@ -17,7 +17,8 @@ nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  -- execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  execute('!git clone --depth 1 https://hub.fastgit.xyz/wbthomason/packer.nvim.git '.. install_path)
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
@@ -25,6 +26,11 @@ end
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
+require('packer').init({
+  git = {
+    default_url_format = "https://hub.xn--p8jhe.tw/%s"
+  }
+})
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -48,13 +54,13 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- 使用 nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use 'nvim-treesitter/nvim-tree-docs'
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- 使用 nvim_context_vt
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -62,7 +68,7 @@ require('packer').startup(function()
   --   config = function()
   --     require('spellsitter').setup()
   --   end}
-  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight', 'TwilightEnable'}, config = function() require('twilight'):setup() end}
+  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -81,12 +87,12 @@ require('packer').startup(function()
         use_treesitter = true
       }
     end}
-  use {'mg979/vim-visual-multi', event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-hlslens', event = 'BufRead'} -- 显示高亮的按键位置
-  -- use {'m-demare/hlargs.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('hlargs').setup{}
-  --   end} -- 和codi冲突
+  use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
+    config = function ()
+      require('hlargs').setup{}
+    end} -- 和codi冲突
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -96,8 +102,8 @@ require('packer').startup(function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use {'github/copilot.vim', event = 'InsertEnter'}
-  use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
+  use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -115,7 +121,10 @@ require('packer').startup(function()
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
-  use {'ThePrimeagen/refactoring.nvim', config = function () require('refactoring').setup() end}
+  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
+    require('refactoring').setup()
+    require'telescope'.load_extension('refactoring')
+    end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'tami5/lspsaga.nvim'}
@@ -125,19 +134,19 @@ require('packer').startup(function()
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  use {'liuchengxu/vista.vim',opt = true, cmd = {'Vista'}}
-  use 'kosayoda/nvim-lightbulb'
+  use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
+  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
-  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Move', 'Rename'}}
+  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use {'jdhao/better-escape.vim', opt = true, event = 'InsertEnter'} -- 快速按jk退出编辑态
+  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
+  use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  -- use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
@@ -184,7 +193,7 @@ require('packer').startup(function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'turbio/bracey.vim', cmd = 'Bracey'}
+  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
   -- use { 'bennypowers/nvim-regexplainer',
@@ -196,7 +205,7 @@ require('packer').startup(function()
   --   }}
   use {
     'rcarriga/nvim-dap-ui',
-    event = 'InsertEnter',
+    event = 'BufRead',
     requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
     config = function()
       require("nvim-dap-virtual-text").setup()
@@ -214,9 +223,8 @@ require('packer').startup(function()
       require('package-info').setup()
     end}
   -- rust
-  use {'simrat39/rust-tools.nvim', opt = true, ft = {'rust', 'toml'}, event = 'BufRead', config = function() require('rust-tools'):setup() end}
+  use {'simrat39/rust-tools.nvim', ft = 'rust', event = 'BufRead', config = function() require('rust-tools'):setup() end}
   use {'Saecki/crates.nvim',
-    opt = true,
     event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
@@ -250,25 +258,6 @@ require('packer').startup(function()
   --     require('auto-session').setup {}
   --   end
   -- }
-  -- use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
-  --   config = function()
-  --     require('autosave').setup{
-  --       enabled = true,
-  --       execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-  --       events = {"InsertLeave"},
-  --       conditions = {
-  --           exists = true,
-  --           filename_is_not = {},
-  --           filetype_is_not = {},
-  --           modifiable = true
-  --       },
-  --       write_all_buffers = false,
-  --       on_off_commands = true,
-  --       clean_command_line_interval = 0,
-  --       debounce_delay = 600
-  --     }
-  --   end
-  -- }
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -279,11 +268,13 @@ require('packer').startup(function()
   }
   use {
     'willchao612/vim-diagon',
+    opt = true,
     ft = 'markdown'
   }
   use {
     'kkoomen/vim-doge',
-    evnet = 'BufRead',
+    opt = true,
+    cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
     run = ':call doge#install()'
   }
   -- use {
@@ -342,7 +333,7 @@ opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
-opt('o', 'laststatus', 2)
+opt('o', 'laststatus', 3)
 opt('o', 'cursorline', true)
 opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
@@ -376,6 +367,7 @@ local function map(mode, lhs, rhs, opts)
   remap(mode, lhs, rhs, options)
 end
 
+-- g.do_filetype_lua = 1 -- nvim > 0.7
 g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
@@ -388,6 +380,8 @@ g.maplocalleader = ","
 -- map('v', 'dd', '"_dd')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
+map('n', ';f', '<C-f>')
+map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
@@ -399,6 +393,7 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 -- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
 map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
@@ -412,7 +407,7 @@ map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
-map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
@@ -431,8 +426,8 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
-map('n', '<c-o>', '<cmd>Lspsaga open_floaterm<CR>')
-map('n', '<c-n>', '<cmd>Lspsaga close_floaterm<CR>')
+map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
+map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
@@ -489,7 +484,6 @@ cmd [[
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
-cmd [[autocmd CursorHold,CursorHoldI * :lua require'nvim-lightbulb'.update_lightbulb()]]
 
 cmd[[
 augroup highlight_yank
@@ -602,7 +596,6 @@ require('telescope').setup {
 
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
-require'telescope'.load_extension('refactoring')
 require'telescope'.load_extension('packer')
 
 local disableTS = function (lang, bufnr)
@@ -879,6 +872,7 @@ setup_servers()
 require'lspkind'.init()
 
 require'nvim-tree'.setup {
+  auto_reload_on_write = true,
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -898,7 +892,7 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'left',
+    side = 'right',
     auto_resize = false,
     mappings = {
       custom_only = false,
@@ -1128,63 +1122,173 @@ sidebar.setup({
 local windline = require('windline')
 local helper = require('windline.helpers')
 local sep = helper.separators
-local vim_components = require('windline.components.vim')
-
 local b_components = require('windline.components.basic')
 local state = _G.WindLine.state
+local vim_components = require('windline.components.vim')
+local HSL = require('wlanimation.utils')
 
 local lsp_comps = require('windline.components.lsp')
 local git_comps = require('windline.components.git')
+
 local gps = require("nvim-gps")
 gps.setup()
-
-b_components.gps = {
-  function()
-    if gps.is_available() then
-      return gps.get_location()
-    end
-    return ''
-  end,
-  {"white", "black"}
-}
-
 local hl_list = {
     Black = { 'white', 'black' },
     White = { 'black', 'white' },
+    Normal = { 'NormalFg', 'NormalBg' },
     Inactive = { 'InactiveFg', 'InactiveBg' },
     Active = { 'ActiveFg', 'ActiveBg' },
 }
 local basic = {}
 
-basic.divider = { b_components.divider, '' }
-basic.file_name_inactive = { b_components.full_file_name, hl_list.Inactive }
-basic.line_col_inactive = { b_components.line_col, hl_list.Inactive }
-basic.progress_inactive = { b_components.progress, hl_list.Inactive }
+local airline_colors = {}
 
-basic.vi_mode = {
-    name = 'vi_mode',
-    hl_colors = {
-        Normal = { 'black', 'red', 'bold' },
-        Insert = { 'black', 'green', 'bold' },
-        Visual = { 'black', 'yellow', 'bold' },
-        Replace = { 'black', 'blue_light', 'bold' },
-        Command = { 'black', 'magenta', 'bold' },
-        NormalBefore = { 'red', 'black' },
-        InsertBefore = { 'green', 'black' },
-        VisualBefore = { 'yellow', 'black' },
-        ReplaceBefore = { 'blue_light', 'black' },
-        CommandBefore = { 'magenta', 'black' },
-        NormalAfter = { 'white', 'red' },
-        InsertAfter = { 'white', 'green' },
-        VisualAfter = { 'white', 'yellow' },
-        ReplaceAfter = { 'white', 'blue_light' },
-        CommandAfter = { 'white', 'magenta' },
-    },
+basic.gps = {
+  function()
+    if gps.is_available() then
+      return ' '..gps.get_location()
+    end
+    return ''
+  end,
+  {"cyan", "NormalBg"}
+}
+
+airline_colors.a = {
+    NormalSep = { 'magenta_a', 'magenta_b' },
+    InsertSep = { 'green_a', 'green_b' },
+    VisualSep = { 'yellow_a', 'yellow_b' },
+    ReplaceSep = { 'blue_a', 'blue_b' },
+    CommandSep = { 'red_a', 'red_b' },
+    Normal = { 'black', 'magenta_a' },
+    Insert = { 'black', 'green_a' },
+    Visual = { 'black', 'yellow_a' },
+    Replace = { 'black', 'blue_a' },
+    Command = { 'black', 'red_a' },
+}
+
+airline_colors.b = {
+    NormalSep = { 'magenta_b', 'magenta_c' },
+    InsertSep = { 'green_b', 'green_c' },
+    VisualSep = { 'yellow_b', 'yellow_c' },
+    ReplaceSep = { 'blue_b', 'blue_c' },
+    CommandSep = { 'red_b', 'red_c' },
+    Normal = { 'white', 'magenta_b' },
+    Insert = { 'white', 'green_b' },
+    Visual = { 'white', 'yellow_b' },
+    Replace = { 'white', 'blue_b' },
+    Command = { 'white', 'red_b' },
+}
+
+airline_colors.c = {
+    NormalSep = { 'magenta_c', 'NormalBg' },
+    InsertSep = { 'green_c', 'NormalBg' },
+    VisualSep = { 'yellow_c', 'NormalBg' },
+    ReplaceSep = { 'blue_c', 'NormalBg' },
+    CommandSep = { 'red_c', 'NormalBg' },
+    Normal = { 'white', 'magenta_c' },
+    Insert = { 'white', 'green_c' },
+    Visual = { 'white', 'yellow_c' },
+    Replace = { 'white', 'blue_c' },
+    Command = { 'white', 'red_c' },
+}
+
+basic.divider = { b_components.divider, hl_list.Normal }
+
+local width_breakpoint = 100
+
+basic.section_a = {
+    hl_colors = airline_colors.a,
+    text = function(_,_,width)
+        if width > width_breakpoint then
+            return {
+                { ' ' .. state.mode[1] .. ' ', state.mode[2] },
+                { sep.right_filled, state.mode[2] .. 'Sep' },
+            }
+        end
+        return {
+            { ' ' .. state.mode[1]:sub(1, 1) .. ' ', state.mode[2] },
+            { sep.right_filled, state.mode[2] .. 'Sep' },
+        }
+    end,
+}
+
+
+basic.section_b = {
+    hl_colors = airline_colors.b,
+    text = function(bufnr,_, width)
+        if width > width_breakpoint and git_comps.is_git(bufnr) then
+            return {
+                { git_comps.git_branch() , state.mode[2] },
+                { ' ', '' },
+                { sep.right_filled, state.mode[2] .. 'Sep' },
+            }
+        end
+        return { { sep.right_filled, state.mode[2] .. 'Sep' } }
+    end,
+}
+
+
+basic.section_c = {
+    hl_colors = airline_colors.c,
     text = function()
         return {
-            { sep.left_rounded, state.mode[2] .. 'Before' },
-            { state.mode[1] .. ' ', state.mode[2] },
-            { sep.left_rounded, state.mode[2] .. 'After' },
+            { ' ', state.mode[2] },
+            { b_components.cache_file_name('[No Name]', 'unique')},
+            { ' '},
+            { sep.right_filled, state.mode[2] .. 'Sep' },
+        }
+    end,
+}
+
+basic.section_x = {
+    hl_colors = airline_colors.c,
+    text = function(_,_,width)
+        if width > width_breakpoint then
+            return {
+            { sep.left_filled, state.mode[2] .. 'Sep' },
+            { ' ', state.mode[2] },
+            { b_components.file_encoding()},
+            { ' ' },
+            { b_components.file_format({ icon = true }) },
+            { ' ' },
+            }
+        end
+        return {
+            { sep.left_filled, state.mode[2] .. 'Sep' },
+        }
+    end,
+}
+
+basic.section_y = {
+    hl_colors = airline_colors.b,
+    text = function(_,_,width)
+        if width > width_breakpoint then
+            return {
+                { sep.left_filled, state.mode[2] .. 'Sep' },
+                { b_components.cache_file_type({ icon = true }), state.mode[2] },
+                { ' ' },
+            }
+        end
+        return { { sep.left_filled, state.mode[2] .. 'Sep' } }
+    end,
+}
+
+basic.section_z = {
+    hl_colors = airline_colors.a,
+    text = function(_,_,width)
+        if width > width_breakpoint then
+            return {
+                { sep.left_filled, state.mode[2] .. 'Sep' },
+                { '', state.mode[2] },
+                { b_components.progress_lua},
+                { ' '},
+                { b_components.line_col_lua},
+            }
+        end
+        return {
+            { sep.left_filled, state.mode[2] .. 'Sep' },
+            { ' ', state.mode[2] },
+            { b_components.line_col_lua, state.mode[2] },
         }
     end,
 }
@@ -1192,105 +1296,41 @@ basic.vi_mode = {
 basic.lsp_diagnos = {
     name = 'diagnostic',
     hl_colors = {
-        red = { 'red', 'black' },
-        yellow = { 'yellow', 'black' },
-        blue = { 'blue', 'black' },
+        red = { 'red', 'NormalBg' },
+        yellow = { 'yellow', 'NormalBg' },
+        blue = { 'blue', 'NormalBg' },
     },
-    width = 90,
     text = function(bufnr)
         if lsp_comps.check_lsp(bufnr) then
             return {
-                { lsp_comps.lsp_error({ format = '  %s' }), 'red' },
-                { lsp_comps.lsp_warning({ format = '  %s' }), 'yellow' },
-                { lsp_comps.lsp_hint({ format = '  %s' }), 'blue' },
+                { lsp_comps.lsp_error({ format = '  %s', show_zero = true }), 'red' },
+                { lsp_comps.lsp_warning({ format = '  %s', show_zero = true }), 'yellow' },
+                { lsp_comps.lsp_hint({ format = '  %s', show_zero = true }), 'blue' },
             }
         end
-        return ''
+        return { ' ', 'red' }
     end,
 }
 
-basic.file = {
-    name = 'file',
-    hl_colors = {
-        default = hl_list.White,
-    },
-    text = function()
-        return {
-            {b_components.cache_file_icon({ default = '' }), 'default'},
-            { ' ', 'default' },
-            { b_components.cache_file_name('[No Name]', 'unique') },
-            { b_components.file_modified(' ')},
-            { b_components.cache_file_size()},
-        }
-    end,
-}
-
-basic.right = {
-    hl_colors = {
-        sep_before = { 'black_light', 'black' },
-        sep_after = { 'black_light', 'black' },
-        text = { 'white', 'black_light' },
-    },
-    text = function()
-        return {
-            { sep.left_rounded, 'sep_before' },
-            { 'l/n', 'text' },
-            { b_components.line_col_lua },
-            { '' },
-            { b_components.progress_lua },
-            { sep.right_rounded, 'sep_after' },
-        }
-    end,
-}
 basic.git = {
     name = 'git',
-    width = 90,
+    width = width_breakpoint,
     hl_colors = {
-        green = { 'green', 'black' },
-        red = { 'red', 'black' },
-        blue = { 'blue', 'black' },
+        green = { 'green', 'NormalBg' },
+        red = { 'red', 'NormalBg' },
+        blue = { 'blue', 'NormalBg' },
     },
     text = function(bufnr)
         if git_comps.is_git(bufnr) then
             return {
-                { ' ' },
-                { git_comps.diff_added({ format = ' %s' }), 'green' },
+                { git_comps.diff_added({ format = '  %s' }), 'green' },
                 { git_comps.diff_removed({ format = '  %s' }), 'red' },
-                { git_comps.diff_changed({ format = ' 柳%s' }), 'blue' },
+                { git_comps.diff_changed({ format = '  %s' }), 'blue' },
             }
         end
         return ''
     end,
 }
-
-local default = {
-    filetypes = { 'default' },
-    active = {
-        { ' ', hl_list.Black },
-        basic.vi_mode,
-        basic.file,
-        { vim_components.search_count(), { 'red', 'white' } },
-        { sep.right_rounded, hl_list.Black },
-        basic.lsp_diagnos,
-        basic.git,
-        { ' ', hl_list.Black },
-        b_components.gps,
-        basic.divider,
-        { git_comps.git_branch({ icon = '  ' }), { 'green', 'black' }, 90 },
-        { ' ', hl_list.Black },
-        basic.right,
-        { ' ', hl_list.Black },
-    },
-    inactive = {
-        basic.file_name_inactive,
-        basic.divider,
-        basic.divider,
-        basic.line_col_inactive,
-        { '', hl_list.Inactive },
-        basic.progress_inactive,
-    },
-}
-
 local quickfix = {
     filetypes = { 'qf', 'Trouble' },
     active = {
@@ -1316,8 +1356,8 @@ local quickfix = {
 local explorer = {
     filetypes = { 'fern', 'NvimTree', 'lir' },
     active = {
-        { '  ', { 'white', 'black_light' } },
-        { helper.separators.slant_right, { 'black_light', 'NormalBg' } },
+        { '  ', { 'white', 'magenta_b' } },
+        { helper.separators.slant_right, { 'magenta_b', 'NormalBg' } },
         { b_components.divider, '' },
         { b_components.file_name(''), { 'NormalFg', 'NormalBg' } },
     },
@@ -1325,16 +1365,70 @@ local explorer = {
     show_last_status = true
 }
 
+local default = {
+    filetypes = { 'default' },
+    active = {
+        basic.section_a,
+        basic.section_b,
+        basic.section_c,
+        basic.lsp_diagnos,
+        { vim_components.search_count(), { 'cyan', 'NormalBg' } },
+        basic.gps,
+        basic.divider,
+        basic.git,
+        basic.section_x,
+        basic.section_y,
+        basic.section_z,
+    },
+    inactive = {
+        { b_components.full_file_name, hl_list.Inactive },
+        { b_components.divider, hl_list.Inactive },
+        { b_components.line_col, hl_list.Inactive },
+        { b_components.progress, hl_list.Inactive },
+    },
+}
+
 windline.setup({
     colors_name = function(colors)
+        local mod = function (c, value)
+            if vim.o.background == 'light' then
+                return HSL.rgb_to_hsl(c):tint(value):to_rgb()
+            end
+            return HSL.rgb_to_hsl(c):shade(value):to_rgb()
+        end
+
+        colors.magenta_a = colors.magenta
+        colors.magenta_b = mod(colors.magenta,0.5)
+        colors.magenta_c = mod(colors.magenta,0.7)
+
+        colors.yellow_a = colors.yellow
+        colors.yellow_b = mod(colors.yellow,0.5)
+        colors.yellow_c = mod(colors.yellow,0.7)
+
+        colors.blue_a = colors.blue
+        colors.blue_b = mod(colors.blue,0.5)
+        colors.blue_c = mod(colors.blue,0.7)
+
+        colors.green_a = colors.green
+        colors.green_b = mod(colors.green,0.5)
+        colors.green_c = mod(colors.green,0.7)
+
+        colors.red_a = colors.red
+        colors.red_b = mod(colors.red,0.5)
+        colors.red_c = mod(colors.red,0.7)
+
         return colors
     end,
     statuslines = {
         default,
-        explorer,
         quickfix,
+        explorer,
     },
 })
+
+require('windline').add_status(
+    require('spectre.state_utils').status_line()
+)
 
 -- spectre
 require'spectre'.setup{
@@ -1460,9 +1554,6 @@ require'spectre'.setup{
     is_open_target_win = true, --open file on opener window
     is_insert_mode = false, -- start open panel on is_insert_mode
 }
-require('windline').add_status(
-    require('spectre.state_utils').status_line()
-)
 
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
@@ -1498,26 +1589,6 @@ require('telekasten').setup({
     new_note_location = "smart",
     rename_update_links = true,
 })
-
--- telekasten 高亮
-cmd [[
-hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
-hi tkBrackets ctermfg=gray guifg=gray
-
-" for gruvbox
-hi tklink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
-hi tkBrackets ctermfg=gray guifg=gray
-
-" real yellow
-hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=darkred gui=bold
-" gruvbox
-"hi tkHighlight ctermbg=214 ctermfg=124 cterm=bold guibg=#fabd2f guifg=#9d0006 gui=bold
-
-hi link CalNavi CalRuler
-hi tkTagSep ctermfg=gray guifg=gray
-hi tkTag ctermfg=175 guifg=#d3869B
-]]
-
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
