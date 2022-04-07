@@ -35,7 +35,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use 'nathom/filetype.nvim'
+  -- use 'nathom/filetype.nvim' -- use filetype.lua for 0.7
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
@@ -444,8 +444,8 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
-map('n', '<c-o>', '<cmd>Lspsaga open_floaterm<CR>')
-map('n', '<c-n>', '<cmd>Lspsaga close_floaterm<CR>')
+map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
+map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 map('n', 'gb', '<cmd>BufferPick<CR>')
 map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
