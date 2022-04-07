@@ -35,7 +35,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  -- use 'nathom/filetype.nvim' -- use filetype.lua for 0.7
+  use 'nathom/filetype.nvim'
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
@@ -54,13 +54,13 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- 使用 nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use 'nvim-treesitter/nvim-tree-docs'
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- 使用 nvim_context_vt
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -89,10 +89,10 @@ require('packer').startup(function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
-  -- use {'m-demare/hlargs.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('hlargs').setup{}
-  --   end} -- 和codi冲突
+  use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
+    config = function ()
+      require('hlargs').setup{}
+    end} -- 和codi冲突
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -103,7 +103,7 @@ require('packer').startup(function()
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
-  use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
+  use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -257,25 +257,6 @@ require('packer').startup(function()
   --     require('auto-session').setup {}
   --   end
   -- }
-  -- use {'Pocco81/AutoSave.nvim', event = 'InsertEnter',
-  --   config = function()
-  --     require('autosave').setup{
-  --       enabled = true,
-  --       execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-  --       events = {"InsertLeave"},
-  --       conditions = {
-  --           exists = true,
-  --           filename_is_not = {},
-  --           filetype_is_not = {},
-  --           modifiable = true
-  --       },
-  --       write_all_buffers = false,
-  --       on_off_commands = true,
-  --       clean_command_line_interval = 0,
-  --       debounce_delay = 600
-  --     }
-  --   end
-  -- }
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -385,8 +366,8 @@ local function map(mode, lhs, rhs, opts)
   remap(mode, lhs, rhs, options)
 end
 
-g.do_filetype_lua = 1 -- nvim > 0.7
-g.did_load_filetypes = 0
+-- g.do_filetype_lua = 1 -- nvim > 0.7
+g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', 'x', '"_x')
