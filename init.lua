@@ -198,13 +198,13 @@ require('packer').startup(function()
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
-  use { 'bennypowers/nvim-regexplainer',
-    event = 'BufRead',
-    config = function() require'regexplainer'.setup()  end,
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-    }}
+  -- use { 'bennypowers/nvim-regexplainer',
+  --   event = 'BufRead',
+  --   config = function() require'regexplainer'.setup()  end,
+  --   requires = {
+  --     'nvim-lua/plenary.nvim',
+  --     'MunifTanjim/nui.nvim',
+  --   }}
   use {
     'rcarriga/nvim-dap-ui',
     event = 'BufRead',
@@ -244,6 +244,7 @@ require('packer').startup(function()
         require('crates').setup()
     end}
   use {'David-Kunz/cmp-npm',
+    opt = true,
     event = 'BufRead package.json',
     config = function()
       require('cmp-npm').setup({})
