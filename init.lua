@@ -55,12 +55,14 @@ require('packer').startup(function()
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'nvim-treesitter/nvim-tree-docs'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- 使用 nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {
+    'romgrk/nvim-treesitter-context',
+    opt = true,
+    event = 'BufRead',
+    config = function()
+      require('treesitter-context').setup {}
+    end} -- or nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -89,10 +91,10 @@ require('packer').startup(function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
-  use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
-    config = function ()
-      require('hlargs').setup{}
-    end} -- 和codi冲突
+  -- use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
+  --   config = function ()
+  --     require('hlargs').setup{}
+  --   end} -- 和codi冲突
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -223,7 +225,19 @@ require('packer').startup(function()
       require('package-info').setup()
     end}
   -- rust
-  use {'simrat39/rust-tools.nvim', ft = 'rust', event = 'BufRead', config = function() require('rust-tools'):setup() end}
+  use {'simrat39/rust-tools.nvim',
+    ft = 'rust',
+    event = 'BufRead',
+    config = function()
+      require('rust-tools'):setup{
+        tools = {
+          autoSetHints = true,
+          runnables = { use_telescope = true },
+          inlay_hints = { show_parameter_hints = true },
+          hover_actions = { auto_focus = true }
+        }
+      }
+    end}
   use {'Saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
     config = function()
@@ -247,7 +261,7 @@ require('packer').startup(function()
   --       ['*'] = require('distant.settings').chip_default()
   --     }
   --   end }
-  use 'nanotee/sqls.nvim'
+  -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use 'windwp/nvim-spectre'
   use {'tpope/vim-repeat', event = 'InsertEnter'}
@@ -810,9 +824,9 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
 
 
-  if client.name == 'sqls' then
-    require('sqls').on_attach(client, bufnr)
-  end
+  -- if client.name == 'sqls' then
+  --   require('sqls').on_attach(client, bufnr)
+  -- end
 
   if client.name == 'tsserver' then
     local ts_utils = require("nvim-lsp-ts-utils")
