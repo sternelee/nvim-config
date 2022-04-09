@@ -568,7 +568,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 local notify = require("notify")
 vim.notify = notify
