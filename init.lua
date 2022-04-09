@@ -42,7 +42,7 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  use 'sidebar-nvim/sidebar.nvim'
+  -- use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -55,14 +55,14 @@ require('packer').startup(function()
   use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -75,7 +75,7 @@ require('packer').startup(function()
   -- use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
-  use 'ellisonleao/gruvbox.nvim'
+  -- use 'ellisonleao/gruvbox.nvim'
   use 'Mofiqul/vscode.nvim'
   -- use {'catppuccin/nvim', as = 'catppuccin'}
   use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
@@ -205,18 +205,18 @@ require('packer').startup(function()
   --     'nvim-lua/plenary.nvim',
   --     'MunifTanjim/nui.nvim',
   --   }}
-  use {
-    'rcarriga/nvim-dap-ui',
-    event = 'BufRead',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
-    config = function()
-      require("nvim-dap-virtual-text").setup()
-      require("dapui").setup()
-      local dap_install = require("dap-install")
-      dap_install.setup({
-      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
-    end}
+  -- use {
+  --   'rcarriga/nvim-dap-ui',
+  --   event = 'BufRead',
+  --   requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
+  --   config = function()
+  --     require("nvim-dap-virtual-text").setup()
+  --     require("dapui").setup()
+  --     local dap_install = require("dap-install")
+  --     dap_install.setup({
+  --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+  --     })
+  --   end}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
@@ -280,11 +280,11 @@ require('packer').startup(function()
       require('goto-preview').setup {}
     end
   }
-  use {
-    'willchao612/vim-diagon',
-    opt = true,
-    ft = 'markdown'
-  }
+  -- use {
+  --   'willchao612/vim-diagon',
+  --   opt = true,
+  --   ft = 'markdown'
+  -- }
   use {
     'kkoomen/vim-doge',
     opt = true,
@@ -307,30 +307,27 @@ local function opt(scope, key, value)
 end
 
 local indent = 2
-cmd 'hi NORMAL guibg=#2f334d'
+-- cmd 'hi NORMAL guibg=#2f334d'
 opt('b', 'expandtab', true)                           -- Use spaces instead of tabs
 opt('b', 'shiftwidth', indent)                        -- Size of an indent
 opt('b', 'smartindent', true)                         -- Insert indents automatically
 opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
 opt('o', 'completeopt', 'menu,menuone,noselect')      -- Completion options
 opt('o', 'hidden', true)                              -- Enable modified buffers in background
-opt('o', 'scrolloff', 3 )                             -- Lines of context
+opt('o', 'scrolloff', 3)                              -- Lines of context
 opt('o', 'shiftround', true)                          -- Round indent
-opt('o', 'sidescrolloff', 8 )                         -- Columns of context
+opt('o', 'sidescrolloff', 8)                          -- Columns of context
 opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
-opt('o', 'scrolloff', 2 )
-opt('o', 'tabstop', 2)
-opt('o', 'shiftwidth', 2)
 opt('o', 'softtabstop', 2)
-opt('o', 'swapfile', false )
-opt('o', 'showmode', false )
-opt('o', 'background', 'dark' )
-opt('o', 'backup', false )
+opt('o', 'swapfile', true)
+opt('o', 'showmode', false)
+opt('o', 'background', 'dark')
+opt('o', 'backup', false)
 opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
@@ -382,7 +379,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- g.do_filetype_lua = 1 -- nvim > 0.7
-g.did_load_filetypes = 1
+-- g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', 'x', '"_x')
@@ -482,7 +479,7 @@ map('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search()<CR>')
 map('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
 
 -- dapui
-map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+-- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
 -- goto-preview
 map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
@@ -576,22 +573,22 @@ cmd 'colorscheme nightfly'
 local notify = require("notify")
 vim.notify = notify
 
-vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  local client = vim.lsp.get_client_by_id(ctx.client_id)
-  local lvl = ({
-    'ERROR',
-    'WARN',
-    'INFO',
-    'DEBUG',
-  })[result.type]
-  notify({ result.message }, lvl, {
-    title = 'LSP | ' .. client.name,
-    timeout = 10000,
-    keep = function()
-      return lvl == 'ERROR' or lvl == 'WARN'
-    end,
-  })
-end
+-- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+--   local client = vim.lsp.get_client_by_id(ctx.client_id)
+--   local lvl = ({
+--     'ERROR',
+--     'WARN',
+--     'INFO',
+--     'DEBUG',
+--   })[result.type]
+--   notify({ result.message }, lvl, {
+--     title = 'LSP | ' .. client.name,
+--     timeout = 10000,
+--     keep = function()
+--       return lvl == 'ERROR' or lvl == 'WARN'
+--     end,
+--   })
+-- end
 
 require('telescope').setup {
   defaults = {
@@ -695,6 +692,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 local lspkind = require('lspkind')
+require'lspkind'.init()
 local cmp = require'cmp'
 
 require("cmp_git").setup()
@@ -883,7 +881,6 @@ end
 setup_servers()
 
 -- vim.lsp.set_log_level("debug")
-require'lspkind'.init()
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
@@ -1114,24 +1111,24 @@ require'Comment'.setup {
   end,
 }
 
-local sidebar = require("sidebar-nvim")
-sidebar.setup({
-  open = false,
-  initial_width = 30,
-  bindings = { ["q"] = function() sidebar.close() end },
-  sections = {
-      "datetime",
-      "git",
-      "diagnostics",
-      require("dap-sidebar-nvim.breakpoints")
-  },
-  dap = {
-      breakpoints = {
-          icon = "🔍"
-      }
-  }
-})
-
+-- local sidebar = require("sidebar-nvim")
+-- sidebar.setup({
+--   open = false,
+--   initial_width = 30,
+--   bindings = { ["q"] = function() sidebar.close() end },
+--   sections = {
+--       "datetime",
+--       "git",
+--       "diagnostics",
+--       require("dap-sidebar-nvim.breakpoints")
+--   },
+--   dap = {
+--       breakpoints = {
+--           icon = "🔍"
+--       }
+--   }
+-- })
+--
 -- windline config
 local windline = require('windline')
 local helper = require('windline.helpers')
