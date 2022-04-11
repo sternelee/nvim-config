@@ -72,7 +72,6 @@ require('packer').startup(function()
   --   end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
-  -- use {'ellisonleao/glow.nvim', event = 'BufRead'} -- markdown 文件预览
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'ellisonleao/gruvbox.nvim'
@@ -198,13 +197,6 @@ require('packer').startup(function()
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
-  -- use { 'bennypowers/nvim-regexplainer',
-  --   event = 'BufRead',
-  --   config = function() require'regexplainer'.setup()  end,
-  --   requires = {
-  --     'nvim-lua/plenary.nvim',
-  --     'MunifTanjim/nui.nvim',
-  --   }}
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
@@ -263,15 +255,14 @@ require('packer').startup(function()
   --     }
   --   end }
   -- use 'nanotee/sqls.nvim'
-  -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
-  use 'windwp/nvim-spectre'
+  use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  -- use {
-  --   'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {}
-  --   end
-  -- }
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {}
+    end
+  }
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -296,6 +287,7 @@ require('packer').startup(function()
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
+  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
 
 end)
 
@@ -362,7 +354,7 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
--- vim.o.sessionoptions="buffers,help,tabpages"
+vim.o.sessionoptions="buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
@@ -473,11 +465,6 @@ map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
 map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
--- spectre
-map('n', '<leader>rp', '<cmd>lua require("spectre").open()<CR>')
-map('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search()<CR>')
-map('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
-
 -- dapui
 -- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
@@ -568,7 +555,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
 vim.notify = notify
@@ -1436,135 +1423,6 @@ windline.setup({
         explorer,
     },
 })
-
-require('windline').add_status(
-    require('spectre.state_utils').status_line()
-)
-
--- spectre
-require'spectre'.setup{
-    color_devicons = true,
-    highlight = {
-      ui = "String",
-      search = "DiffChange",
-      replace = "DiffDelete",
-    },
-    mapping = {
-      ["toggle_line"] = {
-        map = "t",
-        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-        desc = "toggle current item",
-      },
-      ["enter_file"] = {
-        map = "<cr>",
-        cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
-        desc = "goto current file",
-      },
-      ["send_to_qf"] = {
-        map = "Q",
-        cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
-        desc = "send all item to quickfix",
-      },
-      ["replace_cmd"] = {
-        map = "c",
-        cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
-        desc = "input replace vim command",
-      },
-      ["show_option_menu"] = {
-        map = "o",
-        cmd = "<cmd>lua require('spectre').show_options()<CR>",
-        desc = "show option",
-      },
-      ["run_replace"] = {
-        map = "R",
-        cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
-        desc = "replace all",
-      },
-      ["change_view_mode"] = {
-        map = "m",
-        cmd = "<cmd>lua require('spectre').change_view()<CR>",
-        desc = "change result view mode",
-      },
-      ["toggle_ignore_case"] = {
-        map = "I",
-        cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
-        desc = "toggle ignore case",
-      },
-      ["toggle_ignore_hidden"] = {
-        map = "H",
-        cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
-        desc = "toggle search hidden",
-      },
-    },
-    find_engine = {
-      ["rg"] = {
-        cmd = "rg",
-        args = {
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-        },
-        options = {
-          ["ignore-case"] = {
-            value = "--ignore-case",
-            icon = "[I]",
-            desc = "ignore case",
-          },
-          ["hidden"] = {
-            value = "--hidden",
-            desc = "hidden file",
-            icon = "[H]",
-          },
-        },
-      },
-      ["ag"] = {
-        cmd = "ag",
-        args = {
-          "--vimgrep",
-          "-s",
-        },
-        options = {
-          ["ignore-case"] = {
-            value = "-i",
-            icon = "[I]",
-            desc = "ignore case",
-          },
-          ["hidden"] = {
-            value = "--hidden",
-            desc = "hidden file",
-            icon = "[H]",
-          },
-        },
-      },
-    },
-    replace_engine = {
-      ["sed"] = {
-        cmd = "sed",
-        args = sed_args,
-      },
-      options = {
-        ["ignore-case"] = {
-          value = "--ignore-case",
-          icon = "[I]",
-          desc = "ignore case",
-        },
-      },
-    },
-    default = {
-      find = {
-        cmd = "rg",
-        options = { "ignore-case" },
-      },
-      replace = {
-        cmd = "sed",
-      },
-    },
-    replace_vim_cmd = "cdo",
-    is_open_target_win = true, --open file on opener window
-    is_insert_mode = false, -- start open panel on is_insert_mode
-}
 
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
