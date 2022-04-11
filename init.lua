@@ -13,7 +13,7 @@ g.loaded_perl_provider = 0
 g.neovide_transparency=0.98
 g.neovide_cursor_vfx_mode = "sonicboom"
 
-nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -313,7 +313,7 @@ opt('o', 'smartcase', true)                           -- Don't ignore case with 
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'clipboard', 'unnamed')                      -- 与系统剪切板相通
+opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
 opt('o', 'swapfile', true)
@@ -381,6 +381,12 @@ g.maplocalleader = ","
 -- map('n', 'D', '"_D')
 -- map('v', 'd', '"_d')
 -- map('v', 'dd', '"_dd')
+map('n', '<c-c>', '"+y')
+map('v', '<c-c>', '"+y')
+map('n', '<c-v>', '"+p')
+map('i', '<c-v>', '<c-r>+')
+map('c', '<c-v>', '<c-r>+')
+map('i', '<c-r>', '<c-v>')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
