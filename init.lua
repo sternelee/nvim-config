@@ -10,8 +10,8 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-g.neovide_transparency=0.98
-g.neovide_cursor_vfx_mode = "sonicboom"
+-- g.neovide_transparency=0.98
+-- g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
 
@@ -104,7 +104,7 @@ require('packer').startup(function()
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
-  use {'hrsh7th/nvim-cmp', requires = {
+  use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -257,12 +257,12 @@ require('packer').startup(function()
   -- use 'nanotee/sqls.nvim'
   use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {}
-    end
-  }
+  -- use {
+  --   'rmagatti/auto-session',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- }
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -316,7 +316,7 @@ opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
-opt('o', 'swapfile', true)
+opt('o', 'swapfile', false)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
@@ -381,12 +381,12 @@ g.maplocalleader = ","
 -- map('n', 'D', '"_D')
 -- map('v', 'd', '"_d')
 -- map('v', 'dd', '"_dd')
-map('n', '<c-c>', '"+y')
-map('v', '<c-c>', '"+y')
-map('n', '<c-v>', '"+p')
-map('i', '<c-v>', '<c-r>+')
-map('c', '<c-v>', '<c-r>+')
-map('i', '<c-r>', '<c-v>')
+-- map('n', '<D-c>', '"+y') --- mac下的复制粘贴
+-- map('v', '<D-c>', '"+y')
+-- map('n', '<D-v>', '"+p')
+-- map('i', '<D-v>', '<c-r>+')
+-- map('c', '<D-v>', '<c-r>+')
+-- map('i', '<D-r>', '<c-v>')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
