@@ -10,10 +10,10 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- g.neovide_transparency=0.98
--- g.neovide_cursor_vfx_mode = "sonicboom"
+g.neovide_transparency=0.96
+g.neovide_cursor_vfx_mode = "sonicboom"
 
-nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -42,7 +42,7 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  -- use 'sidebar-nvim/sidebar.nvim'
+  use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -104,7 +104,7 @@ require('packer').startup(function()
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
-  use {'hrsh7th/nvim-cmp', branch = 'dev', requires = {
+  use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
@@ -127,7 +127,8 @@ require('packer').startup(function()
     require'telescope'.load_extension('refactoring')
     end}
   -- 语法提示
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  -- use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use {
     'weilbith/nvim-code-action-menu',
@@ -197,18 +198,18 @@ require('packer').startup(function()
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
-  -- use {
-  --   'rcarriga/nvim-dap-ui',
-  --   event = 'BufRead',
-  --   requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
-  --   config = function()
-  --     require("nvim-dap-virtual-text").setup()
-  --     require("dapui").setup()
-  --     local dap_install = require("dap-install")
-  --     dap_install.setup({
-  --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-  --     })
-  --   end}
+  use {
+    'rcarriga/nvim-dap-ui',
+    event = 'BufRead',
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
+    config = function()
+      require("nvim-dap-virtual-text").setup()
+      require("dapui").setup()
+      local dap_install = require("dap-install")
+      dap_install.setup({
+      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+    end}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
@@ -299,7 +300,6 @@ local function opt(scope, key, value)
 end
 
 local indent = 2
--- cmd 'hi NORMAL guibg=#2f334d'
 opt('b', 'expandtab', true)                           -- Use spaces instead of tabs
 opt('b', 'shiftwidth', indent)                        -- Size of an indent
 opt('b', 'smartindent', true)                         -- Insert indents automatically
@@ -325,7 +325,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', true)
+opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -342,6 +342,7 @@ opt('o', 'cursorcolumn', true)
 opt('o', 'autowrite', true)
 opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
+opt('o', 'filetype', 'on')
 opt('o', 'timeoutlen', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
@@ -354,14 +355,13 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
-vim.o.sessionoptions="buffers,help,tabpages"
-vim.opt.fillchars:append('fold:•')
+-- vim.o.sessionoptions="buffers,help,tabpages"
+-- vim.opt.fillchars:append('fold:•')
 
-nvim_exec([[
-filetype on
-filetype plugin on
-filetype indent on
-]], false)
+-- nvim_exec([[
+-- filetype plugin on
+-- filetype indent on
+-- ]], false)
 
 --mappings
 local function map(mode, lhs, rhs, opts)
@@ -381,12 +381,12 @@ g.maplocalleader = ","
 -- map('n', 'D', '"_D')
 -- map('v', 'd', '"_d')
 -- map('v', 'dd', '"_dd')
--- map('n', '<D-c>', '"+y') --- mac下的复制粘贴
--- map('v', '<D-c>', '"+y')
--- map('n', '<D-v>', '"+p')
--- map('i', '<D-v>', '<c-r>+')
--- map('c', '<D-v>', '<c-r>+')
--- map('i', '<D-r>', '<c-v>')
+-- map('n', '<c-c>', '"+y') --- mac下的复制粘贴
+-- map('v', '<c-c>', '"+y')
+-- map('n', '<c-v>', '"+p')
+-- map('i', '<c-v>', '<c-r>+')
+-- map('c', '<c-v>', '<c-r>+')
+-- map('i', '<c-r>', '<c-v>')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -497,12 +497,12 @@ augroup highlight_yank
 ]]
 
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
+cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '●',
+    prefix = '■',
     source = "always",
   },
   float = {
@@ -531,7 +531,6 @@ let g:VM_maps = {}
 let g:VM_default_mappings = 0
 let g:VM_maps["Add Cursor Down"] = '<A-j>'
 let g:VM_maps["Add Cursor Up"] = '<A-k>'
-let g:indent_blankline_char_highlight_list = ['|', '¦', '┆', '┊']
 let g:indent_blankline_filetype_exclude = ['help', 'lspinfo', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha']
 let g:indent_blankline_buftype_exclude = ['nvim-lsp-installer', 'registers']
 ]], false)
@@ -549,9 +548,8 @@ g.markdown_fenced_language = {
   "ts=typescript"
 }
 
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-
+-- vim.opt.list = true
+-- vim.opt.listchars:append("space:⋅")
 
 --theme
 g.vscode_style = "dark"
@@ -561,7 +559,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 local notify = require("notify")
 vim.notify = notify
@@ -732,13 +730,17 @@ cmp.setup({
     { name = 'cmp_git' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
-    { name = 'look', keyword_length=5, option={convert_case=true, loud=true}},
+    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = lspkind.cmp_format()
   },
   flags = {
       debounce_text_changes = 150,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered()
   },
   experimental = {
     ghost_text = true
@@ -767,6 +769,7 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   vim.lsp.handlers.hover, {
     border = 'single'
@@ -873,7 +876,7 @@ end
 
 setup_servers()
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
@@ -1060,32 +1063,6 @@ require('todo-comments').setup{
     },
 }
 
-_G.whitespace_disabled_file_types = {
-    'lsp-installer',
-    'lspinfo',
-    'TelescopePrompt',
-    'dashboard',
-    'alpha'
-}
-function _G.whitespace_visibility(file_types)
-    local better_whitespace_status = 1
-    local current_file_type = vim.api.nvim_eval('&ft')
-    for k,v in ipairs(file_types) do
-        if current_file_type == "" or current_file_type == v then
-            better_whitespace_status = 0
-        end
-    end
-
-    if better_whitespace_status == 0 then
-        vim.cmd('execute "DisableWhitespace"')
-    else
-        vim.cmd('execute "EnableWhitespace"')
-    end
-end
-
-cmd('autocmd BufEnter * lua whitespace_visibility(whitespace_disabled_file_types)')
-cmd('autocmd FileType dashboard execute "DisableWhitespace" | autocmd BufLeave <buffer> lua whitespace_visibility(whitespace_disabled_file_types)')
-
 require'Comment'.setup {
   pre_hook = function(ctx)
     local U = require "Comment.utils"
@@ -1104,24 +1081,6 @@ require'Comment'.setup {
   end,
 }
 
--- local sidebar = require("sidebar-nvim")
--- sidebar.setup({
---   open = false,
---   initial_width = 30,
---   bindings = { ["q"] = function() sidebar.close() end },
---   sections = {
---       "datetime",
---       "git",
---       "diagnostics",
---       require("dap-sidebar-nvim.breakpoints")
---   },
---   dap = {
---       breakpoints = {
---           icon = "🔍"
---       }
---   }
--- })
---
 -- windline config
 local windline = require('windline')
 local helper = require('windline.helpers')
@@ -1483,3 +1442,24 @@ cmd [[
 		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
 	augroup end
 ]]
+
+-- 背景透明-放最后，覆盖主题
+-- cmd 'hi NORMAL guibg=NONE ctermbg=NONE'
+
+local sidebar = require("sidebar-nvim")
+sidebar.setup({
+  open = false,
+  initial_width = 30,
+  bindings = { ["q"] = function() sidebar.close() end },
+  sections = {
+      "datetime",
+      "git",
+      "diagnostics",
+      require("dap-sidebar-nvim.breakpoints")
+  },
+  dap = {
+      breakpoints = {
+          icon = "🔍"
+      }
+  }
+})
