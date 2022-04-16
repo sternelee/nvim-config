@@ -38,6 +38,10 @@ require('packer').init({
   }
 })
 require('packer').startup(function()
+  use {'lewis6991/impatient.nvim',
+    config = function ()
+      require 'impatient'
+    end}
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
@@ -245,7 +249,12 @@ require('packer').startup(function()
   --     }
   --   end }
   -- use 'nanotee/sqls.nvim'
-  use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
+  -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
+  use {'nvim-pack/nvim-spectre',
+    config = function()
+      require('spectre').setup()
+    end
+  }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
   -- use {
   --   'rmagatti/auto-session',
@@ -272,8 +281,10 @@ require('packer').startup(function()
     cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
     run = ':call doge#install()'
   }
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    requires = {{'rcarriga/nvim-dap-ui', opt = true}, {'mfussenegger/nvim-dap', opt = true}, {'Pocco81/DAPInstall.nvim', opt = true}, {'sidebar-nvim/sections-dap', opt = true}, {'theHamsta/nvim-dap-virtual-text', opt = true}},
+  use {
+    'rcarriga/nvim-dap-ui',
+    event = 'BufRead',
+    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
     config = function()
       require("nvim-dap-virtual-text").setup()
       require("dapui").setup()
@@ -281,6 +292,9 @@ require('packer').startup(function()
       dap_install.setup({
       	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
       })
+    end}
+  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+    config = function()
       local sidebar = require("sidebar-nvim")
       sidebar.setup({
         open = false,
@@ -487,7 +501,7 @@ map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
 -- dapui
--- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
 -- goto-preview
 map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
@@ -500,6 +514,12 @@ g.copilot_no_tab_map = true
 cmd [[
   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
 ]]
+
+-- spectre
+map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
+map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
+map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
+map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -1403,7 +1423,9 @@ windline.setup({
         explorer,
     },
 })
-
+require('windline').add_status(
+  require('spectre.state_utils').status_line()
+)
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
 require('telekasten').setup({
