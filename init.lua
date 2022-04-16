@@ -100,6 +100,12 @@ packer.startup({function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
+  use {
+    'ahmedkhalf/project.nvim',
+    config = function()
+      require'project_nvim'.setup{}
+    end
+  }
   -- 语法建议
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -198,8 +204,6 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
-  -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
-  -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
@@ -258,12 +262,12 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  -- use {
-  --   'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {}
-  --   end
-  -- }
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {}
+    end
+  }
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -393,7 +397,7 @@ opt('o', 'showtabline', 2)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
--- vim.o.sessionoptions="buffers,help,tabpages"
+vim.o.sessionoptions="buffers,help,tabpages"
 -- vim.opt.fillchars:append('fold:•')
 
 -- nvim_exec([[
@@ -641,6 +645,7 @@ require('telescope').setup {
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('packer')
+require'telescope'.load_extension('projects')
 
 local disableTS = function (lang, bufnr)
   return vim.api.nvim_buf_line_count(bufnr) > 10000
@@ -764,7 +769,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer', option={keyword_length=2} },
-    -- { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
