@@ -40,13 +40,13 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-nmap <silent> [d <Plug>(coc-diagnostic-prev)
-nmap <silent> ]d <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nmap <silent>[d <Plug>(coc-diagnostic-prev)
+nmap <silent>]d <Plug>(coc-diagnostic-next)
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gy <Plug>(coc-type-definition)
+nmap <silent>gi <Plug>(coc-implementation)
+nmap <silent>gr <Plug>(coc-references)
+nnoremap <silent>K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -125,7 +125,7 @@ endfunction
 au Colorscheme * call OverrideCocHighlights()
 autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 
-nnoremap <silent>fw :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+" nnoremap <silent>fw :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nnoremap <Leader>e :CocCommand explorer<CR>
 " nmap <Leader>t <Plug>(coc-translator-e)

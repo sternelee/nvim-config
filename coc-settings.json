@@ -3,16 +3,7 @@
   "coc.preferences.extensionUpdateCheck": "weekly",
   "coc.preferences.messageLevel": "error",
   "coc.preferences.listOfWorkspaceEdit": "location",
-  "semanticTokens.filetypes": [
-    "c",
-    "go",
-    "html",
-    "java",
-    "javascript",
-    "lua",
-    "rust",
-    "typescript"
-  ],
+  "semanticTokens.filetypes": ["*"],
   "coc.source.file.triggerCharacters": ["/"],
   "codeLens.enable": true,
   "codeLens.separator": "",
