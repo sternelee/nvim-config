@@ -4,11 +4,17 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
+local autocmd = vim.api.nvim_create_autocmd
+local ucmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
+
+-- g.did_load_filetypes = 0 -- nvim > 0.7
+-- g.do_filetype_lua = 1
 
 g.neovide_transparency=0.96
 g.neovide_cursor_vfx_mode = "sonicboom"
@@ -42,7 +48,6 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  use 'sidebar-nvim/sidebar.nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -90,10 +95,6 @@ require('packer').startup(function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
-  -- use {'m-demare/hlargs.nvim', opt = true, event = 'BufRead',
-  --   config = function ()
-  --     require('hlargs').setup{}
-  --   end} -- 和codi冲突
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -114,7 +115,7 @@ require('packer').startup(function()
     {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'hrsh7th/cmp-nvim-lsp-signature-help'},
+    {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-cmdline'},
     {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
@@ -127,7 +128,7 @@ require('packer').startup(function()
     require'telescope'.load_extension('refactoring')
     end}
   -- 语法提示
-  -- use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use {
@@ -138,7 +139,7 @@ require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
-  use 'ray-x/lsp_signature.nvim'
+  -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
@@ -198,18 +199,6 @@ require('packer').startup(function()
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use {'skywind3000/asyncrun.vim', event = 'InsertEnter'}
   -- use {'skywind3000/asynctasks.vim', event = 'InsertEnter'}
-  use {
-    'rcarriga/nvim-dap-ui',
-    event = 'BufRead',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
-    config = function()
-      require("nvim-dap-virtual-text").setup()
-      require("dapui").setup()
-      local dap_install = require("dap-install")
-      dap_install.setup({
-      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
-    end}
   use {
     'vuki656/package-info.nvim',
     requires = 'MunifTanjim/nui.nvim',
@@ -282,6 +271,34 @@ require('packer').startup(function()
     opt = true,
     cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
     run = ':call doge#install()'
+  }
+  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+    requires = {{'rcarriga/nvim-dap-ui', opt = true}, {'mfussenegger/nvim-dap', opt = true}, {'Pocco81/DAPInstall.nvim', opt = true}, {'sidebar-nvim/sections-dap', opt = true}, {'theHamsta/nvim-dap-virtual-text', opt = true}},
+    config = function()
+      require("nvim-dap-virtual-text").setup()
+      require("dapui").setup()
+      local dap_install = require("dap-install")
+      dap_install.setup({
+      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+      local sidebar = require("sidebar-nvim")
+      sidebar.setup({
+        open = false,
+        initial_width = 30,
+        bindings = { ["q"] = function() sidebar.close() end },
+        sections = {
+            "datetime",
+            "git",
+            "diagnostics",
+            require("dap-sidebar-nvim.breakpoints")
+        },
+        dap = {
+            breakpoints = {
+                icon = "🔍"
+            }
+        }
+      })
+    end
   }
   -- use {
   -- 	'xeluxee/competitest.nvim',
@@ -370,8 +387,6 @@ local function map(mode, lhs, rhs, opts)
   remap(mode, lhs, rhs, options)
 end
 
--- g.do_filetype_lua = 1 -- nvim > 0.7
--- g.did_load_filetypes = 1
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', 'x', '"_x')
@@ -391,7 +406,7 @@ map('i', 'jk', '<esc>')                                               --jk to ex
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
-map('n', ';', ':')                                                     --semicolon to enter command mode
+-- map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
@@ -421,7 +436,7 @@ map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
-map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
+-- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
@@ -437,8 +452,8 @@ map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<c-x>', '<cmd>BufferClose<CR>')
 map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
 map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
-map('n', 'gb', '<cmd>BufferPick<CR>')
-map('n', 'gp', '<cmd>bprevious<CR>')
+-- map('n', 'gb', '<cmd>BufferPick<CR>')
+-- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add .<CR>')
@@ -564,22 +579,22 @@ cmd 'colorscheme bogsterish'
 local notify = require("notify")
 vim.notify = notify
 
--- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
---   local client = vim.lsp.get_client_by_id(ctx.client_id)
---   local lvl = ({
---     'ERROR',
---     'WARN',
---     'INFO',
---     'DEBUG',
---   })[result.type]
---   notify({ result.message }, lvl, {
---     title = 'LSP | ' .. client.name,
---     timeout = 10000,
---     keep = function()
---       return lvl == 'ERROR' or lvl == 'WARN'
---     end,
---   })
--- end
+vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({
+    'ERROR',
+    'WARN',
+    'INFO',
+    'DEBUG',
+  })[result.type]
+  notify({ result.message }, lvl, {
+    title = 'LSP | ' .. client.name,
+    timeout = 10000,
+    keep = function()
+      return lvl == 'ERROR' or lvl == 'WARN'
+    end,
+  })
+end
 
 require('telescope').setup {
   defaults = {
@@ -813,7 +828,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>Lspsaga implement<CR>', opts)
   buf_set_keymap('n', 'gE', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', 'gc', '<cmd>Lspsaga show_cursor_diagnostics<CR>', opts)
+  buf_set_keymap('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>', opts)
   buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
@@ -833,12 +848,12 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require'lsp_signature'.on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
-      }
-    }, bufnr)
+    -- require'lsp_signature'.on_attach({
+    --   bind = true,
+    --   handler_opts = {
+    --     border = "rounded"
+    --   }
+    -- }, bufnr)
   end
 
 end
@@ -1445,21 +1460,3 @@ cmd [[
 
 -- 背景透明-放最后，覆盖主题
 -- cmd 'hi NORMAL guibg=NONE ctermbg=NONE'
-
-local sidebar = require("sidebar-nvim")
-sidebar.setup({
-  open = false,
-  initial_width = 30,
-  bindings = { ["q"] = function() sidebar.close() end },
-  sections = {
-      "datetime",
-      "git",
-      "diagnostics",
-      require("dap-sidebar-nvim.breakpoints")
-  },
-  dap = {
-      breakpoints = {
-          icon = "🔍"
-      }
-  }
-})
