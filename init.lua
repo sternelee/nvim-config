@@ -32,16 +32,13 @@ end
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
-require('packer').init({
+local packer = require('packer')
+packer.init({
   git = {
     default_url_format = "https://hub.xn--p8jhe.tw/%s"
   }
 })
-require('packer').startup(function()
-  use {'lewis6991/impatient.nvim',
-    config = function ()
-      require 'impatient'
-    end}
+packer.startup({function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
@@ -61,7 +58,7 @@ require('packer').startup(function()
   use {'junegunn/gv.vim', opt = true, cmd = {'GV'}}
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-refactor', config = function() require('nvim-treesitter-refactor').init() end}
+  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'nvim-treesitter/nvim-tree-docs'
   -- use {
@@ -251,8 +248,13 @@ require('packer').startup(function()
   -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'nvim-pack/nvim-spectre',
+    opt = true,
+    event = 'InsertEnter',
     config = function()
       require('spectre').setup()
+      require('windline').add_status(
+        require('spectre.state_utils').status_line()
+      )
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
@@ -320,8 +322,13 @@ require('packer').startup(function()
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-
-end)
+end,
+config = {
+  profile = {
+    enabled = true,
+    threshold = 1
+  }
+}})
 
 --settings
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
@@ -1423,9 +1430,6 @@ windline.setup({
         explorer,
     },
 })
-require('windline').add_status(
-  require('spectre.state_utils').status_line()
-)
 -- telekasten
 local home = vim.fn.expand("~/zettelkasten")
 require('telekasten').setup({
