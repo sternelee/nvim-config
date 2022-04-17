@@ -13,9 +13,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- g.did_load_filetypes = 0 -- nvim > 0.7
--- g.do_filetype_lua = 1
-
 g.neovide_transparency=0.96
 g.neovide_cursor_vfx_mode = "sonicboom"
 
@@ -59,7 +56,7 @@ packer.startup({function()
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
   -- use {
   --   'romgrk/nvim-treesitter-context',
@@ -68,7 +65,7 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
@@ -135,7 +132,7 @@ packer.startup({function()
     require'telescope'.load_extension('refactoring')
     end}
   -- 语法提示
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  -- use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use {
@@ -150,7 +147,7 @@ packer.startup({function()
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- 方便操作
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
-  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  -- use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
@@ -605,10 +602,9 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme nightfly'
 
 local notify = require("notify")
-vim.notify = notify
 
 vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
