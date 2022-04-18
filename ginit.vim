@@ -1,22 +1,33 @@
 "=============================================================================
 " ginit.vim --- Entry file for neovim-qt
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
-" URL: https://spacevim.org
-" License: GPLv3
 "=============================================================================
 
-if exists('g:GuiLoaded')
-  exe 'Guifont! Fira Code:h16'
-  " Disable gui popupmenu
-  if exists(':GuiPopupmenu') == 2
-    GuiPopupmenu 0
-  endif
+set mouse=a
 
-  " Disbale gui tabline
-  if exists(':GuiTabline') == 2
-    GuiTabline 0
-  endif
+" if exists(':GuiFont')
+"   GuiFont VictorMono\ NF:h18
+" endif
+
+if exists(':GuiPopupmenu')
+  GuiPopupmenu 1
 endif
 
-" vim:set et sw=2:
+if exists(':GuiTabline')
+  GuiTabline 0
+endif
+
+if exists(':GuiScrollbar')
+  GuiScrollbar 1
+endif
+
+if exists(':GuiAdaptiveFont')
+  GuiAdaptiveFont 1
+endif
+
+if exists(':GuiRenderLigatures')
+  GuiRenderLigatures 1
+endif
+
+if exists(':GuiWindowOpacity')
+  GuiWindowOpacity 0.96
+endif

@@ -4,9 +4,9 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
-local keymap = vim.keymap.set
-local autocmd = vim.api.nvim_create_autocmd
-local ucmd = vim.api.nvim_create_user_command
+-- local keymap = vim.keymap.set
+-- local autocmd = vim.api.nvim_create_autocmd
+-- local ucmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
@@ -919,7 +919,7 @@ end
 
 setup_servers()
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
