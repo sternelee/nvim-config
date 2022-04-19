@@ -13,7 +13,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-g.neovide_transparency=0.96
+-- g.neovide_transparency=0.96
 g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
@@ -153,7 +153,7 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态
+  -- use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态,已经原生实现
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
@@ -284,39 +284,39 @@ packer.startup({function()
     cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
     run = ':call doge#install()'
   }
-  use {
-    'rcarriga/nvim-dap-ui',
-    event = 'BufRead',
-    requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
-    config = function()
-      require("nvim-dap-virtual-text").setup()
-      require("dapui").setup()
-      local dap_install = require("dap-install")
-      dap_install.setup({
-      	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
-    end}
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
+  -- use {
+  --   'rcarriga/nvim-dap-ui',
+  --   event = 'BufRead',
+  --   requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
+  --   config = function()
+  --     require("nvim-dap-virtual-text").setup()
+  --     require("dapui").setup()
+  --     local dap_install = require("dap-install")
+  --     dap_install.setup({
+  --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+  --     })
+  --   end}
+  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+  --   config = function()
+  --     local sidebar = require("sidebar-nvim")
+  --     sidebar.setup({
+  --       open = false,
+  --       initial_width = 30,
+  --       bindings = { ["q"] = function() sidebar.close() end },
+  --       sections = {
+  --           "datetime",
+  --           "git",
+  --           "diagnostics",
+  --           require("dap-sidebar-nvim.breakpoints")
+  --       },
+  --       dap = {
+  --           breakpoints = {
+  --               icon = "🔍"
+  --           }
+  --       }
+  --     })
+  --   end
+  -- }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -455,7 +455,7 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+-- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
@@ -509,7 +509,7 @@ map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
 -- dapui
-map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
+-- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
 -- goto-preview
 map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
