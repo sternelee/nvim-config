@@ -49,12 +49,12 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use {'lambdalisue/gina.vim'}
+  use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'junegunn/gv.vim', opt = true, cmd = {'GV'}}
   -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
@@ -110,6 +110,7 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
+  use {'fedepujol/move.nvim', opt = true, event = 'InsertEnter'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -496,12 +497,12 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gu', '<cmd>Git pull<CR>')
-map('n', '<leader>gh', '<cmd>Git push<CR>')
-map('n', '<leader>gl', '<cmd>Git log<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gu', '<cmd>Gina pull<CR>')
+map('n', '<leader>gh', '<cmd>Gina push<CR>')
+map('n', '<leader>gl', '<cmd>Gina log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -546,6 +547,16 @@ map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
 map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
 map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
+
+-- move.nvim
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
