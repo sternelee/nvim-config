@@ -14,7 +14,7 @@ g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- g.neovide_transparency=0.96
-g.neovide_cursor_vfx_mode = "sonicboom"
+-- g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
@@ -27,6 +27,7 @@ end
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
+-- https://github.com/ecosse3/nvim
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
@@ -110,7 +111,7 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'InsertEnter'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -477,7 +478,6 @@ map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 -- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
--- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
@@ -550,6 +550,7 @@ map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
 map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
 map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
 map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
 map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
@@ -578,12 +579,22 @@ vim.diagnostic.config({
     source = "always",
   },
   float = {
-    source = "always",  -- Or "if_many"
+    format = function(diagnostic)
+      if not diagnostic.source or not diagnostic.user_data.lsp.code then
+        return string.format('%s', diagnostic.message)
+      end
+
+      if diagnostic.source == 'eslint' then
+        return string.format('%s [%s]', diagnostic.message, diagnostic.user_data.lsp.code)
+      end
+
+      return string.format('%s [%s]', diagnostic.message, diagnostic.source)
+    end
   },
+  severity_sort = true,
   signs = true,
   underline = true,
-  update_in_insert = false,
-  severity_sort = false,
+  update_in_insert = false
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -1003,6 +1014,9 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
   end
 
+  if client.name == 'tailwindcss' then
+  end
+
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
@@ -1041,6 +1055,48 @@ local function setup_servers()
         json = {
           schemas = require('schemastore').json.schemas(),
         },
+      }
+    end
+    if server.name == "tailwindcss" then
+      opts.on_attach = function(client, bufnr)
+        if client.server_capabilities.colorProvider then
+            require"documentcolors".buf_attach(bufnr)
+        end
+      end
+      opts.on_new_config = function(new_config)
+        if not new_config.settings then
+          new_config.settings = {}
+        end
+        if not new_config.settings.editor then
+          new_config.settings.editor = {}
+        end
+        if not new_config.settings.editor.tabSize then
+          -- set tab size for hover
+          new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
+        end
+      end
+      opts.settings = {
+        tailwindCSS = {
+          lint = {
+            cssConflict = "warning",
+            invalidApply = "error",
+            invalidConfigPath = "error",
+            invalidScreen = "error",
+            invalidTailwindDirective = "error",
+            invalidVariant = "error",
+            recommendedVariantOrder = "warning"
+          },
+          experimental = {
+            classRegex = {
+              "tw`([^`]*)",
+              "tw=\"([^\"]*)",
+              "tw={\"([^\"}]*)",
+              "tw\\.\\w+`([^`]*)",
+              "tw\\(.*?\\)`([^`]*)"
+            }
+          },
+          validate = true
+        }
       }
     end
     server:setup(opts)
