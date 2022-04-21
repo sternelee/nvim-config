@@ -50,10 +50,9 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
+  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Git'}}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
-  use {'junegunn/gv.vim', opt = true, cmd = {'GV'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'},
     config = function ()
       require('diffview').setup()
@@ -95,14 +94,14 @@ packer.startup({function()
         show_current_context = true,
         show_current_context_start = true,
         use_treesitter = true,
-        context_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5',
-          'IndentBlanklineIndent6',
-        },
+        -- context_highlight_list = {
+        --   'IndentBlanklineIndent1',
+        --   'IndentBlanklineIndent2',
+        --   'IndentBlanklineIndent3',
+        --   'IndentBlanklineIndent4',
+        --   'IndentBlanklineIndent5',
+        --   'IndentBlanklineIndent6',
+        -- },
         filetype_exculde = {
           'alpha',
           'packer',
@@ -490,7 +489,9 @@ map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', '<leader>S', '<cmd>Vista<CR>')                   --fuzzN
+map('n', '<leader>S', '<cmd>Vista<CR>')
+map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
+map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -503,12 +504,12 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gu', '<cmd>Gina pull<CR>')
-map('n', '<leader>gh', '<cmd>Gina push<CR>')
-map('n', '<leader>gl', '<cmd>Gina log<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gu', '<cmd>Git pull<CR>')
+map('n', '<leader>gh', '<cmd>Git push<CR>')
+map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
