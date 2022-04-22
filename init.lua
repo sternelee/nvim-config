@@ -94,14 +94,14 @@ packer.startup({function()
         show_current_context = true,
         show_current_context_start = true,
         use_treesitter = true,
-        -- context_highlight_list = {
-        --   'IndentBlanklineIndent1',
-        --   'IndentBlanklineIndent2',
-        --   'IndentBlanklineIndent3',
-        --   'IndentBlanklineIndent4',
-        --   'IndentBlanklineIndent5',
-        --   'IndentBlanklineIndent6',
-        -- },
+        context_highlight_list = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
         filetype_exculde = {
           'alpha',
           'packer',
@@ -473,6 +473,7 @@ map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
@@ -579,6 +580,13 @@ augroup highlight_yank
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
+cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
   virtual_text = {
@@ -615,15 +623,6 @@ for _, num in pairs(numbers) do
   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
 end
 map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
-
-nvim_exec([[
-let g:VM_maps = {}
-let g:VM_default_mappings = 0
-let g:VM_maps["Add Cursor Down"] = '<A-j>'
-let g:VM_maps["Add Cursor Up"] = '<A-k>'
-let g:indent_blankline_filetype_exclude = ['help', 'lspinfo', 'dashboard', 'NvimTree', 'telescope', 'packer', 'alpha']
-let g:indent_blankline_buftype_exclude = ['nvim-lsp-installer', 'registers']
-]], false)
 
 --barbar
 nvim_exec([[
