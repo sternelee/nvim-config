@@ -1,3 +1,7 @@
+local ok, _ = pcall(require, 'impatient')
+if ok then
+  require('impatient') -- This needs to be first
+end
 local cmd = vim.cmd
 local g = vim.g
 local fn = vim.fn
@@ -38,6 +42,7 @@ packer.init({
 })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
+  use {'lewis6991/impatient.nvim'}
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
@@ -169,7 +174,55 @@ packer.startup({function()
   use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
+  -- rust
+  use {'simrat39/rust-tools.nvim',
+    ft = 'rust',
+    event = 'BufRead',
+    config = function()
+      require('rust-tools'):setup{
+        tools = {
+          autoSetHints = true,
+          runnables = { use_telescope = true },
+          inlay_hints = { show_parameter_hints = true },
+          hover_actions = { auto_focus = true }
+        }
+      }
+    end}
+  use {'Saecki/crates.nvim',
+    event = { "BufRead Cargo.toml" },
+    config = function()
+        require('crates').setup()
+    end}
+  use {'David-Kunz/cmp-npm',
+    opt = true,
+    event = 'BufRead package.json',
+    config = function()
+      require('cmp-npm').setup({})
+    end}
+  use {
+    'NTBBloodbath/rest.nvim',
+    ft = 'http',
+    requires = {"nvim-lua/plenary.nvim" },
+    config = function()
+      require'rest-nvim'.setup() end}
+  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
+  use {
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup()
+    end}
   -- 方便操作
+  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+  use {'AndrewRadev/switch.vim'}
+  use {'AndrewRadev/splitjoin.vim'}
+  use {'tpope/vim-speeddating'}
+  use {'antoinemadec/FixCursorHold.nvim'}
+  use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
+    require('numb').setup()
+  end}
+  use {'mattn/emmet-vim'}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
@@ -203,7 +256,6 @@ packer.startup({function()
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   -- use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
   use {
@@ -225,44 +277,6 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
-    event = 'BufRead package.json',
-    config = function()
-      require('package-info').setup()
-    end}
-  -- rust
-  use {'simrat39/rust-tools.nvim',
-    ft = 'rust',
-    event = 'BufRead',
-    config = function()
-      require('rust-tools'):setup{
-        tools = {
-          autoSetHints = true,
-          runnables = { use_telescope = true },
-          inlay_hints = { show_parameter_hints = true },
-          hover_actions = { auto_focus = true }
-        }
-      }
-    end}
-  use {'Saecki/crates.nvim',
-    event = { "BufRead Cargo.toml" },
-    config = function()
-        require('crates').setup()
-    end}
-  use {'David-Kunz/cmp-npm',
-    opt = true,
-    event = 'BufRead package.json',
-    config = function()
-      require('cmp-npm').setup({})
-    end}
-  use {
-    'NTBBloodbath/rest.nvim',
-    ft = 'http',
-    requires = {"nvim-lua/plenary.nvim" },
-    config = function()
-      require'rest-nvim'.setup() end}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -346,7 +360,6 @@ packer.startup({function()
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
-  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
 end,
 config = {
   profile = {
@@ -1012,7 +1025,7 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'right',
+    side = 'left',
     auto_resize = false,
     mappings = {
       custom_only = false,
@@ -1157,48 +1170,26 @@ require'colorizer'.setup{
 }
 
 require('todo-comments').setup{
-  signs = true,
-    sign_priority = 8,
-    keywords = {
-      FIX = {
-        icon = " ",
-        color = "error",
-        alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
-      },
-      TODO = { icon = " ", color = "info" },
-      HACK = { icon = " ", color = "warning" },
-      WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+  signs = true, -- show icons in the signs column
+  sign_priority = 8, -- sign priority
+  -- keywords recognized as todo comments
+  keywords = {
+    FIX = {
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
     },
-    merge_keywords = true,
-    highlight = {
-      before = "", -- "fg" or "bg" or empty
-      keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-      after = "fg", -- "fg" or "bg" or empty
-      pattern = [[(KEYWORDS)]], -- pattern or table of patterns, used for highlightng (vim regex)
-      comments_only = true,
-      max_line_len = 400,
-      exclude = {},
-    },
-    colors = {
-      error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
-      warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
-      info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
-      hint = { "LspDiagnosticsDefaultHint", "#10B981" },
-      default = { "Identifier", "#7C3AED" },
-    },
-    search = {
-      command = "rg",
-      args = {
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-      },
-      pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
-    },
+    WARN = { alt = { "WARNING" } },
+    PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+  },
+  highlight = {
+    before = "", -- "fg" or "bg" or empty
+    -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+    after = "", -- "fg" or "bg" or empty
+    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+    comments_only = true, -- uses treesitter to match keywords in comments only
+    max_line_len = 400, -- ignore lines longer than this
+    exclude = {}, -- list of file types to exclude highlighting
+  },
 }
 
 require'Comment'.setup {
