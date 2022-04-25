@@ -1,6 +1,6 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- This needs to be first
+  require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -311,6 +311,7 @@ packer.startup({function()
       require('goto-preview').setup {}
     end
   }
+  -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- use {
   --   'willchao612/vim-diagon',
   --   opt = true,
@@ -334,27 +335,27 @@ packer.startup({function()
   --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   --     })
   --   end}
-  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-  --   config = function()
-  --     local sidebar = require("sidebar-nvim")
-  --     sidebar.setup({
-  --       open = false,
-  --       initial_width = 30,
-  --       bindings = { ["q"] = function() sidebar.close() end },
-  --       sections = {
-  --           "datetime",
-  --           "git",
-  --           "diagnostics",
-  --           require("dap-sidebar-nvim.breakpoints")
-  --       },
-  --       dap = {
-  --           breakpoints = {
-  --               icon = "🔍"
-  --           }
-  --       }
-  --     })
-  --   end
-  -- }
+  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+    config = function()
+      local sidebar = require("sidebar-nvim")
+      sidebar.setup({
+        open = false,
+        initial_width = 30,
+        bindings = { ["q"] = function() sidebar.close() end },
+        sections = {
+            "datetime",
+            "git",
+            "diagnostics",
+            -- require("dap-sidebar-nvim.breakpoints")
+        },
+        dap = {
+            breakpoints = {
+                icon = "🔍"
+            }
+        }
+      })
+    end
+  }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -455,12 +456,12 @@ map('n', 'dd', '"_dd')
 map('n', 'D', '"_D')
 -- map('v', 'd', '"_d')
 -- map('v', 'dd', '"_dd')
--- map('n', '<c-c>', '"+y') --- mac下的复制粘贴
--- map('v', '<c-c>', '"+y')
+map('n', '<c-c>', '"+y') --- mac下的复制粘贴
+map('v', '<c-c>', '"+y')
 -- map('n', '<c-v>', '"+p')
--- map('i', '<c-v>', '<c-r>+')
--- map('c', '<c-v>', '<c-r>+')
--- map('i', '<c-r>', '<c-v>')
+map('i', '<c-v>', '<c-r>+')
+map('c', '<c-v>', '<c-r>+')
+map('i', '<c-r>', '<c-v>')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -493,7 +494,7 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
--- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
