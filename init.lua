@@ -55,7 +55,10 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Git'}}
+  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
+  use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
+    require('git-conflict').setup()
+  end}
   use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'},
@@ -213,6 +216,7 @@ packer.startup({function()
     config = function()
       require('package-info').setup()
     end}
+  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'AndrewRadev/switch.vim'}
@@ -361,6 +365,7 @@ packer.startup({function()
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
+  use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
 end,
 config = {
   profile = {
@@ -571,15 +576,15 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -662,7 +667,10 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
+
+-- editorconfig-vim
+g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
 local notify = require("notify")
 
@@ -691,7 +699,7 @@ end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   disable_tokenziation_after_line = 10000,
   additional_vim_regex_highlighting = false,
   highlight = {
