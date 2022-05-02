@@ -23,6 +23,7 @@ g.neovide_cursor_vfx_mode = "sonicboom"
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+
 if fn.empty(fn.glob(install_path)) > 0 then
   -- execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
   execute('!git clone --depth 1 https://hub.fastgit.xyz/wbthomason/packer.nvim.git '.. install_path)
@@ -71,14 +72,14 @@ packer.startup({function()
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   opt = true,
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- or nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {
+    'romgrk/nvim-treesitter-context',
+    opt = true,
+    event = 'BufRead',
+    config = function()
+      require('treesitter-context').setup {}
+    end} -- or nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
