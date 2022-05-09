@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  -- require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
-  require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -19,7 +19,7 @@ g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- g.neovide_transparency=0.96
-g.neovide_cursor_vfx_mode = "sonicboom"
+-- g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
@@ -57,7 +57,7 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
+  use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
@@ -93,9 +93,9 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'ellisonleao/gruvbox.nvim'
-  use 'Mofiqul/vscode.nvim'
+  -- use 'Mofiqul/vscode.nvim'
   -- use {'catppuccin/nvim', as = 'catppuccin'}
-  use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  -- use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -155,7 +155,7 @@ packer.startup({function()
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-cmdline'},
-    {'octaltree/cmp-look'}, -- 太多了
+    -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
@@ -166,7 +166,7 @@ packer.startup({function()
     require'telescope'.load_extension('refactoring')
     end}
   -- 语法提示
-  -- use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'tami5/lspsaga.nvim'}
   use {
@@ -236,7 +236,6 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'jdhao/better-escape.vim', event = 'InsertEnter'} -- 快速按jk退出编辑态,已经原生实现
   use {'toppair/reach.nvim', event = 'BufRead',
     config = function ()
       require('reach').setup({
@@ -527,12 +526,12 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
-map('n', '<leader>gm', '<cmd>Git commit<CR>')
-map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gu', '<cmd>Git pull<CR>')
-map('n', '<leader>gh', '<cmd>Git push<CR>')
-map('n', '<leader>gl', '<cmd>Git log<CR>')
+map('n', '<leader>ga', '<cmd>Gina add .<CR>')
+map('n', '<leader>gm', '<cmd>Gina commit<CR>')
+map('n', '<leader>gs', '<cmd>Gina status<CR>')
+map('n', '<leader>gu', '<cmd>Gina pull<CR>')
+map('n', '<leader>gh', '<cmd>Gina push<CR>')
+map('n', '<leader>gl', '<cmd>Gina log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -602,12 +601,18 @@ augroup highlight_yank
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
-cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+local highlights = {
+  IndentBlanklineIndent1    = { fg = "#E06C75"  },
+  IndentBlanklineIndent2    = { fg = "#E5C07B"  },
+  IndentBlanklineIndent3    = { fg = "#98C379"  },
+  IndentBlanklineIndent4    = { fg = "#56B6C2"  },
+  IndentBlanklineIndent5    = { fg = "#61AFEF"  },
+  IndentBlanklineIndent6    = { fg = "#C678DD"  },
+}
+
+for group, hl in pairs(highlights) do
+  vim.api.nvim_set_hl(0, group, hl)
+end
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
@@ -670,7 +675,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme bogsterish'
+cmd 'colorscheme nightfly'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -823,10 +828,10 @@ cmp.setup({
     { name = 'emoji' },
     -- { name = 'spell' },
     -- { name = 'cmp_tabnine' },
-    { name = 'cmp_git' },
+    { name = 'git' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
-    { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
+    -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
     format = lspkind.cmp_format()
@@ -926,16 +931,16 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
   end
 
-  -- if client.name ~= 'jsonls' then
-  --   local msg = string.format("Language server %s started!", client.name)
-  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-  --   -- require'lsp_signature'.on_attach({
-  --   --   bind = true,
-  --   --   handler_opts = {
-  --   --     border = "rounded"
-  --   --   }
-  --   -- }, bufnr)
-  -- end
+  if client.name ~= 'jsonls' then
+    local msg = string.format("Language server %s started!", client.name)
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+    -- require'lsp_signature'.on_attach({
+    --   bind = true,
+    --   handler_opts = {
+    --     border = "rounded"
+    --   }
+    -- }, bufnr)
+  end
 
 end
 
