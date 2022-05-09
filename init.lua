@@ -1,6 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -277,7 +278,7 @@ packer.startup({function()
     -- 'nvim-telescope/telescope-media-files.nvim'
   }} -- 笔记
   use 'ntpeters/vim-better-whitespace'
-  use 'ThePrimeagen/vim-be-good'
+  use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
@@ -367,6 +368,7 @@ packer.startup({function()
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
+
 end,
 config = {
   profile = {
