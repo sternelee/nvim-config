@@ -1019,8 +1019,6 @@ require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
-  ignore              = {".git", "node_modules", ".cache"},
-  hide_dotfiles       = 1,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
@@ -1036,14 +1034,10 @@ require'nvim-tree'.setup {
   view = {
     width = 20,
     side = 'left',
-    auto_resize = false,
     mappings = {
       custom_only = false,
       list = {}
     }
-  },
-  diagnostic = {
-    enable = true
   },
   git = {
     enable = true
