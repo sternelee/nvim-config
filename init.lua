@@ -48,6 +48,7 @@ packer.startup({function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nathom/filetype.nvim'
+  use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
@@ -57,7 +58,7 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
+  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
@@ -95,7 +96,7 @@ packer.startup({function()
   -- use 'ellisonleao/gruvbox.nvim'
   -- use 'Mofiqul/vscode.nvim'
   -- use {'catppuccin/nvim', as = 'catppuccin'}
-  -- use {'amazingefren/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -219,12 +220,34 @@ packer.startup({function()
       require('package-info').setup()
     end}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
+  use {
+    'rmagatti/goto-preview',
+    opt = true,
+    evnet = 'BufRead',
+    config = function()
+      require('goto-preview').setup {}
+    end
+  }
+  -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
+  -- use {
+  --   'willchao612/vim-diagon',
+  --   opt = true,
+  --   ft = 'markdown'
+  -- }
+  use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   -- 方便操作
+  use {
+    "max397574/better-escape.nvim",
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'AndrewRadev/switch.vim'}
-  use {'AndrewRadev/splitjoin.vim'}
-  use {'tpope/vim-speeddating'}
-  use {'antoinemadec/FixCursorHold.nvim'}
+  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -272,10 +295,10 @@ packer.startup({function()
           enabled = true
       }
     end} -- 方便写注释
-  use {'renerocksai/telekasten.nvim', requires = {
-    'renerocksai/calendar-vim',
-    -- 'nvim-telescope/telescope-media-files.nvim'
-  }} -- 笔记
+  -- use {'renerocksai/telekasten.nvim', requires = {
+  --   'renerocksai/calendar-vim',
+  --   -- 'nvim-telescope/telescope-media-files.nvim'
+  -- }} -- 笔记
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'mhartington/formatter.nvim'
@@ -307,20 +330,6 @@ packer.startup({function()
   --   config = function()
   --     require('auto-session').setup {}
   --   end
-  -- }
-  use {
-    'rmagatti/goto-preview',
-    opt = true,
-    evnet = 'BufRead',
-    config = function()
-      require('goto-preview').setup {}
-    end
-  }
-  -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  -- use {
-  --   'willchao612/vim-diagon',
-  --   opt = true,
-  --   ft = 'markdown'
   -- }
   use {
     'kkoomen/vim-doge',
@@ -366,7 +375,6 @@ packer.startup({function()
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
-  use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
 
 end,
 config = {
@@ -469,8 +477,8 @@ map('v', '<c-c>', '"+y')
 map('i', '<c-v>', '<c-r>+')
 map('c', '<c-v>', '<c-r>+')
 map('i', '<c-r>', '<c-v>')
-map('i', 'jk', '<esc>')                                               --jk to exit
-map('c', 'jk', '<C-C>')
+-- map('i', 'jk', '<esc>')                                               --jk to exit
+-- map('c', 'jk', '<C-C>') -- 这里有可能会dump
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -526,12 +534,12 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Gina add .<CR>')
-map('n', '<leader>gm', '<cmd>Gina commit<CR>')
-map('n', '<leader>gs', '<cmd>Gina status<CR>')
-map('n', '<leader>gu', '<cmd>Gina pull<CR>')
-map('n', '<leader>gh', '<cmd>Gina push<CR>')
-map('n', '<leader>gl', '<cmd>Gina log<CR>')
+map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>gu', '<cmd>Git pull<CR>')
+map('n', '<leader>gh', '<cmd>Git push<CR>')
+map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -544,12 +552,12 @@ map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline 
 map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 
 --- zettelkasten
-map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
-map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
-map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
-map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
-map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
-map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
+-- map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
+-- map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
+-- map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
+-- map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
+-- map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
+-- map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -601,18 +609,18 @@ augroup highlight_yank
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
-local highlights = {
-  IndentBlanklineIndent1    = { fg = "#E06C75"  },
-  IndentBlanklineIndent2    = { fg = "#E5C07B"  },
-  IndentBlanklineIndent3    = { fg = "#98C379"  },
-  IndentBlanklineIndent4    = { fg = "#56B6C2"  },
-  IndentBlanklineIndent5    = { fg = "#61AFEF"  },
-  IndentBlanklineIndent6    = { fg = "#C678DD"  },
-}
-
-for group, hl in pairs(highlights) do
-  vim.api.nvim_set_hl(0, group, hl)
-end
+-- local highlights = {
+--   IndentBlanklineIndent1    = { fg = "#E06C75"  },
+--   IndentBlanklineIndent2    = { fg = "#E5C07B"  },
+--   IndentBlanklineIndent3    = { fg = "#98C379"  },
+--   IndentBlanklineIndent4    = { fg = "#56B6C2"  },
+--   IndentBlanklineIndent5    = { fg = "#61AFEF"  },
+--   IndentBlanklineIndent6    = { fg = "#C678DD"  },
+-- }
+--
+-- for group, hl in pairs(highlights) do
+--   vim.api.nvim_set_hl(0, group, hl)
+-- end
 
 -- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
 vim.diagnostic.config({
@@ -675,7 +683,7 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -1170,6 +1178,9 @@ require('formatter').setup({
     },
     less = {
       prettierd
+    },
+    rust = {
+      prettierd
     }
   }
 })
@@ -1224,39 +1235,39 @@ require'Comment'.setup {
 require'statusline'
 
 -- telekasten
-local home = vim.fn.expand("~/zettelkasten")
-require('telekasten').setup({
-    home         = home,
-    take_over_my_home = true,
-    auto_set_filetype = true,
-    dailies      = home .. '/' .. 'daily',
-    weeklies     = home .. '/' .. 'weekly',
-    templates    = home .. '/' .. 'templates',
-    image_subdir = "img",
-    extension    = ".md",
-    follow_creates_nonexisting = true,
-    dailies_create_nonexisting = true,
-    weeklies_create_nonexisting = true,
-    template_new_note = home .. '/' .. 'templates/new_note.md',
-    template_new_daily = home .. '/' .. 'templates/daily.md',
-    template_new_weekly= home .. '/' .. 'templates/weekly.md',
-    image_link_style = "markdown",
-    plug_into_calendar = true,
-    calendar_opts = {
-        weeknm = 4,
-        calendar_monday = 1,
-        calendar_mark = 'left-fit',
-    },
-    close_after_yanking = false,
-    insert_after_inserting = true,
-    tag_notation = "#tag",
-    command_palette_theme = "ivy",
-    show_tags_theme = "ivy",
-    subdirs_in_links = true,
-    template_handling = "smart",
-    new_note_location = "smart",
-    rename_update_links = true,
-})
+-- local home = vim.fn.expand("~/zettelkasten")
+-- require('telekasten').setup({
+--     home         = home,
+--     take_over_my_home = true,
+--     auto_set_filetype = true,
+--     dailies      = home .. '/' .. 'daily',
+--     weeklies     = home .. '/' .. 'weekly',
+--     templates    = home .. '/' .. 'templates',
+--     image_subdir = "img",
+--     extension    = ".md",
+--     follow_creates_nonexisting = true,
+--     dailies_create_nonexisting = true,
+--     weeklies_create_nonexisting = true,
+--     template_new_note = home .. '/' .. 'templates/new_note.md',
+--     template_new_daily = home .. '/' .. 'templates/daily.md',
+--     template_new_weekly= home .. '/' .. 'templates/weekly.md',
+--     image_link_style = "markdown",
+--     plug_into_calendar = true,
+--     calendar_opts = {
+--         weeknm = 4,
+--         calendar_monday = 1,
+--         calendar_mark = 'left-fit',
+--     },
+--     close_after_yanking = false,
+--     insert_after_inserting = true,
+--     tag_notation = "#tag",
+--     command_palette_theme = "ivy",
+--     show_tags_theme = "ivy",
+--     subdirs_in_links = true,
+--     template_handling = "smart",
+--     new_note_location = "smart",
+--     rename_update_links = true,
+-- })
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
