@@ -912,7 +912,6 @@ g.coc_global_extensions = {
    'coc-toml',
    'coc-lightbulb',
    'coc-highlight',
-   'coc-spell-checker',
    'coc-pairs'
 }
 g.coc_start_at_startup=0
