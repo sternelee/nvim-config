@@ -169,21 +169,8 @@
       }
     }
   },
-  "clangd.enabled": true,
-  "clangd.trace.server": "off",
-  "vimlsp.trace.server": "off",
-  "xml.trace.server": "off",
   "html.trace.server": "off",
   "css.trace.server": "off",
-  "java.trace.server": "off",
-  "java.enabled": true,
-  "java.codeGeneration.useBlocks": true,
-  "java.import.maven.enabled": true,
-  "java.maven.downloadSources": false,
-  "python.analysis.diagnosticMode": "openFilesOnly",
-  "python.linting.pylintEnabled": true,
-  "python.linting.pylintPath": "pylint",
-  "python.formatting.provider": "autopep8",
   "tsserver.trace.server": "off",
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
@@ -191,20 +178,10 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.semicolons": "remove",
   "typescript.format.semicolons": "remove",
-  "go.trace.server": "off",
-  "go.goplsPath": "gopls",
-  "go.goplsUseDaemon": false,
-  "go.goplsOptions": {
-    "usePlaceholders": true,
-    "semanticTokens": true
-  },
   "rust-analyzer.trace.server": "off",
   "rust-analyzer.server.path": "rust-analyzer",
   "eslint.packageManager": "yarn",
   "eslint.run": "onSave",
-  "sql.formatOptions": {
-    "indent": "    "
-  },
   "json.trace.server": "off",
   "json.schemas": [
     {
@@ -216,15 +193,6 @@
   "yaml.validate": true,
   "yaml.format.singleQuote": true,
   "yaml.completion": true,
-  "snippets.enableStatusItem": false,
-  "snippets.ultisnips.enable": false,
-  "snippets.snipmate.enable": false,
-  "snippets.loadFromExtensions": false,
-  "snippets.shortcut": "SP",
-  "snippets.extends": {
-    "cpp": ["c"],
-    "typescript": ["javascript"]
-  },
   "outline.keepWindow": true,
   "outline.sortBy": "position",
   "outline.splitCommand": "botright 40vs",

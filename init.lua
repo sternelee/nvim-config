@@ -153,7 +153,6 @@ packer.startup({function()
     cmd = 'CodeActionMenu',
   }
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
-  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   use {
     'NTBBloodbath/rest.nvim',
     ft = 'http',
@@ -193,7 +192,6 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
-  use {'mattn/emmet-vim'}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
@@ -450,8 +448,8 @@ map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
--- map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
--- map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
@@ -459,6 +457,7 @@ map('n', '<leader>tw', '<cmd>Translate<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')
+map('n', '<leader>cs', '<cmd>CocStart<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -914,19 +913,26 @@ g.coc_global_extensions = {
    'coc-lightbulb',
    'coc-highlight',
    'coc-spell-checker',
-   'coc-pairs',
-   'coc-explorer'
+   'coc-pairs'
 }
 g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
+
+-- cmd [[ source ~/.config/nvim/config.vim ]]
+
 remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
-remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
+-- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
+remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
+remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
+remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+remap("n", "gr", "<Plug>(coc-references)", {silent = true})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
 remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
-remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
+-- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
 remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
