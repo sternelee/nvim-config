@@ -295,10 +295,6 @@ packer.startup({function()
           enabled = true
       }
     end} -- 方便写注释
-  -- use {'renerocksai/telekasten.nvim', requires = {
-  --   'renerocksai/calendar-vim',
-  --   -- 'nvim-telescope/telescope-media-files.nvim'
-  -- }} -- 笔记
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'mhartington/formatter.nvim'
@@ -412,6 +408,7 @@ opt('o', 'swapfile', false)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
+opt('o', 'writebackup', false)
 opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
@@ -550,14 +547,6 @@ map("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract
 map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
 map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
 map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
-
---- zettelkasten
--- map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
--- map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
--- map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
--- map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
--- map('n', '<leader>zp', '<cmd>lua require("telekasten").panel()<CR>')
--- map('n', '<leader>zc', '<cmd>CalendarVR<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -852,7 +841,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered()
   },
   experimental = {
-    ghost_text = true
+    ghost_text = false
   }
 })
 
@@ -985,18 +974,12 @@ local function setup_servers()
             require"documentcolors".buf_attach(bufnr)
         end
       end
-      opts.on_new_config = function(new_config)
-        if not new_config.settings then
-          new_config.settings = {}
-        end
-        if not new_config.settings.editor then
-          new_config.settings.editor = {}
-        end
-        if not new_config.settings.editor.tabSize then
-          -- set tab size for hover
-          new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
-        end
-      end
+      opts.init_options = {
+        userLanguages = {
+          eelixir = "html-eex",
+          eruby = "erb"
+        }
+      }
       opts.settings = {
         tailwindCSS = {
           lint = {
@@ -1087,16 +1070,10 @@ require'gitsigns'.setup {
     ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
   },
-  watch_gitdir = {
-    interval = 1000
-  },
   current_line_blame = false,
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default
-  diff_opts = {
-    internal = false
-  }
 }
 
 local startify = require('alpha.themes.startify')
@@ -1233,41 +1210,6 @@ require'Comment'.setup {
 }
 
 require'statusline'
-
--- telekasten
--- local home = vim.fn.expand("~/zettelkasten")
--- require('telekasten').setup({
---     home         = home,
---     take_over_my_home = true,
---     auto_set_filetype = true,
---     dailies      = home .. '/' .. 'daily',
---     weeklies     = home .. '/' .. 'weekly',
---     templates    = home .. '/' .. 'templates',
---     image_subdir = "img",
---     extension    = ".md",
---     follow_creates_nonexisting = true,
---     dailies_create_nonexisting = true,
---     weeklies_create_nonexisting = true,
---     template_new_note = home .. '/' .. 'templates/new_note.md',
---     template_new_daily = home .. '/' .. 'templates/daily.md',
---     template_new_weekly= home .. '/' .. 'templates/weekly.md',
---     image_link_style = "markdown",
---     plug_into_calendar = true,
---     calendar_opts = {
---         weeknm = 4,
---         calendar_monday = 1,
---         calendar_mark = 'left-fit',
---     },
---     close_after_yanking = false,
---     insert_after_inserting = true,
---     tag_notation = "#tag",
---     command_palette_theme = "ivy",
---     show_tags_theme = "ivy",
---     subdirs_in_links = true,
---     template_handling = "smart",
---     new_note_location = "smart",
---     rename_update_links = true,
--- })
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
