@@ -598,50 +598,6 @@ augroup highlight_yank
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
 cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
--- local highlights = {
---   IndentBlanklineIndent1    = { fg = "#E06C75"  },
---   IndentBlanklineIndent2    = { fg = "#E5C07B"  },
---   IndentBlanklineIndent3    = { fg = "#98C379"  },
---   IndentBlanklineIndent4    = { fg = "#56B6C2"  },
---   IndentBlanklineIndent5    = { fg = "#61AFEF"  },
---   IndentBlanklineIndent6    = { fg = "#C678DD"  },
--- }
---
--- for group, hl in pairs(highlights) do
---   vim.api.nvim_set_hl(0, group, hl)
--- end
-
--- https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/UI-customization
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = '■',
-    source = "always",
-  },
-  float = {
-    format = function(diagnostic)
-      if not diagnostic.source or not diagnostic.user_data.lsp.code then
-        return string.format('%s', diagnostic.message)
-      end
-
-      if diagnostic.source == 'eslint' then
-        return string.format('%s [%s]', diagnostic.message, diagnostic.user_data.lsp.code)
-      end
-
-      return string.format('%s [%s]', diagnostic.message, diagnostic.source)
-    end
-  },
-  severity_sort = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false
-})
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
@@ -678,6 +634,7 @@ cmd 'colorscheme bogsterish'
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
 local notify = require("notify")
+vim.notify = notify
 
 vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
@@ -698,8 +655,9 @@ end
 
 require('telescope_config')
 
-local disableTS = function (lang, bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 10000
+local noTsAndLSP = function (lang, bufnr)
+  local n = vim.api.nvim_buf_line_count(bufnr)
+  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
@@ -709,23 +667,23 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    disable = disableTS
+    disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
     extended_mode = true,
-    disable = disableTS
+    disable = noTsAndLSP
   },
   autotag = {
     enable = true,
-    disable = disableTS
+    disable = noTsAndLSP
   },
   refactor = {
     highlight_definitions = {
       enable = true,
       clear_on_cursor_move = true,
     },
-    disable = disableTS
+    disable = noTsAndLSP
   },
   tree_docs = {enable = true},
   textobjects = {
@@ -890,16 +848,12 @@ cmp.setup.cmdline(':', {
   })
 })
 
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = 'single'
-  }
-)
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.signatureHelp, {
-    border = 'single'
-  }
-)
+-- LSP config
+require('lsp/config')
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
+}
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -950,37 +904,31 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
   end
 
-  if client.name ~= 'jsonls' then
-    local msg = string.format("Language server %s started!", client.name)
-    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- require'lsp_signature'.on_attach({
-    --   bind = true,
-    --   handler_opts = {
-    --     border = "rounded"
-    --   }
-    -- }, bufnr)
-  end
+  -- if client.name ~= 'jsonls' then
+  --   local msg = string.format("Language server %s started!", client.name)
+  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+  --   -- require'lsp_signature'.on_attach({
+  --   --   bind = true,
+  --   --   handler_opts = {
+  --   --     border = "rounded"
+  --   --   }
+  --   -- }, bufnr)
+  -- end
 
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
   local lsp_installer = require("nvim-lsp-installer")
+
   local opts = {
     on_attach = on_attach,
-    capabilities = capabilities
+    capabilities = capabilities,
+    handlers = handlers
+    -- autostart = false
+    -- autostart = noTsAndLSP("", bufnr)
   }
   lsp_installer.on_server_ready(function(server)
     if server.name == "jsonls" then
@@ -990,41 +938,20 @@ local function setup_servers()
         },
       }
     end
+    if server.name == "tsserver" then
+      opts.capabilities =require('lsp/tsserver').capabilities
+      opts.on_attach =require('lsp/tsserver').on_attach
+    end
+    if server.name == "sumneko_lua" then
+      opts.settings = require('lsp/sumneko_lua').settings
+    end
+    if server.name == "eslint" then
+      opts.settings =require('lsp/eslint').settings
+    end
     if server.name == "tailwindcss" then
-      opts.on_attach = function(client, bufnr)
-        if client.server_capabilities.colorProvider then
-            require"documentcolors".buf_attach(bufnr)
-        end
-      end
-      opts.init_options = {
-        userLanguages = {
-          eelixir = "html-eex",
-          eruby = "erb"
-        }
-      }
-      opts.settings = {
-        tailwindCSS = {
-          lint = {
-            cssConflict = "warning",
-            invalidApply = "error",
-            invalidConfigPath = "error",
-            invalidScreen = "error",
-            invalidTailwindDirective = "error",
-            invalidVariant = "error",
-            recommendedVariantOrder = "warning"
-          },
-          experimental = {
-            classRegex = {
-              "tw`([^`]*)",
-              "tw=\"([^\"]*)",
-              "tw={\"([^\"}]*)",
-              "tw\\.\\w+`([^`]*)",
-              "tw\\(.*?\\)`([^`]*)"
-            }
-          },
-          validate = true
-        }
-      }
+      opts.on_attach = require('lsp/tailwindcss').on_attach
+      opts.init_options = require('lsp/tailwindcss').init_options
+      opts.settings = require('lsp/tailwindcss').settings
     end
     server:setup(opts)
   end)
