@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
-  -- require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -51,7 +51,7 @@ packer.startup({function()
   use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
-  use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use {'goolord/alpha-nvim', lock = true}
   use 'SmiteshP/nvim-gps'
@@ -81,7 +81,7 @@ packer.startup({function()
       require('treesitter-context').setup {}
     end} -- or nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  -- use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
+  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
   --   event = 'BufRead',
@@ -95,7 +95,9 @@ packer.startup({function()
   -- use 'ellisonleao/gruvbox.nvim'
   -- use 'Mofiqul/vscode.nvim'
   -- use {'catppuccin/nvim', as = 'catppuccin'}
-  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use 'sainnhe/gruvbox-material'
+  use 'EdenEast/nightfox.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -234,10 +236,6 @@ packer.startup({function()
           enabled = true
       }
     end} -- 方便写注释
-  -- use {'renerocksai/telekasten.nvim', requires = {
-  --   'renerocksai/calendar-vim',
-  --   -- 'nvim-telescope/telescope-media-files.nvim'
-  -- }} -- 笔记
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'mhartington/formatter.nvim'
@@ -257,9 +255,6 @@ packer.startup({function()
     event = 'InsertEnter',
     config = function()
       require('spectre').setup()
-      require('windline').add_status(
-        require('spectre.state_utils').status_line()
-      )
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
@@ -350,6 +345,7 @@ opt('o', 'swapfile', false)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
+opt('o', 'writebackup', false)
 opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
@@ -465,7 +461,7 @@ map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
-map('n', '<c-x>', '<cmd>BufferClose<CR>')
+map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add .<CR>')
@@ -553,7 +549,10 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
-cmd 'colorscheme bogsterish'
+-- gruvbox-material
+g.gruvbox_material_background = 'hard'
+g.gruvbox_material_better_performance = 1
+cmd 'colorscheme gruvbox-material'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -563,8 +562,9 @@ vim.notify = notify
 
 require('telescope_config')
 
-local disableTS = function (lang, bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 10000
+local noTsAndLSP = function (lang, bufnr)
+  local n = vim.api.nvim_buf_line_count(bufnr)
+  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
@@ -573,24 +573,23 @@ require('nvim-treesitter.configs').setup {
   disable_tokenziation_after_line = 10000,
   additional_vim_regex_highlighting = false,
   highlight = {
-    enable = true,
-    disable = disableTS
+    -- enable = false,
+    -- disable = noTsAndLSP,
+    disable = true
   },
   rainbow = {
-    enable = true,
-    extended_mode = true,
-    disable = disableTS
+    enable = false,
+    extended_mode = false,
   },
   autotag = {
-    enable = true,
-    disable = disableTS
+    enable = false,
   },
   refactor = {
     highlight_definitions = {
       enable = true,
       clear_on_cursor_move = true,
     },
-    disable = disableTS
+    disable = noTsAndLSP
   },
   tree_docs = {enable = true},
   textobjects = {
@@ -844,41 +843,6 @@ require'Comment'.setup {
 
 require'statusline'
 
--- telekasten
--- local home = vim.fn.expand("~/zettelkasten")
--- require('telekasten').setup({
---     home         = home,
---     take_over_my_home = true,
---     auto_set_filetype = true,
---     dailies      = home .. '/' .. 'daily',
---     weeklies     = home .. '/' .. 'weekly',
---     templates    = home .. '/' .. 'templates',
---     image_subdir = "img",
---     extension    = ".md",
---     follow_creates_nonexisting = true,
---     dailies_create_nonexisting = true,
---     weeklies_create_nonexisting = true,
---     template_new_note = home .. '/' .. 'templates/new_note.md',
---     template_new_daily = home .. '/' .. 'templates/daily.md',
---     template_new_weekly= home .. '/' .. 'templates/weekly.md',
---     image_link_style = "markdown",
---     plug_into_calendar = true,
---     calendar_opts = {
---         weeknm = 4,
---         calendar_monday = 1,
---         calendar_mark = 'left-fit',
---     },
---     close_after_yanking = false,
---     insert_after_inserting = true,
---     tag_notation = "#tag",
---     command_palette_theme = "ivy",
---     show_tags_theme = "ivy",
---     subdirs_in_links = true,
---     template_handling = "smart",
---     new_note_location = "smart",
---     rename_update_links = true,
--- })
-
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
 cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
@@ -919,20 +883,20 @@ g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
--- cmd [[ source ~/.config/nvim/config.vim ]]
+cmd [[ source ~/.config/nvim/config.vim ]]
 
-remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
--- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
-remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
-remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
-remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
-remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-remap("n", "gr", "<Plug>(coc-references)", {silent = true})
-remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
-remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
--- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
-remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
-remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
-remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
-remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+-- remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
+-- -- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
+-- remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
+-- remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
+-- remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
+-- remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+-- remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+-- remap("n", "gr", "<Plug>(coc-references)", {silent = true})
+-- remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
+-- remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
+-- -- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
+-- remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
+-- remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
+-- remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
+-- remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
