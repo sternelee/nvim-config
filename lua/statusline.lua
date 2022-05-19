@@ -212,7 +212,8 @@ basic.git = {
     end,
 }
 local quickfix = {
-    filetypes = { 'qf', 'Trouble' },
+    -- filetypes = { 'qf', 'Trouble' },
+    filetypes = { 'qf' },
     active = {
         { '🚦 Quickfix ', { 'white', 'black' } },
         { helper.separators.slant_right, { 'black', 'black_light' } },
