@@ -53,12 +53,10 @@ packer.startup({function()
   use 'romgrk/barbar.nvim'
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
-  use {'goolord/alpha-nvim', lock = true}
-  use 'SmiteshP/nvim-gps'
+  use 'goolord/alpha-nvim'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
@@ -68,20 +66,6 @@ packer.startup({function()
       require('diffview').setup()
     end
   }
-  -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
-  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  -- use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
   --   event = 'BufRead',
@@ -94,10 +78,8 @@ packer.startup({function()
   use 'bluz71/vim-nightfly-guicolors'
   -- use 'ellisonleao/gruvbox.nvim'
   -- use 'Mofiqul/vscode.nvim'
-  -- use {'catppuccin/nvim', as = 'catppuccin'}
   -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'sainnhe/gruvbox-material'
-  use 'EdenEast/nightfox.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -105,7 +87,7 @@ packer.startup({function()
         space_char_blankline = " ",
         show_current_context = true,
         show_current_context_start = true,
-        use_treesitter = true,
+        use_treesitter = false,
         context_highlight_list = {
           'IndentBlanklineIndent1',
           'IndentBlanklineIndent2',
@@ -142,13 +124,7 @@ packer.startup({function()
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
-  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
-    require('refactoring').setup()
-    require'telescope'.load_extension('refactoring')
-    end}
   -- 语法提示
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {
     'weilbith/nvim-code-action-menu',
     opt = true,
@@ -171,13 +147,11 @@ packer.startup({function()
       require('goto-preview').setup {}
     end
   }
-  -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- use {
   --   'willchao612/vim-diagon',
   --   opt = true,
   --   ft = 'markdown'
   -- }
-  use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   -- 方便操作
   use {
     "max397574/better-escape.nvim",
@@ -196,46 +170,12 @@ packer.startup({function()
   end}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
-  use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
+  use {'tomtom/tcomment_vim'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'toppair/reach.nvim', event = 'BufRead',
-    config = function ()
-      require('reach').setup({
-        notifications = true
-      })
-    end}
-  use {'chentau/marks.nvim', event = 'BufRead',
-    config = function ()
-      require('marks').setup({
-        default_mappings = true,
-        builtin_marks = { ".", "<", ">", "^" },
-        cyclic = true,
-        force_write_shada = false,
-        refresh_interval = 250,
-        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-        excluded_filetypes = {},
-        bookmark_0 = {
-          sign = "⚑",
-          virt_text = "sterne"
-        },
-        mappings = {}
-      })
-    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   -- use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   use 'folke/todo-comments.nvim'
-  use {
-    'danymat/neogen',
-    requires = 'nvim-treesitter/nvim-treesitter',
-    event = 'InsertEnter',
-    config = function()
-      require'neogen'.setup {
-          enabled = true
-      }
-    end} -- 方便写注释
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'mhartington/formatter.nvim'
@@ -350,7 +290,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 2)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -428,27 +368,20 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
--- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
-map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 map('n', 'fo', '<cmd>Format<CR>')
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
-map('n', '<leader>tw', '<cmd>Translate<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
@@ -472,14 +405,6 @@ map('n', '<leader>gh', '<cmd>Git push<CR>')
 map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
-
--- refactoring
-map("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -561,88 +486,6 @@ local notify = require("notify")
 vim.notify = notify
 
 require('telescope_config')
-
-local noTsAndLSP = function (lang, bufnr)
-  local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
-end
-
---nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
-require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  disable_tokenziation_after_line = 10000,
-  additional_vim_regex_highlighting = false,
-  highlight = {
-    -- enable = false,
-    -- disable = noTsAndLSP,
-    disable = true
-  },
-  rainbow = {
-    enable = false,
-    extended_mode = false,
-  },
-  autotag = {
-    enable = false,
-  },
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      clear_on_cursor_move = true,
-    },
-    disable = noTsAndLSP
-  },
-  tree_docs = {enable = true},
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
-      },
-    },
-  },
-  incremental_selection = {
-    enable = true,
-    disable = { "cpp", "lua" },
-    keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<TAB>',
-      node_decremental = '<S-TAB>',
-    }
-  },
-}
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
@@ -823,24 +666,6 @@ require('todo-comments').setup{
   },
 }
 
-require'Comment'.setup {
-  pre_hook = function(ctx)
-    local U = require "Comment.utils"
-
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require("ts_context_commentstring.utils").get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require("ts_context_commentstring.utils").get_visual_start_location()
-    end
-
-    return require("ts_context_commentstring.internal").calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-      location = location,
-    }
-  end,
-}
-
 require'statusline'
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
@@ -885,18 +710,18 @@ g.coc_selectmode_mapping = 0
 
 cmd [[ source ~/.config/nvim/config.vim ]]
 
--- remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
--- -- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
--- remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
--- remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
--- remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
--- remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
--- remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
--- remap("n", "gr", "<Plug>(coc-references)", {silent = true})
--- remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
--- remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
--- -- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
--- remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
--- remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
--- remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
--- remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
+-- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
+remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
+remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
+remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
+remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+remap("n", "gr", "<Plug>(coc-references)", {silent = true})
+remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
+remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
+-- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
+remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
+remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
+remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
+remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
