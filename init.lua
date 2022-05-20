@@ -1,6 +1,6 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载
   -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
@@ -17,9 +17,6 @@ g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
-
--- g.neovide_transparency=0.96
--- g.neovide_cursor_vfx_mode = "sonicboom"
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
@@ -53,7 +50,7 @@ packer.startup({function()
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
-  use {'goolord/alpha-nvim', lock = true}
+  use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
@@ -93,9 +90,6 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
-  -- use 'ellisonleao/gruvbox.nvim'
-  -- use 'Mofiqul/vscode.nvim'
-  -- use {'catppuccin/nvim', as = 'catppuccin'}
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -259,13 +253,13 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'toppair/reach.nvim', event = 'BufRead',
-    config = function ()
-      require('reach').setup({
-        notifications = true
-      })
-    end}
-  use {'chentau/marks.nvim', event = 'BufRead',
+  -- use {'toppair/reach.nvim', event = 'BufRead',
+  --   config = function ()
+  --     require('reach').setup({
+  --       notifications = true
+  --     })
+  --   end}
+  use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
         default_mappings = true,
@@ -488,10 +482,8 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
--- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -1178,6 +1170,3 @@ cmd [[
 		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
 	augroup end
 ]]
-
--- 背景透明-放最后，覆盖主题
--- cmd 'hi NORMAL guibg=NONE ctermbg=NONE'

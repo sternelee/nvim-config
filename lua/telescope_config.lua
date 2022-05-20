@@ -107,11 +107,6 @@ require('telescope').setup {
       },
     },
   },
-  pickers = {
-    find_files = {
-      previewer = false,
-    },
-  },
 }
 
 require'telescope'.load_extension('file_browser')
