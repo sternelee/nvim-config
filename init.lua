@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  -- require('impatient') -- 必须是第一加载, 查看结果配置为 require('impatient').enable_profile()
-  require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -81,33 +81,7 @@ packer.startup({function()
   -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'sainnhe/gruvbox-material'
   -- 显示导航线
-  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
-    config = function()
-      require("indent_blankline").setup {
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-        use_treesitter = false,
-        context_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5',
-          'IndentBlanklineIndent6',
-        },
-        filetype_exculde = {
-          'alpha',
-          'packer',
-          'NvimTree',
-          'lsp-install',
-          'help',
-          'TelescopePrompt',
-          'TelescopeResults',
-        },
-        buftype_exclude = { 'terminal', 'nofile' },
-      }
-    end}
+  use {'yggdroot/indentline', event = 'BufRead'}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
