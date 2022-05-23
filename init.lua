@@ -138,14 +138,14 @@ packer.startup({function()
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-vsnip'},
+    {'saadparwaiz1/cmp_luasnip'},
     {'rafamadriz/friendly-snippets'},
-    {'hrsh7th/vim-vsnip'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
@@ -229,6 +229,17 @@ packer.startup({function()
   --   ft = 'markdown'
   -- }
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
+  use {
+    "amrbashir/nvim-docs-view",
+    opt = true,
+    cmd = { "DocsViewToggle" },
+    config = function()
+      require("docs-view").setup {
+        position = "right",
+        width = vim.api.nvim_get_option("columns") / 3,
+      }
+    end
+  }
   -- 方便操作
   use {
     "max397574/better-escape.nvim",
@@ -439,17 +450,17 @@ opt('o', 'showtabline', 2)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
--- vim.opt.fillchars:append('fold:•')
+vim.opt.fillchars:append('fold:•')
 
--- nvim_exec([[
--- filetype plugin on
--- filetype indent on
--- ]], false)
+nvim_exec([[
+filetype plugin on
+filetype indent on
+]], false)
 
 --mappings
-local function map(mode, lhs, rhs, opts)
+local function map(mode, lhs, rhs)
   local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
+  if opts then options = vim.tbl_extend('force', options) end
   remap(mode, lhs, rhs, options)
 end
 
@@ -577,6 +588,39 @@ map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
 map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
 map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
+-- LSP
+map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+-- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+-- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+-- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+-- map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+-- map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+-- map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
+-- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+-- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
+-- map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+
+map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
+map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
+map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
+map('n', 'gam', '<cmd>CodeActionMenu<CR>')
+map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
+map('n', 'gr', '<cmd>Lspsaga rename<CR>')
+map('n', 'gi', '<cmd>Lspsaga implement<CR>')
+map('n', 'gE', '<cmd>Lspsaga preview_definition<CR>')
+map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
+map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
+map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+map('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
@@ -609,13 +653,10 @@ g.markdown_fenced_language = {
   "ts=typescript"
 }
 
--- vim.opt.list = true
--- vim.opt.listchars:append("space:⋅")
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
 
 --theme
-g.vscode_style = "dark"
-g.vscode_italic_comment = 1
--- require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
@@ -735,6 +776,8 @@ require'lspkind'.init()
 local cmp = require'cmp'
 
 require("cmp_git").setup()
+local luasnip = require("luasnip")
+require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
@@ -749,10 +792,10 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
+      luasnip.lsp_expand(args.body)
+    end
   },
-mapping = cmp.mapping.preset.insert({
+  mapping = cmp.mapping.preset.insert({
     ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-2), { 'i', 'c' }),
@@ -767,6 +810,10 @@ mapping = cmp.mapping.preset.insert({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       elseif check_backspace() then
         fallback()
       else
@@ -779,6 +826,30 @@ mapping = cmp.mapping.preset.insert({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<C-l>"] = cmp.mapping(function(fallback)
+      if luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<C-h>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -790,7 +861,7 @@ mapping = cmp.mapping.preset.insert({
   sources = {
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
@@ -848,43 +919,6 @@ local handlers = {
 }
 
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-  buf_set_keymap('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap('n', 'ga', '<cmd>Lspsaga code_action<CR>', opts)
-  buf_set_keymap('x', 'gA', '<cmd>Lspsaga range_code_action<CR>', opts)
-  buf_set_keymap('n', 'gam', '<cmd>CodeActionMenu<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>Lspsaga rename<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>Lspsaga implement<CR>', opts)
-  buf_set_keymap('n', 'gE', '<cmd>Lspsaga preview_definition<CR>', opts)
-  buf_set_keymap('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>', opts)
-  buf_set_keymap('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-
-
   -- if client.name == 'sqls' then
   --   require('sqls').on_attach(client, bufnr)
   -- end
@@ -918,7 +952,7 @@ local function setup_servers()
   local opts = {
     on_attach = on_attach,
     capabilities = capabilities,
-    handlers = handlers
+    handlers = handlers,
     -- autostart = false
     -- autostart = noTsAndLSP("", bufnr)
   }
