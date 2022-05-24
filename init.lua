@@ -68,18 +68,18 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
-  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
+  -- use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- or nvim_context_vt
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
+  -- use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use {
   --   'lewis6991/spellsitter.nvim',
   --   event = 'BufRead',
@@ -120,8 +120,8 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -145,11 +145,10 @@ packer.startup({function()
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'saadparwaiz1/cmp_luasnip'},
-    {'rafamadriz/friendly-snippets'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    {'hrsh7th/cmp-cmdline'},
+    -- {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -250,9 +249,9 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
+  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -305,7 +304,7 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
+  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -350,27 +349,27 @@ packer.startup({function()
   --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   --     })
   --   end}
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            -- require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
+  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+  --   config = function()
+  --     local sidebar = require("sidebar-nvim")
+  --     sidebar.setup({
+  --       open = false,
+  --       initial_width = 30,
+  --       bindings = { ["q"] = function() sidebar.close() end },
+  --       sections = {
+  --           "datetime",
+  --           "git",
+  --           "diagnostics",
+  --           -- require("dap-sidebar-nvim.breakpoints")
+  --       },
+  --       dap = {
+  --           breakpoints = {
+  --               icon = "🔍"
+  --           }
+  --       }
+  --     })
+  --   end
+  -- }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -509,7 +508,7 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+-- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
@@ -578,15 +577,15 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- LSP
 map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
@@ -711,13 +710,13 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     disable = noTsAndLSP
   },
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      clear_on_cursor_move = true,
-    },
-    disable = noTsAndLSP
-  },
+  -- refactor = {
+  --   highlight_definitions = {
+  --     enable = true,
+  --     clear_on_cursor_move = true,
+  --   },
+  --   disable = noTsAndLSP
+  -- },
   tree_docs = {enable = true},
   textobjects = {
     select = {
@@ -897,19 +896,19 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- cmp.setup.cmdline('/', {
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+--
+-- cmp.setup.cmdline(':', {
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 -- LSP config
 require('lsp/config')
