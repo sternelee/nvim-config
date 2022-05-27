@@ -5,9 +5,9 @@ vim.api.nvim_set_hl(0, "WinBarSigDoc", { fg = "#dedede", bg = "#363636" })
 vim.api.nvim_set_hl(0, "WinBarSigActParm", { fg = "#dedede", bg = "#9f3838" })
 
 local treesitter_context = function(width)
-  if not packer_plugins["nvim-treesitter"] or packer_plugins["nvim-treesitter"].loaded == false then
-    return " "
-  end
+  -- if not packer_plugins["nvim-treesitter"] or packer_plugins["nvim-treesitter"].loaded == false then
+  --   return " "
+  -- end
   local type_patterns = {
     "class",
     "function",

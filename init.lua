@@ -71,13 +71,13 @@ packer.startup({function()
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
-  use {
-    'romgrk/nvim-treesitter-context',
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- or nvim_context_vt
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
@@ -960,12 +960,12 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require'lsp_signature'.on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
-      }
-    }, bufnr)
+    -- require'lsp_signature'.on_attach({
+    --   bind = true,
+    --   handler_opts = {
+    --     border = "rounded"
+    --   }
+    -- }, bufnr) -- 用 winbar 代替
   end
 
 end
@@ -1210,7 +1210,7 @@ require'Comment'.setup {
 }
 
 require'statusline'
-require'winbar'
+vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
