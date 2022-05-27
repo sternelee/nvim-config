@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -149,7 +149,7 @@ packer.startup({function()
     {'rafamadriz/friendly-snippets'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-nvim-lsp-signature-help'},
+    -- {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
@@ -173,7 +173,7 @@ packer.startup({function()
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
-  -- use 'ray-x/lsp_signature.nvim'
+  use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
   use {'simrat39/rust-tools.nvim',
@@ -878,7 +878,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
@@ -928,6 +928,7 @@ cmp.setup.cmdline(':', {
 
 -- LSP config
 require('lsp/config')
+
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
@@ -937,24 +938,35 @@ local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
   --   require('sqls').on_attach(client, bufnr)
   -- end
-
   if client.name == 'tsserver' then
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
     local ts_utils = require("nvim-lsp-ts-utils")
     local init_options = require("nvim-lsp-ts-utils").init_options
     ts_utils.setup(init_options)
     ts_utils.setup_client(client)
   end
 
-  -- if client.name ~= 'jsonls' then
-  --   local msg = string.format("Language server %s started!", client.name)
-  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-  --   -- require'lsp_signature'.on_attach({
-  --   --   bind = true,
-  --   --   handler_opts = {
-  --   --     border = "rounded"
-  --   --   }
-  --   -- }, bufnr)
-  -- end
+  if client.name == 'tailwindcss' then
+    if client.server_capabilities.colorProvider then
+      require"lsp/documentcolors".buf_attach(bufnr)
+    end
+  end
+
+  if client.name ~= 'jsonls' then
+    local msg = string.format("Language server %s started!", client.name)
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+    require'lsp_signature'.on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr)
+  end
 
 end
 
@@ -981,7 +993,6 @@ local function setup_servers()
     end
     if server.name == "tsserver" then
       opts.capabilities =require('lsp/tsserver').capabilities
-      opts.on_attach =require('lsp/tsserver').on_attach
     end
     if server.name == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
@@ -990,7 +1001,6 @@ local function setup_servers()
       opts.settings =require('lsp/eslint').settings
     end
     if server.name == "tailwindcss" then
-      opts.on_attach = require('lsp/tailwindcss').on_attach
       opts.init_options = require('lsp/tailwindcss').init_options
       opts.settings = require('lsp/tailwindcss').settings
     end
@@ -1200,6 +1210,7 @@ require'Comment'.setup {
 }
 
 require'statusline'
+require'winbar'
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])

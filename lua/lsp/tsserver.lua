@@ -33,15 +33,6 @@ capabilities.textDocument.codeAction = {
   },
 }
 
-local on_attach = function(client, bufnr)
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
-
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-end
-
 M.capabilities = capabilities;
-M.on_attach = on_attach;
 
 return M

@@ -6,12 +6,6 @@ capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 
 -- Settings
 
-local on_attach = function (client, bufnr)
-  if client.server_capabilities.colorProvider then
-    require"lsp/documentcolors".buf_attach(bufnr)
-  end
-end
-
 local filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "django-html", "edge", "eelixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte" }
 
 local init_options = {
@@ -45,7 +39,6 @@ local settings = {
   }
 }
 
-M.on_attach = on_attach;
 M.filetypes = filetypes;
 M.capabilities = capabilities;
 M.settings = settings;
