@@ -71,13 +71,13 @@ packer.startup({function()
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use 'nvim-treesitter/nvim-tree-docs'
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   opt = true,
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- or nvim_context_vt
+  use {
+    'romgrk/nvim-treesitter-context',
+    opt = true,
+    event = 'BufRead',
+    config = function()
+      require('treesitter-context').setup {}
+    end} -- or nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
@@ -92,6 +92,10 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use({
+  	"catppuccin/nvim",
+  	as = "catppuccin"
+  })
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -423,7 +427,7 @@ opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
-opt('o', 'swapfile', false)
+opt('o', 'swapfile', true)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
@@ -677,6 +681,80 @@ g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
 cmd 'colorscheme bogsterish'
+
+local catppuccin = require("catppuccin")
+catppuccin.setup({
+  transparent_background = false,
+  term_colors = false,
+  styles = {
+  	comments = "italic",
+  	conditionals = "italic",
+  	loops = "NONE",
+  	functions = "NONE",
+  	keywords = "italic",
+  	strings = "NONE",
+  	variables = "NONE",
+  	numbers = "NONE",
+  	booleans = "NONE",
+  	properties = "NONE",
+  	types = "italic",
+  	operators = "NONE",
+  },
+  integrations = {
+  	treesitter = true,
+  	native_lsp = {
+  		enabled = true,
+  		virtual_text = {
+  			errors = "italic",
+  			hints = "italic",
+  			warnings = "italic",
+  			information = "italic",
+  		},
+  		underlines = {
+  			errors = "underline",
+  			hints = "underline",
+  			warnings = "underline",
+  			information = "underline",
+  		},
+  	},
+  	lsp_trouble = false,
+  	cmp = true,
+  	lsp_saga = true,
+  	gitgutter = false,
+  	gitsigns = true,
+  	telescope = true,
+  	nvimtree = {
+  		enabled = true,
+  		show_root = false,
+  		transparent_panel = false,
+  	},
+  	neotree = {
+  		enabled = false,
+  		show_root = false,
+  		transparent_panel = false,
+  	},
+  	which_key = true,
+  	indent_blankline = {
+  		enabled = true,
+  		colored_indent_levels = false,
+  	},
+  	dashboard = false,
+  	neogit = false,
+  	vim_sneak = false,
+  	fern = false,
+  	barbar = true,
+  	bufferline = true,
+  	markdown = true,
+  	lightspeed = false,
+  	ts_rainbow = true,
+  	hop = true,
+  	notify = true,
+  	telekasten = true,
+  	symbols_outline = false,
+  }
+})
+g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+cmd 'colorscheme catppuccin'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -1210,7 +1288,7 @@ require'Comment'.setup {
 }
 
 require'statusline'
-vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
+-- vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
