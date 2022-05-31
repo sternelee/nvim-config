@@ -18,7 +18,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -959,12 +959,12 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- require'lsp_signature'.on_attach({
-    --   bind = true,
-    --   handler_opts = {
-    --     border = "rounded"
-    --   }
-    -- }, bufnr) -- 用 winbar 代替
+    require'lsp_signature'.on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr) -- 用 winbar 代替
   end
 
 end
