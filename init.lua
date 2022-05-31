@@ -92,10 +92,6 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
-  use({
-  	"catppuccin/nvim",
-  	as = "catppuccin"
-  })
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -681,81 +677,6 @@ g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
 cmd 'colorscheme bogsterish'
-
-local catppuccin = require("catppuccin")
-catppuccin.setup({
-  transparent_background = false,
-  term_colors = false,
-  styles = {
-  	comments = "italic",
-  	conditionals = "italic",
-  	loops = "NONE",
-  	functions = "NONE",
-  	keywords = "italic",
-  	strings = "NONE",
-  	variables = "NONE",
-  	numbers = "NONE",
-  	booleans = "NONE",
-  	properties = "NONE",
-  	types = "italic",
-  	operators = "NONE",
-  },
-  integrations = {
-  	treesitter = true,
-  	native_lsp = {
-  		enabled = true,
-  		virtual_text = {
-  			errors = "italic",
-  			hints = "italic",
-  			warnings = "italic",
-  			information = "italic",
-  		},
-  		underlines = {
-  			errors = "underline",
-  			hints = "underline",
-  			warnings = "underline",
-  			information = "underline",
-  		},
-  	},
-  	lsp_trouble = false,
-  	cmp = true,
-  	lsp_saga = true,
-  	gitgutter = false,
-  	gitsigns = true,
-  	telescope = true,
-  	nvimtree = {
-  		enabled = true,
-  		show_root = false,
-  		transparent_panel = false,
-  	},
-  	neotree = {
-  		enabled = false,
-  		show_root = false,
-  		transparent_panel = false,
-  	},
-  	which_key = true,
-  	indent_blankline = {
-  		enabled = true,
-  		colored_indent_levels = false,
-  	},
-  	dashboard = false,
-  	neogit = false,
-  	vim_sneak = false,
-  	fern = false,
-  	barbar = true,
-  	bufferline = true,
-  	markdown = true,
-  	lightspeed = false,
-  	ts_rainbow = true,
-  	hop = true,
-  	notify = true,
-  	telekasten = true,
-  	symbols_outline = false,
-  }
-})
-g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd 'colorscheme catppuccin'
-
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
