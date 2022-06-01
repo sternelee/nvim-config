@@ -10,8 +10,8 @@ local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 -- local keymap = vim.keymap.set
--- local autocmd = vim.api.nvim_create_autocmd
--- local ucmd = vim.api.nvim_create_user_command
+local autocmd = vim.api.nvim_create_autocmd
+-- local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
@@ -149,7 +149,7 @@ packer.startup({function()
     {'rafamadriz/friendly-snippets'},
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
-    -- {'hrsh7th/cmp-nvim-lsp-signature-help'},
+    {'hrsh7th/cmp-nvim-lsp-signature-help'},
     {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
@@ -172,8 +172,15 @@ packer.startup({function()
   }
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
-  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
-  use 'ray-x/lsp_signature.nvim'
+  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufWrite', config = function()
+    autocmd({"CursorHold", "CursorMovedI"}, {
+      pattern = "*",
+      callback = function()
+        require"nvim-lightbulb".update_lightbulb()
+      end
+    })
+  end}
+  -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
   use {'simrat39/rust-tools.nvim',
@@ -265,12 +272,12 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'toppair/reach.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('reach').setup({
-  --       notifications = true
-  --     })
-  --   end}
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end}
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -433,7 +440,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', false)
+opt('o', 'wrap', true)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -508,8 +515,10 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -637,18 +646,43 @@ map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+-- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+-- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+--
+-- cmd[[
+-- augroup highlight_yank
+--   autocmd!
+--   au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+--   augroup END
+-- ]]
 
-cmd[[
-augroup highlight_yank
-  autocmd!
-  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
-  augroup END
-]]
+-- cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
+-- cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
-cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
+autocmd({ "TextYankPost" }, {
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
+    end,
+    desc = "Highlight yanked text",
+    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+})
+
+autocmd({"FileType"}, {
+  pattern = "*.toml",
+  callback = function()
+    require('cmp').setup.buffer { sources = { { name = 'crates' } } }
+  end,
+  desc = "Add cmp source for toml",
+})
+
+autocmd({"FileType"}, {
+  pattern = "*.json",
+  callback = function()
+    require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }
+  end,
+  desc = "Add cmp source for json",
+})
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -878,7 +912,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
-    -- { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
@@ -960,12 +994,12 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    require'lsp_signature'.on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
-      }
-    }, bufnr) -- 用 winbar 代替
+    -- require'lsp_signature'.on_attach({
+    --   bind = true,
+    --   handler_opts = {
+    --     border = "rounded"
+    --   }
+    -- }, bufnr) -- 用 winbar 代替
   end
 
 end
