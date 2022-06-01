@@ -172,14 +172,7 @@ packer.startup({function()
   }
   use 'onsails/lspkind-nvim'
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
-  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufWrite', config = function()
-    autocmd({"CursorHold", "CursorMovedI"}, {
-      pattern = "*",
-      callback = function()
-        require"nvim-lightbulb".update_lightbulb()
-      end
-    })
-  end}
+  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
@@ -430,7 +423,7 @@ opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
-opt('o', 'swapfile', true)
+opt('o', 'swapfile', false)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
@@ -488,19 +481,8 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'x', '"_x')
-map('n', 'X', '"_X')
-map('n', 'd', '"_d')  --- 删除不写剪切板
-map('n', 'dd', '"_dd')
-map('n', 'D', '"_D')
--- map('v', 'd', '"_d')
--- map('v', 'dd', '"_dd')
-map('n', '<c-c>', '"+y') --- mac下的复制粘贴
-map('v', '<c-c>', '"+y')
--- map('n', '<c-v>', '"+p')
-map('i', '<c-v>', '<c-r>+')
-map('c', '<c-v>', '<c-r>+')
-map('i', '<c-r>', '<c-v>')
+map('n', 'p', '"0p')
+map('v', 'p', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>') -- 这里有可能会dump
 map('n', ';f', '<C-f>')
