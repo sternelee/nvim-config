@@ -199,5 +199,6 @@
   "outline.showLineNumber": true,
   "tree.key.activeFilter": "zf",
   "tree.key.close": "qq",
-  "tree.key.toggle": "t"
+  "tree.key.toggle": "t",
+  "explorer.icon.enableNerdfont": true
 }

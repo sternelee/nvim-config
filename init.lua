@@ -34,11 +34,11 @@ end
 -- using :source % or :luafile %
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
-packer.init({
-  git = {
-    default_url_format = "https://gitcode.net/mirrors/%s"
-  }
-})
+-- packer.init({
+--   git = {
+--     default_url_format = "https://gitcode.net/mirrors/%s"
+--   }
+-- })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
@@ -49,11 +49,9 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
-  use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
-  use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
@@ -89,17 +87,39 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
-  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'sainnhe/gruvbox-material'
   -- 显示导航线
-  use {'yggdroot/indentline', event = 'BufRead'}
+  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
+    config = function()
+      require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+        use_treesitter = true,
+        context_highlight_list = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
+        filetype_exculde = {
+          'alpha',
+          'packer',
+          'NvimTree',
+          'lsp-install',
+          'help',
+          'TelescopePrompt',
+          'TelescopeResults',
+        },
+        buftype_exclude = { 'terminal', 'nofile' },
+      }
+    end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
-  use 'nvim-telescope/telescope-packer.nvim'
   use {
     'ahmedkhalf/project.nvim',
     config = function()
@@ -377,20 +397,16 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
-map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
-map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>p', '<cmd>Telescope commands<CR>')
-map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
+map('n', '<leader>f', '<cmd>CocList files<CR>')
+map('n', '<leader>b', '<cmd>CocList buffers<CR>')
+map('n', '<leader>m', '<cmd>CocList marks<CR>')
+map('n', '<leader>/', '<cmd>CocList live_grep<CR>')
+map('n', '<leader>\'', '<cmd>CocList resume<CR>')
+map('n', '<leader>s', '<cmd>CocList grep_string<CR>')
+map('n', '<leader>p', '<cmd>CocList commands<CR>')
+map('n', 'fc', '<cmd>CocList commands<CR>')
+map('n', 'fp', '<cmd>CocList projects<CR>')
 map('n', 'fo', '<cmd>Format<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
@@ -521,16 +537,13 @@ g.nightflyNormalFloat = 1
 -- gruvbox-material
 g.gruvbox_material_background = 'hard'
 g.gruvbox_material_better_performance = 1
-cmd 'colorscheme gruvbox-material'
+cmd 'colorscheme nightfly'
 
--- cmd 'colorscheme bogsterish'
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
 local notify = require("notify")
 vim.notify = notify
-
-require('telescope_config')
 
 local noTsAndLSP = function (lang, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
@@ -613,70 +626,6 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<S-TAB>',
     }
   },
-}
-
-require'nvim-tree'.setup {
-  auto_reload_on_write = true,
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  open_on_tab         = false,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-  update_focused_file = {
-    enable      = true,
-    update_cwd  = true,
-    ignore_list = { ".git", "node_modules", ".cache" },
-  },
-  view = {
-    width = 20,
-    side = 'left',
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  },
-  git = {
-    enable = true
-  }
-}
-
---gitsigns
-require'gitsigns'.setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {
-    noremap = true,
-    buffer = true,
-
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-    ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
 }
 
 local startify = require('alpha.themes.startify')
@@ -830,14 +779,15 @@ g.coc_global_extensions = {
    'coc-toml',
    'coc-lightbulb',
    'coc-highlight',
-   'coc-pairs'
+   'coc-pairs',
+   'coc-explorer'
 }
 g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
-cmd [[ source ~/.config/nvim/config.vim ]]
+cmd [[ source ~/AppData/Local//nvim/config.vim ]]
 
 remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
 -- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
