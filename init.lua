@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -18,10 +18,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- g.neovide_transparency=0.96
--- g.neovide_cursor_vfx_mode = "sonicboom"
-
-nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -54,6 +51,7 @@ packer.startup({function()
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
+  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -66,6 +64,21 @@ packer.startup({function()
       require('diffview').setup()
     end
   }
+  -- 语法高亮
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
+  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
+  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  -- use 'nvim-treesitter/nvim-tree-docs'
+  use {
+    'romgrk/nvim-treesitter-context',
+    opt = true,
+    event = 'BufRead',
+    config = function()
+      require('treesitter-context').setup {}
+    end} -- or nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
+  -- use "ziontee113/syntax-tree-surfer"
   -- use {
   --   'lewis6991/spellsitter.nvim',
   --   event = 'BufRead',
@@ -76,9 +89,7 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
-  -- use 'ellisonleao/gruvbox.nvim'
-  -- use 'Mofiqul/vscode.nvim'
-  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'sainnhe/gruvbox-material'
   -- 显示导航线
   use {'yggdroot/indentline', event = 'BufRead'}
@@ -146,6 +157,29 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'tomtom/tcomment_vim'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end}
+  use {'chentoast/marks.nvim', event = 'BufRead',
+    config = function ()
+      require('marks').setup({
+        default_mappings = true,
+        builtin_marks = { ".", "<", ">", "^" },
+        cyclic = true,
+        force_write_shada = false,
+        refresh_interval = 250,
+        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+        excluded_filetypes = {},
+        bookmark_0 = {
+          sign = "⚑",
+          virt_text = "sterne"
+        },
+        mappings = {}
+      })
+    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   -- use {'hoschi/yode-nvim', event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
@@ -217,6 +251,19 @@ packer.startup({function()
       })
     end
   }
+  use {
+      "nvim-neorg/neorg",
+      -- tag = "latest",
+      ft = "norg",
+      after = "nvim-treesitter",
+      config = function()
+          require('neorg').setup {
+            load = {
+              ["core.defaults"] = {},
+            }
+          }
+      end
+  }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -264,8 +311,8 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 2)
-opt('o', 'wrap', false)
+opt('o', 'cmdheight', 1)
+opt('o', 'wrap', true)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
@@ -284,6 +331,7 @@ opt('o', 'autoindent', true)
 opt('o', 'syntax', 'on')
 opt('o', 'filetype', 'on')
 opt('o', 'timeoutlen', 500)
+opt('o', 'history', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'writebackup', false)
@@ -297,7 +345,7 @@ opt('o', 'showtabline', 2)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
--- vim.opt.fillchars:append('fold:•')
+vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype plugin on
@@ -305,9 +353,9 @@ filetype indent on
 ]], false)
 
 --mappings
-local function map(mode, lhs, rhs, opts)
+local function map(mode, lhs, rhs)
   local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
+  if opts then options = vim.tbl_extend('force', options) end
   remap(mode, lhs, rhs, options)
 end
 
@@ -315,19 +363,8 @@ g.do_filetype_lua = 1 -- nvim > 0.7
 g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'x', '"_x')
-map('n', 'X', '"_X')
-map('n', 'd', '"_d')  --- 删除不写剪切板
-map('n', 'dd', '"_dd')
-map('n', 'D', '"_D')
--- map('v', 'd', '"_d')
--- map('v', 'dd', '"_dd')
-map('n', '<c-c>', '"+y') --- mac下的复制粘贴
-map('v', '<c-c>', '"+y')
--- map('n', '<c-v>', '"+p')
-map('i', '<c-v>', '<c-r>+')
-map('c', '<c-v>', '<c-r>+')
-map('i', '<c-r>', '<c-v>')
+map('n', 'p', '"0p')
+map('v', 'p', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>') -- 这里有可能会dump
 map('n', ';f', '<C-f>')
@@ -371,7 +408,8 @@ map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
-map('n', '<leader>ga', '<cmd>Git add .<CR>')
+map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
+map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gu', '<cmd>Git pull<CR>')
@@ -408,15 +446,50 @@ map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
 map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
 map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
-cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+-- LSP
+map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+-- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+-- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+-- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+-- map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+-- map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+-- map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
+-- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+-- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
+-- map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
-cmd[[
-augroup highlight_yank
-  autocmd!
-  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
-  augroup END
-]]
+map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
+map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
+map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
+map('n', 'gam', '<cmd>CodeActionMenu<CR>')
+map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
+map('n', 'gr', '<cmd>Lspsaga rename<CR>')
+map('n', 'gi', '<cmd>Lspsaga implement<CR>')
+map('n', 'gE', '<cmd>Lspsaga preview_definition<CR>')
+map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
+map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
+map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+map('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+
+-- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+-- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
+
+autocmd({ "TextYankPost" }, {
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
+    end,
+    desc = "Highlight yanked text",
+    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+})
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -437,13 +510,10 @@ g.markdown_fenced_language = {
   "ts=typescript"
 }
 
--- vim.opt.list = true
--- vim.opt.listchars:append("space:⋅")
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
 
 --theme
-g.vscode_style = "dark"
-g.vscode_italic_comment = 1
--- require'catppuccin'.setup{}
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
@@ -453,6 +523,7 @@ g.gruvbox_material_background = 'hard'
 g.gruvbox_material_better_performance = 1
 cmd 'colorscheme gruvbox-material'
 
+-- cmd 'colorscheme bogsterish'
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
@@ -460,6 +531,89 @@ local notify = require("notify")
 vim.notify = notify
 
 require('telescope_config')
+
+local noTsAndLSP = function (lang, bufnr)
+  local n = vim.api.nvim_buf_line_count(bufnr)
+  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
+end
+
+--nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
+require('nvim-treesitter.configs').setup {
+  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  disable_tokenziation_after_line = 10000,
+  additional_vim_regex_highlighting = false,
+  highlight = {
+    enable = true,
+    disable = noTsAndLSP
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    disable = noTsAndLSP
+  },
+  autotag = {
+    enable = true,
+    disable = noTsAndLSP
+  },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      clear_on_cursor_move = true,
+    },
+    disable = noTsAndLSP
+  },
+  tree_docs = {enable = true},
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["df"] = "@function.outer",
+        ["dF"] = "@class.outer",
+      },
+    },
+  },
+  incremental_selection = {
+    enable = true,
+    disable = { "cpp", "lua" },
+    keymaps = {
+      init_selection = '<CR>',
+      scope_incremental = '<CR>',
+      node_incremental = '<TAB>',
+      node_decremental = '<S-TAB>',
+    }
+  },
+}
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
@@ -641,6 +795,7 @@ require('todo-comments').setup{
 }
 
 require'statusline'
+-- vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
