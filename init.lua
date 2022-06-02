@@ -94,16 +94,7 @@ packer.startup({function()
       require("indent_blankline").setup {
         space_char_blankline = " ",
         show_current_context = true,
-        show_current_context_start = true,
         use_treesitter = true,
-        context_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5',
-          'IndentBlanklineIndent6',
-        },
         filetype_exculde = {
           'alpha',
           'packer',
@@ -206,7 +197,6 @@ packer.startup({function()
   use 'folke/todo-comments.nvim'
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
@@ -400,16 +390,14 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>f', '<cmd>CocList files<CR>')
 map('n', '<leader>b', '<cmd>CocList buffers<CR>')
 map('n', '<leader>m', '<cmd>CocList marks<CR>')
-map('n', '<leader>/', '<cmd>CocList live_grep<CR>')
-map('n', '<leader>\'', '<cmd>CocList resume<CR>')
-map('n', '<leader>s', '<cmd>CocList grep_string<CR>')
+map('n', '<leader>/', '<cmd>CocList grep<CR>')
+map('n', '<leader>\'', '<cmd>CocListResume<CR>')
+map('n', '<leader>s', '<cmd>CocList grep<CR>')
 map('n', '<leader>p', '<cmd>CocList commands<CR>')
 map('n', 'fc', '<cmd>CocList commands<CR>')
 map('n', 'fp', '<cmd>CocList projects<CR>')
-map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
--- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')
@@ -656,64 +644,6 @@ startify.section.header.val = header
 
 require'alpha'.setup(startify.opts)
 
---[[ local prettier = function ()
-  return {
-    exe = "prettier",
-    args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
-    stdin = true
-  }
-end ]]
-
--- npm install -g @fsouza/prettierd
-local prettierd = function ()
-  return {
-    exe = "prettierd",
-    args = {vim.api.nvim_buf_get_name(0)},
-    stdin = true
-  }
-end
-
-require('formatter').setup({
-  filetype = {
-    javascript = {
-      prettierd
-    },
-    javascriptreact = {
-      prettierd
-    },
-    typescript = {
-      prettierd
-    },
-    typescriptreact = {
-      prettierd
-    },
-    vue = {
-      prettierd
-    },
-    json = {
-      prettierd
-    },
-    html = {
-      prettierd
-    },
-    css = {
-      prettierd
-    },
-    sass = {
-      prettierd
-    },
-    scss = {
-      prettierd
-    },
-    less = {
-      prettierd
-    },
-    rust = {
-      prettierd
-    }
-  }
-})
-
 require'which-key'.setup{}
 require'colorizer'.setup{
   '*',
@@ -787,7 +717,7 @@ g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
-cmd [[ source ~/AppData/Local//nvim/config.vim ]]
+cmd [[ source ~/AppData/Local/nvim/config.vim ]]
 
 remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
 -- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
@@ -799,8 +729,9 @@ remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 remap("n", "gr", "<Plug>(coc-references)", {silent = true})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
 remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
--- remap("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
+remap("n", "fo", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
 remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
 remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+

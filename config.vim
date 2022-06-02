@@ -3,7 +3,7 @@ function! CocTimerStart(timer)
     exec "CocStart"
 endfunction
 
-call timer_start(2000,'CocTimerStart',{'repeat':1})
+call timer_start(1000,'CocTimerStart',{'repeat':1})
 
 let g:trigger_size = 0.5 * 1048576
 
@@ -93,8 +93,8 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
 
 command! -nargs=0 Format :call CocActionAsync('format')
 
