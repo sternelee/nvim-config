@@ -49,6 +49,7 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
@@ -87,7 +88,6 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
-  use 'sainnhe/gruvbox-material'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -111,20 +111,19 @@ packer.startup({function()
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use {
-    'ahmedkhalf/project.nvim',
-    config = function()
-      require'project_nvim'.setup{}
-    end
-  }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
   -- 语法提示
   use {
     'weilbith/nvim-code-action-menu',
+    after = 'coc.nvim',
     opt = true,
     cmd = 'CodeActionMenu',
+    requires = 'xiyaowong/coc-code-action-menu.nvim',
+    config = function()
+      require 'coc-code-action-menu'
+    end,
   }
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {
@@ -135,14 +134,6 @@ packer.startup({function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {
-    'rmagatti/goto-preview',
-    opt = true,
-    evnet = 'BufRead',
-    config = function()
-      require('goto-preview').setup {}
-    end
-  }
   -- use {
   --   'willchao612/vim-diagon',
   --   opt = true,
@@ -373,8 +364,8 @@ g.do_filetype_lua = 1 -- nvim > 0.7
 g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'p', '"0p')
-map('v', 'p', '"0p')
+-- map('n', 'p', '"0p')
+-- map('v', 'p', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>') -- 这里有可能会dump
 map('n', ';f', '<C-f>')
@@ -401,7 +392,6 @@ map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')
-map('n', '<leader>cs', '<cmd>CocStart<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -421,6 +411,8 @@ map('n', '<leader>gh', '<cmd>Git push<CR>')
 map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -450,38 +442,7 @@ map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
 map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
 map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
--- LSP
-map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
--- map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
--- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
--- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
--- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
-map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
-map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
--- map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
--- map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
--- map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
--- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
--- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
--- map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-
-map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
-map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
-map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
 map('n', 'gam', '<cmd>CodeActionMenu<CR>')
-map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
-map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
-map('n', 'gr', '<cmd>Lspsaga rename<CR>')
-map('n', 'gi', '<cmd>Lspsaga implement<CR>')
-map('n', 'gE', '<cmd>Lspsaga preview_definition<CR>')
-map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
-map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
-map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
-map('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
 
 -- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 -- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -522,9 +483,6 @@ g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
 g.nightflyNormalFloat = 1
 
--- gruvbox-material
-g.gruvbox_material_background = 'hard'
-g.gruvbox_material_better_performance = 1
 cmd 'colorscheme nightfly'
 
 -- editorconfig-vim
@@ -650,6 +608,36 @@ require'colorizer'.setup{
   css = { rgb_fn = true; }
 }
 
+require'nvim-tree'.setup {
+  auto_reload_on_write = true,
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+  update_focused_file = {
+    enable      = true,
+    update_cwd  = true,
+    ignore_list = { ".git", "node_modules", ".cache" },
+  },
+  view = {
+    width = 20,
+    side = 'left',
+    mappings = {
+      custom_only = false,
+      list = {}
+    }
+  },
+  git = {
+    enable = true
+  }
+}
+
 require('todo-comments').setup{
   signs = true, -- show icons in the signs column
   sign_priority = 8, -- sign priority
@@ -709,8 +697,7 @@ g.coc_global_extensions = {
    'coc-toml',
    'coc-lightbulb',
    'coc-highlight',
-   'coc-pairs',
-   'coc-explorer'
+   'coc-pairs'
 }
 g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
@@ -720,7 +707,7 @@ g.coc_selectmode_mapping = 0
 cmd [[ source ~/AppData/Local/nvim/config.vim ]]
 
 remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
--- remap("n", "<leader>l", ":CocCommand eslint.executeAutofix<CR>", {})
+remap("n", "<leader>ef", ":CocCommand eslint.executeAutofix<CR>", {})
 remap("n", "]d", "<Plug>(coc-diagnostic-prev)", {silent = true})
 remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
@@ -734,4 +721,3 @@ remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
 remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
 remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
-

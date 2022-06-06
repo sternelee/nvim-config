@@ -123,6 +123,4 @@ autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 
 nnoremap <silent><Leader>s :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-nnoremap <Leader>e :CocCommand explorer<CR>
-nmap <Leader>tw <Plug>(coc-translator-e)
-vmap <Leader>tw <Plug>(coc-translator-ev)
+" nnoremap <Leader>e :CocCommand explorer<CR>
