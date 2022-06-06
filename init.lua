@@ -481,10 +481,10 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'p', '"0p')
-map('v', 'p', '"0p')
+-- map('n', 'p', '"0p')
+-- map('v', 'p', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
--- map('c', 'jk', '<C-C>') -- 这里有可能会dump
+-- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
