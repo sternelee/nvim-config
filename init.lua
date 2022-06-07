@@ -93,6 +93,7 @@ packer.startup({function()
   use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'ray-x/starry.nvim'
+  use 'akai54/2077.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -132,6 +133,13 @@ packer.startup({function()
     'ahmedkhalf/project.nvim',
     config = function()
       require'project_nvim'.setup{}
+    end
+  }
+  use { "johmsalas/text-case.nvim",
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require('textcase').setup {}
     end
   }
   -- 语法建议
@@ -317,6 +325,11 @@ packer.startup({function()
   --   end }
   -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
+  use {'arjunmahishi/run-code.nvim', event = 'BufRead',
+    config = function()
+      require('run-code').setup{}
+    end
+  }
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',
@@ -468,7 +481,7 @@ opt('o', 'showtabline', 2)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
-vim.opt.fillchars:append('fold:•')
+-- vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype plugin on
