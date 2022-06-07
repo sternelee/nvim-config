@@ -327,12 +327,14 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  -- use {
-  --   'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {}
-  --   end
-  -- }
+  use {
+    'rmagatti/auto-session',
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require('auto-session').setup {}
+    end
+  }
   use {
     'kkoomen/vim-doge',
     opt = true,
@@ -433,7 +435,7 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', true)
+opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
