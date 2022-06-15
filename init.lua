@@ -167,7 +167,7 @@ packer.startup({function()
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    -- {'ray-x/cmp-treesitter'},
+    {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
@@ -228,14 +228,14 @@ packer.startup({function()
       require('package-info').setup()
     end}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  -- use {
-  --   'rmagatti/goto-preview',
-  --   opt = true,
-  --   evnet = 'BufRead',
-  --   config = function()
-  --     require('goto-preview').setup {}
-  --   end
-  -- }
+  use {
+    'rmagatti/goto-preview',
+    opt = true,
+    evnet = 'BufRead',
+    config = function()
+      require('goto-preview').setup {}
+    end
+  }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- use {
   --   'willchao612/vim-diagon',
@@ -278,12 +278,12 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'toppair/reach.nvim', event = 'BufRead',
-    config = function ()
-      require('reach').setup({
-        notifications = true
-      })
-    end}
+  -- use {'toppair/reach.nvim', event = 'BufRead',
+  --   config = function ()
+  --     require('reach').setup({
+  --       notifications = true
+  --     })
+  --   end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -517,10 +517,10 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
--- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
+-- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -587,10 +587,10 @@ map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 -- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
 -- goto-preview
--- map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
--- map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
--- map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
--- map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
+map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
+map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
+map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
+map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- copilot
 g.copilot_no_tab_map = true
@@ -920,7 +920,7 @@ cmp.setup({
     -- { name = 'cmp_tabnine' },
     { name = 'git' },
     -- { name = 'digraphs' },
-    -- { name = 'treesitter' },
+    { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
