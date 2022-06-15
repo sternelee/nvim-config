@@ -52,6 +52,10 @@ packer.startup({function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
+  -- use {
+  --     "SmiteshP/nvim-navic",
+  --     requires = "neovim/nvim-lspconfig"
+  -- }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -224,14 +228,14 @@ packer.startup({function()
       require('package-info').setup()
     end}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {
-    'rmagatti/goto-preview',
-    opt = true,
-    evnet = 'BufRead',
-    config = function()
-      require('goto-preview').setup {}
-    end
-  }
+  -- use {
+  --   'rmagatti/goto-preview',
+  --   opt = true,
+  --   evnet = 'BufRead',
+  --   config = function()
+  --     require('goto-preview').setup {}
+  --   end
+  -- }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- use {
   --   'willchao612/vim-diagon',
@@ -560,9 +564,9 @@ map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
-map('n', '<leader>gu', '<cmd>Git pull<CR>')
-map('n', '<leader>gh', '<cmd>Git push<CR>')
-map('n', '<leader>gl', '<cmd>Git log<CR>')
+map('n', '<leader>gl', '<cmd>Git pull<CR>')
+map('n', '<leader>gu', '<cmd>Git push<CR>')
+-- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
@@ -583,10 +587,10 @@ map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 -- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
 
 -- goto-preview
-map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
-map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
-map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
-map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
+-- map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
+-- map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
+-- map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
+-- map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- copilot
 g.copilot_no_tab_map = true
@@ -612,10 +616,10 @@ map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
 map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- LSP
-map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gD', '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gd', '<cmd>Lspsaga preview_definition<CR>')
 map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
--- map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
 -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 -- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
@@ -638,7 +642,6 @@ map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
 map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
 map('n', 'gr', '<cmd>Lspsaga rename<CR>')
 map('n', 'gi', '<cmd>Lspsaga implement<CR>')
-map('n', 'gE', '<cmd>Lspsaga preview_definition<CR>')
 map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
@@ -965,6 +968,7 @@ local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
 }
+-- local navic = require("nvim-navic")
 
 local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
@@ -992,6 +996,7 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+    -- navic.attach(client, bufnr)
     -- require'lsp_signature'.on_attach({
     --   bind = true,
     --   handler_opts = {
