@@ -1,5 +1,21 @@
 local actions = require('telescope.actions')
 local action_layout = require('telescope.actions.layout')
+local previewers = require('telescope.previewers')
+
+-- 避免大文件
+local previewer_maker = function(filepath, bufnr, opts)
+  opts = opts or {}
+  filepath = vim.fn.expand(filepath)
+  vim.loop.fs_stat(filepath, function(_, stat)
+    if not stat then return end
+    if stat.size > 100000 then
+      return
+    else
+      previewers.buffer_previewer_maker(filepath, bufnr, opts)
+    end
+  end)
+end
+
 require('telescope').setup {
   defaults = {
     vimgrep_arguments = {
@@ -45,7 +61,7 @@ require('telescope').setup {
     grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
+    buffer_previewer_maker = previewer_maker,
 
     mappings = {
       i = {

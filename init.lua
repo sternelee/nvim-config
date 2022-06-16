@@ -49,6 +49,7 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  -- use {'rebelot/heirline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
@@ -1246,8 +1247,9 @@ require'Comment'.setup {
   end,
 }
 
-require'statusline'
+require'windline_config'
 -- vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
+-- require'heirline.config'
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
