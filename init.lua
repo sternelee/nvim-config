@@ -168,7 +168,7 @@ packer.startup({function()
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    {'ray-x/cmp-treesitter'},
+    -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
   use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
@@ -921,7 +921,7 @@ cmp.setup({
     -- { name = 'cmp_tabnine' },
     { name = 'git' },
     -- { name = 'digraphs' },
-    { name = 'treesitter' },
+    -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
