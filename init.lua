@@ -66,7 +66,6 @@ packer.startup({function()
       require('diffview').setup()
     end
   }
-  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
@@ -113,6 +112,8 @@ packer.startup({function()
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  use 'sheerun/vim-polyglot'
+  use 'mhartington/formatter.nvim'
   -- 语法提示
   use {
     'weilbith/nvim-code-action-menu',
@@ -151,6 +152,8 @@ packer.startup({function()
   use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
   use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
   use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
+  use {'dhruvasagar/vim-table-mode', opt = true, ft = 'markdown', event = 'BufRead'}
+  use {'ferrine/md-img-paste.vim', opt = true, ft = 'markdown', event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -158,12 +161,6 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'tomtom/tcomment_vim'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'toppair/reach.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('reach').setup({
-  --       notifications = true
-  --     })
-  --   end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -374,8 +371,6 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
--- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -383,14 +378,10 @@ map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', 'fo', '<cmd>Format<CR>')
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+-- map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
-map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')
@@ -527,6 +518,56 @@ startify.section.header.val = header
 
 require'alpha'.setup(startify.opts)
 
+-- npm install -g @fsouza/prettierd
+local prettierd = function ()
+  return {
+    exe = "prettierd",
+    args = {vim.api.nvim_buf_get_name(0)},
+    stdin = true
+  }
+end
+
+require('formatter').setup({
+  filetype = {
+    javascript = {
+      prettierd
+    },
+    javascriptreact = {
+      prettierd
+    },
+    typescript = {
+      prettierd
+    },
+    typescriptreact = {
+      prettierd
+    },
+    vue = {
+      prettierd
+    },
+    json = {
+      prettierd
+    },
+    html = {
+      prettierd
+    },
+    css = {
+      prettierd
+    },
+    sass = {
+      prettierd
+    },
+    scss = {
+      prettierd
+    },
+    less = {
+      prettierd
+    },
+    rust = {
+      prettierd
+    }
+  }
+})
+
 require'which-key'.setup{}
 require'colorizer'.setup{
   '*',
@@ -623,7 +664,11 @@ g.coc_global_extensions = {
    'coc-toml',
    'coc-lightbulb',
    'coc-highlight',
-   'coc-pairs'
+   'coc-pairs',
+   'coc-htmlhint',
+   'coc-yank',
+   'coc-translator',
+   'coc-markdownlint'
 }
 g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
@@ -640,9 +685,9 @@ remap("n", "[d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-remap("n", "gr", "<Plug>(coc-references)", {silent = true})
+remap("n", "gh", "<Plug>(coc-references)", {silent = true})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
-remap("n", "<leader>rn", "<Plug>(coc-rename)", {})
+remap("n", "gr", "<Plug>(coc-rename)", {})
 remap("n", "fo", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
