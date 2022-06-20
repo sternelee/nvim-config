@@ -444,7 +444,7 @@ opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
-opt('o', 'swapfile', false)
+opt('o', 'swapfile', true)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
