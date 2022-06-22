@@ -1014,6 +1014,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
   local lsp_installer = require("nvim-lsp-installer")
+  lsp_installer.setup{}
 
   local opts = {
     on_attach = on_attach,
@@ -1022,29 +1023,33 @@ local function setup_servers()
     -- autostart = false
     -- autostart = noTsAndLSP("", bufnr)
   }
-  lsp_installer.on_server_ready(function(server)
-    if server.name == "jsonls" then
+  local lspconfig = require("lspconfig")
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"}
+  -- or volar
+
+  for _, lsp in ipairs(servers) do
+    if lsp == "jsonls" then
       opts.settings = {
         json = {
           schemas = require('schemastore').json.schemas(),
         },
       }
     end
-    if server.name == "tsserver" then
+    if lsp == "tsserver" then
       opts.capabilities =require('lsp/tsserver').capabilities
     end
-    if server.name == "sumneko_lua" then
+    if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
-    if server.name == "eslint" then
+    if lsp == "eslint" then
       opts.settings =require('lsp/eslint').settings
     end
-    if server.name == "tailwindcss" then
+    if lsp == "tailwindcss" then
       opts.init_options = require('lsp/tailwindcss').init_options
       opts.settings = require('lsp/tailwindcss').settings
     end
-    server:setup(opts)
-  end)
+    lspconfig[lsp].setup(opts)
+   end
 end
 
 setup_servers()
