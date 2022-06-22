@@ -152,7 +152,7 @@ packer.startup({function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
@@ -164,7 +164,7 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    {'hrsh7th/cmp-cmdline'},
+    -- {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -593,11 +593,11 @@ map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<
 map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
--- copilot
-g.copilot_no_tab_map = true
-cmd [[
-  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-]]
+-- copilot 要收钱了
+-- g.copilot_no_tab_map = true
+-- cmd [[
+--   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+-- ]]
 
 -- spectre
 map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
@@ -948,20 +948,21 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
-
+-- cmdline在wsl容易卡死
+-- cmp.setup.cmdline('/', {
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+--
+-- cmp.setup.cmdline(':', {
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
+--
 -- LSP config
 require('lsp/config')
 
