@@ -702,9 +702,6 @@ g.markdown_fenced_language = {
   "ts=typescript"
 }
 
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-
 --theme
 g.moonflyIgnoreDefaultColors = 1
 g.nightflyCursorColor = 1
@@ -1073,7 +1070,7 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'left',
+    side = 'right',
     mappings = {
       custom_only = false,
       list = {}
