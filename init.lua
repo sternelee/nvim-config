@@ -32,6 +32,7 @@ end
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- https://github.com/ecosse3/nvim
 -- using :source % or :luafile %
+-- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
 packer.init({
@@ -49,14 +50,13 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
-  -- use {'rebelot/heirline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  -- use {
-  --     "SmiteshP/nvim-navic",
-  --     requires = "neovim/nvim-lspconfig"
-  -- }
+  use {
+      "SmiteshP/nvim-navic",
+      requires = "neovim/nvim-lspconfig"
+  }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -75,7 +75,6 @@ packer.startup({function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  -- use 'nvim-treesitter/nvim-tree-docs'
   use {
     'romgrk/nvim-treesitter-context',
     opt = true,
@@ -97,8 +96,6 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
-  use 'ray-x/starry.nvim'
-  use 'akai54/2077.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -152,7 +149,7 @@ packer.startup({function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
@@ -164,7 +161,7 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    -- {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -486,7 +483,7 @@ opt('o', 'showtabline', 2)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
--- vim.opt.fillchars:append('fold:•')
+vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype plugin on
@@ -502,8 +499,8 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
--- map('n', 'p', '"0p')
--- map('v', 'p', '"0p')
+map('n', 'gp', '"0p')
+map('v', 'gp', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -594,10 +591,10 @@ map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- copilot 要收钱了
--- g.copilot_no_tab_map = true
--- cmd [[
---   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
--- ]]
+g.copilot_no_tab_map = true
+cmd [[
+  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+]]
 
 -- spectre
 map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
@@ -737,7 +734,7 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   })
 end
 
-require('telescope_config')
+require'modules.telescope'
 
 local noTsAndLSP = function (lang, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
@@ -949,19 +946,19 @@ cmp.setup.filetype('gitcommit', {
 })
 
 -- cmdline在wsl容易卡死
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 --
 -- LSP config
 require('lsp/config')
@@ -970,7 +967,9 @@ local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
 }
--- local navic = require("nvim-navic")
+
+g.navic_silence = true
+local navic = require("nvim-navic")
 
 local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
@@ -998,7 +997,7 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- navic.attach(client, bufnr)
+    navic.attach(client, bufnr)
     -- require'lsp_signature'.on_attach({
     --   bind = true,
     --   handler_opts = {
@@ -1024,8 +1023,7 @@ local function setup_servers()
     -- autostart = noTsAndLSP("", bufnr)
   }
   local lspconfig = require("lspconfig")
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"}
-  -- or volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"} -- or volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -1253,9 +1251,8 @@ require'Comment'.setup {
   end,
 }
 
-require'windline_config'
--- vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
--- require'heirline.config'
+require'modules.windline'
+-- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
