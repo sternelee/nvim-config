@@ -18,7 +18,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -53,10 +53,10 @@ packer.startup({function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  use {
-      "SmiteshP/nvim-navic",
-      requires = "neovim/nvim-lspconfig"
-  }
+  -- use {
+  --     "SmiteshP/nvim-navic",
+  --     requires = "neovim/nvim-lspconfig"
+  -- }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -94,7 +94,7 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'bluz71/vim-nightfly-guicolors'
+  -- use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -500,8 +500,9 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', 'gp', '"0p')
-map('v', 'gp', '"0p')
+map('n', '<C-p>', '"0p')
+map('v', '<C-p>', '"0p')
+map('i', '<C-v>', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -704,9 +705,9 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.moonflyIgnoreDefaultColors = 1
-g.nightflyCursorColor = 1
-g.nightflyNormalFloat = 1
+-- g.moonflyIgnoreDefaultColors = 1
+-- g.nightflyCursorColor = 1
+-- g.nightflyNormalFloat = 1
 
 cmd 'colorscheme bogsterish'
 -- editorconfig-vim
@@ -967,7 +968,7 @@ local handlers = {
 }
 
 g.navic_silence = true
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
@@ -995,7 +996,7 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    navic.attach(client, bufnr)
+    -- navic.attach(client, bufnr)
     -- require'lsp_signature'.on_attach({
     --   bind = true,
     --   handler_opts = {
