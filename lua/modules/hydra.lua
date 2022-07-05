@@ -110,7 +110,7 @@ Hydra({
       { 'm', cmd 'MarksListBuf', { desc = 'Marks' } },
       { 'k', cmd 'Telescope keymaps' },
       { 'r', cmd 'Telescope registers' },
-      { 'r', cmd 'Telescope file_browser' },
+      { 'e', cmd 'Telescope file_browser' },
       { '\'', cmd 'Telescope resume' },
       { 'p', cmd 'Telescope projects', { desc = 'Projects' } },
       { '/', cmd 'Telescope current_buffer_fuzzy_find', { desc = 'Search in file' } },

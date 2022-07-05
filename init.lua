@@ -302,7 +302,7 @@ packer.startup({function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
-  use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
+  -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
@@ -514,20 +514,20 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
--- map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
--- map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
--- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
--- map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
--- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
--- map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
--- map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
--- map('n', '<leader>p', '<cmd>Telescope commands<CR>')
--- map('n', 'ft', '<cmd>Telescope treesitter<CR>')
--- map('n', 'fc', '<cmd>Telescope commands<CR>')
--- map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
--- map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
+map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>p', '<cmd>Telescope commands<CR>')
+map('n', 'ft', '<cmd>Telescope treesitter<CR>')
+map('n', 'fc', '<cmd>Telescope commands<CR>')
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
@@ -559,12 +559,12 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
--- map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
--- map('n', '<leader>go', '<cmd>Git add .<CR>')
--- map('n', '<leader>gm', '<cmd>Git commit<CR>')
--- map('n', '<leader>gs', '<cmd>Git status<CR>')
+map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
+map('n', '<leader>go', '<cmd>Git add .<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gs', '<cmd>Git status<CR>')
 -- map('n', '<leader>gl', '<cmd>Git pull<CR>')
--- map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>gu', '<cmd>Git push<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
