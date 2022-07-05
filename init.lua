@@ -560,10 +560,10 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
-map('n', '<leader>go', '<cmd>Git add .<CR>')
+map('n', '<leader>gA', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
--- map('n', '<leader>gl', '<cmd>Git pull<CR>')
+map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
@@ -1269,4 +1269,14 @@ cmd [[
 		autocmd BufEnter *.js let @g=":w\<CR> :vsp | terminal node % \<CR>i"
 		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
 	augroup end
+]]
+
+cmd [[
+  highlight IndentBlanklineIndent1 guifg=#E06C75
+  highlight IndentBlanklineIndent2 guifg=#E5C07B
+  highlight IndentBlanklineIndent3 guifg=#98C379
+  highlight IndentBlanklineIndent4 guifg=#56B6C2
+  highlight IndentBlanklineIndent5 guifg=#61AFEF
+  highlight IndentBlanklineIndent6 guifg=#C678DD
+  highlight link LspSagaFinderSelection Search
 ]]
