@@ -149,7 +149,7 @@ packer.startup({function()
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
@@ -276,12 +276,12 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'toppair/reach.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('reach').setup({
-  --       notifications = true
-  --     })
-  --   end} -- 如果文件名重复就不好查看了
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -408,6 +408,7 @@ packer.startup({function()
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
+  use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
 config = {
@@ -493,7 +494,6 @@ filetype indent on
 --mappings
 local function map(mode, lhs, rhs)
   local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options) end
   remap(mode, lhs, rhs, options)
 end
 
@@ -517,8 +517,8 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>b', '<cmd>ReachOpen buffers<CR>')
--- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -569,12 +569,12 @@ map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
 -- refactoring
-map("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("n", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
-map("n", "<leader>rr", [[ <Esc><Cmd><Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]], {noremap = true, silent = true, expr = false})
+map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
+map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
+map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
+map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -591,10 +591,10 @@ map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- copilot 要收钱了
-g.copilot_no_tab_map = true
-cmd [[
-  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-]]
+-- g.copilot_no_tab_map = true
+-- cmd [[
+--   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+-- ]]
 
 -- spectre
 map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
@@ -929,7 +929,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered()
   },
   experimental = {
-    ghost_text = false
+    ghost_text = true
   }
 })
 
