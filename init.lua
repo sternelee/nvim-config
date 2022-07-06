@@ -554,6 +554,8 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
+map('n', '<Tab>', '<cmd>BufferNext<CR>')
+map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
 map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
@@ -737,7 +739,7 @@ require'modules.telescope'
 
 local noTsAndLSP = function (lang, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
+  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
