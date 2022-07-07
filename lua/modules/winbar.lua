@@ -1,3 +1,4 @@
+-- or https://github.com/fgheng/winbar.nvim
 local M = {}
 
 vim.api.nvim_set_hl(0, "WinBarSignature", { fg = "#363636", bg = "#363636" })

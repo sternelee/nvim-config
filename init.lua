@@ -53,10 +53,10 @@ packer.startup({function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  -- use {
-  --     "SmiteshP/nvim-navic",
-  --     requires = "neovim/nvim-lspconfig"
-  -- }
+  use {
+      "SmiteshP/nvim-navic",
+      requires = "neovim/nvim-lspconfig"
+  }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -75,14 +75,14 @@ packer.startup({function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  use {
-    'romgrk/nvim-treesitter-context',
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require('treesitter-context').setup {}
-    end} -- or nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
   -- use {
@@ -970,7 +970,7 @@ local handlers = {
 }
 
 g.navic_silence = true
--- local navic = require("nvim-navic")
+local navic = require("nvim-navic")
 
 local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
@@ -998,13 +998,13 @@ local on_attach = function(client, bufnr)
   if client.name ~= 'jsonls' then
     local msg = string.format("Language server %s started!", client.name)
     notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    -- navic.attach(client, bufnr)
+    navic.attach(client, bufnr)
     -- require'lsp_signature'.on_attach({
     --   bind = true,
     --   handler_opts = {
     --     border = "rounded"
     --   }
-    -- }, bufnr) -- 用 winbar 代替
+    -- }, bufnr)
   end
 
 end
