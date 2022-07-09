@@ -11,10 +11,10 @@ local lsp_comps = require('windline.components.lsp')
 local git_comps = require('windline.components.git')
 
 local gps = require("nvim-gps")
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 gps.setup()
-navic.setup()
+-- navic.setup()
 
 local hl_list = {
     Black = { 'white', 'black' },
@@ -29,9 +29,9 @@ local airline_colors = {}
 
 basic.gps = {
   function()
-    if navic.is_available() then
-      return ' '..navic.get_location()
-    end
+    -- if navic.is_available() then
+    --   return ' '..navic.get_location()
+    -- end
     if gps.is_available() then
       return ' '..gps.get_location()
     end

@@ -43,9 +43,9 @@ packer.init({
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
+  use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use 'nathom/filetype.nvim'
   use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
@@ -53,10 +53,10 @@ packer.startup({function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  use {
-      "SmiteshP/nvim-navic",
-      requires = "neovim/nvim-lspconfig"
-  }
+  -- use {
+  --     "SmiteshP/nvim-navic",
+  --     requires = "neovim/nvim-lspconfig"
+  -- }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -211,12 +211,12 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  use {
-    'NTBBloodbath/rest.nvim',
-    ft = 'http',
-    requires = {"nvim-lua/plenary.nvim" },
-    config = function()
-      require'rest-nvim'.setup() end}
+  -- use {
+  --   'NTBBloodbath/rest.nvim',
+  --   ft = 'http',
+  --   requires = {"nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   use {
     'vuki656/package-info.nvim',
@@ -262,15 +262,15 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
+  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
   use {'mattn/emmet-vim'}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
-  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  -- use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
@@ -301,7 +301,7 @@ packer.startup({function()
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use 'folke/todo-comments.nvim'
   use {
@@ -318,7 +318,7 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
+  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -344,20 +344,20 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {
-    'rmagatti/auto-session',
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require('auto-session').setup {}
-    end
-  }
-  use {
-    'kkoomen/vim-doge',
-    opt = true,
-    cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
-    run = ':call doge#install()'
-  }
+  -- use {
+  --   'rmagatti/auto-session',
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- }
+  -- use {
+  --   'kkoomen/vim-doge',
+  --   opt = true,
+  --   cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
+  --   run = ':call doge#install()'
+  -- }
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
@@ -370,40 +370,40 @@ packer.startup({function()
   --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   --     })
   --   end}
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            -- require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
-  use {
-      "nvim-neorg/neorg",
-      -- tag = "latest",
-      ft = "norg",
-      after = "nvim-treesitter",
-      config = function()
-          require('neorg').setup {
-            load = {
-              ["core.defaults"] = {},
-            }
-          }
-      end
-  }
+  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+  --   config = function()
+  --     local sidebar = require("sidebar-nvim")
+  --     sidebar.setup({
+  --       open = false,
+  --       initial_width = 30,
+  --       bindings = { ["q"] = function() sidebar.close() end },
+  --       sections = {
+  --           "datetime",
+  --           "git",
+  --           "diagnostics",
+  --           -- require("dap-sidebar-nvim.breakpoints")
+  --       },
+  --       dap = {
+  --           breakpoints = {
+  --               icon = "🔍"
+  --           }
+  --       }
+  --     })
+  --   end
+  -- }
+  -- use {
+  --     "nvim-neorg/neorg",
+  --     -- tag = "latest",
+  --     ft = "norg",
+  --     after = "nvim-treesitter",
+  --     config = function()
+  --         require('neorg').setup {
+  --           load = {
+  --             ["core.defaults"] = {},
+  --           }
+  --         }
+  --     end
+  -- }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -535,7 +535,7 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+-- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 -- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
@@ -970,7 +970,7 @@ local handlers = {
 }
 
 g.navic_silence = true
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 local on_attach = function(client, bufnr)
   -- if client.name == 'sqls' then
@@ -995,17 +995,17 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  if client.name ~= 'jsonls' then
-    local msg = string.format("Language server %s started!", client.name)
-    notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-    navic.attach(client, bufnr)
-    -- require'lsp_signature'.on_attach({
-    --   bind = true,
-    --   handler_opts = {
-    --     border = "rounded"
-    --   }
-    -- }, bufnr)
-  end
+  -- if client.name ~= 'jsonls' then
+  --   local msg = string.format("Language server %s started!", client.name)
+  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
+  --   -- navic.attach(client, bufnr)
+  --   -- require'lsp_signature'.on_attach({
+  --   --   bind = true,
+  --   --   handler_opts = {
+  --   --     border = "rounded"
+  --   --   }
+  --   -- }, bufnr)
+  -- end
 
 end
 
