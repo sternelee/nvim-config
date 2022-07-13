@@ -82,7 +82,7 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
   -- use {
@@ -263,7 +263,7 @@ packer.startup({function()
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
   -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -1081,8 +1081,11 @@ require'nvim-tree'.setup {
     }
   },
   git = {
-    enable = true
-  }
+    enable = true,
+    ignore = true,
+    show_on_dirs = false,
+    timeout = 400,
+  },
 }
 
 --gitsigns
