@@ -18,7 +18,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -32,6 +32,7 @@ end
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- https://github.com/ecosse3/nvim
 -- using :source % or :luafile %
+-- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
 -- packer.init({
@@ -42,9 +43,9 @@ local packer = require('packer')
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
+  use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use 'nathom/filetype.nvim'
   use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
@@ -66,9 +67,30 @@ packer.startup({function()
       require('diffview').setup()
     end
   }
+  -- 语法高亮
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
+  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
+  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
+  -- use "ziontee113/syntax-tree-surfer"
+  -- use {
+  --   'lewis6991/spellsitter.nvim',
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('spellsitter').setup()
+  --   end}
+  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'bluz71/vim-nightfly-guicolors'
+  -- use 'bluz71/vim-nightfly-guicolors'
   use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
@@ -111,7 +133,7 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-  use {'github/copilot.vim', opt = true, event = 'BufRead'}
+  -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use 'sheerun/vim-polyglot'
   use 'mhartington/formatter.nvim'
   -- 语法提示
@@ -149,7 +171,7 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
   use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
   use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'dhruvasagar/vim-table-mode', opt = true, ft = 'markdown', event = 'BufRead'}
@@ -158,9 +180,18 @@ packer.startup({function()
     require('numb').setup()
   end}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
-  use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
-  use {'tomtom/tcomment_vim'}
+  -- use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
+  use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
+  use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
+  use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  use {'toppair/reach.nvim', event = 'BufRead',
+    config = function ()
+      require('reach').setup({
+        notifications = true
+      })
+    end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -179,13 +210,15 @@ packer.startup({function()
       })
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
-  use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
+  -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use 'folke/todo-comments.nvim'
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
+  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use { 'chipsenkbeil/distant.nvim',
   --   event = 'BufRead',
   --   config = function()
@@ -207,20 +240,20 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {
-    'rmagatti/auto-session',
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require('auto-session').setup {}
-    end
-  }
-  use {
-    'kkoomen/vim-doge',
-    opt = true,
-    cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
-    run = ':call doge#install()'
-  }
+  -- use {
+  --   'rmagatti/auto-session',
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- }
+  -- use {
+  --   'kkoomen/vim-doge',
+  --   opt = true,
+  --   cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
+  --   run = ':call doge#install()'
+  -- }
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
@@ -233,32 +266,46 @@ packer.startup({function()
   --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   --     })
   --   end}
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            -- require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
+  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+  --   config = function()
+  --     local sidebar = require("sidebar-nvim")
+  --     sidebar.setup({
+  --       open = false,
+  --       initial_width = 30,
+  --       bindings = { ["q"] = function() sidebar.close() end },
+  --       sections = {
+  --           "datetime",
+  --           "git",
+  --           "diagnostics",
+  --           -- require("dap-sidebar-nvim.breakpoints")
+  --       },
+  --       dap = {
+  --           breakpoints = {
+  --               icon = "🔍"
+  --           }
+  --       }
+  --     })
+  --   end
+  -- }
+  -- use {
+  --     "nvim-neorg/neorg",
+  --     -- tag = "latest",
+  --     ft = "norg",
+  --     after = "nvim-treesitter",
+  --     config = function()
+  --         require('neorg').setup {
+  --           load = {
+  --             ["core.defaults"] = {},
+  --           }
+  --         }
+  --     end
+  -- }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
+  use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
 config = {
@@ -335,7 +382,7 @@ opt('o', 'showtabline', 2)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
--- vim.opt.fillchars:append('fold:•')
+vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
 filetype plugin on
@@ -345,7 +392,6 @@ filetype indent on
 --mappings
 local function map(mode, lhs, rhs)
   local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options) end
   remap(mode, lhs, rhs, options)
 end
 
@@ -353,8 +399,9 @@ g.do_filetype_lua = 1 -- nvim > 0.7
 g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
--- map('n', 'p', '"0p')
--- map('v', 'p', '"0p')
+map('n', '<C-p>', '"0p')
+map('v', '<C-p>', '"0p')
+map('i', '<C-v>', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -371,6 +418,8 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
+map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -381,7 +430,14 @@ map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 -- map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+-- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', '<leader>tl', '<cmd>Twilight<CR>')
+map('n', '<leader>tw', '<cmd>Translate<CR>')
+-- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
+-- nvim-lsp-ts-utils
+map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
+map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
+map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>S', '<cmd>Vista<CR>')
@@ -393,19 +449,24 @@ map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
+map('n', '<Tab>', '<cmd>BufferNext<CR>')
+map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
+map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
+map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
+-- map('n', 'gb', '<cmd>BufferPick<CR>')
+-- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
-map('n', '<leader>go', '<cmd>Git add .<CR>')
+map('n', '<leader>gA', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
+map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -413,10 +474,10 @@ map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
 -- copilot
-g.copilot_no_tab_map = true
-cmd [[
-  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-]]
+-- g.copilot_no_tab_map = true
+-- cmd [[
+--   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+-- ]]
 
 -- spectre
 map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
@@ -468,15 +529,12 @@ g.markdown_fenced_language = {
   "ts=typescript"
 }
 
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-
 --theme
-g.moonflyIgnoreDefaultColors = 1
-g.nightflyCursorColor = 1
-g.nightflyNormalFloat = 1
+-- g.moonflyIgnoreDefaultColors = 1
+-- g.nightflyCursorColor = 1
+-- g.nightflyNormalFloat = 1
 
-cmd 'colorscheme nightfly'
+cmd 'colorscheme bogsterish'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -484,9 +542,11 @@ g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 local notify = require("notify")
 vim.notify = notify
 
+require'modules.telescope'
+
 local noTsAndLSP = function (lang, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 6 -- 大于一万行，或小于6行（可能是压缩的js文件）
+  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
 
 local startify = require('alpha.themes.startify')
@@ -627,7 +687,7 @@ require('todo-comments').setup{
   },
 }
 
-require'lualine_config'
+require'modules.lualine'
 -- vim.o.winbar = "%{%v:lua.require'winbar'.eval()%}"
 -- require'heirline.config'
 
