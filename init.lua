@@ -526,9 +526,9 @@ cmp.setup({
     }),
   }),
   sources = {
-    { name = 'nvim_lsp', priority = 100 },
+    { name = 'nvim_lsp', priority = 8 },
     { name = 'luasnip', priority = 7 },
-    { name = 'buffer', option={keyword_length=2} },
+    { name = 'buffer', option={keyword_length=2}, buffer = 7 },
     { name = 'nvim_lsp_signature_help' },
     { name = 'git' },
   },
