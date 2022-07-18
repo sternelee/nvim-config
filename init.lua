@@ -48,6 +48,7 @@ packer.startup({function()
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
+  use 'romgrk/barbar.nvim'
   use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
@@ -146,12 +147,6 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'toppair/reach.nvim', event = 'BufRead',
-    config = function ()
-      require('reach').setup({
-        notifications = true
-      })
-    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   use 'folke/todo-comments.nvim'
@@ -276,8 +271,6 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', 'gt', '<cmd>ReachOpen buffers<CR>')
-map('n', 'gm', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -303,11 +296,12 @@ map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
-map('n', '<s-q>', '<cmd>bdelete<CR>')
-map('n', '<Tab>', '<cmd>bnext<CR>')
+map('n', '<s-q>', '<cmd>BufferClose<CR>')
+map('n', '<Tab>', '<cmd>BufferNext<CR>')
+map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>gA', '<cmd>Git add .<CR>')
--- map('n', '<leader>gm', '<cmd>Git commit<CR>')
+map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
@@ -345,6 +339,19 @@ autocmd({ "TextYankPost" }, {
     group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
 })
 
+local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+for _, num in pairs(numbers) do
+  map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
+end
+map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
+
+--barbar
+nvim_exec([[
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.animation = v:false
+let bufferline.auto_hide = v:true
+let bufferline.icons = 'both'
+]], false)
 
 g.vista_default_executive = 'nvim_lsp'
 g.markdown_fenced_language = {
