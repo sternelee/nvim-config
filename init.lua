@@ -54,7 +54,6 @@ packer.startup({function()
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
-  use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
@@ -77,12 +76,20 @@ packer.startup({function()
       require("indent_blankline").setup {
         space_char_blankline = " ",
         show_current_context = true,
-        use_treesitter = false,
+        show_current_context_start = true,
+        use_treesitter = true,
+        context_highlight_list = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
         filetype_exculde = {
           'alpha',
           'packer',
           'NvimTree',
-          'lsp-install',
           'help',
           'TelescopePrompt',
           'TelescopeResults',
@@ -114,7 +121,6 @@ packer.startup({function()
     end,
   }
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
-  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
   use {
@@ -139,7 +145,6 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'tpope/vim-repeat', event = 'InsertEnter'}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
-
 end,
 config = {
   profile = {
@@ -282,14 +287,6 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
-
-map('n', '<leader>j', '<cmd>AnyJump<CR>')
-map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
-map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
-map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
-
-map('n', 'gam', '<cmd>CodeActionMenu<CR>')
-
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
@@ -399,40 +396,6 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<S-TAB>',
     }
   },
-}
-
---gitsigns
-require'gitsigns'.setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {
-    noremap = true,
-    buffer = true,
-
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-    ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
 }
 
 local startify = require('alpha.themes.startify')
@@ -599,7 +562,6 @@ cmd [[
   highlight IndentBlanklineIndent4 guifg=#56B6C2
   highlight IndentBlanklineIndent5 guifg=#61AFEF
   highlight IndentBlanklineIndent6 guifg=#C678DD
-  highlight link LspSagaFinderSelection Search
 ]]
 -- coc
 g.coc_global_extensions = {
@@ -629,15 +591,15 @@ g.coc_selectmode_mapping = 0
 -- cmd [[ source ~/AppData/Local/nvim/config.vim ]]
 cmd [[ source ~/.config/nvim/config.vim ]]
 
-remap("n", "<leader>.", "<Plug>(coc-codeaction)", {})
-remap("n", "<leader>ef", ":CocCommand eslint.executeAutofix<CR>", {})
-remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
-remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 remap("n", "gh", "<Plug>(coc-references)", {silent = true})
+remap("n", "<leader>ca", "<Plug>(coc-codeaction)", {})
+remap("n", "<leader>ef", ":CocCommand eslint.executeAutofix<CR>", {})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
+remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
+remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gr", "<Plug>(coc-rename)", {})
 remap("n", "fo", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
