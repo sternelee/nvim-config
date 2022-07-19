@@ -2,7 +2,7 @@
 require('lualine').setup({
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = 'nightfly',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
@@ -28,4 +28,3 @@ require('lualine').setup({
   -- theme = 'gruvbox-material',
   extensions = {'quickfix', 'fugitive'}
 })
-
