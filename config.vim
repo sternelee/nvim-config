@@ -60,13 +60,11 @@ endif
 " nmap <silent> <C-s> <Plug>(coc-range-select)
 " xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>

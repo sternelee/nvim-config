@@ -108,18 +108,7 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-  use 'mhartington/formatter.nvim'
   -- 语法提示
-  use {
-    'weilbith/nvim-code-action-menu',
-    after = 'coc.nvim',
-    opt = true,
-    cmd = 'CodeActionMenu',
-    requires = 'xiyaowong/coc-code-action-menu.nvim',
-    config = function()
-      require 'coc-code-action-menu'
-    end,
-  }
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
@@ -137,9 +126,35 @@ packer.startup({function()
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
+  use {'chentoast/marks.nvim', event = 'BufRead',
+    config = function ()
+      require('marks').setup({
+        default_mappings = true,
+        builtin_marks = { ".", "<", ">", "^" },
+        cyclic = true,
+        force_write_shada = false,
+        refresh_interval = 250,
+        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+        excluded_filetypes = {},
+        bookmark_0 = {
+          sign = "⚑",
+          virt_text = "sterne"
+        },
+        mappings = {}
+      })
+    end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   use 'folke/todo-comments.nvim'
+  use {
+    'danymat/neogen',
+    requires = 'nvim-treesitter/nvim-treesitter',
+    event = 'InsertEnter',
+    config = function()
+      require'neogen'.setup {
+          enabled = true
+      }
+    end} -- 方便写注释
   use 'ntpeters/vim-better-whitespace'
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'rcarriga/nvim-notify'
@@ -278,7 +293,7 @@ map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
-map('n', '<leader>gA', '<cmd>Git add .<CR>')
+map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
@@ -425,57 +440,8 @@ startify.section.header.val = header
 
 require'alpha'.setup(startify.opts)
 
--- npm install -g @fsouza/prettierd
-local prettierd = function ()
-  return {
-    exe = "prettierd",
-    args = {vim.api.nvim_buf_get_name(0)},
-    stdin = true
-  }
-end
-
-require('formatter').setup({
-  filetype = {
-    javascript = {
-      prettierd
-    },
-    javascriptreact = {
-      prettierd
-    },
-    typescript = {
-      prettierd
-    },
-    typescriptreact = {
-      prettierd
-    },
-    vue = {
-      prettierd
-    },
-    json = {
-      prettierd
-    },
-    html = {
-      prettierd
-    },
-    css = {
-      prettierd
-    },
-    sass = {
-      prettierd
-    },
-    scss = {
-      prettierd
-    },
-    less = {
-      prettierd
-    },
-    rust = {
-      prettierd
-    }
-  }
-})
-
 require'which-key'.setup{}
+
 require'colorizer'.setup{
   '*',
   css = { rgb_fn = true; }
