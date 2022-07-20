@@ -3,7 +3,7 @@ function! CocTimerStart(timer)
     exec "CocStart"
 endfunction
 
-call timer_start(1000,'CocTimerStart',{'repeat':1})
+call timer_start(2000,'CocTimerStart',{'repeat':1})
 
 let g:trigger_size = 0.5 * 1048576
 

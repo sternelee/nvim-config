@@ -125,6 +125,7 @@ packer.startup({function()
   end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
+  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
@@ -466,7 +467,7 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'left',
+    side = 'right',
     mappings = {
       custom_only = false,
       list = {}
