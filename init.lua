@@ -49,7 +49,7 @@ packer.startup({function()
   use {'antoinemadec/FixCursorHold.nvim'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
-  use {'windwp/windline.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
@@ -94,8 +94,8 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- use 'bluz71/vim-nightfly-guicolors'
-  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use 'bluz71/vim-nightfly-guicolors'
+  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -338,26 +338,9 @@ packer.startup({function()
     event = 'InsertEnter',
     config = function()
       require('spectre').setup()
-      require('windline').add_status(
-        require('spectre.state_utils').status_line()
-      )
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  -- use {
-  --   'rmagatti/auto-session',
-  --   opt = true,
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require('auto-session').setup {}
-  --   end
-  -- }
-  -- use {
-  --   'kkoomen/vim-doge',
-  --   opt = true,
-  --   cmd = {'DogeGenerate', 'DogeCreateDocStandard'},
-  --   run = ':call doge#install()'
-  -- }
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
@@ -563,7 +546,7 @@ map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
-map('n', '<leader>gA', '<cmd>Git add .<CR>')
+map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
 map('n', '<leader>gs', '<cmd>Git status<CR>')
 map('n', '<leader>gl', '<cmd>Git pull<CR>')
@@ -708,11 +691,10 @@ g.markdown_fenced_language = {
 }
 
 --theme
--- g.moonflyIgnoreDefaultColors = 1
--- g.nightflyCursorColor = 1
--- g.nightflyNormalFloat = 1
+g.nightflyCursorColor = 1
+g.nightflyNormalFloat = 1
+cmd 'colorscheme nightfly'
 
-cmd 'colorscheme bogsterish'
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
@@ -1025,7 +1007,7 @@ local function setup_servers()
     -- autostart = noTsAndLSP("", bufnr)
   }
   local lspconfig = require("lspconfig")
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"} -- or volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"} -- or volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -1053,8 +1035,6 @@ local function setup_servers()
 end
 
 setup_servers()
-
--- vim.lsp.set_log_level("debug")
 
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
@@ -1256,7 +1236,7 @@ require'Comment'.setup {
   end,
 }
 
-require'modules.windline'
+require'modules.lualine'
 -- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
