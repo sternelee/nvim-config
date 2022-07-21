@@ -46,10 +46,16 @@ packer.startup({function()
   use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use {'antoinemadec/FixCursorHold.nvim'}
+  use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
-  use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+  use 'kyazdani42/nvim-web-devicons'
+  use {'nvim-lualine/lualine.nvim', opt = true,
+    event = 'BufRead',
+    after = 'nvim-gps',
+    config = function()
+      require'modules.lualine'
+    end}
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
@@ -82,7 +88,7 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', after = 'nvim-treesitter', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
   -- use {
@@ -268,7 +274,7 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
-  use {'mattn/emmet-vim'}
+  -- use {'mattn/emmet-vim'} -- use emmet_ls
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   -- use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
@@ -276,12 +282,12 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'toppair/reach.nvim', event = 'BufRead',
-    config = function ()
-      require('reach').setup({
-        notifications = true
-      })
-    end} -- 如果文件名重复就不好查看了
+  -- use {'toppair/reach.nvim', event = 'BufRead',
+  --   config = function ()
+  --     require('reach').setup({
+  --       notifications = true
+  --     })
+  --   end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -502,8 +508,8 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
-map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
+-- map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
+-- map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -1236,7 +1242,6 @@ require'Comment'.setup {
   end,
 }
 
-require'modules.lualine'
 -- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
