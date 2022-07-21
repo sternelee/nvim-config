@@ -50,12 +50,7 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use {'nvim-lualine/lualine.nvim', opt = true,
-    event = 'BufRead',
-    after = 'nvim-gps',
-    config = function()
-      require'modules.lualine'
-    end}
+  use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
@@ -88,7 +83,7 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', after = 'nvim-treesitter', config = function() require('nvim_context_vt'):setup() end}
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
@@ -306,7 +301,6 @@ packer.startup({function()
   use 'folke/todo-comments.nvim'
   use {
     'danymat/neogen',
-    requires = 'nvim-treesitter/nvim-treesitter',
     event = 'InsertEnter',
     config = function()
       require'neogen'.setup {
@@ -378,7 +372,6 @@ packer.startup({function()
   --     "nvim-neorg/neorg",
   --     -- tag = "latest",
   --     ft = "norg",
-  --     after = "nvim-treesitter",
   --     config = function()
   --         require('neorg').setup {
   --           load = {
@@ -1228,6 +1221,7 @@ require'Comment'.setup {
   end,
 }
 
+require'modules.lualine'
 -- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
