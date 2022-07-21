@@ -518,7 +518,6 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', 'fo', '<cmd>Format<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -624,7 +623,7 @@ map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fol
 -- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 -- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
--- map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+map('n', '<space>fo', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
 map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
 map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
@@ -636,21 +635,14 @@ map('n', 'gr', '<cmd>Lspsaga rename<CR>')
 map('n', 'gi', '<cmd>Lspsaga implement<CR>')
 map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
-map('n', '[d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
-map('n', ']d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
 
--- cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
--- cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
---
--- cmd[[
--- augroup highlight_yank
---   autocmd!
---   au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
---   augroup END
--- ]]
+cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
--- cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
--- cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
+cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
+cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
 
 autocmd({ "TextYankPost" }, {
     pattern = "*",
