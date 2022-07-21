@@ -88,20 +88,14 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', after = 'nvim-treesitter', config = function() require('nvim_context_vt'):setup() end}
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', after = 'nvim-treesitter', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
-  -- use {
-  --   'lewis6991/spellsitter.nvim',
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('spellsitter').setup()
-  --   end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'bluz71/vim-nightfly-guicolors'
-  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  -- use 'bluz71/vim-nightfly-guicolors'
+  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -689,9 +683,9 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.nightflyCursorColor = 1
-g.nightflyNormalFloat = 1
-cmd 'colorscheme nightfly'
+-- g.nightflyCursorColor = 1
+-- g.nightflyNormalFloat = 1
+cmd 'colorscheme bogsterish'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -890,7 +884,7 @@ cmp.setup({
   }),
   sources = {
     { name = 'path' },
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', priority = 8 },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
     { name = 'nvim_lsp_signature_help' },
