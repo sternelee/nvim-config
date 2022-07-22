@@ -573,8 +573,8 @@ g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
--- cmd [[ source ~/AppData/Local/nvim/config.vim ]]
-cmd [[ source ~/.config/nvim/config.vim ]]
+cmd [[ source ~/AppData/Local/nvim/config.vim ]]
+-- cmd [[ source ~/.config/nvim/config.vim ]]
 
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
