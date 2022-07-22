@@ -17,6 +17,11 @@ local previewer_maker = function(filepath, bufnr, opts)
 end
 
 require('telescope').setup {
+  pickers = {
+    colorscheme = {
+      enable_preview = true
+    }
+  },
   defaults = {
     vimgrep_arguments = {
       'rg',

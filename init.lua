@@ -90,7 +90,9 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   -- use 'bluz71/vim-nightfly-guicolors'
-  use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
+  use 'RRethy/nvim-base16'
+  use 'Mofiqul/vscode.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -676,9 +678,9 @@ g.markdown_fenced_language = {
 }
 
 --theme
--- g.nightflyCursorColor = 1
--- g.nightflyNormalFloat = 1
-cmd 'colorscheme bogsterish'
+g.nightflyCursorColor = 1
+g.nightflyNormalFloat = 1
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
