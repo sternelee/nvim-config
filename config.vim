@@ -66,14 +66,14 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <space>q  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>ce  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>cc  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>co  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>cs  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>cj  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <space>ck  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <space>cp  :<C-u>CocListResume<CR>
 
 function OverrideCocHighlights()
   hi! CocRustChainingHint NONE

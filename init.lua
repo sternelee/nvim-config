@@ -372,16 +372,16 @@ require('nvim-treesitter.configs').setup {
   },
   tree_docs = {enable = true},
   textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
+    -- select = {
+    --   enable = true,
+    --   lookahead = true,
+    --   keymaps = {
+    --     ["af"] = "@function.outer",
+    --     ["if"] = "@function.inner",
+    --     ["ac"] = "@class.outer",
+    --     ["ic"] = "@class.inner",
+    --   },
+    -- },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
@@ -592,11 +592,11 @@ remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent 
 remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
 remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
 
--- coc use notify for Status and Diagnostics
+-- 使用notify显示coc信息
 local coc_status_record = {}
 
 function coc_status_notify(msg, level)
-  local notify_opts = { title = "LSP Status", timeout = 500, hide_from_history = true, on_close = reset_coc_status_record }
+  local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
   if coc_status_record ~= {} then
     notify_opts["replace"] = coc_status_record.id
@@ -611,7 +611,7 @@ end
 local coc_diag_record = {}
 
 function coc_diag_notify(msg, level)
-  local notify_opts = { title = "LSP Diagnostics", timeout = 500, on_close = reset_coc_diag_record }
+  local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
   if coc_diag_record ~= {} then
     notify_opts["replace"] = coc_diag_record.id
