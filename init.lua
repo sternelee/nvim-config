@@ -596,8 +596,8 @@ map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
 map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- LSP
-map('n', 'gD', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', 'gd', '<cmd>Lspsaga preview_definition<CR>')
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gD', '<cmd>Lspsaga preview_definition<CR>')
 map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
 -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
