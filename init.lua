@@ -1012,6 +1012,9 @@ local function setup_servers()
     end
     if lsp == "eslint" then
       opts.settings =require('lsp/eslint').settings
+      opts.handlers = {
+        ['window/showMessageRequest'] = function(_, result, params) return result end
+      }
     end
     if lsp == "tailwindcss" then
       opts.init_options = require('lsp/tailwindcss').init_options
