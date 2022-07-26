@@ -35,11 +35,11 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
-packer.init({
-  git = {
-    default_url_format = "https://hub.xn--p8jhe.tw/%s"
-  }
-})
+-- packer.init({
+--   git = {
+--     default_url_format = "https://hub.xn--p8jhe.tw/%s"
+--   }
+-- })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
@@ -142,8 +142,13 @@ packer.startup({function()
     end
   }
   -- 语法建议
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
+  -- use 'neovim/nvim-lspconfig'
+  -- use 'williamboman/nvim-lsp-installer'
+  use {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+  }
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
@@ -678,9 +683,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.nightflyCursorColor = 1
-g.nightflyNormalFloat = 1
-cmd 'colorscheme vscode'
+cmd 'colorscheme base16-ayu-mirage'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -983,8 +986,13 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
-  local lsp_installer = require("nvim-lsp-installer")
-  lsp_installer.setup{}
+  -- local lsp_installer = require("nvim-lsp-installer")
+  -- lsp_installer.setup{}
+  require("mason").setup()
+  require("mason-lspconfig").setup({
+    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint" },
+    automatic_installation = true
+  })
 
   local opts = {
     on_attach = on_attach,
