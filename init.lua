@@ -142,8 +142,6 @@ packer.startup({function()
     end
   }
   -- 语法建议
-  -- use 'neovim/nvim-lspconfig'
-  -- use 'williamboman/nvim-lsp-installer'
   use {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -184,7 +182,7 @@ packer.startup({function()
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
+  use {'simrat39/symbols-outline.nvim', opt = true, cmd = {'SymbolsOutline'}}
   use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
@@ -319,14 +317,7 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
-  -- use { 'chipsenkbeil/distant.nvim',
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('distant').setup {
-  --       ['*'] = require('distant.settings').chip_default()
-  --     }
-  --   end }
+  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'arjunmahishi/run-code.nvim', event = 'BufRead',
@@ -354,39 +345,27 @@ packer.startup({function()
   --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   --     })
   --   end}
-  -- use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-  --   config = function()
-  --     local sidebar = require("sidebar-nvim")
-  --     sidebar.setup({
-  --       open = false,
-  --       initial_width = 30,
-  --       bindings = { ["q"] = function() sidebar.close() end },
-  --       sections = {
-  --           "datetime",
-  --           "git",
-  --           "diagnostics",
-  --           -- require("dap-sidebar-nvim.breakpoints")
-  --       },
-  --       dap = {
-  --           breakpoints = {
-  --               icon = "🔍"
-  --           }
-  --       }
-  --     })
-  --   end
-  -- }
-  -- use {
-  --     "nvim-neorg/neorg",
-  --     -- tag = "latest",
-  --     ft = "norg",
-  --     config = function()
-  --         require('neorg').setup {
-  --           load = {
-  --             ["core.defaults"] = {},
-  --           }
-  --         }
-  --     end
-  -- }
+  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+    config = function()
+      local sidebar = require("sidebar-nvim")
+      sidebar.setup({
+        open = false,
+        initial_width = 30,
+        bindings = { ["q"] = function() sidebar.close() end },
+        sections = {
+            "datetime",
+            "git",
+            "diagnostics",
+            -- require("dap-sidebar-nvim.breakpoints")
+        },
+        dap = {
+            breakpoints = {
+                icon = "🔍"
+            }
+        }
+      })
+    end
+  }
   -- use {
   -- 	'xeluxee/competitest.nvim',
   -- 	requires = 'MunifTanjim/nui.nvim',
@@ -517,17 +496,16 @@ map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
--- map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
--- map('n', '<leader>th', '<cmd>lua require("hlargs").toggle()<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', '<leader>S', '<cmd>Vista<CR>')
+map('n', 'st', '<cmd>SymbolsOutline<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -677,7 +655,6 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
-g.vista_default_executive = 'nvim_lsp'
 g.markdown_fenced_language = {
   "ts=typescript"
 }
@@ -986,8 +963,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
-  -- local lsp_installer = require("nvim-lsp-installer")
-  -- lsp_installer.setup{}
   require("mason").setup()
   require("mason-lspconfig").setup({
     ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint" },
