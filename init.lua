@@ -317,14 +317,9 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
+  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
   -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
-  use {'arjunmahishi/run-code.nvim', event = 'BufRead',
-    config = function()
-      require('run-code').setup{}
-    end
-  }
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',
@@ -333,6 +328,11 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
+  use {'arjunmahishi/run-code.nvim', event = 'BufRead',
+    config = function()
+      require('run-code').setup{}
+    end
+  }
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
