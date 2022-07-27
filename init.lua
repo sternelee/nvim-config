@@ -143,9 +143,10 @@ packer.startup({function()
   }
   -- 语法建议
   use {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+    -- "ChristianChiarulli/lsp-inlay-hints"
   }
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
@@ -175,15 +176,15 @@ packer.startup({function()
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
-  use {'tami5/lspsaga.nvim'}
+  use {'glepnir/lspsaga.nvim', branch = 'main'}
   use {
     'weilbith/nvim-code-action-menu',
     opt = true,
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  use {'simrat39/symbols-outline.nvim', opt = true, cmd = {'SymbolsOutline'}}
-  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
+  -- use {'simrat39/symbols-outline.nvim', opt = true, cmd = {'SymbolsOutline'}} -- use lspsaga
+  -- use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
@@ -276,12 +277,6 @@ packer.startup({function()
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
   use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  -- use {'toppair/reach.nvim', event = 'BufRead',
-  --   config = function ()
-  --     require('reach').setup({
-  --       notifications = true
-  --     })
-  --   end} -- 如果文件名重复就不好查看了
   use {'chentoast/marks.nvim', event = 'BufRead',
     config = function ()
       require('marks').setup({
@@ -317,8 +312,6 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  -- use {'turbio/bracey.vim', opt = true, cmd = 'Bracey'}
-  -- use 'nanotee/sqls.nvim'
   -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'nvim-pack/nvim-spectre',
     opt = true,
@@ -505,7 +498,7 @@ map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', 'st', '<cmd>SymbolsOutline<CR>')
+map('n', 'st', '<cmd>LSoutlineToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
@@ -516,8 +509,6 @@ map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
-map('n', ';o', '<cmd>Lspsaga open_floaterm<CR>')
-map('n', ';n', '<cmd>Lspsaga close_floaterm<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
@@ -609,6 +600,8 @@ map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+map('n', '<A-d>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
+map('t', '<A-d>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -772,6 +765,7 @@ require('nvim-treesitter.configs').setup {
 
 local lspkind = require('lspkind')
 require'lspkind'.init()
+
 local cmp = require'cmp'
 
 require("cmp_git").setup()
@@ -919,13 +913,7 @@ local handlers = {
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
 }
 
-g.navic_silence = true
--- local navic = require("nvim-navic")
-
 local on_attach = function(client, bufnr)
-  -- if client.name == 'sqls' then
-  --   require('sqls').on_attach(client, bufnr)
-  -- end
   if client.name == 'tsserver' then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
@@ -945,17 +933,10 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  -- if client.name ~= 'jsonls' then
-  --   local msg = string.format("Language server %s started!", client.name)
-  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '300'})
-  --   -- navic.attach(client, bufnr)
-  --   -- require'lsp_signature'.on_attach({
-  --   --   bind = true,
-  --   --   handler_opts = {
-  --   --     border = "rounded"
-  --   --   }
-  --   -- }, bufnr)
-  -- end
+  if client.name ~= 'jsonls' then
+    local msg = string.format("Language server %s started!", client.name)
+    notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
+  end
 
 end
 
@@ -1210,6 +1191,7 @@ require'Comment'.setup {
 }
 
 require'modules.lualine'
+require'modules.saga'
 -- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
