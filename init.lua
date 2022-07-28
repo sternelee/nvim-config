@@ -122,8 +122,8 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -184,23 +184,23 @@ packer.startup({function()
   }
   use 'onsails/lspkind-nvim'
   -- use {'simrat39/symbols-outline.nvim', opt = true, cmd = {'SymbolsOutline'}} -- use lspsaga
-  -- use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
+  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
-  use {'simrat39/rust-tools.nvim',
-    ft = 'rust',
-    event = 'BufRead',
-    config = function()
-      require('rust-tools'):setup{
-        tools = {
-          autoSetHints = true,
-          runnables = { use_telescope = true },
-          inlay_hints = { show_parameter_hints = true },
-          hover_actions = { auto_focus = true }
-        }
-      }
-    end}
+  -- use {'simrat39/rust-tools.nvim',
+  --   ft = 'rust',
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('rust-tools'):setup{
+  --       tools = {
+  --         autoSetHints = true,
+  --         runnables = { use_telescope = true },
+  --         inlay_hints = { show_parameter_hints = true },
+  --         hover_actions = { auto_focus = true }
+  --       }
+  --     }
+  --   end}
   use {'Saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
     config = function()
@@ -559,15 +559,15 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- LSP
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -653,7 +653,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-mirage'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
