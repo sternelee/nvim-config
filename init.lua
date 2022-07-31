@@ -148,6 +148,12 @@ packer.startup({function()
     "neovim/nvim-lspconfig",
     -- "ChristianChiarulli/lsp-inlay-hints"
   }
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
@@ -162,7 +168,7 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    -- {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -254,14 +260,14 @@ packer.startup({function()
     end
   }
   -- 方便操作
-  use {
-    "max397574/better-escape.nvim",
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require("better_escape").setup()
-    end,
-  }
+  -- use {
+  --   "max397574/better-escape.nvim",
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require("better_escape").setup()
+  --   end,
+  -- }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
   use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
@@ -456,13 +462,14 @@ end
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('n', '<C-p>', '"0p')
-map('v', '<C-p>', '"0p')
+map('v', 'p', '"0p')
+map('v', 'd', '"0d')
 map('i', '<C-v>', '"0p')
--- map('i', 'jk', '<esc>')                                               --jk to exit
--- map('c', 'jk', '<C-C>')
+map('i', 'jk', '<esc>')                                               --jk to exit
+map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
--- map('n', ';', ':')                                                     --semicolon to enter command mode
+map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
@@ -474,8 +481,6 @@ map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>rb', '<cmd>ReachOpen buffers<CR>')
--- map('n', '<leader>rm', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
@@ -484,23 +489,24 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+map('n', 'tns', '<cmd>lua require("package-info").show()<CR>')
+map('n', 'tnp', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', 'tni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tb', '<cmd>SidebarNvimToggle<CR>')
-map('n', '<leader>tl', '<cmd>Twilight<CR>')
-map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', 'tl', '<cmd>Twilight<CR>')
+map('n', 'tw', '<cmd>Translate<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', 'st', '<cmd>LSoutlineToggle<CR>')
+map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
+map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -891,19 +897,19 @@ cmp.setup.filetype('gitcommit', {
 })
 
 -- cmdline在wsl容易卡死
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 -- LSP config
 require('lsp/config')

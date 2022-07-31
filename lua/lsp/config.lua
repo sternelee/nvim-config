@@ -112,7 +112,7 @@ vim.diagnostic.config({
   signs = true,
   underline = true,
   update_in_insert = false,
-  virtual_text = true,
+  virtual_text = false,
 })
 
 -- UI
