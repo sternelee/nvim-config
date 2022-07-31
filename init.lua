@@ -30,7 +30,6 @@ end
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
--- https://github.com/ecosse3/nvim
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
@@ -122,7 +121,7 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -181,7 +180,6 @@ packer.startup({function()
     end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  -- use {'folke/trouble.nvim', event = 'BufRead', config = function() require('trouble'):setup() end}
   use {'glepnir/lspsaga.nvim', branch = 'main'}
   use {
     'weilbith/nvim-code-action-menu',
@@ -189,24 +187,22 @@ packer.startup({function()
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  -- use {'simrat39/symbols-outline.nvim', opt = true, cmd = {'SymbolsOutline'}} -- use lspsaga
   use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
-  -- use 'ray-x/lsp_signature.nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
-  -- use {'simrat39/rust-tools.nvim',
-  --   ft = 'rust',
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('rust-tools'):setup{
-  --       tools = {
-  --         autoSetHints = true,
-  --         runnables = { use_telescope = true },
-  --         inlay_hints = { show_parameter_hints = true },
-  --         hover_actions = { auto_focus = true }
-  --       }
-  --     }
-  --   end}
+  use {'simrat39/rust-tools.nvim',
+    ft = 'rust',
+    event = 'BufRead',
+    config = function()
+      require('rust-tools'):setup{
+        tools = {
+          autoSetHints = true,
+          runnables = { use_telescope = true },
+          inlay_hints = { show_parameter_hints = true },
+          hover_actions = { auto_focus = true }
+        }
+      }
+    end}
   use {'Saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
     config = function()
@@ -242,11 +238,6 @@ packer.startup({function()
     end
   }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  -- use {
-  --   'willchao612/vim-diagon',
-  --   opt = true,
-  --   ft = 'markdown'
-  -- }
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   use {
     "amrbashir/nvim-docs-view",
@@ -275,9 +266,7 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
-  -- use {'mattn/emmet-vim'} -- use emmet_ls
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
-  -- use {'gennaro-tedesco/nvim-peekup', event = 'InsertEnter'} -- 查看历史的复制和删除的寄存器,快捷键 ""
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
   use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
@@ -318,7 +307,6 @@ packer.startup({function()
   use 'mhartington/formatter.nvim'
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  -- use {'brooth/far.vim', event = 'InsertEnter'} -- or nvim-pack/nvim-spectre 全局替换
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',
@@ -504,6 +492,7 @@ map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
+map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
@@ -565,15 +554,15 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
--- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
--- map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
--- map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
--- map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
--- map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
--- map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
--- map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
--- map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
--- map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- LSP
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -654,10 +643,10 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
-g.markdown_fenced_language = {
-  "ts=typescript"
-}
-
+-- g.markdown_fenced_language = {
+--   "ts=typescript"
+-- }
+--
 --theme
 cmd 'colorscheme vscode'
 
@@ -667,22 +656,22 @@ g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 local notify = require("notify")
 vim.notify = notify
 
--- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
---   local client = vim.lsp.get_client_by_id(ctx.client_id)
---   local lvl = ({
---     'ERROR',
---     'WARN',
---     'INFO',
---     'DEBUG',
---   })[result.type]
---   notify({ result.message }, lvl, {
---     title = 'LSP | ' .. client.name,
---     timeout = 10000,
---     keep = function()
---       return lvl == 'ERROR' or lvl == 'WARN'
---     end,
---   })
--- end
+vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({
+    'ERROR',
+    'WARN',
+    'INFO',
+    'DEBUG',
+  })[result.type]
+  notify({ result.message }, lvl, {
+    title = 'LSP | ' .. client.name,
+    timeout = 300,
+    keep = function()
+      return lvl == 'ERROR' or lvl == 'WARN'
+    end,
+  })
+end
 
 require'modules.telescope'
 
@@ -750,6 +739,7 @@ require('nvim-treesitter.configs').setup {
     },
     lsp_interop = {
       enable = true,
+      disable = noTsAndLSP,
       border = 'none',
       peek_definition_code = {
         ["df"] = "@function.outer",
