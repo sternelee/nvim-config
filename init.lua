@@ -52,7 +52,7 @@ packer.startup({function()
   use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
-  use 'SmiteshP/nvim-gps'
+  -- use 'SmiteshP/nvim-gps'
   -- use {
   --     "SmiteshP/nvim-navic",
   --     requires = "neovim/nvim-lspconfig"
@@ -450,7 +450,7 @@ end
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('n', '<C-p>', '"0p')
-map('v', 'p', '"0p')
+-- map('v', 'p', '"0p')
 map('v', 'd', '"0d')
 map('i', '<C-v>', '"0p')
 map('i', 'jk', '<esc>')                                               --jk to exit
@@ -863,7 +863,13 @@ cmp.setup({
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
   formatting = {
-    format = lspkind.cmp_format()
+    format = lspkind.cmp_format({
+      mode = 'symbol_text', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
   },
   flags = {
       debounce_text_changes = 150,
