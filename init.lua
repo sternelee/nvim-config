@@ -11,6 +11,7 @@ local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 -- local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
+local autogroup = vim.api.nvim_create_augroup
 -- local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
@@ -52,7 +53,7 @@ packer.startup({function()
   use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   -- use {
   --     "SmiteshP/nvim-navic",
   --     requires = "neovim/nvim-lspconfig"
@@ -145,6 +146,7 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    -- "lvimuser/lsp-inlayhints.nvim"
     -- "ChristianChiarulli/lsp-inlay-hints"
   }
   use({
@@ -187,21 +189,21 @@ packer.startup({function()
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
+  -- use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
   use {'simrat39/rust-tools.nvim',
     ft = 'rust',
     event = 'BufRead',
     config = function()
-      require('rust-tools'):setup{
+      require('rust-tools').setup({
         tools = {
           autoSetHints = true,
           runnables = { use_telescope = true },
           inlay_hints = { show_parameter_hints = true },
           hover_actions = { auto_focus = true }
         }
-      }
+      })
     end}
   use {'Saecki/crates.nvim',
     event = { "BufRead Cargo.toml" },
@@ -610,7 +612,7 @@ autocmd({ "TextYankPost" }, {
         vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
     end,
     desc = "Highlight yanked text",
-    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+    group = autogroup("highlight_yank", { clear = true }),
 })
 
 autocmd({"FileType"}, {
@@ -935,6 +937,7 @@ local on_attach = function(client, bufnr)
     end
   end
 
+  -- require("lsp-inlayhints").on_attach(bufnr, client)
   -- if client.name ~= 'jsonls' then
   --   local msg = string.format("Language server %s started!", client.name)
   --   notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
