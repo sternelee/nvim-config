@@ -73,7 +73,7 @@ packer.startup({function()
     end
   }
   -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {
@@ -650,7 +650,7 @@ let bufferline.icons = 'both'
 -- }
 --
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
