@@ -89,6 +89,7 @@ packer.startup({function()
   -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
+  use 'lunarvim/synthwave84.nvim'
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -650,7 +651,7 @@ let bufferline.icons = 'both'
 -- }
 --
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
