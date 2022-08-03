@@ -54,10 +54,6 @@ packer.startup({function()
   use 'kyazdani42/nvim-tree.lua'
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
-  -- use {
-  --     "SmiteshP/nvim-navic",
-  --     requires = "neovim/nvim-lspconfig"
-  -- }
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -83,7 +79,7 @@ packer.startup({function()
   --   config = function()
   --     require('treesitter-context').setup {}
   --   end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
   -- use "ziontee113/syntax-tree-surfer"
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
@@ -123,7 +119,8 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -147,7 +144,6 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
     -- "lvimuser/lsp-inlayhints.nvim"
-    -- "ChristianChiarulli/lsp-inlay-hints"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -157,7 +153,6 @@ packer.startup({function()
   })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
-  -- use {'github/copilot.vim', opt = true, event = 'BufRead'}
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
@@ -216,12 +211,12 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  -- use {
-  --   'NTBBloodbath/rest.nvim',
-  --   ft = 'http',
-  --   requires = {"nvim-lua/plenary.nvim" },
-  --   config = function()
-  --     require'rest-nvim'.setup() end}
+  use {
+    'NTBBloodbath/rest.nvim',
+    ft = 'http',
+    requires = {"nvim-lua/plenary.nvim" },
+    config = function()
+      require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
   use {
     'vuki656/package-info.nvim',
@@ -253,18 +248,18 @@ packer.startup({function()
     end
   }
   -- 方便操作
-  -- use {
-  --   "max397574/better-escape.nvim",
-  --   opt = true,
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require("better_escape").setup()
-  --   end,
-  -- }
+  use {
+    "max397574/better-escape.nvim",
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
   use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
+  use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -317,11 +312,15 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', event = 'InsertEnter'}
-  use {'arjunmahishi/run-code.nvim', event = 'BufRead',
-    config = function()
-      require('run-code').setup{}
-    end
-  }
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+  --   config = function()
+  --     require'modules.ufo'
+  -- end}
+  -- use {'arjunmahishi/run-code.nvim', event = 'BufRead',
+  --   config = function()
+  --     require('run-code').setup{}
+  --   end
+  -- }
   -- use {
   --   'rcarriga/nvim-dap-ui',
   --   event = 'BufRead',
@@ -411,6 +410,9 @@ opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
+-- opt('o', 'foldcolumn', '1')
+opt('o', 'foldenable', true)
+opt('o', 'foldlevel', 1)
 opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
@@ -455,8 +457,8 @@ g.maplocalleader = ","
 -- map('v', 'p', '"0p')
 -- map('v', 'd', '"0d')
 -- map('i', '<C-v>', '"0p')
-map('i', 'jk', '<esc>')                                               --jk to exit
-map('c', 'jk', '<C-C>')
+-- map('i', 'jk', '<esc>')                                               --jk to exit
+-- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -543,12 +545,6 @@ map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<
 map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
--- copilot 要收钱了
--- g.copilot_no_tab_map = true
--- cmd [[
---   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
--- ]]
-
 -- spectre
 map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
 map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
@@ -556,15 +552,19 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<M-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<M-j>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<M-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<M-l>', '<cmd>MoveHBlock(1)<CR>')
-map('n', '<M-h>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
+
+-- ufo
+-- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+-- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
