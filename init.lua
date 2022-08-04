@@ -51,7 +51,11 @@ packer.startup({function()
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'nvim-lualine/lualine.nvim'
-  use 'kyazdani42/nvim-tree.lua'
+  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle',
+    config = function()
+      require'modules.nvim-tree'
+    end
+  }
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
@@ -69,7 +73,7 @@ packer.startup({function()
     end
   }
   -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {
@@ -185,7 +189,6 @@ packer.startup({function()
     cmd = 'CodeActionMenu',
   }
   use 'onsails/lspkind-nvim'
-  -- use {'kosayoda/nvim-lightbulb', opt = true, event = 'BufRead', config = 'vim.cmd[[autocmd CursorHold,CursorHoldI * :lua require"nvim-lightbulb".update_lightbulb()]]'}
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
   -- rust
   use {'simrat39/rust-tools.nvim',
@@ -202,6 +205,7 @@ packer.startup({function()
       })
     end}
   use {'Saecki/crates.nvim',
+    opt = true,
     event = { "BufRead Cargo.toml" },
     config = function()
         require('crates').setup()
@@ -214,6 +218,7 @@ packer.startup({function()
     end}
   use {
     'NTBBloodbath/rest.nvim',
+    opt = true,
     ft = 'http',
     requires = {"nvim-lua/plenary.nvim" },
     config = function()
@@ -266,11 +271,15 @@ packer.startup({function()
   end}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
-  use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'chentoast/marks.nvim', event = 'BufRead',
+  use {'numToStr/Comment.nvim', opt = true, event = 'BufRead', requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
+    config = function()
+      require'modules.comment'
+    end
+  }
+  use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
+  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
     config = function ()
       require('marks').setup({
         default_mappings = true,
@@ -291,7 +300,11 @@ packer.startup({function()
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
-  use 'folke/todo-comments.nvim'
+  use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
+    config = function ()
+      require'modules.todo'
+    end
+  }
   use {
     'danymat/neogen',
     event = 'InsertEnter',
@@ -300,9 +313,13 @@ packer.startup({function()
           enabled = true
       }
     end} -- 方便写注释
-  use 'ntpeters/vim-better-whitespace'
+  use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  use 'mhartington/formatter.nvim'
+  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
+    config = function()
+      require'modules.formatter'
+    end
+  }
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
@@ -312,7 +329,7 @@ packer.startup({function()
       require('spectre').setup()
     end
   }
-  use {'tpope/vim-repeat', event = 'InsertEnter'}
+  use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
   -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
   --   config = function()
   --     require'modules.ufo'
@@ -361,6 +378,7 @@ packer.startup({function()
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
+  use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
 
 end,
 config = {
@@ -655,6 +673,14 @@ cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
+
+-- minimap
+g.minimap_width = 6
+g.minimap_auto_start = 1
+g.minimap_auto_start_win_enter = 1
+
+-- vim-better-whitespace
+g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
 local notify = require("notify")
 vim.notify = notify
@@ -964,7 +990,7 @@ local function setup_servers()
     -- autostart = noTsAndLSP("", bufnr)
   }
   local lspconfig = require("lspconfig")
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss"} -- or volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd"} -- or volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -995,39 +1021,6 @@ local function setup_servers()
 end
 
 setup_servers()
-
-require'nvim-tree'.setup {
-  auto_reload_on_write = true,
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  open_on_tab         = false,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-  update_focused_file = {
-    enable      = true,
-    update_cwd  = true,
-    ignore_list = { ".git", "node_modules", ".cache" },
-  },
-  view = {
-    width = 20,
-    side = 'right',
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  },
-  git = {
-    enable = true,
-    ignore = true,
-    show_on_dirs = false,
-    timeout = 400,
-  },
-}
 
 --gitsigns
 require'gitsigns'.setup {
@@ -1091,109 +1084,10 @@ startify.section.header.val = header
 
 require'alpha'.setup(startify.opts)
 
---[[ local prettier = function ()
-  return {
-    exe = "prettier",
-    args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
-    stdin = true
-  }
-end ]]
-
--- npm install -g @fsouza/prettierd
-local prettierd = function ()
-  return {
-    exe = "prettierd",
-    args = {vim.api.nvim_buf_get_name(0)},
-    stdin = true
-  }
-end
-
-require('formatter').setup({
-  filetype = {
-    javascript = {
-      prettierd
-    },
-    javascriptreact = {
-      prettierd
-    },
-    typescript = {
-      prettierd
-    },
-    typescriptreact = {
-      prettierd
-    },
-    vue = {
-      prettierd
-    },
-    json = {
-      prettierd
-    },
-    html = {
-      prettierd
-    },
-    css = {
-      prettierd
-    },
-    sass = {
-      prettierd
-    },
-    scss = {
-      prettierd
-    },
-    less = {
-      prettierd
-    },
-    rust = {
-      prettierd
-    }
-  }
-})
-
 require'which-key'.setup{}
 require'colorizer'.setup{
   '*',
   css = { rgb_fn = true; }
-}
-
-require('todo-comments').setup{
-  signs = true, -- show icons in the signs column
-  sign_priority = 8, -- sign priority
-  -- keywords recognized as todo comments
-  keywords = {
-    FIX = {
-      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-    },
-    WARN = { alt = { "WARNING" } },
-    PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-  },
-  highlight = {
-    before = "", -- "fg" or "bg" or empty
-    -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-    after = "", -- "fg" or "bg" or empty
-    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-    comments_only = true, -- uses treesitter to match keywords in comments only
-    max_line_len = 400, -- ignore lines longer than this
-    exclude = {}, -- list of file types to exclude highlighting
-  },
-}
-
-require'Comment'.setup {
-  pre_hook = function(ctx)
-    local U = require "Comment.utils"
-
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require("ts_context_commentstring.utils").get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require("ts_context_commentstring.utils").get_visual_start_location()
-    end
-
-    return require("ts_context_commentstring.internal").calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-      location = location,
-    }
-  end,
 }
 
 require'modules.lualine'
