@@ -123,9 +123,9 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -136,13 +136,13 @@ packer.startup({function()
       require'project_nvim'.setup{}
     end
   }
-  use { "johmsalas/text-case.nvim",
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require('textcase').setup {}
-    end
-  }
+  -- use { "johmsalas/text-case.nvim",
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('textcase').setup {}
+  --   end
+  -- }
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -263,9 +263,9 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
+  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -575,15 +575,15 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
 
 -- ufo
 -- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
