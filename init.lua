@@ -673,7 +673,7 @@ let bufferline.icons = 'both'
 -- }
 --
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
