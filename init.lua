@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  -- require('impatient') -- 必须是第一加载
-  require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -379,6 +379,10 @@ packer.startup({function()
   -- } -- 竞技编程
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
   -- use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
+  -- use {'petertriho/nvim-scrollbar', opt = true, event = 'BufRead', config= function()
+  --   require("scrollbar").setup()
+  --   require("scrollbar.handlers.search").setup()
+  -- end}
 
 end,
 config = {
@@ -669,7 +673,7 @@ let bufferline.icons = 'both'
 -- }
 --
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
