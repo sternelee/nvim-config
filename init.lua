@@ -378,7 +378,7 @@ packer.startup({function()
   -- 	config = function() require'competitest'.setup() end
   -- } -- 竞技编程
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
-  use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
+  -- use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
 
 end,
 config = {
