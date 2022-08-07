@@ -523,7 +523,7 @@ map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
-map('n', '<leader>ty', '<cmd>require("lsp-inlayhints").toggle()<CR>')
+map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
