@@ -74,7 +74,7 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
+  -- use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {
   --   'romgrk/nvim-treesitter-context',
@@ -148,7 +148,7 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    -- "lvimuser/lsp-inlayhints.nvim"
+    "lvimuser/lsp-inlayhints.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -727,17 +727,17 @@ require('nvim-treesitter.configs').setup {
     extended_mode = true,
     disable = noTsAndLSP
   },
-  autotag = {
-    enable = true,
-    disable = noTsAndLSP
-  },
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      clear_on_cursor_move = true,
-    },
-    disable = noTsAndLSP
-  },
+  -- autotag = {
+  --   enable = true,
+  --   disable = noTsAndLSP
+  -- },
+  -- refactor = {
+  --   highlight_definitions = {
+  --     enable = true,
+  --     clear_on_cursor_move = true,
+  --   },
+  --   disable = noTsAndLSP
+  -- },
   tree_docs = {enable = true},
   textobjects = {
     select = {
@@ -968,7 +968,6 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  -- require("lsp-inlayhints").on_attach(bufnr, client)
   -- if client.name ~= 'jsonls' then
   --   local msg = string.format("Language server %s started!", client.name)
   --   notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
@@ -1006,6 +1005,7 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.capabilities =require('lsp/tsserver').capabilities
+      opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
