@@ -504,9 +504,9 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', 'tns', '<cmd>lua require("package-info").show()<CR>')
-map('n', 'tnp', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', 'tni', '<cmd>lua require("package-info").install()<CR>')
+map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
@@ -523,6 +523,7 @@ map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
+map('n', '<leader>ty', '<cmd>require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
