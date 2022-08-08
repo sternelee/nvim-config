@@ -93,7 +93,7 @@ packer.startup({function()
   -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
-  use 'lunarvim/synthwave84.nvim'
+  use {'lunarvim/synthwave84.nvim', 'LunarVim/horizon.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -148,7 +148,7 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    "lvimuser/lsp-inlayhints.nvim"
+    -- "lvimuser/lsp-inlayhints.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -224,13 +224,13 @@ packer.startup({function()
     config = function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
-    event = 'BufRead package.json',
-    config = function()
-      require('package-info').setup()
-    end}
+  -- use {
+  --   'vuki656/package-info.nvim',
+  --   requires = 'MunifTanjim/nui.nvim',
+  --   event = 'BufRead package.json',
+  --   config = function()
+  --     require('package-info').setup()
+  --   end}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {
     'rmagatti/goto-preview',
@@ -504,9 +504,9 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+-- map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+-- map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+-- map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
@@ -523,7 +523,7 @@ map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
-map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
+-- map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -628,7 +628,7 @@ cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove t
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
 cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
-cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }]]
+cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 2 } } }]]
 
 autocmd({ "TextYankPost" }, {
     pattern = "*",
