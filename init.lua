@@ -961,7 +961,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "volar", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- or volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -972,18 +972,8 @@ local function setup_servers()
       }
     end
     if lsp == "tsserver" then
-      -- TODO: 当denols启动时tsserver不启动
-      opts.root_dir = util.root_pattern('tsconfig.json')
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
-    end
-    if lsp == "denols" then
-      opts.root_dir = util.root_pattern('deno_root')
-      opts.init_options = {
-        enable = true,
-        lint = true,
-        unstable = true,
-      }
     end
     if lsp == "volar" then
       opts.root_dir = util.root_pattern('volar_root')
