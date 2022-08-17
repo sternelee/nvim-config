@@ -673,9 +673,6 @@ remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gr", "<Plug>(coc-rename)", {})
 remap("n", "fo", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
-remap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
-remap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
-remap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
 
 -- 使用notify显示coc信息
 local coc_status_record = {}
