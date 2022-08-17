@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  -- require('impatient') -- 必须是第一加载
-  require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -11,14 +11,15 @@ local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
-local ucmd = vim.api.nvim_create_user_command
+local autogroup = vim.api.nvim_create_augroup
+-- local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -30,14 +31,13 @@ end
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
--- https://github.com/ecosse3/nvim
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
 -- packer.init({
 --   git = {
---     default_url_format = "https://gitcode.net/mirrors/%s"
+--     default_url_format = "https://hub.xn--p8jhe.tw/%s"
 --   }
 -- })
 packer.startup({function()
@@ -46,11 +46,16 @@ packer.startup({function()
   use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use {'antoinemadec/FixCursorHold.nvim'}
+  use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
   -- 状态栏
   use 'romgrk/barbar.nvim'
-  use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
-  use 'kyazdani42/nvim-tree.lua'
+  use 'kyazdani42/nvim-web-devicons'
+  use 'nvim-lualine/lualine.nvim'
+  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle',
+    config = function()
+      require'modules.nvim-tree'
+    end
+  }
   use 'goolord/alpha-nvim'
   use 'SmiteshP/nvim-gps'
   -- git相关
@@ -65,13 +70,27 @@ packer.startup({function()
     end
   }
   -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lock = true }
+  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  -- use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('treesitter-context').setup {}
+  --   end} -- or nvim_context_vt
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
+  -- use "ziontee113/syntax-tree-surfer"
+  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'bluz71/vim-nightfly-guicolors'
+  -- use 'bluz71/vim-nightfly-guicolors'
+  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
+  use {'lunarvim/synthwave84.nvim', 'LunarVim/horizon.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -99,6 +118,10 @@ packer.startup({function()
         buftype_exclude = { 'terminal', 'nofile' },
       }
     end}
+  use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -122,14 +145,24 @@ packer.startup({function()
       require("better_escape").setup()
     end,
   }
+  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
+  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
+  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
+  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'numToStr/Comment.nvim', requires = {'JoosepAlviste/nvim-ts-context-commentstring'}}
-  use {'windwp/nvim-ts-autotag', event = 'InsertEnter'}
-  use {'machakann/vim-sandwich', event = 'InsertEnter'}
-  use {'chentoast/marks.nvim', event = 'BufRead',
+  use {'numToStr/Comment.nvim', opt = true, event = 'BufRead', requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
+    config = function()
+      require'modules.comment'
+    end
+  }
+  use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
+  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
+  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
     config = function ()
       require('marks').setup({
         default_mappings = true,
@@ -148,21 +181,80 @@ packer.startup({function()
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  use 'folke/todo-comments.nvim'
+  -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
+  use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
+    config = function ()
+      require'modules.todo'
+    end
+  }
   use {
     'danymat/neogen',
-    requires = 'nvim-treesitter/nvim-treesitter',
     event = 'InsertEnter',
     config = function()
       require'neogen'.setup {
           enabled = true
       }
     end} -- 方便写注释
-  use 'ntpeters/vim-better-whitespace'
+  use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
+  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
+    config = function()
+      require'modules.formatter'
+    end
+  }
   use 'rcarriga/nvim-notify'
-  use {'tpope/vim-repeat', event = 'InsertEnter'}
+  use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
+  use {'nvim-pack/nvim-spectre',
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require('spectre').setup()
+    end
+  }
+  use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+  --   config = function()
+  --     require'modules.ufo'
+  -- end}
+  -- use {'arjunmahishi/run-code.nvim', event = 'BufRead',
+  --   config = function()
+  --     require('run-code').setup{}
+  --   end
+  -- }
+  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+    config = function()
+      local sidebar = require("sidebar-nvim")
+      sidebar.setup({
+        open = false,
+        initial_width = 30,
+        bindings = { ["q"] = function() sidebar.close() end },
+        sections = {
+            "datetime",
+            "git",
+            "diagnostics",
+            -- require("dap-sidebar-nvim.breakpoints")
+        },
+        dap = {
+            breakpoints = {
+                icon = "🔍"
+            }
+        }
+      })
+    end
+  }
+  -- use {
+  -- 	'xeluxee/competitest.nvim',
+  -- 	requires = 'MunifTanjim/nui.nvim',
+  -- 	config = function() require'competitest'.setup() end
+  -- } -- 竞技编程
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
+  -- use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
+  -- use {'petertriho/nvim-scrollbar', opt = true, event = 'BufRead', config= function()
+  --   require("scrollbar").setup()
+  --   require("scrollbar.handlers.search").setup()
+  -- end}
+
 end,
 config = {
   profile = {
@@ -212,6 +304,9 @@ opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
+-- opt('o', 'foldcolumn', '1')
+opt('o', 'foldenable', true)
+opt('o', 'foldlevel', 1)
 opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
@@ -253,9 +348,10 @@ g.do_filetype_lua = 1 -- nvim > 0.7
 g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
-map('n', '<C-p>', '"0p')
-map('v', '<C-p>', '"0p')
-map('i', '<C-v>', '"0p')
+-- map('n', '<C-p>', '"0p')
+-- map('v', 'p', '"0p')
+-- map('v', 'd', '"0d')
+-- map('i', '<C-v>', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -280,13 +376,18 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
+map('n', 'tl', '<cmd>Twilight<CR>')
+map('n', 'tw', '<cmd>Translate<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', '<leader>S', '<cmd>Vista<CR>')
+map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
+map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
+map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
+-- map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -295,6 +396,10 @@ map('n', '<c-s>', '<cmd>w<CR>')
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
+-- map('n', 'gb', '<cmd>BufferPick<CR>')
+-- map('n', 'gp', '<cmd>bprevious<CR>')
+map('n', 'gn', '<cmd>bnext<CR>')
+map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
@@ -305,6 +410,32 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
+
+map('n', '<leader>j', '<cmd>AnyJump<CR>')
+map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
+map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
+map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
+
+-- spectre
+map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
+map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
+map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
+map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
+
+-- move.nvim
+map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+
+-- ufo
+-- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+-- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
@@ -314,7 +445,7 @@ autocmd({ "TextYankPost" }, {
         vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
     end,
     desc = "Highlight yanked text",
-    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+    group = autogroup("highlight_yank", { clear = true }),
 })
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
@@ -337,12 +468,18 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.nightflyCursorColor = 1
-g.nightflyNormalFloat = 1
-cmd 'colorscheme nightfly'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
+
+-- minimap
+g.minimap_width = 6
+g.minimap_auto_start = 1
+g.minimap_auto_start_win_enter = 1
+
+-- vim-better-whitespace
+g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
 local notify = require("notify")
 vim.notify = notify
@@ -372,18 +509,25 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     disable = noTsAndLSP
   },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      clear_on_cursor_move = true,
+    },
+    disable = noTsAndLSP
+  },
   tree_docs = {enable = true},
   textobjects = {
-    -- select = {
-    --   enable = true,
-    --   lookahead = true,
-    --   keymaps = {
-    --     ["af"] = "@function.outer",
-    --     ["if"] = "@function.inner",
-    --     ["ac"] = "@class.outer",
-    --     ["ic"] = "@class.inner",
-    --   },
-    -- },
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
@@ -402,6 +546,15 @@ require('nvim-treesitter.configs').setup {
       goto_previous_end = {
         ["[M"] = "@function.outer",
         ["[]"] = "@class.outer",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      disable = noTsAndLSP,
+      border = 'none',
+      peek_definition_code = {
+        ["df"] = "@function.outer",
+        ["dF"] = "@class.outer",
       },
     },
   },
@@ -435,6 +588,7 @@ local header = {
    '│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │',
    '┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙',
 }
+
 -- 布局
 startify.section.header.val = header
 
@@ -444,84 +598,13 @@ startify.section.header.val = header
 require'alpha'.setup(startify.opts)
 
 require'which-key'.setup{}
-
 require'colorizer'.setup{
   '*',
   css = { rgb_fn = true; }
 }
 
-require'nvim-tree'.setup {
-  auto_reload_on_write = true,
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  open_on_tab         = false,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-  update_focused_file = {
-    enable      = true,
-    update_cwd  = true,
-    ignore_list = { ".git", "node_modules", ".cache" },
-  },
-  view = {
-    width = 20,
-    side = 'right',
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  },
-  git = {
-    enable = true
-  }
-}
-
-require('todo-comments').setup{
-  signs = true, -- show icons in the signs column
-  sign_priority = 8, -- sign priority
-  -- keywords recognized as todo comments
-  keywords = {
-    FIX = {
-      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-    },
-    WARN = { alt = { "WARNING" } },
-    PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-  },
-  highlight = {
-    before = "", -- "fg" or "bg" or empty
-    -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-    after = "", -- "fg" or "bg" or empty
-    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-    comments_only = true, -- uses treesitter to match keywords in comments only
-    max_line_len = 400, -- ignore lines longer than this
-    exclude = {}, -- list of file types to exclude highlighting
-  },
-}
-
-require'Comment'.setup {
-  pre_hook = function(ctx)
-    local U = require "Comment.utils"
-
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require("ts_context_commentstring.utils").get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require("ts_context_commentstring.utils").get_visual_start_location()
-    end
-
-    return require("ts_context_commentstring.internal").calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-      location = location,
-    }
-  end,
-}
-
 require'modules.lualine'
+-- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
