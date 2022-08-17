@@ -478,7 +478,7 @@ g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', '<C-p>', '"0p')
 -- map('v', 'p', '"0p')
-map('v', 'd', '"0d')
+-- map('v', 'd', '"0d')
 -- map('i', '<C-v>', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
