@@ -123,7 +123,7 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
@@ -169,7 +169,7 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    -- {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -478,13 +478,13 @@ g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', '<C-p>', '"0p')
 -- map('v', 'p', '"0p')
--- map('v', 'd', '"0d')
+map('v', 'd', '"0d')
 -- map('i', '<C-v>', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
-map('n', ';', ':')                                                     --semicolon to enter command mode
+-- map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
@@ -576,15 +576,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
--- map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
--- map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
--- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
--- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
--- map('v', '<A-j>', '<cmd>MoveBlock(-1)<CR>')
--- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
--- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
--- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
--- map('n', '<A-h>', '<cmd>MoveHBlock(1)<CR>')
+map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 -- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
@@ -802,9 +801,9 @@ require("cmp_git").setup()
 local luasnip = require("luasnip")
 require("luasnip/loaders/from_vscode").lazy_load()
 
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 cmp.setup({
@@ -833,19 +832,14 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
-      elseif check_backspace() then
-        fallback()
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
-    end, {
-      "i",
-      "s",
-    }),
+    end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -854,32 +848,7 @@ cmp.setup({
       else
         fallback()
       end
-    end, {
-      "i",
-      "s",
-    }),
-    ["<C-l>"] = cmp.mapping(function(fallback)
-      if luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
-    ["<C-h>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
+    end, { "i", "s" }),
   }),
   sources = {
     { name = 'path' },
@@ -926,20 +895,19 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
--- cmdline在wsl容易卡死
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 -- LSP config
 require('lsp/config')
@@ -982,7 +950,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local function setup_servers()
   require("mason").setup()
   require("mason-lspconfig").setup({
-    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint" },
+    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint", "volar", "vuels" },
     automatic_installation = true
   })
 
@@ -990,11 +958,10 @@ local function setup_servers()
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = handlers,
-    -- autostart = false
-    -- autostart = noTsAndLSP("", bufnr)
   }
   local lspconfig = require("lspconfig")
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd"} -- or volar
+  local util = require 'lspconfig.util'
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "volar", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- or volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -1005,13 +972,30 @@ local function setup_servers()
       }
     end
     if lsp == "tsserver" then
+      -- TODO: 当denols启动时tsserver不启动
+      opts.root_dir = util.root_pattern('tsconfig.json')
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
+    end
+    if lsp == "denols" then
+      opts.root_dir = util.root_pattern('deno_root')
+      opts.init_options = {
+        enable = true,
+        lint = true,
+        unstable = true,
+      }
+    end
+    if lsp == "volar" then
+      opts.root_dir = util.root_pattern('volar_root')
+    end
+    if lsp == "vuels" then
+      opts.root_dir = util.root_pattern("vue.config.js")
     end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
     if lsp == "eslint" then
+      opts.root_dir = util.root_pattern('.eslintrc.js')
       opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
