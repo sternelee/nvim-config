@@ -61,7 +61,6 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  -- use {'lambdalisue/gina.vim', opt = true, cmd = {'Gina'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
@@ -74,26 +73,14 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   opt = true,
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- or nvim_context_vt
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
-  -- use "ziontee113/syntax-tree-surfer"
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   -- use 'bluz71/vim-nightfly-guicolors'
-  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
-  use {'lunarvim/synthwave84.nvim', 'LunarVim/horizon.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -125,7 +112,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -148,14 +135,13 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    -- "lvimuser/lsp-inlayhints.nvim"
   }
-  -- use({
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- })
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -224,13 +210,13 @@ packer.startup({function()
     config = function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
-  -- use {
-  --   'vuki656/package-info.nvim',
-  --   requires = 'MunifTanjim/nui.nvim',
-  --   event = 'BufRead package.json',
-  --   config = function()
-  --     require('package-info').setup()
-  --   end}
+  use {
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup()
+    end}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {
     'rmagatti/goto-preview',
@@ -298,7 +284,6 @@ packer.startup({function()
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
-  -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
     config = function ()
@@ -330,59 +315,11 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-  --   config = function()
-  --     require'modules.ufo'
-  -- end}
-  -- use {'arjunmahishi/run-code.nvim', event = 'BufRead',
-  --   config = function()
-  --     require('run-code').setup{}
-  --   end
-  -- }
-  -- use {
-  --   'rcarriga/nvim-dap-ui',
-  --   event = 'BufRead',
-  --   requires = { 'mfussenegger/nvim-dap', 'Pocco81/DAPInstall.nvim', 'sidebar-nvim/sections-dap', 'theHamsta/nvim-dap-virtual-text'},
-  --   config = function()
-  --     require("nvim-dap-virtual-text").setup()
-  --     require("dapui").setup()
-  --     local dap_install = require("dap-install")
-  --     dap_install.setup({
-  --     	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-  --     })
-  --   end}
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
     config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            -- require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
-  -- use {
-  -- 	'xeluxee/competitest.nvim',
-  -- 	requires = 'MunifTanjim/nui.nvim',
-  -- 	config = function() require'competitest'.setup() end
-  -- } -- 竞技编程
+      require'modules.ufo'
+  end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
-  -- use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
-  -- use {'petertriho/nvim-scrollbar', opt = true, event = 'BufRead', config= function()
-  --   require("scrollbar").setup()
-  --   require("scrollbar.handlers.search").setup()
-  -- end}
 
 end,
 config = {
@@ -484,7 +421,7 @@ g.maplocalleader = ","
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
--- map('n', ';', ':')                                                     --semicolon to enter command mode
+map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
@@ -504,12 +441,11 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
--- map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
--- map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
--- map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
 map('n', 'tw', '<cmd>Translate<CR>')
 -- nvim-lsp-ts-utils
@@ -522,8 +458,6 @@ map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
-map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
--- map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -560,9 +494,6 @@ map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
 map('n', '<leader>ab', '<cmd>AnyJumpBack<CR>')
 map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 
--- dapui
--- map('n', '<leader>td', '<cmd>lua require("dapui").toggle()<CR>')
-
 -- goto-preview
 map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
@@ -586,8 +517,8 @@ map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
--- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
--- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -673,7 +604,7 @@ let bufferline.icons = 'both'
 -- }
 --
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -708,10 +639,10 @@ end
 
 require'modules.telescope'
 
-local noTsAndLSP = function (lang, bufnr)
-  local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
-end
+-- local noTsAndLSP = function (lang, bufnr)
+--   local n = vim.api.nvim_buf_line_count(bufnr)
+--   return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
+-- end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
@@ -720,25 +651,15 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    disable = noTsAndLSP
+    -- disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
     extended_mode = true,
-    disable = noTsAndLSP
   },
   autotag = {
     enable = true,
-    disable = noTsAndLSP
   },
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      clear_on_cursor_move = true,
-    },
-    disable = noTsAndLSP
-  },
-  tree_docs = {enable = true},
   textobjects = {
     select = {
       enable = true,
@@ -772,7 +693,6 @@ require('nvim-treesitter.configs').setup {
     },
     lsp_interop = {
       enable = true,
-      disable = noTsAndLSP,
       border = 'none',
       peek_definition_code = {
         ["df"] = "@function.outer",
@@ -960,7 +880,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -974,12 +894,9 @@ local function setup_servers()
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
-    if lsp == "volar" then
-      opts.root_dir = util.root_pattern('volar_root')
-    end
-    if lsp == "vuels" then
-      opts.root_dir = util.root_pattern("vue.config.js")
-    end
+    -- if lsp == "volar" then
+    --   opts.root_dir = util.root_pattern('volar_root')
+    -- end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
@@ -1070,7 +987,6 @@ require'colorizer'.setup{
 
 require'modules.lualine'
 require'modules.saga'
--- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
