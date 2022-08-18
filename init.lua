@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -57,7 +57,6 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
-  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'tpope/vim-fugitive'
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
@@ -71,26 +70,12 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  -- use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  -- use {
-  --   'romgrk/nvim-treesitter-context',
-  --   opt = true,
-  --   event = 'BufRead',
-  --   config = function()
-  --     require('treesitter-context').setup {}
-  --   end} -- or nvim_context_vt
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'nvim-treesitter/playground', opt = true, cmd = {'TSPlaygroundToggle'}}
-  -- use "ziontee113/syntax-tree-surfer"
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   -- use 'bluz71/vim-nightfly-guicolors'
-  -- use {'sternelee/bogsterish.nvim', requires='rktjmp/lush.nvim'}
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
-  use {'lunarvim/synthwave84.nvim', 'LunarVim/horizon.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -121,7 +106,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -152,15 +137,12 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
-  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'numToStr/Comment.nvim', opt = true, event = 'BufRead', requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
     config = function()
       require'modules.comment'
     end
   }
-  use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
     config = function ()
@@ -181,7 +163,7 @@ packer.startup({function()
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
+  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
     config = function ()
@@ -198,11 +180,6 @@ packer.startup({function()
     end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
-    config = function()
-      require'modules.formatter'
-    end
-  }
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
@@ -213,47 +190,16 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-  --   config = function()
-  --     require'modules.ufo'
-  -- end}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function()
+      require'modules.ufo'
+  end}
   -- use {'arjunmahishi/run-code.nvim', event = 'BufRead',
   --   config = function()
   --     require('run-code').setup{}
   --   end
   -- }
-  use {'sidebar-nvim/sidebar.nvim', opt = true, cmd = {'SidebarNvimToggle'},
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      sidebar.setup({
-        open = false,
-        initial_width = 30,
-        bindings = { ["q"] = function() sidebar.close() end },
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            -- require("dap-sidebar-nvim.breakpoints")
-        },
-        dap = {
-            breakpoints = {
-                icon = "🔍"
-            }
-        }
-      })
-    end
-  }
-  -- use {
-  -- 	'xeluxee/competitest.nvim',
-  -- 	requires = 'MunifTanjim/nui.nvim',
-  -- 	config = function() require'competitest'.setup() end
-  -- } -- 竞技编程
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
-  -- use {'wfxr/minimap.vim', opt = true, event = 'BufRead'} -- brew install code-minimap
-  -- use {'petertriho/nvim-scrollbar', opt = true, event = 'BufRead', config= function()
-  --   require("scrollbar").setup()
-  --   require("scrollbar.handlers.search").setup()
-  -- end}
 
 end,
 config = {
@@ -344,8 +290,8 @@ local function map(mode, lhs, rhs)
   remap(mode, lhs, rhs, options)
 end
 
-g.do_filetype_lua = 1 -- nvim > 0.7
-g.did_load_filetypes = 0
+-- g.do_filetype_lua = 1 -- nvim > 0.7
+-- g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 -- map('n', '<C-p>', '"0p')
@@ -377,17 +323,13 @@ map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtre
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', 'tb', '<cmd>SidebarNvimToggle<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
 map('n', 'tw', '<cmd>Translate<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
-map('n', '<leader>tp', '<cmd>TSPlaygroundToggle<CR>')
--- map('n', '<leader>ty', '<cmd>lua require("lsp-inlayhints").toggle()<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -433,8 +375,8 @@ map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
--- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
--- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -468,7 +410,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-atlas'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -508,55 +450,6 @@ require('nvim-treesitter.configs').setup {
   autotag = {
     enable = true,
     disable = noTsAndLSP
-  },
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      clear_on_cursor_move = true,
-    },
-    disable = noTsAndLSP
-  },
-  tree_docs = {enable = true},
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      disable = noTsAndLSP,
-      border = 'none',
-      peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
-      },
-    },
   },
   incremental_selection = {
     enable = true,
@@ -604,7 +497,6 @@ require'colorizer'.setup{
 }
 
 require'modules.lualine'
--- vim.o.winbar = "%{%v:lua.require'modules.winbar'.eval()%}"
 
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
@@ -651,7 +543,9 @@ g.coc_global_extensions = {
    'coc-htmlhint',
    'coc-yank',
    'coc-translator',
-   'coc-markdownlint'
+   'coc-markdownlint',
+   'coc-symbol-line',
+   '@yaegassy/coc-tailwindcss3'
 }
 g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
@@ -703,4 +597,27 @@ end
 
 function reset_coc_diag_record(window)
   coc_diag_record = {}
+end
+
+-- coc-winbar by coc-symbol-line
+function _G.symbol_line()
+  local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
+  local ok, line = pcall(vim.api.nvim_buf_get_var, bufnr, 'coc_symbol_line')
+  return ok and '%#CocSymbolLine# ' .. line or ''
+end
+
+if fn.exists '&winbar' then
+  autocmd({'CursorHold', 'WinEnter', 'BufWinEnter'}, {
+    pattern = "*",
+    callback = function()
+      if vim.b.coc_symbol_line and vim.bo.buftype == '' then
+        if vim.opt_local.winbar:get() == '' then
+          vim.opt_local.winbar = '%!v:lua.symbol_line()'
+        end
+      else
+        vim.opt_local.winbar = ''
+      end
+    end,
+    desc = "Winbar Info",
+  })
 end
