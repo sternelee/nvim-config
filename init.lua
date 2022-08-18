@@ -74,7 +74,7 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  -- use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
+  use {'nvim-treesitter/nvim-treesitter-refactor', opt = true, event = 'InsertEnter', config = function() require('nvim-treesitter-refactor').init() end}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {
   --   'romgrk/nvim-treesitter-context',
@@ -150,12 +150,12 @@ packer.startup({function()
     "neovim/nvim-lspconfig",
     -- "lvimuser/lsp-inlayhints.nvim"
   }
-  use({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+  -- use({
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -277,7 +277,6 @@ packer.startup({function()
     end
   }
   use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
     config = function ()
@@ -298,6 +297,7 @@ packer.startup({function()
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
+  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
   -- use {'hoschi/yode-nvim', opt = true, event = 'BufRead', config = function () require('yode-nvim').setup({}) end}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
@@ -727,17 +727,17 @@ require('nvim-treesitter.configs').setup {
     extended_mode = true,
     disable = noTsAndLSP
   },
-  -- autotag = {
-  --   enable = true,
-  --   disable = noTsAndLSP
-  -- },
-  -- refactor = {
-  --   highlight_definitions = {
-  --     enable = true,
-  --     clear_on_cursor_move = true,
-  --   },
-  --   disable = noTsAndLSP
-  -- },
+  autotag = {
+    enable = true,
+    disable = noTsAndLSP
+  },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      clear_on_cursor_move = true,
+    },
+    disable = noTsAndLSP
+  },
   tree_docs = {enable = true},
   textobjects = {
     select = {
@@ -782,7 +782,6 @@ require('nvim-treesitter.configs').setup {
   },
   incremental_selection = {
     enable = true,
-    disable = { "cpp", "lua" },
     keymaps = {
       init_selection = '<CR>',
       scope_incremental = '<CR>',
