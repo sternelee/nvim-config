@@ -70,7 +70,6 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  -- use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
@@ -123,6 +122,7 @@ packer.startup({function()
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- 方便操作
   use {
     "max397574/better-escape.nvim",
@@ -406,7 +406,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-atlas'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -450,46 +450,6 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = false
   },
-  -- textobjects = {
-  --   select = {
-  --     enable = true,
-  --     lookahead = true,
-  --     keymaps = {
-  --       ["af"] = "@function.outer",
-  --       ["if"] = "@function.inner",
-  --       ["ac"] = "@class.outer",
-  --       ["ic"] = "@class.inner",
-  --     },
-  --   },
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true, -- whether to set jumps in the jumplist
-  --     goto_next_start = {
-  --       ["]m"] = "@function.outer",
-  --       ["]]"] = "@class.outer",
-  --     },
-  --     goto_next_end = {
-  --       ["]M"] = "@function.outer",
-  --       ["]["] = "@class.outer",
-  --     },
-  --     goto_previous_start = {
-  --       ["[m"] = "@function.outer",
-  --       ["[["] = "@class.outer",
-  --     },
-  --     goto_previous_end = {
-  --       ["[M"] = "@function.outer",
-  --       ["[]"] = "@class.outer",
-  --     },
-  --   },
-  --   lsp_interop = {
-  --     enable = true,
-  --     border = 'none',
-  --     peek_definition_code = {
-  --       ["df"] = "@function.outer",
-  --       ["dF"] = "@class.outer",
-  --     },
-  --   },
-  -- },
 }
 
 local startify = require('alpha.themes.startify')
