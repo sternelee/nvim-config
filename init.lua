@@ -73,7 +73,7 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  --[[ use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'} ]]
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
@@ -110,8 +110,8 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -123,13 +123,6 @@ packer.startup({function()
       require'project_nvim'.setup{}
     end
   }
-  -- use { "johmsalas/text-case.nvim",
-  --   opt = true,
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require('textcase').setup {}
-  --   end
-  -- }
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -206,7 +199,6 @@ packer.startup({function()
     'NTBBloodbath/rest.nvim',
     opt = true,
     ft = 'http',
-    requires = {"nvim-lua/plenary.nvim" },
     config = function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
@@ -228,17 +220,6 @@ packer.startup({function()
   }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
-  use {
-    "amrbashir/nvim-docs-view",
-    opt = true,
-    cmd = { "DocsViewToggle" },
-    config = function()
-      require("docs-view").setup {
-        position = "right",
-        width = vim.api.nvim_get_option("columns") / 3,
-      }
-    end
-  }
   -- 方便操作
   use {
     "max397574/better-escape.nvim",
@@ -249,9 +230,6 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -372,7 +350,7 @@ opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
 -- opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
-opt('o', 'foldlevel', 1)
+opt('o', 'foldlevel', 99)
 opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
@@ -640,19 +618,18 @@ end
 
 require'modules.telescope'
 
--- local noTsAndLSP = function (lang, bufnr)
---   local n = vim.api.nvim_buf_line_count(bufnr)
---   return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
--- end
+local noTsAndLSP = function (_, bufnr)
+  local n = vim.api.nvim_buf_line_count(bufnr)
+  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
+end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  disable_tokenziation_after_line = 10000,
-  additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
-    -- disable = noTsAndLSP
+    additional_vim_regex_highlighting = false,
+    disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
@@ -661,55 +638,52 @@ require('nvim-treesitter.configs').setup {
   autotag = {
     enable = true,
   },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
-      },
-    },
+  indent = {
+    enable = false,
   },
   incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<TAB>',
-      node_decremental = '<S-TAB>',
-    }
+    enable = false
   },
+  -- textobjects = {
+  --   select = {
+  --     enable = true,
+  --     lookahead = true,
+  --     keymaps = {
+  --       ["af"] = "@function.outer",
+  --       ["if"] = "@function.inner",
+  --       ["ac"] = "@class.outer",
+  --       ["ic"] = "@class.inner",
+  --     },
+  --   },
+  --   move = {
+  --     enable = true,
+  --     set_jumps = true, -- whether to set jumps in the jumplist
+  --     goto_next_start = {
+  --       ["]m"] = "@function.outer",
+  --       ["]]"] = "@class.outer",
+  --     },
+  --     goto_next_end = {
+  --       ["]M"] = "@function.outer",
+  --       ["]["] = "@class.outer",
+  --     },
+  --     goto_previous_start = {
+  --       ["[m"] = "@function.outer",
+  --       ["[["] = "@class.outer",
+  --     },
+  --     goto_previous_end = {
+  --       ["[M"] = "@function.outer",
+  --       ["[]"] = "@class.outer",
+  --     },
+  --   },
+  --   lsp_interop = {
+  --     enable = true,
+  --     border = 'none',
+  --     peek_definition_code = {
+  --       ["df"] = "@function.outer",
+  --       ["dF"] = "@class.outer",
+  --     },
+  --   },
+  -- },
 }
 
 local lspkind = require('lspkind')
@@ -881,7 +855,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- volar
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
