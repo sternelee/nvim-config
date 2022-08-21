@@ -130,7 +130,7 @@ packer.startup({function()
     "neovim/nvim-lspconfig",
   }
   use({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    "https://gitee.com/sternelee/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup()
     end,
@@ -391,10 +391,7 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
--- map('n', '<C-p>', '"0p')
--- map('v', 'p', '"0p')
--- map('v', 'd', '"0d')
--- map('i', '<C-v>', '"0p')
+map('v', 'P', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
