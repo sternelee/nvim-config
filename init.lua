@@ -70,6 +70,8 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  -- use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -104,8 +106,8 @@ packer.startup({function()
       }
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -131,9 +133,6 @@ packer.startup({function()
     end,
   }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  -- use {'AndrewRadev/switch.vim', opt = true, event = 'BufRead', cmd = {'Switch'}}
-  -- use {'AndrewRadev/splitjoin.vim', opt = true, event = 'BufRead'}
-  -- use {'tpope/vim-speeddating', opt = true, event = 'BufRead'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -194,11 +193,6 @@ packer.startup({function()
     config = function()
       require'modules.ufo'
   end}
-  -- use {'arjunmahishi/run-code.nvim', event = 'BufRead',
-  --   config = function()
-  --     require('run-code').setup{}
-  --   end
-  -- }
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -252,7 +246,7 @@ opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
 -- opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
-opt('o', 'foldlevel', 1)
+opt('o', 'foldlevel', 99)
 opt('o', 'foldlevelstart', 99)
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
@@ -294,15 +288,12 @@ end
 -- g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
--- map('n', '<C-p>', '"0p')
--- map('v', 'p', '"0p')
--- map('v', 'd', '"0d')
--- map('i', '<C-v>', '"0p')
+map('v', 'P', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
--- map('n', ';', ':')                                                     --semicolon to enter command mode
+map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
@@ -318,6 +309,11 @@ map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
+map('n', 'fc', '<cmd>Telescope commands<CR>')
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
+map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
+map('n', 'fg', '<cmd>Telescope git_files<CR>')
+map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
 map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
@@ -428,7 +424,7 @@ vim.notify = notify
 
 require'modules.telescope'
 
-local noTsAndLSP = function (lang, bufnr)
+local noTsAndLSP = function (_, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
   return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
@@ -436,30 +432,64 @@ end
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  disable_tokenziation_after_line = 10000,
-  additional_vim_regex_highlighting = false,
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = false,
     disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
     extended_mode = true,
-    disable = noTsAndLSP
   },
   autotag = {
     enable = true,
-    disable = noTsAndLSP
+  },
+  indent = {
+    enable = false,
   },
   incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<TAB>',
-      node_decremental = '<S-TAB>',
-    }
+    enable = false
   },
+  -- textobjects = {
+  --   select = {
+  --     enable = true,
+  --     lookahead = true,
+  --     keymaps = {
+  --       ["af"] = "@function.outer",
+  --       ["if"] = "@function.inner",
+  --       ["ac"] = "@class.outer",
+  --       ["ic"] = "@class.inner",
+  --     },
+  --   },
+  --   move = {
+  --     enable = true,
+  --     set_jumps = true, -- whether to set jumps in the jumplist
+  --     goto_next_start = {
+  --       ["]m"] = "@function.outer",
+  --       ["]]"] = "@class.outer",
+  --     },
+  --     goto_next_end = {
+  --       ["]M"] = "@function.outer",
+  --       ["]["] = "@class.outer",
+  --     },
+  --     goto_previous_start = {
+  --       ["[m"] = "@function.outer",
+  --       ["[["] = "@class.outer",
+  --     },
+  --     goto_previous_end = {
+  --       ["[M"] = "@function.outer",
+  --       ["[]"] = "@class.outer",
+  --     },
+  --   },
+  --   lsp_interop = {
+  --     enable = true,
+  --     border = 'none',
+  --     peek_definition_code = {
+  --       ["df"] = "@function.outer",
+  --       ["dF"] = "@class.outer",
+  --     },
+  --   },
+  -- },
 }
 
 local startify = require('alpha.themes.startify')

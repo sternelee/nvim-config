@@ -17,16 +17,6 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'right',
-    mappings = {
-      custom_only = false,
-      list = {}
-    }
-  },
-  git = {
-    enable = true,
-    ignore = true,
-    show_on_dirs = false,
-    timeout = 400,
-  },
+    side = 'right'
+  }
 }
