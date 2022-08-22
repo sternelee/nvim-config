@@ -430,14 +430,16 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
-    -- disable = noTsAndLSP
+    disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
     extended_mode = true,
+    disable = noTsAndLSP
   },
   autotag = {
     enable = true,
+    disable = noTsAndLSP
   },
   indent = {
     enable = false,
