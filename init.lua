@@ -57,7 +57,7 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
-  use 'SmiteshP/nvim-gps'
+  -- use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -112,7 +112,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -195,6 +195,13 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
+  -- use {
+  --   'vuki656/package-info.nvim',
+  --   requires = 'MunifTanjim/nui.nvim',
+  --   event = 'BufRead package.json',
+  --   config = function()
+  --     require('package-info').setup()
+  --   end}
   use {
     'NTBBloodbath/rest.nvim',
     opt = true,
@@ -202,14 +209,7 @@ packer.startup({function()
     config = function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
-    event = 'BufRead package.json',
-    config = function()
-      require('package-info').setup()
-    end}
-  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
+  -- use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -221,14 +221,14 @@ packer.startup({function()
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   -- 方便操作
-  use {
-    "max397574/better-escape.nvim",
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require("better_escape").setup()
-    end,
-  }
+  -- use {
+  --   "max397574/better-escape.nvim",
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require("better_escape").setup()
+  --   end,
+  -- }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -293,10 +293,10 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-    config = function()
-      require'modules.ufo'
-  end}
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+  --   config = function()
+  --     require'modules.ufo'
+  -- end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -392,8 +392,8 @@ end
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('v', 'P', '"0p')
--- map('i', 'jk', '<esc>')                                               --jk to exit
--- map('c', 'jk', '<C-C>')
+map('i', 'jk', '<esc>')                                               --jk to exit
+map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -575,20 +575,15 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
--- g.markdown_fenced_language = {
---   "ts=typescript"
--- }
---
+ g.markdown_fenced_language = {
+   "ts=typescript"
+ }
+
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
-
--- minimap
-g.minimap_width = 6
-g.minimap_auto_start = 1
-g.minimap_auto_start_win_enter = 1
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
@@ -626,7 +621,7 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
-    disable = noTsAndLSP
+    -- disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
@@ -640,6 +635,9 @@ require('nvim-treesitter.configs').setup {
   },
   incremental_selection = {
     enable = false
+  },
+  context_commentstring = {
+    enable = true
   },
   -- textobjects = {
   --   select = {
@@ -841,7 +839,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local function setup_servers()
   require("mason").setup()
   require("mason-lspconfig").setup({
-    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint", "volar", "vuels" },
+    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint", "vuels", "volar" },
     automatic_installation = true
   })
 
@@ -852,7 +850,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"} -- volar
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -866,9 +864,15 @@ local function setup_servers()
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
-    -- if lsp == "volar" then
-    --   opts.root_dir = util.root_pattern('volar_root')
-    -- end
+    if lsp == "denols" then
+      opts.root_dir = util.root_pattern('deno.json')
+    end
+    if lsp == "vuels" then
+      opts.root_dir = util.root_pattern('vue.config.js')
+    end
+    if lsp == "volar" then
+      opts.root_dir = util.root_pattern('.volarrc')
+    end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
@@ -945,7 +949,6 @@ local header = {
 
 -- 布局
 startify.section.header.val = header
-
 -- 高亮
 -- startify.section.header.opts.hl = 'AlphaHeader'
 
