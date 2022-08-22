@@ -57,6 +57,7 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
+  -- use 'SmiteshP/nvim-gps'
   -- git相关
   use 'tpope/vim-fugitive'
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
@@ -106,8 +107,8 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -124,14 +125,14 @@ packer.startup({function()
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- 方便操作
-  use {
-    "max397574/better-escape.nvim",
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require("better_escape").setup()
-    end,
-  }
+  -- use {
+  --   "max397574/better-escape.nvim",
+  --   opt = true,
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require("better_escape").setup()
+  --   end,
+  -- }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -189,10 +190,10 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-    config = function()
-      require'modules.ufo'
-  end}
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+  --   config = function()
+  --     require'modules.ufo'
+  -- end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -289,8 +290,8 @@ end
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('v', 'P', '"0p')
--- map('i', 'jk', '<esc>')                                               --jk to exit
--- map('c', 'jk', '<C-C>')
+map('i', 'jk', '<esc>')                                               --jk to exit
+map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -361,14 +362,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
-map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+-- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
@@ -411,11 +412,6 @@ cmd 'colorscheme vscode'
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 
--- minimap
-g.minimap_width = 6
-g.minimap_auto_start = 1
-g.minimap_auto_start_win_enter = 1
-
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
@@ -435,7 +431,7 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
-    disable = noTsAndLSP
+    -- disable = noTsAndLSP
   },
   rainbow = {
     enable = true,
@@ -449,6 +445,9 @@ require('nvim-treesitter.configs').setup {
   },
   incremental_selection = {
     enable = false
+  },
+  context_commentstring = {
+    enable = true
   },
 }
 
@@ -474,7 +473,6 @@ local header = {
 
 -- 布局
 startify.section.header.val = header
-
 -- 高亮
 -- startify.section.header.opts.hl = 'AlphaHeader'
 
