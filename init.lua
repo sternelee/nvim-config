@@ -57,7 +57,7 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
-  -- use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -129,12 +129,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use({
-  --   "https://gitee.com/sternelee/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- })
+  use({
+    "https://gitee.com/sternelee/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -235,11 +235,7 @@ packer.startup({function()
   end}
   use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'numToStr/Comment.nvim', opt = true, event = 'BufRead', requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
-    config = function()
-      require'modules.comment'
-    end
-  }
+  use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
@@ -637,7 +633,7 @@ require('nvim-treesitter.configs').setup {
     enable = false
   },
   context_commentstring = {
-    enable = true
+    enable = false
   },
   -- textobjects = {
   --   select = {
