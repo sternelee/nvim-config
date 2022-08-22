@@ -111,7 +111,7 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -129,12 +129,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  use({
-    "https://gitee.com/sternelee/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+  -- use({
+  --   "https://gitee.com/sternelee/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -155,10 +155,10 @@ packer.startup({function()
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
-  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
-    require('refactoring').setup()
-    require'telescope'.load_extension('refactoring')
-    end}
+  -- use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
+  --   require('refactoring').setup()
+  --   require'telescope'.load_extension('refactoring')
+  --   end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'glepnir/lspsaga.nvim', branch = 'main'}
@@ -458,12 +458,12 @@ map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
 -- refactoring
-map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
-map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
-map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
-map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
-map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
-map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
+-- map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
+-- map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
+-- map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
+-- map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+-- map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+-- map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -483,14 +483,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
-map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+-- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
