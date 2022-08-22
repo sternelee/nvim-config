@@ -138,11 +138,7 @@ packer.startup({function()
     require('numb').setup()
   end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'numToStr/Comment.nvim', opt = true, event = 'BufRead', requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
-    config = function()
-      require'modules.comment'
-    end
-  }
+  use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
     config = function ()
@@ -416,6 +412,9 @@ g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
 local notify = require("notify")
+notify.setup{
+  background_colour = '#000000'
+}
 vim.notify = notify
 
 require'modules.telescope'
@@ -445,9 +444,6 @@ require('nvim-treesitter.configs').setup {
   },
   incremental_selection = {
     enable = false
-  },
-  context_commentstring = {
-    enable = true
   },
 }
 
@@ -553,7 +549,6 @@ remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap =
 remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
 remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
 remap("n", "gr", "<Plug>(coc-rename)", {})
-remap("n", "fo", ":CocCommand prettier.formatFile<CR>", {noremap = true})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 
 -- 使用notify显示coc信息

@@ -2,7 +2,6 @@
   "coc.preferences.useQuickfixForLocations": false,
   "coc.preferences.extensionUpdateCheck": "weekly",
   "coc.preferences.messageLevel": "error",
-  "semanticTokens.filetypes": ["*"],
   "coc.source.file.triggerCharacters": ["/"],
   "codeLens.enable": true,
   "codeLens.separator": "",
