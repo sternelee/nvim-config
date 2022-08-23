@@ -110,13 +110,13 @@ saga.init_lsp_saga({
     end
   },
   show_outline = {
-  win_position = 'right',
-  win_with = '',
-  win_width = 30,
-  auto_enter = true,
-  auto_preview = true,
-  virt_text = '┃',
-  jump_key = 'o',
-  auto_refresh = true,
-},
+    win_position = 'right',
+    win_with = '',
+    win_width = 30,
+    auto_enter = true,
+    auto_preview = true,
+    virt_text = '┃',
+    jump_key = 'o',
+    auto_refresh = true,
+  },
 })
