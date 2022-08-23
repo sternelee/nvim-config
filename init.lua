@@ -176,6 +176,11 @@ packer.startup({function()
     end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
+  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
+    config = function()
+      require'modules.formatter'
+    end
+  }
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
