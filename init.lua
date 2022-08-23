@@ -835,7 +835,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local function setup_servers()
   require("mason").setup()
   require("mason-lspconfig").setup({
-    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls", "eslint", "vuels", "volar" },
+    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
     automatic_installation = true
   })
 
@@ -846,7 +846,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -860,9 +860,9 @@ local function setup_servers()
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
-    if lsp == "denols" then
-      opts.root_dir = util.root_pattern('deno.json')
-    end
+    -- if lsp == "denols" then
+    --   opts.root_dir = util.root_pattern('deno.json')
+    -- end
     if lsp == "vuels" then
       opts.root_dir = util.root_pattern('vue.config.js')
     end
