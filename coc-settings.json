@@ -109,5 +109,15 @@
   "tree.key.activeFilter": "zf",
   "tree.key.close": "qq",
   "tree.key.toggle": "t",
-  "cSpell.ignoreWords": ["xunlei", "nvim", "XLJS", "macintel", "Xbase", "Jsbridge", "KHTML", "SHOUJIXUNLEI"]
+  "cSpell.ignoreWords": [
+    "xunlei",
+    "nvim",
+    "XLJS",
+    "macintel",
+    "Xbase",
+    "Jsbridge",
+    "KHTML",
+    "SHOUJIXUNLEI"
+  ],
+  "Lua.telemetry.enable": true
 }
