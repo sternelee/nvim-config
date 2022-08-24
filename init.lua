@@ -76,30 +76,6 @@ packer.startup({function()
   -- use 'bluz71/vim-nightfly-guicolors'
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
-  -- 显示导航线
-  -- use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
-  --   config = function()
-  --     require("indent_blankline").setup {
-  --       space_char_blankline = " ",
-  --       char_highlight_list = {
-  --           "IndentBlanklineIndent1",
-  --           "IndentBlanklineIndent2",
-  --           "IndentBlanklineIndent3",
-  --           "IndentBlanklineIndent4",
-  --           "IndentBlanklineIndent5",
-  --           "IndentBlanklineIndent6",
-  --       },
-  --       filetype_exculde = {
-  --         'alpha',
-  --         'packer',
-  --         'NvimTree',
-  --         'help',
-  --         'TelescopePrompt',
-  --         'TelescopeResults',
-  --       },
-  --       buftype_exclude = { 'terminal', 'nofile' },
-  --     }
-  --   end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
@@ -245,9 +221,6 @@ vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
-
-vim.opt.list = true
--- vim.opt.listchars:append "space:."
 
 nvim_exec([[
 filetype plugin on
