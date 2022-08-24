@@ -3,6 +3,16 @@
   "coc.preferences.extensionUpdateCheck": "weekly",
   "coc.preferences.messageLevel": "error",
   "coc.source.file.triggerCharacters": ["/"],
+  "semanticTokens.filetypes": ["*"],
+  "semanticTokens.highlightPriority": 2048,
+  "semanticTokens.incrementTypes": [
+    "variable",
+    "string",
+    "parameter"
+  ],
+  "semanticTokens.combinedModifiers": [
+    "deprecated"
+  ],
   "codeLens.enable": true,
   "codeLens.separator": "",
   "codeLens.subseparator": " │ ",

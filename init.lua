@@ -70,8 +70,6 @@ packer.startup({function()
     end
   }
   -- 语法高亮
-  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -83,16 +81,13 @@ packer.startup({function()
     config = function()
       require("indent_blankline").setup {
         space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-        use_treesitter = true,
-        context_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5',
-          'IndentBlanklineIndent6',
+        char_highlight_list = {
+            "IndentBlanklineIndent1",
+            "IndentBlanklineIndent2",
+            "IndentBlanklineIndent3",
+            "IndentBlanklineIndent4",
+            "IndentBlanklineIndent5",
+            "IndentBlanklineIndent6",
         },
         filetype_exculde = {
           'alpha',
@@ -191,10 +186,6 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-  --   config = function()
-  --     require'modules.ufo'
-  -- end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -275,6 +266,9 @@ vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.sessionoptions="buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
 
+vim.opt.list = true
+vim.opt.listchars:append "space:."
+
 nvim_exec([[
 filetype plugin on
 filetype indent on
@@ -312,14 +306,13 @@ map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', 'fg', '<cmd>Telescope git_files<CR>')
-map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
 map('n', 'tw', '<cmd>Translate<CR>')
@@ -423,36 +416,6 @@ notify.setup{
 vim.notify = notify
 
 require'modules.telescope'
-
-local noTsAndLSP = function (_, bufnr)
-  local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
-end
-
---nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
-require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-    disable = noTsAndLSP
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    disable = noTsAndLSP
-  },
-  autotag = {
-    enable = true,
-    disable = noTsAndLSP
-  },
-  indent = {
-    enable = false,
-  },
-  incremental_selection = {
-    enable = false
-  },
-}
 
 local startify = require('alpha.themes.startify')
 local header = {
