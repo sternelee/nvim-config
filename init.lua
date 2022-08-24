@@ -77,33 +77,31 @@ packer.startup({function()
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
   -- 显示导航线
-  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
-    config = function()
-      require("indent_blankline").setup {
-        space_char_blankline = " ",
-        char_highlight_list = {
-            "IndentBlanklineIndent1",
-            "IndentBlanklineIndent2",
-            "IndentBlanklineIndent3",
-            "IndentBlanklineIndent4",
-            "IndentBlanklineIndent5",
-            "IndentBlanklineIndent6",
-        },
-        filetype_exculde = {
-          'alpha',
-          'packer',
-          'NvimTree',
-          'help',
-          'TelescopePrompt',
-          'TelescopeResults',
-        },
-        buftype_exclude = { 'terminal', 'nofile' },
-      }
-    end}
+  -- use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
+  --   config = function()
+  --     require("indent_blankline").setup {
+  --       space_char_blankline = " ",
+  --       char_highlight_list = {
+  --           "IndentBlanklineIndent1",
+  --           "IndentBlanklineIndent2",
+  --           "IndentBlanklineIndent3",
+  --           "IndentBlanklineIndent4",
+  --           "IndentBlanklineIndent5",
+  --           "IndentBlanklineIndent6",
+  --       },
+  --       filetype_exculde = {
+  --         'alpha',
+  --         'packer',
+  --         'NvimTree',
+  --         'help',
+  --         'TelescopePrompt',
+  --         'TelescopeResults',
+  --       },
+  --       buftype_exclude = { 'terminal', 'nofile' },
+  --     }
+  --   end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -120,14 +118,6 @@ packer.startup({function()
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- 方便操作
-  -- use {
-  --   "max397574/better-escape.nvim",
-  --   opt = true,
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require("better_escape").setup()
-  --   end,
-  -- }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -153,22 +143,12 @@ packer.startup({function()
       })
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
-  use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
   -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
     config = function ()
       require'modules.todo'
     end
   }
-  use {
-    'danymat/neogen',
-    event = 'InsertEnter',
-    config = function()
-      require'neogen'.setup {
-          enabled = true
-      }
-    end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
@@ -267,7 +247,7 @@ vim.o.sessionoptions="buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
 
 vim.opt.list = true
-vim.opt.listchars:append "space:."
+-- vim.opt.listchars:append "space:."
 
 nvim_exec([[
 filetype plugin on
@@ -411,7 +391,7 @@ g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive
 
 local notify = require("notify")
 notify.setup{
-  background_colour = '#000000'
+  background_colour = '#1e1e1e'
 }
 vim.notify = notify
 
@@ -501,7 +481,8 @@ g.coc_global_extensions = {
    'coc-symbol-line',
    '@yaegassy/coc-tailwindcss3'
 }
-g.coc_start_at_startup=0
+
+-- g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
