@@ -411,15 +411,16 @@ map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'fg', '<cmd>Telescope git_files<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')                      --nvimtree
-map('n', 'fp', '<cmd>Telescope projects<CR>')                      --nvimtree
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')                      --nvimtree
+map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
 map('n', 'tw', '<cmd>Translate<CR>')
+map('n', 'th', '<cmd>TSDisable highlight<CR>')
 -- nvim-lsp-ts-utils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
@@ -606,28 +607,27 @@ end
 
 require'modules.telescope'
 
-local noTsAndLSP = function (_, bufnr)
+local enableTsOrLsp = function (_, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
+  return  n < 10000 and n > 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true,
+    enable = enableTsOrLsp,
     additional_vim_regex_highlighting = false,
-    -- disable = noTsAndLSP
   },
   rainbow = {
-    enable = true,
+    enable = enableTsOrLsp,
     extended_mode = true,
   },
   autotag = {
-    enable = true,
+    enable = enableTsOrLsp,
   },
   indent = {
-    enable = false,
+    enable = enableTsOrLsp,
   },
   incremental_selection = {
     enable = false
@@ -840,6 +840,7 @@ local function setup_servers()
   })
 
   local opts = {
+    autostart = enableTsOrLsp,
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = handlers,
