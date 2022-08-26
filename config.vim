@@ -12,7 +12,7 @@ augroup hugefile
   autocmd BufReadPre *
         \ let size = getfsize(expand('<afile>')) |
         \ if (size > g:trigger_size) || (size == -2) |
-        \   echohl WarningMsg | echomsg 'WARNING: altering options for this huge file!' | echohl None |
+	\   execute "lua vim.notify('WARNING: altering options for this huge file!', 'warning', { title = 'Coc.nvim Status', timeout = 1000 })"
         \   exec 'CocDisable' |
         \ else |
         \   exec 'CocEnable' |
@@ -20,12 +20,26 @@ augroup hugefile
         \ unlet size
 augroup END
 
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 xmap <leader>fo  <Plug>(coc-format-selected)
 nmap <leader>fo  <Plug>(coc-format-selected)
 
-augroup mygroup
+augroup cocGroup
   autocmd!
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
