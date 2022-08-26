@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
+  -- require('impatient') -- 必须是第一加载
+  require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -73,12 +73,11 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  --[[ use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'} ]]
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- use 'bluz71/vim-nightfly-guicolors'
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
   -- 显示导航线
@@ -111,8 +110,8 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -155,10 +154,10 @@ packer.startup({function()
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
   }}
-  -- use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
-  --   require('refactoring').setup()
-  --   require'telescope'.load_extension('refactoring')
-  --   end}
+  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
+    require('refactoring').setup()
+    require'telescope'.load_extension('refactoring')
+    end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use {'glepnir/lspsaga.nvim', branch = 'main'}
@@ -195,13 +194,13 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  -- use {
-  --   'vuki656/package-info.nvim',
-  --   requires = 'MunifTanjim/nui.nvim',
-  --   event = 'BufRead package.json',
-  --   config = function()
-  --     require('package-info').setup()
-  --   end}
+  use {
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup()
+    end}
   use {
     'NTBBloodbath/rest.nvim',
     opt = true,
@@ -209,7 +208,7 @@ packer.startup({function()
     config = function()
       require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
-  -- use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
+  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -221,14 +220,14 @@ packer.startup({function()
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   -- 方便操作
-  -- use {
-  --   "max397574/better-escape.nvim",
-  --   opt = true,
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require("better_escape").setup()
-  --   end,
-  -- }
+  use {
+    "max397574/better-escape.nvim",
+    opt = true,
+    event = 'InsertEnter',
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -388,8 +387,8 @@ end
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('v', 'P', '"0p')
-map('i', 'jk', '<esc>')                                               --jk to exit
-map('c', 'jk', '<C-C>')
+-- map('i', 'jk', '<esc>')                                               --jk to exit
+-- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -455,12 +454,12 @@ map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
 -- refactoring
--- map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
--- map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
--- map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
--- map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
--- map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
--- map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
+map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
+map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
+map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
+map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -480,14 +479,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
--- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
--- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
--- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
--- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
--- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
--- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
--- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
--- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
@@ -635,46 +634,46 @@ require('nvim-treesitter.configs').setup {
   context_commentstring = {
     enable = false
   },
-  -- textobjects = {
-  --   select = {
-  --     enable = true,
-  --     lookahead = true,
-  --     keymaps = {
-  --       ["af"] = "@function.outer",
-  --       ["if"] = "@function.inner",
-  --       ["ac"] = "@class.outer",
-  --       ["ic"] = "@class.inner",
-  --     },
-  --   },
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true, -- whether to set jumps in the jumplist
-  --     goto_next_start = {
-  --       ["]m"] = "@function.outer",
-  --       ["]]"] = "@class.outer",
-  --     },
-  --     goto_next_end = {
-  --       ["]M"] = "@function.outer",
-  --       ["]["] = "@class.outer",
-  --     },
-  --     goto_previous_start = {
-  --       ["[m"] = "@function.outer",
-  --       ["[["] = "@class.outer",
-  --     },
-  --     goto_previous_end = {
-  --       ["[M"] = "@function.outer",
-  --       ["[]"] = "@class.outer",
-  --     },
-  --   },
-  --   lsp_interop = {
-  --     enable = true,
-  --     border = 'none',
-  --     peek_definition_code = {
-  --       ["df"] = "@function.outer",
-  --       ["dF"] = "@class.outer",
-  --     },
-  --   },
-  -- },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["df"] = "@function.outer",
+        ["dF"] = "@class.outer",
+      },
+    },
+  },
 }
 
 local lspkind = require('lspkind')
