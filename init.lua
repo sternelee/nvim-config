@@ -73,7 +73,7 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- use 'bluz71/vim-nightfly-guicolors'
+  use 'bluz71/vim-nightfly-guicolors'
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -455,7 +455,7 @@ g.coc_global_extensions = {
    '@yaegassy/coc-tailwindcss3'
 }
 
--- g.coc_start_at_startup=0
+g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0

@@ -12,7 +12,7 @@ augroup hugefile
   autocmd BufReadPre *
         \ let size = getfsize(expand('<afile>')) |
         \ if (size > g:trigger_size) || (size == -2) |
-        \   echohl WarningMsg | echomsg 'WARNING: altering options for this huge file!' | echohl None |
+	\   execute "lua vim.notify('WARNING: altering options for this huge file!', 'warning', { title = 'Coc.nvim Status', timeout = 1000 })"
         \   exec 'CocDisable' |
         \ else |
         \   exec 'CocEnable' |
