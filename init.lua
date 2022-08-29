@@ -35,11 +35,11 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
-packer.init({
-  git = {
-    default_url_format = "https://hub.fastgit.xyz/%s"
-  }
-})
+-- packer.init({
+--   git = {
+--     default_url_format = "https://hub.fastgit.xyz/%s"
+--   }
+-- })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
