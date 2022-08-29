@@ -37,7 +37,7 @@ cmd [[packadd packer.nvim]]
 local packer = require('packer')
 -- packer.init({
 --   git = {
---     default_url_format = "https://hub.xn--p8jhe.tw/%s"
+--     default_url_format = "https://hub.fastgit.xyz/%s"
 --   }
 -- })
 packer.startup({function()
@@ -986,4 +986,5 @@ cmd [[
   highlight IndentBlanklineIndent5 guifg=#61AFEF
   highlight IndentBlanklineIndent6 guifg=#C678DD
   highlight link LspSagaFinderSelection Search
+  highlight Normal ctermbg=NONE guibg=NONE
 ]]
