@@ -79,7 +79,7 @@ packer.startup({function()
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use 'Mofiqul/vscode.nvim'
+  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -585,6 +585,9 @@ g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
 local notify = require("notify")
+notify.setup{
+  background_colour = '#000000'
+}
 vim.notify = notify
 
 vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
@@ -606,27 +609,31 @@ end
 
 require'modules.telescope'
 
-local enableTsOrLsp = function (_, bufnr)
+local disableTsOrLsp = function (_, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n < 10000 and n > 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
+  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = enableTsOrLsp,
+    enable = true,
     additional_vim_regex_highlighting = false,
+    disable = disableTsOrLsp,
   },
   rainbow = {
-    enable = enableTsOrLsp,
+    enable = true,
     extended_mode = true,
+    disable = disableTsOrLsp,
   },
   autotag = {
-    enable = enableTsOrLsp,
+    enable = true,
+    disable = disableTsOrLsp,
   },
   indent = {
-    enable = enableTsOrLsp,
+    enable = true,
+    disable = disableTsOrLsp,
   },
   incremental_selection = {
     enable = false
@@ -839,7 +846,6 @@ local function setup_servers()
   })
 
   local opts = {
-    autostart = enableTsOrLsp,
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = handlers,
