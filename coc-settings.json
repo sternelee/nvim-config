@@ -1,7 +1,7 @@
 {
   "coc.preferences.useQuickfixForLocations": false,
   "coc.preferences.extensionUpdateCheck": "weekly",
-  "coc.preferences.messageLevel": "error",
+  "coc.preferences.messageLevel": "warning",
   "coc.source.file.triggerCharacters": ["/"],
   "semanticTokens.filetypes": ["*"],
   "semanticTokens.highlightPriority": 2048,
@@ -87,6 +87,9 @@
   "html.trace.server": "off",
   "css.trace.server": "off",
   "tsserver.trace.server": "off",
+  "tsserver.ignoreLocalTsserver": true,
+  "tsserver.implicitProjectConfig.checkJs": true,
+  "tsserver.implicitProjectConfig.experimentalDecorators": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
   "javascript.inlayHints.parameterNames.enabled": "all",
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,

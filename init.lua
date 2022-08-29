@@ -35,11 +35,11 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
--- packer.init({
---   git = {
---     default_url_format = "https://hub.xn--p8jhe.tw/%s"
---   }
--- })
+packer.init({
+  git = {
+    default_url_format = "https://hub.fastgit.xyz/%s"
+  }
+})
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
@@ -89,6 +89,16 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
+  use {
+    'weilbith/nvim-code-action-menu',
+    after = 'coc.nvim',
+    requires = 'xiyaowong/coc-code-action-menu.nvim',
+    opt = true,
+    cmd = 'CodeActionMenu',
+    config = function()
+      require 'coc-code-action-menu'
+    end,
+  }
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
@@ -308,19 +318,12 @@ map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=tru
 map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
--- move.nvim
--- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
--- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
--- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
--- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
--- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
--- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
--- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
--- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
-
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+
+-- coc-code-action-menu
+map('n', 'gam', '<cmd>CodeActionMenu<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
