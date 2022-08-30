@@ -128,12 +128,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use({
-  --   "https://gitee.com/sternelee/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- })
+  use({
+    "https://gitee.com/sternelee/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -194,13 +194,13 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
-    event = 'BufRead package.json',
-    config = function()
-      require('package-info').setup()
-    end}
+  -- use {
+  --   'vuki656/package-info.nvim',
+  --   requires = 'MunifTanjim/nui.nvim',
+  --   event = 'BufRead package.json',
+  --   config = function()
+  --     require('package-info').setup()
+  --   end}
   use {
     'NTBBloodbath/rest.nvim',
     opt = true,
@@ -412,9 +412,9 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
 map('n', 'fp', '<cmd>Telescope projects<CR>')
-map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
-map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
-map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+-- map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+-- map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+-- map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
@@ -576,7 +576,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
