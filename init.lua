@@ -74,7 +74,7 @@ packer.startup({function()
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -111,7 +111,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -128,12 +128,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  use({
-    "https://gitee.com/sternelee/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+  -- use({
+  --   "https://gitee.com/sternelee/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
