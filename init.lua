@@ -357,7 +357,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme nightfly'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -434,6 +434,7 @@ cmd [[
   highlight IndentBlanklineIndent4 guifg=#56B6C2
   highlight IndentBlanklineIndent5 guifg=#61AFEF
   highlight IndentBlanklineIndent6 guifg=#C678DD
+  highlight Normal ctermbg=NONE guibg=NONE
 ]]
 -- coc
 g.coc_global_extensions = {
@@ -463,8 +464,8 @@ g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
-cmd [[ source ~/AppData/Local/nvim/config.vim ]]
--- cmd [[ source ~/.config/nvim/config.vim ]]
+-- cmd [[ source ~/AppData/Local/nvim/config.vim ]]
+cmd [[ source ~/.config/nvim/config.vim ]]
 
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
@@ -479,35 +480,35 @@ remap("n", "gr", "<Plug>(coc-rename)", {})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 
 -- 使用notify显示coc信息
-local coc_status_record = {}
+-- local coc_status_record = {}
 
-function coc_status_notify(msg, level)
-  local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
-  -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
-  if coc_status_record ~= {} then
-    notify_opts["replace"] = coc_status_record.id
-  end
-  coc_status_record = vim.notify(msg, level, notify_opts)
-end
+-- function coc_status_notify(msg, level)
+--   local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
+--   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
+--   if coc_status_record ~= {} then
+--     notify_opts["replace"] = coc_status_record.id
+--   end
+--   coc_status_record = vim.notify(msg, level, notify_opts)
+-- end
 
-function reset_coc_status_record(window)
-  coc_status_record = {}
-end
+-- function reset_coc_status_record(window)
+--   coc_status_record = {}
+-- end
 
-local coc_diag_record = {}
+-- local coc_diag_record = {}
 
-function coc_diag_notify(msg, level)
-  local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
-  -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
-  if coc_diag_record ~= {} then
-    notify_opts["replace"] = coc_diag_record.id
-  end
-  coc_diag_record = vim.notify(msg, level, notify_opts)
-end
+-- function coc_diag_notify(msg, level)
+--   local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
+--   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
+--   if coc_diag_record ~= {} then
+--     notify_opts["replace"] = coc_diag_record.id
+--   end
+--   coc_diag_record = vim.notify(msg, level, notify_opts)
+-- end
 
-function reset_coc_diag_record(window)
-  coc_diag_record = {}
-end
+-- function reset_coc_diag_record(window)
+--   coc_diag_record = {}
+-- end
 
 -- coc-winbar by coc-symbol-line
 function _G.symbol_line()
