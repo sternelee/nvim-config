@@ -74,7 +74,6 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'bluz71/vim-nightfly-guicolors'
   use 'RRethy/nvim-base16'
   use 'Mofiqul/vscode.nvim'
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -358,7 +357,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme nightfly'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
