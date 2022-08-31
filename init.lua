@@ -61,6 +61,7 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
+  use 'kdheepak/lazygit.nvim'
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
@@ -866,9 +867,9 @@ local function setup_servers()
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
-    -- if lsp == "denols" then
-    --   opts.root_dir = util.root_pattern('deno.json')
-    -- end
+    if lsp == "denols" then
+      opts.root_dir = util.root_pattern('deno.json')
+    end
     if lsp == "vuels" then
       opts.root_dir = util.root_pattern('vue.config.js')
     end

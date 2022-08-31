@@ -16,7 +16,6 @@ require'nvim-tree'.setup {
     ignore_list = { ".git", "node_modules", ".cache" },
   },
   view = {
-    width = 20,
     side = 'right'
   }
 }
