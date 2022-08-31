@@ -61,7 +61,7 @@ packer.startup({function()
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
-  use 'kdheepak/lazygit.nvim'
+  use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
     require('git-conflict').setup()
   end}
