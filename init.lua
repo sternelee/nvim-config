@@ -74,8 +74,7 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'norcalli/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'RRethy/nvim-base16'
-  use 'Mofiqul/vscode.nvim'
+  use {'Mofiqul/vscode.nvim', 'sainnhe/sonokai', 'sainnhe/edge', 'tandy1229/nvim-deus'}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
