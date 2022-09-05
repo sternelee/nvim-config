@@ -140,7 +140,6 @@ packer.startup({function()
   use {'hrsh7th/nvim-cmp', requires = {
     {'petertriho/cmp-git'},
     {'hrsh7th/cmp-nvim-lsp'},
-    {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-buffer'},
     {'saadparwaiz1/cmp_luasnip'},
     {'rafamadriz/friendly-snippets'},
@@ -194,13 +193,15 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  -- use {
-  --   'vuki656/package-info.nvim',
-  --   requires = 'MunifTanjim/nui.nvim',
-  --   event = 'BufRead package.json',
-  --   config = function()
-  --     require('package-info').setup()
-  --   end}
+  use {
+    'vuki656/package-info.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    event = 'BufRead package.json',
+    config = function()
+      require('package-info').setup{
+        package_manager = 'pnpm'
+      }
+    end}
   use {
     'NTBBloodbath/rest.nvim',
     opt = true,
@@ -412,9 +413,9 @@ map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
 map('n', 'fp', '<cmd>Telescope projects<CR>')
--- map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
--- map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
--- map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', 'tl', '<cmd>Twilight<CR>')
@@ -748,7 +749,6 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
-    -- { name = 'path' }, -- 在wsl下可能会 segmentation fault
     -- { name = 'spell' },
     -- { name = 'cmp_tabnine' },
     { name = 'git' },
@@ -794,8 +794,6 @@ cmp.setup.cmdline('/', {
 
 cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
     { name = 'cmdline' }
   })
 })
