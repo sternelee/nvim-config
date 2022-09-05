@@ -57,7 +57,6 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
-  use 'SmiteshP/nvim-gps'
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -129,12 +128,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  use({
-    "https://gitee.com/sternelee/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+  -- use({
+  --   "https://gitee.com/sternelee/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -208,8 +207,8 @@ packer.startup({function()
     ft = 'http',
     config = function()
       require'rest-nvim'.setup() end}
-  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump'}}
-  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
+  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump', 'AnyJumpVisual', 'AnyJumpBack'}}
+  -- use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   use {
     'rmagatti/goto-preview',
     opt = true,
@@ -289,10 +288,10 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-  --   config = function()
-  --     require'modules.ufo'
-  -- end}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function()
+      require'modules.ufo'
+  end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -387,6 +386,7 @@ end
 
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
+map('n', 'P', '"0p')
 map('v', 'P', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
