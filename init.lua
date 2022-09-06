@@ -76,7 +76,7 @@ packer.startup({function()
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
-  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
+  use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
@@ -850,7 +850,7 @@ local function setup_servers()
   }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
@@ -861,11 +861,12 @@ local function setup_servers()
       }
     end
     if lsp == "tsserver" then
+      opts.root_dir = util.root_pattern('package.json')
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
-      opts.root_dir = util.root_pattern('deno.json')
+      opts.root_dir = util.root_pattern("deno.json", "deno.jsonc")
     end
     if lsp == "vuels" then
       opts.root_dir = util.root_pattern('vue.config.js')
@@ -956,8 +957,13 @@ require'alpha'.setup(startify.opts)
 
 require'which-key'.setup{}
 require'colorizer'.setup{
-  '*',
-  css = { rgb_fn = true; }
+  filetypes = { "*" },
+  user_default_options = {
+    rgb_fn = true,
+    hsl_fn = true,
+    css = true,
+    css_fn = true,
+  }
 }
 
 require'modules.lualine'
