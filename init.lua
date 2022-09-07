@@ -19,7 +19,16 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+
+if g.neovide then
+  g.neovide_remember_window_size = true
+  g.neovide_underline_automatic_scaling = false
+  g.neovide_input_macos_alt_is_meta = false
+  g.neovide_cursor_antialiasing = true
+  g.neovide_floating_blur_amount_x = 2.0
+  g.neovide_floating_blur_amount_y = 2.0
+end
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -229,6 +238,7 @@ packer.startup({function()
       require("better_escape").setup()
     end,
   }
+  use {"ellisonleao/glow.nvim", opt = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end}
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
