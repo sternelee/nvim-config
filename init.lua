@@ -19,7 +19,22 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
+g.mapleader = " "                                                     --leader
+g.maplocalleader = ","
+
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+
+--set shortmess
+vim.o.shortmess = vim.o.shortmess .. "c"
+
+vim.o.sessionoptions="buffers,help,tabpages"
+vim.opt.fillchars:append('fold:•')
+
+nvim_exec([[
+filetype plugin on
+filetype indent on
+]], false)
+
 
 if g.neovide then
   g.neovide_remember_window_size = true
@@ -119,7 +134,7 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -137,12 +152,13 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use({
-  --   "https://gitee.com/sternelee/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- })
+  use({
+    "https://gitee.com/sternelee/lsp_lines.nvim",
+    event = 'InsertEnter',
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -238,7 +254,7 @@ packer.startup({function()
       require("better_escape").setup()
     end,
   }
-  use {"ellisonleao/glow.nvim", opt = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end}
+  -- use {"ellisonleao/glow.nvim", opt = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end}
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
@@ -377,25 +393,12 @@ opt('o', 'showtabline', 2)
 -- opt('o', 'spell', true)
 -- opt('o', 'spelllang', 'en_us')
 
---set shortmess
-vim.o.shortmess = vim.o.shortmess .. "c"
-
-vim.o.sessionoptions="buffers,help,tabpages"
-vim.opt.fillchars:append('fold:•')
-
-nvim_exec([[
-filetype plugin on
-filetype indent on
-]], false)
-
 --mappings
 local function map(mode, lhs, rhs)
   local options = {noremap = true}
   remap(mode, lhs, rhs, options)
 end
 
-g.mapleader = " "                                                     --leader
-g.maplocalleader = ","
 map('n', 'P', '"0p')
 map('v', 'P', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
@@ -490,14 +493,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
-map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
-map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
-map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
-map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
-map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
-map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
-map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+-- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+-- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+-- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+-- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+-- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+-- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+-- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+-- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
