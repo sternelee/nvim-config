@@ -154,7 +154,6 @@ packer.startup({function()
   }
   use({
     "https://gitee.com/sternelee/lsp_lines.nvim",
-    event = 'InsertEnter',
     config = function()
       require("lsp_lines").setup()
     end,
