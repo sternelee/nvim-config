@@ -53,7 +53,6 @@ saga.init_lsp_saga({
   saga_winblend = 0,
   move_in_saga = { prev = '<C-p>',next = '<C-n>'},
   diagnostic_header = { "😡", "😥", "😤", "😐" },
-  show_diagnostic_source = true,
   max_preview_lines = 20,
   code_action_icon = "💡",
   code_action_num_shortcut = true,
@@ -83,7 +82,6 @@ saga.init_lsp_saga({
       exec = "<CR>",
   },
   rename_action_quit = "<C-c>",
-  definition_preview_icon = "  ",
   symbol_in_winbar = {
     in_custom = true,
   },
