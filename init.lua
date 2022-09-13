@@ -19,13 +19,23 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-nvim_exec([[set guifont=VictorMono\ NF:h14]], false)
+nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+
+--set shortmess
+vim.o.shortmess = vim.o.shortmess .. "c"
+
+vim.o.sessionoptions="buffers,help,tabpages"
+vim.opt.fillchars:append('fold:•')
+
+nvim_exec([[
+filetype plugin on
+filetype indent on
+]], false)
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  -- execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
-  execute('!git clone --depth 1 https://hub.fastgit.xyz/wbthomason/packer.nvim.git '.. install_path)
+  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
@@ -35,11 +45,6 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
--- packer.init({
---   git = {
---     default_url_format = "https://hub.fastgit.xyz/%s"
---   }
--- })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
@@ -57,7 +62,6 @@ packer.startup({function()
     end
   }
   use 'goolord/alpha-nvim'
-  -- use 'SmiteshP/nvim-gps'
   -- git相关
   use 'tpope/vim-fugitive'
   use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
@@ -71,10 +75,42 @@ packer.startup({function()
     end
   }
   -- 语法高亮
+  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
-  use 'norcalli/nvim-colorizer.lua' -- 色值高亮
+  use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'sainnhe/sonokai', 'sainnhe/edge', 'tandy1229/nvim-deus'}
+  use 'RRethy/nvim-base16'
+  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
+  use {'katawful/kat.nvim', tag = '1.0'}
+  -- 显示导航线
+  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
+    config = function()
+      require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+        use_treesitter = true,
+        context_highlight_list = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
+        filetype_exculde = {
+          'alpha',
+          'packer',
+          'NvimTree',
+          'lsp-install',
+          'help',
+          'TelescopePrompt',
+          'TelescopeResults',
+        },
+        buftype_exclude = { 'terminal', 'nofile' },
+      }
+    end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
@@ -151,6 +187,10 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function()
+      require'modules.ufo'
+  end}
   use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
 
 end,
@@ -224,17 +264,6 @@ opt('o', 'writebackup', false)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
 opt('o', 'showtabline', 0)
-
---set shortmess
-vim.o.shortmess = vim.o.shortmess .. "c"
-
-vim.o.sessionoptions="buffers,help,tabpages"
-vim.opt.fillchars:append('fold:•')
-
-nvim_exec([[
-filetype plugin on
-filetype indent on
-]], false)
 
 --mappings
 local function map(mode, lhs, rhs)
@@ -356,7 +385,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme kat.nwim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -371,6 +400,7 @@ notify.setup{
 vim.notify = notify
 
 require'modules.telescope'
+require'modules.treesitter'
 
 local startify = require('alpha.themes.startify')
 local header = {
@@ -401,8 +431,13 @@ require'alpha'.setup(startify.opts)
 
 require'which-key'.setup{}
 require'colorizer'.setup{
-  '*',
-  css = { rgb_fn = true; }
+  filetypes = { "*" },
+  user_default_options = {
+    rgb_fn = true,
+    hsl_fn = true,
+    css = true,
+    css_fn = true,
+  }
 }
 
 require'modules.lualine'
@@ -479,35 +514,35 @@ remap("n", "gr", "<Plug>(coc-rename)", {})
 remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
 
 -- 使用notify显示coc信息
--- local coc_status_record = {}
+local coc_status_record = {}
 
--- function coc_status_notify(msg, level)
---   local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
---   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
---   if coc_status_record ~= {} then
---     notify_opts["replace"] = coc_status_record.id
---   end
---   coc_status_record = vim.notify(msg, level, notify_opts)
--- end
+function coc_status_notify(msg, level)
+  local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
+  -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
+  if coc_status_record ~= {} then
+    notify_opts["replace"] = coc_status_record.id
+  end
+  coc_status_record = vim.notify(msg, level, notify_opts)
+end
 
--- function reset_coc_status_record(window)
---   coc_status_record = {}
--- end
+function reset_coc_status_record(window)
+  coc_status_record = {}
+end
 
--- local coc_diag_record = {}
+local coc_diag_record = {}
 
--- function coc_diag_notify(msg, level)
---   local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
---   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
---   if coc_diag_record ~= {} then
---     notify_opts["replace"] = coc_diag_record.id
---   end
---   coc_diag_record = vim.notify(msg, level, notify_opts)
--- end
+function coc_diag_notify(msg, level)
+  local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
+  -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
+  if coc_diag_record ~= {} then
+    notify_opts["replace"] = coc_diag_record.id
+  end
+  coc_diag_record = vim.notify(msg, level, notify_opts)
+end
 
--- function reset_coc_diag_record(window)
---   coc_diag_record = {}
--- end
+function reset_coc_diag_record(window)
+  coc_diag_record = {}
+end
 
 -- coc-winbar by coc-symbol-line
 function _G.symbol_line()
