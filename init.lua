@@ -104,6 +104,7 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
+  use {'katawful/kat.nvim', tag = '1.0'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
     config = function()
@@ -589,7 +590,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme kat.nwim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
