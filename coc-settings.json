@@ -3,7 +3,8 @@
   "coc.preferences.extensionUpdateCheck": "weekly",
   "coc.preferences.messageLevel": "warning",
   "coc.source.file.triggerCharacters": ["/"],
-  "semanticTokens.filetypes": ["*"],
+  "signature.enable": false,
+  "semanticTokens.enable": true,
   "semanticTokens.highlightPriority": 2048,
   "semanticTokens.incrementTypes": [
     "variable",
@@ -17,7 +18,7 @@
   "codeLens.separator": "",
   "codeLens.subseparator": " │ ",
   "codeLens.position": "eol",
-  "suggest.enablePreselect": true,
+  "suggest.enablePreselect": false,
   "suggest.noselect": false,
   "suggest.defaultSortMethod": "none",
   "suggest.snippetIndicator": "",
@@ -66,7 +67,7 @@
   "diagnostic.signPriority": 20,
   "diagnostic.enableHighlightLineNumber": false,
   "diagnostic.locationlistUpdate": false,
-  "diagnostic.virtualText": true,
+  "diagnostic.virtualText": false,
   "git.addGBlameToVirtualText": true,
   "hover.floatConfig": {
     "border": true,
