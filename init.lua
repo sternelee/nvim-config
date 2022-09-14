@@ -48,8 +48,7 @@ end
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  -- execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
-  execute('!git clone --depth 1 https://hub.fastgit.xyz/wbthomason/packer.nvim.git '.. install_path)
+  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
@@ -59,11 +58,6 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
--- packer.init({
---   git = {
---     default_url_format = "https://hub.fastgit.xyz/%s"
---   }
--- })
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
@@ -135,7 +129,7 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  -- use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'} -- 显示高亮的按键位置
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
@@ -159,6 +153,15 @@ packer.startup({function()
   --     require("lsp_lines").setup()
   --   end,
   -- })
+  use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function ()
+    require("typescript").setup({
+      disable_commands = false,
+      debug = true,
+      go_to_source_definition = {
+          fallback = true,
+      },
+    })
+    end}
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -438,17 +441,19 @@ map('n', 'th', '<cmd>TSDisable highlight<CR>')
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
+-- session
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
-map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
-map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
+-- diffview
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
+-- wincmd
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
 map('n', '<c-s>', '<cmd>w<CR>')
+-- barbar
 map('n', '<s-q>', '<cmd>BufferClose<CR>')
 map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
@@ -456,6 +461,7 @@ map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
+-- git
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
@@ -493,14 +499,14 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
--- map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
--- map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
--- map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
--- map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
--- map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
--- map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
--- map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
--- map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
@@ -539,6 +545,8 @@ map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
 map('n', '<A-d>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
 map('t', '<A-d>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
+map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
+map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
