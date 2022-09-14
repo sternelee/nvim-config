@@ -156,7 +156,7 @@ packer.startup({function()
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function ()
     require("typescript").setup({
       disable_commands = false,
-      debug = true,
+      debug = false,
       go_to_source_definition = {
           fallback = true,
       },
