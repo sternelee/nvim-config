@@ -472,25 +472,26 @@ cmd [[
 ]]
 -- coc
 g.coc_global_extensions = {
-   'coc-git',
-   'coc-html',
-   'coc-lists',
-   'coc-marketplace',
-   'coc-tsserver',
-   'coc-json',
-   'coc-css',
-   'coc-emmet',
-   'coc-gitignore',
-   'coc-toml',
-   'coc-lightbulb',
-   'coc-highlight',
-   'coc-pairs',
-   'coc-htmlhint',
-   'coc-yank',
-   'coc-translator',
-   'coc-markdownlint',
-   'coc-symbol-line',
-   '@yaegassy/coc-tailwindcss3'
+  'coc-git',
+  'coc-html',
+  'coc-lists',
+  'coc-marketplace',
+  'coc-tsserver',
+  'coc-json',
+  'coc-css',
+  'coc-emmet',
+  'coc-gitignore',
+  'coc-toml',
+  'coc-lightbulb',
+  'coc-highlight',
+  'coc-pairs',
+  'coc-htmlhint',
+  'coc-yank',
+  'coc-translator',
+  'coc-markdownlint',
+  'coc-symbol-line',
+  '@yaegassy/coc-tailwindcss3',
+  'coc-docthis'
 }
 
 g.coc_start_at_startup=0
@@ -502,6 +503,7 @@ g.coc_selectmode_mapping = 0
 cmd [[ source ~/.config/nvim/config.vim ]]
 
 remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
+remap("n", "gj", ":CocCommand tsserver.goToSourceDefinition<CR>", {silent = true})
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 remap("n", "gh", "<Plug>(coc-references)", {silent = true})

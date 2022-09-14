@@ -17,6 +17,6 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 20,
-    side = 'left'
+    side = 'right'
   }
 }

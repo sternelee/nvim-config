@@ -131,7 +131,7 @@
     "Xbase",
     "Jsbridge",
     "KHTML",
-    "SHOUJIXUNLEI"
-  ],
-  "Lua.telemetry.enable": true
+    "SHOUJIXUNLEI",
+    "botright"
+  ]
 }
