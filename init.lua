@@ -76,7 +76,6 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -124,16 +123,6 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-  use {
-    'weilbith/nvim-code-action-menu',
-    after = 'coc.nvim',
-    requires = 'xiyaowong/coc-code-action-menu.nvim',
-    opt = true,
-    cmd = 'CodeActionMenu',
-    config = function()
-      require 'coc-code-action-menu'
-    end,
-  }
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
@@ -350,9 +339,6 @@ map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
--- coc-code-action-menu
-map('n', 'gam', '<cmd>CodeActionMenu<CR>')
-
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
@@ -496,7 +482,8 @@ g.coc_global_extensions = {
   'coc-markdownlint',
   'coc-symbol-line',
   '@yaegassy/coc-tailwindcss3',
-  'coc-docthis'
+  'coc-docthis',
+  'coc-spell-checker'
 }
 
 g.coc_start_at_startup=0
@@ -512,7 +499,6 @@ remap("n", "gj", ":CocCommand tsserver.goToSourceDefinition<CR>", {silent = true
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 remap("n", "gh", "<Plug>(coc-references)", {silent = true})
-remap("n", "<leader>ca", "<Plug>(coc-codeaction)", {})
 remap("n", "<leader>ef", ":CocCommand eslint.executeAutofix<CR>", {})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
 remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})

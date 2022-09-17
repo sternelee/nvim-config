@@ -36,6 +36,7 @@ endfunction
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+" format 格式化
 xmap <leader>fo  <Plug>(coc-format-selected)
 nmap <leader>fo  <Plug>(coc-format-selected)
 
@@ -47,10 +48,8 @@ augroup end
 
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap ga  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
-
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
 xmap if <Plug>(coc-funcobj-i)
