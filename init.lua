@@ -259,7 +259,7 @@ opt('o', 'filetype', 'on')
 opt('o', 'timeoutlen', 500)
 opt('o', 'history', 500)
 opt('o', 'ttimeoutlen', 10)
-opt('o', 'updatetime', 600)
+opt('o', 'updatetime', 300)
 opt('o', 'writebackup', false)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
@@ -310,8 +310,8 @@ map('n', 'tw', '<cmd>Translate<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
-map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
-map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
+map('n', '<leader>to', '<cmd>DiffviewOpen<CR>')
+map('n', '<leader>tc', '<cmd>DiffviewClose<CR>')
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -352,6 +352,9 @@ map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- coc-code-action-menu
 map('n', 'gam', '<cmd>CodeActionMenu<CR>')
+
+-- LazyGit
+map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
