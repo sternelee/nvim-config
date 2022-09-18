@@ -53,7 +53,7 @@ saga.init_lsp_saga({
   saga_winblend = 0,
   move_in_saga = { prev = '<C-p>',next = '<C-n>'},
   diagnostic_header = { "😡", "😥", "😤", "😐" },
-  max_preview_lines = 20,
+  max_preview_lines = 30,
   code_action_icon = "💡",
   code_action_num_shortcut = true,
   code_action_lightbulb = {
