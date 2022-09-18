@@ -531,7 +531,7 @@ map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fol
 -- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 -- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
-map('n', '<space>fo', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+map('n', '<space>fo', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
 
 map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
 map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
