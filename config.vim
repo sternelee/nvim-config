@@ -129,18 +129,18 @@ function! s:DiagnosticNotify() abort
   call v:lua.coc_diag_notify(l:msg, l:level)
 endfunction
 
-function! s:StatusNotify() abort
-  let l:status = get(g:, 'coc_status', '')
-  let l:level = 'info'
-  if empty(l:status) | return '' | endif
-  call v:lua.coc_status_notify(l:status, l:level)
-endfunction
+" function! s:StatusNotify() abort
+"   let l:status = get(g:, 'coc_status', '')
+"   let l:level = 'info'
+"   if empty(l:status) | return '' | endif
+"   call v:lua.coc_status_notify(l:status, l:level)
+" endfunction
 
-function! s:InitCoc() abort
-  execute "lua vim.notify('Initialized coc.nvim for LSP support', 'info', { title = 'LSP Status', timeout = 100 })"
-endfunction
+" function! s:InitCoc() abort
+"   execute "lua vim.notify('Initialized coc.nvim for LSP support', 'info', { title = 'LSP Status', timeout = 100 })"
+" endfunction
 
 " " notifications
-autocmd User CocNvimInit call s:InitCoc()
+" autocmd User CocNvimInit call s:InitCoc()
 autocmd User CocDiagnosticChange call s:DiagnosticNotify()
-autocmd User CocStatusChange call s:StatusNotify()
+" autocmd User CocStatusChange call s:StatusNotify()

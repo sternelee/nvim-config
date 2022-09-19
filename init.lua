@@ -323,6 +323,7 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
+map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
