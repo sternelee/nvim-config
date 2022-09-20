@@ -126,7 +126,6 @@ packer.startup({function()
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   -- 方便操作
   use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
@@ -167,7 +166,7 @@ packer.startup({function()
   --   end
   -- }
   use 'rcarriga/nvim-notify'
-  use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
+  -- use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',

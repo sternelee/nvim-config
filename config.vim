@@ -45,7 +45,7 @@ augroup end
 xmap <leader>ca  <Plug>(coc-codeaction-selected)
 nmap <leader>ca  <Plug>(coc-codeaction-selected)
 nmap ga  <Plug>(coc-codeaction)
-nmap gqf  <Plug>(coc-fix-current)
+nmap <leader>qf  <Plug>(coc-fix-current)
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
 xmap if <Plug>(coc-funcobj-i)
@@ -75,8 +75,8 @@ endif
 
 " format 格式化
 command! -nargs=0 Format :call CocActionAsync('format')
-" xmap <leader>fe  <Plug>(coc-format-selected)
-" nmap <leader>fe  <Plug>(coc-format-selected)
+xmap fo  <Plug>(coc-format-selected)
+nmap fo  <Plug>(coc-format-selected)
 
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
