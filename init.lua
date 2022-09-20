@@ -161,11 +161,11 @@ packer.startup({function()
   }
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
-    config = function()
-      require'modules.formatter'
-    end
-  }
+  -- use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
+  --   config = function()
+  --     require'modules.formatter'
+  --   end
+  -- }
   use 'rcarriga/nvim-notify'
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
@@ -480,7 +480,7 @@ g.coc_global_extensions = {
   'coc-pairs',
   'coc-htmlhint',
   'coc-yank',
-  'coc-translator',
+  -- 'coc-translator',
   'coc-markdownlint',
   'coc-symbol-line',
   '@yaegassy/coc-tailwindcss3',

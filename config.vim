@@ -36,10 +36,6 @@ endfunction
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" format 格式化
-" xmap <leader>fe  <Plug>(coc-format-selected)
-" nmap <leader>fe  <Plug>(coc-format-selected)
-
 augroup cocGroup
   autocmd!
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -73,7 +69,14 @@ endif
 " nmap <silent> <C-s> <Plug>(coc-range-select)
 " xmap <silent> <C-s> <Plug>(coc-range-select)
 
+" coc-translator
+" nmap tw <Plug>(coc-translator-p)
+" vmap tw <Plug>(coc-translator-pv)
+
+" format 格式化
 command! -nargs=0 Format :call CocActionAsync('format')
+" xmap <leader>fe  <Plug>(coc-format-selected)
+" nmap <leader>fe  <Plug>(coc-format-selected)
 
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
