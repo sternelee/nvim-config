@@ -284,7 +284,7 @@ map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
-map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>w', '<cmd>Telescope grep_string<CR>')
 map('n', '<leader>p', '<cmd>Telescope commands<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
@@ -313,7 +313,7 @@ map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 map('n', 'gn', '<cmd>bnext<CR>')
-map('n', '<leader>be', '<cmd>tabedit<CR>')
+-- map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
 map('n', '<leader>gm', '<cmd>Git commit<CR>')
@@ -376,7 +376,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme kat.nwim'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -501,7 +501,7 @@ remap("n", "gj", ":CocCommand tsserver.goToSourceDefinition<CR>", {silent = true
 remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 remap("n", "gh", "<Plug>(coc-references)", {silent = true})
-remap("n", "<leader>ef", ":CocCommand eslint.executeAutofix<CR>", {})
+remap("n", "gef", ":CocCommand eslint.executeAutofix<CR>", {})
 remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
 remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
 remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
