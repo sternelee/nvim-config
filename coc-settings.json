@@ -4,7 +4,7 @@
   "coc.preferences.messageLevel": "warning",
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": false,
-  "semanticTokens.enable": true,
+  "semanticTokens.enable": false,
   "semanticTokens.highlightPriority": 2048,
   "semanticTokens.incrementTypes": [
     "variable",
