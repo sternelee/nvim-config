@@ -141,5 +141,16 @@
     "borderhighlight",
     "focusable",
     "locationlist"
+  ],
+  "cSpell.userWords": [
+    "Bybl",
+    "Vite",
+    "Vitesse",
+    "athing",
+    "pnpm",
+    "prettytable",
+    "printstd",
+    "reqwest",
+    "storylink"
   ]
 }
