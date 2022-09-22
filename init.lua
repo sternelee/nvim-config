@@ -127,7 +127,6 @@ packer.startup({function()
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
-  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
     require('numb').setup()
   end}
@@ -152,7 +151,6 @@ packer.startup({function()
       })
     end}
   use 'folke/which-key.nvim' -- 提示leader按键
-  -- use {'anuvyklack/hydra.nvim', requires = 'anuvyklack/keymap-layer.nvim', config = function () require('modules.hydra') end} -- 增强的重复操作
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
     config = function ()
       require'modules.todo'
@@ -160,13 +158,7 @@ packer.startup({function()
   }
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  -- use {'mhartington/formatter.nvim', opt = true, cmd = 'Format',
-  --   config = function()
-  --     require'modules.formatter'
-  --   end
-  -- }
   use 'rcarriga/nvim-notify'
-  -- use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',
@@ -175,11 +167,7 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-    config = function()
-      require'modules.ufo'
-  end}
-  use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
+  use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
 
 end,
 config = {
