@@ -148,12 +148,12 @@ packer.startup({function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use({
-  --   "https://gitee.com/sternelee/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- })
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function ()
     require("typescript").setup({
       disable_commands = false,
@@ -600,7 +600,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
