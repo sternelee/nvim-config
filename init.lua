@@ -901,7 +901,7 @@ local function setup_servers()
       opts.settings = require('lsp/sumneko_lua').settings
     end
     if lsp == "eslint" then
-      opts.root_dir = util.root_pattern('.eslintrc.js')
+      opts.root_dir = util.root_pattern('.eslintrc')
       opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
