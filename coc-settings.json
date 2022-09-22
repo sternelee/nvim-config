@@ -132,6 +132,14 @@
     "Jsbridge",
     "KHTML",
     "SHOUJIXUNLEI",
-    "botright"
+    "botright",
+    "vetur",
+    "Quickfix",
+    "subseparator",
+    "noselect",
+    "struct",
+    "borderhighlight",
+    "focusable",
+    "locationlist"
   ]
 }
