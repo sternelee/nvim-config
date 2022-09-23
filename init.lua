@@ -322,7 +322,8 @@ packer.startup({function()
     config = function()
       require'modules.ufo'
   end}
-  use {"wakatime/vim-wakatime", opt = true, event = "BufRead"}
+  use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
+  use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
 
 end,
 config = {
