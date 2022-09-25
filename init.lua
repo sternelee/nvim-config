@@ -68,7 +68,13 @@ packer.startup({function()
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use 'nvim-lualine/lualine.nvim'
+  -- use {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end}
+  use({
+    'windwp/windline.nvim',
+    config = function()
+      require('modules.windline')
+    end,
+  })
   use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle',
     config = function()
       require'modules.nvim-tree'
@@ -93,7 +99,7 @@ packer.startup({function()
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   -- use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
+  use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -131,7 +137,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -188,7 +194,7 @@ packer.startup({function()
     end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  use {'glepnir/lspsaga.nvim', branch = 'main'}
+  use {'glepnir/lspsaga.nvim', branch = 'main', config = function() require'modules.saga' end}
   use {
     'weilbith/nvim-code-action-menu',
     opt = true,
@@ -309,7 +315,7 @@ packer.startup({function()
     end
   }
   use 'rcarriga/nvim-notify'
-  -- use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
+  use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre',
     opt = true,
     event = 'InsertEnter',
@@ -992,9 +998,6 @@ require'colorizer'.setup{
   }
 }
 
-require'modules.lualine'
-require'modules.saga'
-
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
 cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
@@ -1023,4 +1026,8 @@ cmd [[
   highlight IndentBlanklineIndent6 guifg=#C678DD
   highlight link LspSagaFinderSelection Search
   highlight Normal ctermbg=NONE guibg=NONE
+  hi default link HlSearchNear IncSearch
+  hi default link HlSearchLens WildMenu
+  hi default link HlSearchLensNear IncSearch
+  hi default link HlSearchFloat IncSearch
 ]]
