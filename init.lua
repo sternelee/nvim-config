@@ -153,6 +153,7 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    "tamago324/nlsp-settings.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -836,13 +837,17 @@ local handlers = {
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
 }
 
+
+local lspconfig = require("lspconfig")
+local util = require 'lspconfig.util'
+
 local on_attach = function(client, bufnr)
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
   if client.name == 'tsserver' then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
-
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
     local ts_utils = require("nvim-lsp-ts-utils")
     local init_options = require("nvim-lsp-ts-utils").init_options
@@ -864,6 +869,11 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+  capabilities = capabilities,
+})
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
@@ -878,9 +888,16 @@ local function setup_servers()
     capabilities = capabilities,
     handlers = handlers,
   }
-  local lspconfig = require("lspconfig")
-  local util = require 'lspconfig.util'
   local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
+  local nlspsettings = require("nlspsettings")
+
+  nlspsettings.setup({
+    config_home = vim.fn.stdpath('config') .. '/.vim',
+    local_settings_dir = ".vim",
+    local_settings_root_markers_fallback = { '.git' },
+    append_default_schemas = true,
+    loader = 'json'
+  })
 
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
