@@ -874,16 +874,16 @@ local function setup_servers()
     automatic_installation = true
   })
 
-  local opts = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    handlers = handlers,
-  }
   local lspconfig = require("lspconfig")
   local util = require 'lspconfig.util'
 
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
+  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "bashls"}
   for _, lsp in ipairs(servers) do
+    local opts = {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      handlers = handlers,
+    }
     if lsp == "jsonls" then
       opts.settings = {
         json = {
