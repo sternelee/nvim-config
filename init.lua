@@ -153,7 +153,6 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    "tamago324/nlsp-settings.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -837,10 +836,6 @@ local handlers = {
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
 }
 
-
-local lspconfig = require("lspconfig")
-local util = require 'lspconfig.util'
-
 local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -870,10 +865,6 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
-  capabilities = capabilities,
-})
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function setup_servers()
@@ -888,17 +879,10 @@ local function setup_servers()
     capabilities = capabilities,
     handlers = handlers,
   }
+  local lspconfig = require("lspconfig")
+  local util = require 'lspconfig.util'
+
   local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "clangd", "bashls"}
-  local nlspsettings = require("nlspsettings")
-
-  nlspsettings.setup({
-    config_home = vim.fn.stdpath('config') .. '/.vim',
-    local_settings_dir = ".vim",
-    local_settings_root_markers_fallback = { '.git' },
-    append_default_schemas = true,
-    loader = 'json'
-  })
-
   for _, lsp in ipairs(servers) do
     if lsp == "jsonls" then
       opts.settings = {
@@ -913,7 +897,7 @@ local function setup_servers()
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
-      opts.root_dir = util.root_pattern("deno.json", "deno.jsonc")
+      opts.root_dir = util.root_pattern('deno.json', 'deno.jsonc')
     end
     if lsp == "vuels" then
       opts.root_dir = util.root_pattern('vue.config.js')
@@ -932,6 +916,16 @@ local function setup_servers()
       }
     end
     if lsp == "tailwindcss" then
+      -- opts.root_dir = function(fname)
+      --   return util.root_pattern('tailwind.config.js', 'tailwind.config.ts')(fname)
+      --     or util.root_pattern('windi.config.js', 'windi.config.ts')(fname)
+      --     or util.root_pattern('postcss.config.js', 'postcss.config.ts')(fname)
+      --     or util.find_package_json_ancestor(fname)
+      --     or util.find_node_modules_ancestor(fname)
+      --     or util.find_git_ancestor(fname)
+      -- end
+      opts.filetypes = require('lsp/tailwindcss').filetypes
+      opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
       opts.settings = require('lsp/tailwindcss').settings
     end
@@ -940,6 +934,13 @@ local function setup_servers()
 end
 
 setup_servers()
+
+-- 需要判断项目下有 .eslintrc
+-- autocmd({"BufWritePre"}, {
+--   pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
+--   command = "EslintFixAll",
+--   desc = "Eslint Fix All"
+-- })
 
 --gitsigns
 require'gitsigns'.setup {
