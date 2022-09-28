@@ -146,5 +146,7 @@
     "storylink",
     "unplugin",
     "vitejs"
-  ]
+  ],
+  "Lua.telemetry.enable": false,
+  "Lua.diagnostics.globals": ["vim", "use", "bit"]
 }
