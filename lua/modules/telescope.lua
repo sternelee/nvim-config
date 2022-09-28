@@ -68,6 +68,13 @@ require('telescope').setup {
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewer_maker,
 
+    extensions = {
+      coc = {
+        theme = 'ivy',
+        prefer_locations = true,
+      }
+    },
+
     mappings = {
       i = {
         ['<C-n>'] = actions.cycle_history_next,
@@ -131,6 +138,7 @@ require('telescope').setup {
 }
 
 require'telescope'.load_extension('file_browser')
--- require'telescope'.load_extension('notify')
+require'telescope'.load_extension('notify')
+require'telescope'.load_extension('coc')
 -- require'telescope'.load_extension('packer')
 require'telescope'.load_extension('projects')

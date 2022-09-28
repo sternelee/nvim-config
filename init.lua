@@ -9,7 +9,6 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
-local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
 -- local usercmd = vim.api.nvim_create_user_command
@@ -112,8 +111,10 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
+  use 'fannheyward/telescope-coc.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {
     'ahmedkhalf/project.nvim',
@@ -363,7 +364,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -451,100 +452,4 @@ cmd [[
   highlight Normal ctermbg=NONE guibg=NONE
 ]]
 -- coc
-g.coc_global_extensions = {
-  'coc-git',
-  'coc-html',
-  'coc-lists',
-  'coc-marketplace',
-  'coc-tsserver',
-  'coc-json',
-  'coc-css',
-  'coc-emmet',
-  'coc-gitignore',
-  'coc-toml',
-  'coc-lightbulb',
-  'coc-highlight',
-  'coc-pairs',
-  'coc-htmlhint',
-  'coc-yank',
-  -- 'coc-translator',
-  'coc-markdownlint',
-  'coc-symbol-line',
-  '@yaegassy/coc-tailwindcss3',
-  'coc-docthis',
-  'coc-spell-checker'
-}
-
-g.coc_start_at_startup=0
-g.coc_default_semantic_highlight_groups = 0
-g.coc_enable_locationlist = 0
-g.coc_selectmode_mapping = 0
-
--- cmd [[ source ~/AppData/Local/nvim/config.vim ]]
-cmd [[ source ~/.config/nvim/config.vim ]]
-
-remap("n", "gd", "<Plug>(coc-definition)", {silent = true})
-remap("n", "gj", ":CocCommand tsserver.goToSourceDefinition<CR>", {silent = true})
-remap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-remap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-remap("n", "gh", "<Plug>(coc-references)", {silent = true})
-remap("n", "gef", ":CocCommand eslint.executeAutofix<CR>", {})
-remap("n", "K", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
-remap("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
-remap("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
-remap("n", "gr", "<Plug>(coc-rename)", {})
-remap("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
-
--- 使用notify显示coc信息
--- local coc_status_record = {}
-
--- function coc_status_notify(msg, level)
---   local notify_opts = { title = "LSP Status", timeout = 200, hide_from_history = true, on_close = reset_coc_status_record }
---   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
---   if coc_status_record ~= {} then
---     notify_opts["replace"] = coc_status_record.id
---   end
---   coc_status_record = vim.notify(msg, level, notify_opts)
--- end
-
--- function reset_coc_status_record(window)
---   coc_status_record = {}
--- end
-
--- local coc_diag_record = {}
-
--- function coc_diag_notify(msg, level)
---   local notify_opts = { title = "LSP Diagnostics", timeout = 200, on_close = reset_coc_diag_record }
---   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
---   if coc_diag_record ~= {} then
---     notify_opts["replace"] = coc_diag_record.id
---   end
---   coc_diag_record = vim.notify(msg, level, notify_opts)
--- end
-
--- function reset_coc_diag_record(window)
---   coc_diag_record = {}
--- end
-
--- coc-winbar by coc-symbol-line
-function _G.symbol_line()
-  local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
-  local ok, line = pcall(vim.api.nvim_buf_get_var, bufnr, 'coc_symbol_line')
-  return ok and '%#CocSymbolLine# ' .. line or ''
-end
-
-if fn.exists '&winbar' then
-  autocmd({'CursorHold', 'WinEnter', 'BufWinEnter'}, {
-    pattern = "*",
-    callback = function()
-      if vim.b.coc_symbol_line and vim.bo.buftype == '' then
-        if vim.opt_local.winbar:get() == '' then
-          vim.opt_local.winbar = '%!v:lua.symbol_line()'
-        end
-      else
-        vim.opt_local.winbar = ''
-      end
-    end,
-    desc = "Winbar Info",
-  })
-end
+require'modules.coc'
