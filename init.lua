@@ -149,6 +149,7 @@ packer.startup({function()
     end
   }
   -- 语法建议
+  -- use 'junnplus/lsp-setup.nvim'
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -607,7 +608,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
