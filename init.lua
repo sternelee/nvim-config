@@ -561,9 +561,6 @@ map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
-cmd [[autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }]]
-cmd [[autocmd FileType json lua require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 2 } } }]]
-
 autocmd({ "TextYankPost" }, {
     pattern = "*",
     callback = function()
@@ -608,7 +605,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -937,11 +934,15 @@ end
 setup_servers()
 
 -- 需要判断项目下有 .eslintrc
--- autocmd({"BufWritePre"}, {
---   pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
---   command = "EslintFixAll",
---   desc = "Eslint Fix All"
--- })
+-- if fn.exists 'EslintFixAll' then
+--   autocmd({"BufWritePre"}, {
+--     pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
+--     callback = function()
+--       nvim_exec([[EslintFixAll]], false)
+--     end,
+--     desc = "Eslint Fix All"
+--   })
+-- end
 
 --gitsigns
 require'gitsigns'.setup {
