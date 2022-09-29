@@ -1,49 +1,19 @@
-local g = vim.g
 local keyset = vim.keymap.set
 local usercmd = vim.api.nvim_create_user_command
 
-g.coc_global_extensions = {
-  'coc-git',
-  'coc-html',
-  'coc-lists',
-  'coc-marketplace',
-  'coc-tsserver',
-  'coc-json',
-  'coc-css',
-  'coc-emmet',
-  'coc-gitignore',
-  'coc-toml',
-  'coc-lightbulb',
-  'coc-highlight',
-  'coc-pairs',
-  'coc-htmlhint',
-  'coc-yank',
-  -- 'coc-translator',
-  'coc-markdownlint',
-  'coc-symbol-line',
-  '@yaegassy/coc-tailwindcss3',
-  'coc-docthis',
-  'coc-spell-checker'
-}
-
--- g.coc_start_at_startup=0
-g.coc_default_semantic_highlight_groups = 0
-g.coc_enable_locationlist = 0
-g.coc_selectmode_mapping = 0
-
 -- Auto complete
-function _G.check_back_space()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
-end
+-- function _G.check_back_space()
+--     local col = vim.fn.col('.') - 1
+--     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
+-- end
 
-local opts = {silent = true, noremap = true, expr = true}
-keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+-- local opts = {silent = true, noremap = true, expr = true}
+-- keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+-- keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
 -- Make <CR> to accept selected completion item or notify coc.nvim to format
 -- <C-g>u breaks current undo, please make your own choice.
-keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+-- keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use <c-j> to trigger snippets
 keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
@@ -105,7 +75,6 @@ vim.api.nvim_create_autocmd("User", {
     desc = "Update signature help on jump placeholder"
 })
 
-
 -- Applying codeAction to the selected region.
 -- Example: `<leader>aap` for current paragraph
 local opts = {silent = true, nowait = true}
@@ -115,14 +84,11 @@ keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
 -- Remap keys for applying codeAction to the current buffer.
 keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts)
 
-
 -- Apply AutoFix to problem on the current line.
 keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts)
 
-
 -- Run the Code Lens action on the current line.
 keyset("n", "<leader>cl", "<Plug>(coc-codelens-action)", opts)
-
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -134,7 +100,6 @@ keyset("x", "ic", "<Plug>(coc-classobj-i)", opts)
 keyset("o", "ic", "<Plug>(coc-classobj-i)", opts)
 keyset("x", "ac", "<Plug>(coc-classobj-a)", opts)
 keyset("o", "ac", "<Plug>(coc-classobj-a)", opts)
-
 
 -- Remap <C-f> and <C-b> for scroll float windows/popups.
 ---@diagnostic disable-next-line: redefined-local

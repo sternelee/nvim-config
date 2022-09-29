@@ -75,6 +75,7 @@ packer.startup({function()
   }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -111,10 +112,10 @@ packer.startup({function()
     end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
+  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
-  use 'fannheyward/telescope-coc.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {
     'ahmedkhalf/project.nvim',
@@ -124,6 +125,8 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
+  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
+  use 'fannheyward/telescope-coc.nvim'
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
@@ -157,6 +160,13 @@ packer.startup({function()
       require'modules.todo'
     end
   }
+  use {
+    'danymat/neogen',
+    config = function()
+      require'neogen'.setup {
+          enabled = true
+      }
+    end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'rcarriga/nvim-notify'
@@ -168,7 +178,12 @@ packer.startup({function()
     end
   }
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function()
+      require'modules.ufo'
+  end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
+  use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
 
 end,
 config = {
@@ -325,6 +340,16 @@ map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=tru
 map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
+-- move.nvim
+map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
+map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
+map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
+map('n', '<A-l>', '<cmd>MoveHChar(1)<CR>')
+map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
+map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
+map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
+
 -- ufo
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
@@ -451,5 +476,53 @@ cmd [[
   highlight IndentBlanklineIndent6 guifg=#C678DD
   highlight Normal ctermbg=NONE guibg=NONE
 ]]
+
 -- coc
+g.coc_global_extensions = {
+  'coc-git',
+  'coc-html',
+  'coc-lists',
+  'coc-marketplace',
+  'coc-tsserver',
+  'coc-json',
+  'coc-css',
+  'coc-emmet',
+  'coc-gitignore',
+  'coc-toml',
+  'coc-lightbulb',
+  'coc-highlight',
+  'coc-pairs',
+  'coc-htmlhint',
+  'coc-yank',
+  -- 'coc-translator',
+  'coc-markdownlint',
+  'coc-symbol-line',
+  '@yaegassy/coc-tailwindcss3',
+  'coc-docthis',
+  'coc-spell-checker'
+}
+
+g.coc_start_at_startup=0
+g.coc_default_semantic_highlight_groups = 1
+g.coc_enable_locationlist = 0
+g.coc_selectmode_mapping = 0
+
+g.trigger_size = 0.5 * 1048576
+
+cmd [[
+  augroup hugefile
+    autocmd!
+    autocmd BufReadPre *
+       \ let size = getfsize(expand('<afile>')) |
+       \ if (size > g:trigger_size) || (size == -2) |
+  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+       \   exec 'CocDisable' |
+       \ else |
+       \   exec 'CocEnable' |
+       \ endif |
+       \ unlet size
+  augroup END
+]]
+
+cmd [[ source ~/.config/nvim/config.vim ]]
 require'modules.coc'
