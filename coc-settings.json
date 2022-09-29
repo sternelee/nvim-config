@@ -6,7 +6,7 @@
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": false,
   "semanticTokens.enable": false,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
   "codeLens.separator": "",
   "codeLens.subseparator": " │ ",
   "codeLens.position": "eol",
