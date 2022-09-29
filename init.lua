@@ -99,7 +99,6 @@ packer.startup({function()
   }
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
   use 'fannheyward/telescope-coc.nvim'
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
@@ -134,13 +133,7 @@ packer.startup({function()
       require'modules.todo'
     end
   }
-  use {
-    'danymat/neogen',
-    config = function()
-      require'neogen'.setup {
-          enabled = true
-      }
-    end} -- 方便写注释
+  use {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'rcarriga/nvim-notify'
@@ -363,7 +356,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
