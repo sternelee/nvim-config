@@ -139,14 +139,17 @@
     "Vite",
     "Vitesse",
     "athing",
+    "iconfont",
     "pnpm",
     "prettytable",
     "printstd",
     "reqwest",
     "storylink",
     "unplugin",
-    "vitejs"
+    "vitejs",
+    "xlpfont"
   ],
   "Lua.telemetry.enable": false,
-  "Lua.diagnostics.globals": ["vim", "use", "bit"]
+  "Lua.diagnostics.globals": ["vim", "use", "bit"],
+  "Lua.hint.enable": false
 }

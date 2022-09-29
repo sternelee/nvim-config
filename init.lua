@@ -83,33 +83,7 @@ packer.startup({function()
   use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
   use {'katawful/kat.nvim', tag = '1.0'}
   -- 显示导航线
-  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
-    config = function()
-      require("indent_blankline").setup {
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-        use_treesitter = true,
-        context_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5',
-          'IndentBlanklineIndent6',
-        },
-        filetype_exculde = {
-          'alpha',
-          'packer',
-          'NvimTree',
-          'lsp-install',
-          'help',
-          'TelescopePrompt',
-          'TelescopeResults',
-        },
-        buftype_exclude = { 'terminal', 'nofile' },
-      }
-    end}
+  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
@@ -389,7 +363,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -503,7 +477,7 @@ g.coc_global_extensions = {
 }
 
 g.coc_start_at_startup=0
-g.coc_default_semantic_highlight_groups = 1
+g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
