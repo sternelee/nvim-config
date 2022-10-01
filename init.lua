@@ -104,7 +104,7 @@ packer.startup({function()
     end,
   })
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function () require'modules.typescript' end}
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  use 'jose-elias-alvarez/nvim-lsp-ts-lsputils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
@@ -293,28 +293,28 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
-map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
-map('n', '<leader>s', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>p', '<cmd>Telescope commands<CR>')
-map('n', 'fg', '<cmd>Telescope git_files<CR>')
-map('n', 'ft', '<cmd>Telescope treesitter<CR>')
-map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')
-map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>fa', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
+map('n', '<leader>f/', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>fr', '<cmd>Telescope resume<CR>')
+map('n', '<leader>fs', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>fg', '<cmd>Telescope git_files<CR>')
+map('n', '<leader>ft', '<cmd>Telescope treesitter<CR>')
+map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
+map('n', '<leader>fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
-map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', 'tl', '<cmd>Twilight<CR>')
-map('n', 'tw', '<cmd>Translate<CR>')
-map('n', 'th', '<cmd>TSDisable highlight<CR>')
--- nvim-lsp-ts-utils
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<leader>tl', '<cmd>Twilight<CR>')
+map('n', '<leader>tw', '<cmd>Translate<CR>')
+map('n', '<leader>th', '<cmd>TSDisable highlight<CR>')
+-- nvim-lsp-ts-lsputils
 map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
@@ -336,7 +336,7 @@ map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
-map('n', 'gn', '<cmd>bnext<CR>')
+-- map('n', 'gn', '<cmd>bnext<CR>')
 map('n', '<leader>be', '<cmd>tabedit<CR>')
 -- git
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
@@ -505,80 +505,7 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
 end
 
 require'modules.telescope'
-
-local disableTsOrLsp = function (_, bufnr)
-  local n = vim.api.nvim_buf_line_count(bufnr)
-  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
-end
-
---nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
-require('nvim-treesitter.configs').setup {
-  ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-    disable = disableTsOrLsp,
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    disable = disableTsOrLsp,
-  },
-  autotag = {
-    enable = true,
-    disable = disableTsOrLsp,
-  },
-  indent = {
-    enable = true,
-    disable = disableTsOrLsp,
-  },
-  incremental_selection = {
-    enable = false
-  },
-  context_commentstring = {
-    enable = false
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
-      },
-    },
-  },
-}
+require'modules.treesitter'
 
 local lspkind = require('lspkind')
 require'lspkind'.init()
@@ -710,10 +637,10 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
 
-    local ts_utils = require("nvim-lsp-ts-utils")
+    local ts_lsputils = require("nvim-lsp-ts-utils")
     local init_options = require("nvim-lsp-ts-utils").init_options
-    ts_utils.setup(init_options)
-    ts_utils.setup_client(client)
+    ts_lsputils.setup(init_options)
+    ts_lsputils.setup_client(client)
   end
 
   if client.name == 'tailwindcss' then
@@ -733,15 +660,15 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+local lspconfig = require("lspconfig")
+local lsputil = require 'lspconfig.util'
+
 local function setup_servers()
   require("mason").setup()
   require("mason-lspconfig").setup({
     ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
     automatic_installation = true
   })
-
-  local lspconfig = require("lspconfig")
-  local util = require 'lspconfig.util'
 
   local servers = { "sumneko_lua", "html", "cssls", "tsserver", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "bashls"}
   for _, lsp in ipairs(servers) do
@@ -758,24 +685,24 @@ local function setup_servers()
       }
     end
     if lsp == "tsserver" then
-      opts.root_dir = util.root_pattern('package.json')
+      opts.root_dir = lsputil.root_pattern('package.json')
       opts.capabilities =require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
-      opts.root_dir = util.root_pattern('deno.json', 'deno.jsonc')
+      opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
     if lsp == "vuels" then
-      opts.root_dir = util.root_pattern('vue.config.js')
+      opts.root_dir = lsputil.root_pattern('vue.config.js')
     end
     if lsp == "volar" then
-      opts.root_dir = util.root_pattern('.volarrc')
+      opts.root_dir = lsputil.root_pattern('.volarrc')
     end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
     if lsp == "eslint" then
-      opts.root_dir = util.root_pattern('.eslintrc')
+      opts.root_dir = lsputil.root_pattern('.eslintrc')
       opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
@@ -783,12 +710,12 @@ local function setup_servers()
     end
     if lsp == "tailwindcss" then
       -- opts.root_dir = function(fname)
-      --   return util.root_pattern('tailwind.config.js', 'tailwind.config.ts')(fname)
-      --     or util.root_pattern('windi.config.js', 'windi.config.ts')(fname)
-      --     or util.root_pattern('postcss.config.js', 'postcss.config.ts')(fname)
-      --     or util.find_package_json_ancestor(fname)
-      --     or util.find_node_modules_ancestor(fname)
-      --     or util.find_git_ancestor(fname)
+      --   return lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts')(fname)
+      --     or lsputil.root_pattern('windi.config.js', 'windi.config.ts')(fname)
+      --     or lsputil.root_pattern('postcss.config.js', 'postcss.config.ts')(fname)
+      --     or lsputil.find_package_json_ancestor(fname)
+      --     or lsputil.find_node_modules_ancestor(fname)
+      --     or lsputil.find_git_ancestor(fname)
       -- end
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
@@ -802,12 +729,10 @@ end
 setup_servers()
 
 -- 需要判断项目下有 .eslintrc
--- if fn.exists 'EslintFixAll' then
+-- if lsputil.root_pattern('.eslintrc') ~= nil then
 --   autocmd({"BufWritePre"}, {
 --     pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
---     callback = function()
---       nvim_exec([[EslintFixAll]], false)
---     end,
+--     command = 'EslintFixAll',
 --     desc = "Eslint Fix All"
 --   })
 -- end
