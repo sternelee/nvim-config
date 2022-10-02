@@ -55,24 +55,14 @@ packer.startup({function()
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'nvim-lualine/lualine.nvim'
-  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle',
-    config = function()
-      require'modules.nvim-tree'
-    end
-  }
+  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
   use 'goolord/alpha-nvim'
   -- git相关
   use 'tpope/vim-fugitive'
   use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
-  use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function()
-    require('git-conflict').setup()
-  end}
+  use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end}
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
-  use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'},
-    config = function ()
-      require('diffview').setup()
-    end
-  }
+  use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
@@ -91,67 +81,31 @@ packer.startup({function()
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
-  use {
-    'ahmedkhalf/project.nvim',
-    config = function()
-      require'project_nvim'.setup{}
-    end
-  }
+  use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use 'fannheyward/telescope-coc.nvim'
+  use {'weilbith/nvim-code-action-menu', opt = true, after = 'coc.nvim', requires = 'xiyaowong/coc-code-action-menu.nvim', cmd = 'CodeActionMenu', config = function() require 'coc-code-action-menu' end}
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
-  use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function()
-    require('numb').setup()
-  end}
+  use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use {'chentoast/marks.nvim', opt = true, event = 'BufRead',
-    config = function ()
-      require('marks').setup({
-        default_mappings = true,
-        builtin_marks = { ".", "<", ">", "^" },
-        cyclic = true,
-        force_write_shada = false,
-        refresh_interval = 250,
-        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-        excluded_filetypes = {},
-        bookmark_0 = {
-          sign = "⚑",
-          virt_text = "sterne"
-        },
-        mappings = {}
-      })
-    end}
+  use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
-  use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter',
-    config = function ()
-      require'modules.todo'
-    end
-  }
+  use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function () require'modules.todo' end}
   use {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use 'rcarriga/nvim-notify'
-  use {'nvim-pack/nvim-spectre',
-    opt = true,
-    event = 'InsertEnter',
-    config = function()
-      require('spectre').setup()
-    end
-  }
+  use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
-    config = function()
-      require'modules.ufo'
-  end}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
-
 end,
 config = {
   profile = {
@@ -193,7 +147,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -201,7 +155,7 @@ opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
--- opt('o', 'foldcolumn', '1')
+opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
 opt('o', 'foldlevel', 99)
 opt('o', 'foldlevelstart', 99)
@@ -231,8 +185,8 @@ local function map(mode, lhs, rhs)
   remap(mode, lhs, rhs, options)
 end
 
--- g.do_filetype_lua = 1 -- nvim > 0.7
--- g.did_load_filetypes = 0
+g.do_filetype_lua = 1 -- nvim > 0.7
+g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 map('v', 'P', '"0p')
@@ -249,24 +203,22 @@ map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
-map('n', '<leader>w', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>p', '<cmd>Telescope commands<CR>')
-map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')
-map('n', 'fp', '<cmd>Telescope projects<CR>')
-map('n', 'fg', '<cmd>Telescope git_files<CR>')
-map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')
-map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>fs', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
+map('n', '<leader>fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>fg', '<cmd>Telescope git_files<CR>')
+map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
+map('n', '<leader>fp', '<cmd>Telescope projects<CR>')
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
-map('n', 'tr', '<cmd>NvimTreeRefresh<CR>')
-map('n', 'tl', '<cmd>Twilight<CR>')
-map('n', 'tw', '<cmd>Translate<CR>')
+map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<leader>tl', '<cmd>Twilight<CR>')
+map('n', '<leader>tw', '<cmd>Translate<CR>')
 map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
 map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
@@ -282,7 +234,7 @@ map('n', '<Tab>', '<cmd>BufferNext<CR>')
 map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
-map('n', 'gn', '<cmd>bnext<CR>')
+-- map('n', 'gn', '<cmd>bnext<CR>')
 -- map('n', '<leader>be', '<cmd>tabedit<CR>')
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
@@ -324,6 +276,8 @@ map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
+map('n', '<leaader>ca', '<cmd>CodeActionMenu<CR>')
+
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
@@ -356,7 +310,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme kat.nvim'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
