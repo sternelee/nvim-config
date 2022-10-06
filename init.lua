@@ -61,6 +61,17 @@ packer.startup({function()
   use {'windwp/windline.nvim', config = function() require('modules.windline') end}
   use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
   use 'goolord/alpha-nvim'
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup()
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
   -- git相关
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
@@ -104,7 +115,7 @@ packer.startup({function()
     end,
   })
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function () require'modules.typescript' end}
-  use 'jose-elias-alvarez/nvim-lsp-ts-lsputils'
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
@@ -293,19 +304,19 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
-map('n', '<leader>fa', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>fm', '<cmd>Telescope marks<CR>')
-map('n', '<leader>f/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>fr', '<cmd>Telescope resume<CR>')
-map('n', '<leader>fs', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>fg', '<cmd>Telescope git_files<CR>')
-map('n', '<leader>ft', '<cmd>Telescope treesitter<CR>')
-map('n', '<leader>fc', '<cmd>Telescope commands<CR>')
-map('n', '<leader>fe', '<cmd>Telescope file_browser<CR>')
-map('n', '<leader>fp', '<cmd>Telescope projects<CR>')
-map('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>')
+map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+map('n', '<leader>c', '<cmd>Telescope grep_string<CR>')
+map('n', '<leader>g', '<cmd>Telescope git_files<CR>')
+map('n', 'ft', '<cmd>Telescope treesitter<CR>')
+map('n', 'fc', '<cmd>Telescope commands<CR>')
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -337,7 +348,7 @@ map('n', '<s-Tab>', '<cmd>BufferPrevious<CR>')
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
 -- map('n', 'gn', '<cmd>bnext<CR>')
-map('n', '<leader>be', '<cmd>tabedit<CR>')
+-- map('n', '<leader>be', '<cmd>tabedit<CR>')
 -- git
 map('n', '<leader>ga', '<cmd>Git add %:p<CR>')
 map('n', '<leader>go', '<cmd>Git add .<CR>')
