@@ -10,6 +10,7 @@ end
 M.on_attach = on_attach;
 
 M.settings = {
+  autoFixOnSave = true,
   codeAction = {
     disableRuleComment = {
       enable = true,
