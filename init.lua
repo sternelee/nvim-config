@@ -61,23 +61,23 @@ packer.startup({function()
   use {'windwp/windline.nvim', config = function() require('modules.windline') end}
   use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
   use 'goolord/alpha-nvim'
-  -- use({
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup()
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --     }
-  -- })
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup()
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
   -- git相关
-  use 'lewis6991/gitsigns.nvim'
+  use {'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function () require'modules.gitsigns' end}
   use 'tpope/vim-fugitive'
   use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end}
-  use {'f-person/git-blame.nvim', event = 'BufRead'}-- 显示git message
+  use {'f-person/git-blame.nvim', opt = true, event = 'BufRead'}-- 显示git message
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
@@ -86,7 +86,7 @@ packer.startup({function()
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
-  use 'NvChad/nvim-colorizer.lua' -- 色值高亮
+  use {'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function () require'modules.colorizer' end} -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
@@ -110,6 +110,8 @@ packer.startup({function()
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    opt = true,
+    event = 'BufRead',
     config = function()
       require("lsp_lines").setup()
     end,
@@ -140,7 +142,7 @@ packer.startup({function()
     end}
   -- 语法提示
   use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  use {'glepnir/lspsaga.nvim', branch = 'main', config = function() require'modules.saga' end}
+  use {'glepnir/lspsaga.nvim', opt = true, event = 'BufRead', branch = 'main', config = function() require'modules.saga' end}
   use {'weilbith/nvim-code-action-menu', opt = true, cmd = 'CodeActionMenu'}
   use 'onsails/lspkind-nvim'
   use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
@@ -170,10 +172,10 @@ packer.startup({function()
     config = function()
       require('cmp-npm').setup({})
     end}
-  use {
-    'vuki656/package-info.nvim',
-    requires = 'MunifTanjim/nui.nvim',
+  use {'vuki656/package-info.nvim',
+    opt = true,
     event = 'BufRead package.json',
+    requires = 'MunifTanjim/nui.nvim',
     config = function()
       require('package-info').setup{
         package_manager = 'pnpm'
@@ -182,7 +184,7 @@ packer.startup({function()
   use {'NTBBloodbath/rest.nvim', opt = true, ft = 'http', config = function() require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump', 'AnyJumpVisual', 'AnyJumpBack'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {'rmagatti/goto-preview', opt = true, evnet = 'BufRead', config = function() require('goto-preview').setup {} end}
+  use {'rmagatti/goto-preview', opt = true, ft = {'typescript', 'javascript', 'typescriptreact', 'rust', 'vue'}, evnet = 'BufRead', config = function() require('goto-preview').setup {} end}
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
   -- 方便操作
@@ -208,7 +210,7 @@ packer.startup({function()
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
+  -- use {'kevinhwang91/nvim-ufo', opt = true, event = 'InsertEnter', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
 end,
@@ -311,7 +313,7 @@ map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', '<leader>c', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>g', '<cmd>Telescope git_files<CR>')
+map('n', 'fg', '<cmd>Telescope git_files<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
@@ -748,40 +750,6 @@ setup_servers()
 --   })
 -- end
 
---gitsigns
-require'gitsigns'.setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {
-    noremap = true,
-    buffer = true,
-
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-    ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-}
-
 local startify = require('alpha.themes.startify')
 local header = {
    '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
@@ -810,18 +778,6 @@ startify.section.header.val = header
 require'alpha'.setup(startify.opts)
 
 require'which-key'.setup{}
-require'colorizer'.setup{
-  filetypes = { "*" },
-  user_default_options = {
-    rgb_fn = true,
-    hsl_fn = true,
-    css = true,
-    css_fn = true,
-    tailwindcss = true,
-    sass = { enable = true, parsers = { css } }
-  }
-}
-
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
 cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
