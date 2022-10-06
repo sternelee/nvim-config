@@ -1,37 +1,40 @@
 local keyset = vim.keymap.set
+local remap = vim.api.nvim_set_keymap
 local usercmd = vim.api.nvim_create_user_command
 
 -- Auto complete
--- function _G.check_back_space()
---     local col = vim.fn.col('.') - 1
---     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
--- end
+function _G.check_back_space()
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
+end
 
--- local opts = {silent = true, noremap = true, expr = true}
--- keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
--- keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+local opts = {silent = true, noremap = true, expr = true}
+remap("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+remap("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
 -- Make <CR> to accept selected completion item or notify coc.nvim to format
 -- <C-g>u breaks current undo, please make your own choice.
--- keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+remap("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use <c-j> to trigger snippets
 keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
 -- Use <c-space> to trigger completion.
 keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 
+-- Use `[g` and `]g` to navigate diagnostics
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-keyset("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
-keyset("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
+keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
+keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation.
 keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+
 keyset("n", "gh", "<Plug>(coc-references)", {silent = true})
 
-keyset("n", "gef", ":CocCommand eslint.executeAutofix<CR>", {})
+keyset("n", "gf", ":CocCommand eslint.executeAutofix<CR>", {})
 keyset("n", "gj", ":CocCommand tsserver.goToSourceDefinition<CR>", {silent = true})
 
 -- Use K to show documentation in preview window.
@@ -78,8 +81,8 @@ vim.api.nvim_create_autocmd("User", {
 -- Applying codeAction to the selected region.
 -- Example: `<leader>aap` for current paragraph
 local opts = {silent = true, nowait = true}
-keyset("x", "<leader>as", "<Plug>(coc-codeaction-selected)", opts)
-keyset("n", "<leader>as", "<Plug>(coc-codeaction-selected)", opts)
+keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
+keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
 
 -- Remap keys for applying codeAction to the current buffer.
 keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts)
@@ -142,19 +145,19 @@ local opts = {silent = true, nowait = true}
 -- Show all diagnostics.
 keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
 -- Manage extensions.
-keyset("n", "<space>ce", ":<C-u>CocList extensions<cr>", opts)
+keyset("n", "<space>e", ":<C-u>CocList extensions<cr>", opts)
 -- Show commands.
-keyset("n", "<space>cc", ":<C-u>CocList commands<cr>", opts)
+keyset("n", "<space>c", ":<C-u>CocList commands<cr>", opts)
 -- Find symbol of current document.
-keyset("n", "<space>co", ":<C-u>CocList outline<cr>", opts)
+keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
 -- Search workspace symbols.
-keyset("n", "<space>cs", ":<C-u>CocList -I symbols<cr>", opts)
+keyset("n", "<space>s", ":<C-u>CocList -I symbols<cr>", opts)
 -- Do default action for next item.
 keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
 -- Do default action for previous item.
 keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list.
-keyset("n", "<space>cp", ":<C-u>CocListResume<cr>", opts)
+keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
 
 -- coc-winbar by coc-symbol-line
 function _G.symbol_line()
