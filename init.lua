@@ -196,7 +196,14 @@ packer.startup({function()
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use({
+    "kylechui/nvim-surround",
+    tag = "main",
+    opt = true, event = 'InsertEnter',
+    config = function()
+        require("nvim-surround").setup{}
+    end})
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -207,6 +214,11 @@ packer.startup({function()
   use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
   use {'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require'modules.formatter' end}
   use 'rcarriga/nvim-notify'
+  -- use {
+  -- "vigoux/notifier.nvim",
+  -- config = function()
+  --   require'notifier'.setup {}
+  -- end}
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
