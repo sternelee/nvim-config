@@ -61,17 +61,6 @@ packer.startup({function()
   use {'windwp/windline.nvim', config = function() require('modules.windline') end}
   use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
   use 'goolord/alpha-nvim'
-  use({
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("noice").setup()
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-      }
-  })
   -- git相关
   use {'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function () require'modules.gitsigns' end}
   use 'tpope/vim-fugitive'
