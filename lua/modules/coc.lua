@@ -59,8 +59,8 @@ vim.api.nvim_create_autocmd("CursorHold", {
 })
 
 -- Formatting selected code.
-keyset("x", "<leader>fo", "<Plug>(coc-format-selected)", {silent = true})
-keyset("n", "<leader>fo", "<Plug>(coc-format-selected)", {silent = true})
+keyset("x", "fo", "<Plug>(coc-format-selected)", {silent = true})
+keyset("n", "fo", "<Plug>(coc-format-selected)", {silent = true})
 
 -- Setup formatexpr specified filetype(s).
 vim.api.nvim_create_autocmd("FileType", {
@@ -81,8 +81,8 @@ vim.api.nvim_create_autocmd("User", {
 -- Applying codeAction to the selected region.
 -- Example: `<leader>aap` for current paragraph
 local opts = {silent = true, nowait = true}
-keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
-keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
+keyset("x", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts)
+keyset("n", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts)
 
 -- Remap keys for applying codeAction to the current buffer.
 keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts)
@@ -143,21 +143,21 @@ usercmd("Prettier", ":CocCommand prettier.formatFile", {})
 ---@diagnostic disable-next-line: redefined-local
 local opts = {silent = true, nowait = true}
 -- Show all diagnostics.
-keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
+keyset("n", "<leader>ca", ":<C-u>CocList diagnostics<cr>", opts)
 -- Manage extensions.
-keyset("n", "<space>e", ":<C-u>CocList extensions<cr>", opts)
+keyset("n", "<leader>ce", ":<C-u>CocList extensions<cr>", opts)
 -- Show commands.
-keyset("n", "<space>c", ":<C-u>CocList commands<cr>", opts)
+keyset("n", "<leader>cc", ":<C-u>CocList commands<cr>", opts)
 -- Find symbol of current document.
-keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
+keyset("n", "<leader>co", ":<C-u>CocList outline<cr>", opts)
 -- Search workspace symbols.
-keyset("n", "<space>s", ":<C-u>CocList -I symbols<cr>", opts)
+keyset("n", "<leader>cs", ":<C-u>CocList -I symbols<cr>", opts)
 -- Do default action for next item.
-keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
+keyset("n", "<leader>cj", ":<C-u>CocNext<cr>", opts)
 -- Do default action for previous item.
-keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
+keyset("n", "<leader>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list.
-keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
+keyset("n", "<leader>p", ":<C-u>CocListResume<cr>", opts)
 
 -- coc-winbar by coc-symbol-line
 function _G.symbol_line()
