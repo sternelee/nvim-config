@@ -155,7 +155,7 @@ opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
-opt('o', 'foldcolumn', '1')
+-- opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
 opt('o', 'foldlevel', 99)
 opt('o', 'foldlevelstart', 99)
@@ -424,7 +424,7 @@ g.coc_global_extensions = {
 }
 
 g.coc_start_at_startup=0
-g.coc_default_semantic_highlight_groups = 0
+g.coc_default_semantic_highlight_groups = 1
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 

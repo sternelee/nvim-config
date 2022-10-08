@@ -5,7 +5,7 @@
   "coc.preferences.enableMessageDialog": true,
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": true,
-  "semanticTokens.enable": false,
+  "semanticTokens.enable": true,
   "codeLens.enable": false,
   "codeLens.separator": "",
   "codeLens.subseparator": " │ ",
