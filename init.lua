@@ -101,7 +101,6 @@ packer.startup({function()
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use 'fannheyward/telescope-coc.nvim'
-  use {'weilbith/nvim-code-action-menu', opt = true, after = 'coc.nvim', requires = 'xiyaowong/coc-code-action-menu.nvim', cmd = 'CodeActionMenu', config = function() require 'coc-code-action-menu' end}
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
@@ -293,8 +292,6 @@ map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
-
-map('n', '<leaader>ca', '<cmd>CodeActionMenu<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
