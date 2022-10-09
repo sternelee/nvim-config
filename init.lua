@@ -51,17 +51,17 @@ packer.startup({function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
-  use({
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("noice").setup()
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-      }
-  })
+  -- use({
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("noice").setup()
+  --   end,
+  --   requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --     }
+  -- })
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
