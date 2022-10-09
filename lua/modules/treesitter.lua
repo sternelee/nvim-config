@@ -1,7 +1,6 @@
 local disableTsOrLsp = function (_, bufnr)
   local n = vim.api.nvim_buf_line_count(bufnr)
-  -- return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
-  return  n > 10000
+  return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
 end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag

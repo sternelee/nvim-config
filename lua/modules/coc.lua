@@ -135,23 +135,23 @@ usercmd("Prettier", ":CocCommand prettier.formatFile", {})
 -- Mappings for CoCList
 -- code actions and coc stuff
 ---@diagnostic disable-next-line: redefined-local
-local opts = {silent = true, nowait = true}
+-- local opts = {silent = true, nowait = true}
 -- Show all diagnostics.
-keyset("n", "<leader>ca", ":<C-u>CocList diagnostics<cr>", opts)
+-- keyset("n", "<leader>a", ":<C-u>CocList diagnostics<cr>", opts)
 -- Manage extensions.
-keyset("n", "<leader>ce", ":<C-u>CocList extensions<cr>", opts)
+-- keyset("n", "<leader>e", ":<C-u>CocList extensions<cr>", opts)
 -- Show commands.
-keyset("n", "<leader>cc", ":<C-u>CocList commands<cr>", opts)
+-- keyset("n", "<leader>c", ":<C-u>CocList commands<cr>", opts)
 -- Find symbol of current document.
-keyset("n", "<leader>co", ":<C-u>CocList outline<cr>", opts)
+-- keyset("n", "<leader>o", ":<C-u>CocList outline<cr>", opts)
 -- Search workspace symbols.
-keyset("n", "<leader>cs", ":<C-u>CocList -I symbols<cr>", opts)
+-- keyset("n", "<leader>s", ":<C-u>CocList -I symbols<cr>", opts)
 -- Do default action for next item.
-keyset("n", "<leader>cj", ":<C-u>CocNext<cr>", opts)
+-- keyset("n", "<leader>j", ":<c-u>CocNext<cr>", opts)
 -- Do default action for previous item.
-keyset("n", "<leader>k", ":<C-u>CocPrev<cr>", opts)
+-- keyset("n", "<leader>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list.
-keyset("n", "<leader>p", ":<C-u>CocListResume<cr>", opts)
+-- keyset("n", "<leader>p", ":<C-u>CocListResume<cr>", opts)
 
 -- coc-winbar by coc-symbol-line
 function _G.symbol_line()

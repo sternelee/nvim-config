@@ -82,6 +82,11 @@ packer.startup({function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
+  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
+    require('reach').setup({
+     notifications = true
+    })
+  end}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use 'fannheyward/telescope-coc.nvim'
@@ -96,6 +101,7 @@ packer.startup({function()
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
+  use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function () require'modules.todo' end}
   use {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
@@ -103,7 +109,7 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
 end,
@@ -205,7 +211,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>C', '<cmd>Telescope coc<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')
@@ -270,8 +277,8 @@ map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
-map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
-map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+-- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+-- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
