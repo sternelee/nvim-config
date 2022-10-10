@@ -119,7 +119,7 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
 end,
@@ -287,8 +287,8 @@ map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
--- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
--- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
