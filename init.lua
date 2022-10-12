@@ -119,6 +119,7 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
+    {'hrsh7th/cmp-nvim-lsp-document-symbol'},
     {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
@@ -581,14 +582,14 @@ cmp.setup({
     end, { "i", "s" }),
   },
   sources = {
-    { name = 'nvim_lsp', priority = 8 },
+    { name = 'nvim_lsp', priority = 10 },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
-    -- { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine', priority = 7 },
     { name = 'git' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
@@ -632,7 +633,9 @@ cmp.setup.cmdline('/', {
 
 cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
-    { name = 'cmdline' }
+    { name = 'nvim_lsp_document_symbol' }
+  }, {
+    { name = 'buffer' }
   })
 })
 
@@ -738,14 +741,6 @@ local function setup_servers()
       }
     end
     if lsp == "tailwindcss" then
-      -- opts.root_dir = function(fname)
-      --   return lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts')(fname)
-      --     or lsputil.root_pattern('windi.config.js', 'windi.config.ts')(fname)
-      --     or lsputil.root_pattern('postcss.config.js', 'postcss.config.ts')(fname)
-      --     or lsputil.find_package_json_ancestor(fname)
-      --     or lsputil.find_node_modules_ancestor(fname)
-      --     or lsputil.find_git_ancestor(fname)
-      -- end
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
