@@ -51,17 +51,6 @@ packer.startup({function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
-  -- use({
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup()
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --     }
-  -- })
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
@@ -325,7 +314,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -410,6 +399,9 @@ cmd [[
   highlight IndentBlanklineIndent4 guifg=#56B6C2
   highlight IndentBlanklineIndent5 guifg=#61AFEF
   highlight IndentBlanklineIndent6 guifg=#C678DD
+  highlight MarkSignHL guifg=#E06C75
+  highlight MarkSignNumHL guifg=#E5C07B
+  highlight MarkVirtTextHL guifg=#98C379
   highlight Normal ctermbg=NONE guibg=NONE
 ]]
 
@@ -461,10 +453,6 @@ cmd [[
 ]]
 
 require'modules.coc'
-
--- function _G.CocTimerStart()
---   execute "CocStart"
--- end
 
 cmd [[
   function! CocTimerStart(timer)
