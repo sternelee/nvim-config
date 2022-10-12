@@ -119,7 +119,6 @@ packer.startup({function()
     {'hrsh7th/cmp-calc'},
     {'hrsh7th/cmp-emoji'},
     {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    {'hrsh7th/cmp-nvim-lsp-document-symbol'},
     {'hrsh7th/cmp-cmdline'},
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
@@ -582,14 +581,14 @@ cmp.setup({
     end, { "i", "s" }),
   },
   sources = {
-    { name = 'nvim_lsp', priority = 10 },
+    { name = 'nvim_lsp', priority = 8 },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option={keyword_length=2} },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
     -- { name = 'spell' },
-    -- { name = 'cmp_tabnine', priority = 7 },
+    -- { name = 'cmp_tabnine' },
     { name = 'git' },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
@@ -633,9 +632,7 @@ cmp.setup.cmdline('/', {
 
 cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
-    { name = 'nvim_lsp_document_symbol' }
-  }, {
-    { name = 'buffer' }
+    { name = 'cmdline' }
   })
 })
 
