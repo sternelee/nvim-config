@@ -150,6 +150,7 @@
     "unplugin",
     "vitejs",
     "windi",
+    "xlpan",
     "xlpfont"
   ],
   "Lua.telemetry.enable": false,
