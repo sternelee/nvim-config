@@ -95,7 +95,6 @@ packer.startup({function()
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "tamago324/nlsp-settings.nvim",
     "neovim/nvim-lspconfig",
   }
   use({
@@ -674,23 +673,9 @@ end
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
 
-local nlspsettings = require("nlspsettings")
-
-nlspsettings.setup({
-  config_home = vim.fn.stdpath('config') .. '/nlsp-settings',
-  local_settings_dir = ".vim",
-  local_settings_root_markers_fallback = { '.git' },
-  append_default_schemas = true,
-  loader = 'json'
-})
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
-  capabilities = global_capabilities,
-})
 
 local function setup_servers()
   require("mason").setup()
@@ -716,7 +701,7 @@ local function setup_servers()
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
       opts.capabilities =require('lsp/tsserver').capabilities
-      -- opts.settings = require('lsp/tsserver').settings
+      opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
@@ -727,12 +712,12 @@ local function setup_servers()
     -- if lsp == "volar" then
     --   opts.root_dir = lsputil.root_pattern('.volarrc')
     -- end
-    -- if lsp == "sumneko_lua" then
-    --   opts.settings = require('lsp/sumneko_lua').settings
-    -- end
+    if lsp == "sumneko_lua" then
+      opts.settings = require('lsp/sumneko_lua').settings
+    end
     if lsp == "eslint" then
       -- opts.root_dir = lsputil.root_pattern('.eslintrc')
-      -- opts.settings =require('lsp/eslint').settings
+      opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
@@ -741,7 +726,7 @@ local function setup_servers()
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
-      -- opts.settings = require('lsp/tailwindcss').settings
+      opts.settings = require('lsp/tailwindcss').settings
     end
     lspconfig[lsp].setup(opts)
    end
