@@ -14,6 +14,12 @@
   "suggest.noselect": false,
   "suggest.defaultSortMethod": "none",
   "suggest.snippetIndicator": "",
+  "suggest.floatConfig": {
+    "border": true,
+    "borderhighlight": "FloatBorder",
+    "highlight": "Normal",
+    "maxWidth": 120
+  },
   "suggest.languageSourcePriority": 99,
   "suggest.triggerCompletionWait": 50,
   "suggest.acceptSuggestionOnCommitCharacter": true,
@@ -91,10 +97,6 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.semicolons": "remove",
   "typescript.format.semicolons": "remove",
-  "rust-analyzer.diagnostics.enable": true,
-  "rust-analyzer.trace.server": "off",
-  "rust-analyzer.server.path": "rust-analyzer",
-  "rust-analyzer.inlayHints.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.run": "onSave",
   "json.trace.server": "off",
@@ -104,10 +106,6 @@
       "url": "https://raw.githubusercontent.com/kevinhwang91/dotfiles/main/nvim/snippets/snippets.json"
     }
   ],
-  "yaml.trace.server": "off",
-  "yaml.validate": true,
-  "yaml.format.singleQuote": true,
-  "yaml.completion": true,
   "outline.keepWindow": true,
   "outline.sortBy": "position",
   "outline.splitCommand": "botright 40vs",
@@ -136,6 +134,7 @@
   ],
   "cSpell.userWords": [
     "Bybl",
+    "Neovim",
     "Vite",
     "Vitesse",
     "athing",
