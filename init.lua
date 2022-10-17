@@ -323,7 +323,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-atlas'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}

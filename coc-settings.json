@@ -12,6 +12,7 @@
   "codeLens.position": "eol",
   "suggest.enablePreselect": false,
   "suggest.noselect": false,
+  "suggest.virtualText": true,
   "suggest.defaultSortMethod": "none",
   "suggest.snippetIndicator": "",
   "suggest.floatConfig": {
@@ -150,7 +151,8 @@
     "vitejs",
     "windi",
     "xlpan",
-    "xlpfont"
+    "xlpfont",
+    "xunleiapp"
   ],
   "Lua.telemetry.enable": false,
   "Lua.diagnostics.globals": ["vim", "use", "bit"],
