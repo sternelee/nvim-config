@@ -70,7 +70,7 @@ packer.startup({function()
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
-  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
@@ -86,11 +86,17 @@ packer.startup({function()
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  -- use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
+  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
+    require('reach').setup({
+     notifications = true
+    })
+  end}
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -303,14 +309,15 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
-map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
-map('n', 'gl', '<cmd>HopLine<CR>')
-map('n', 'g/', '<cmd>HopPattern<CR>')
+-- map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+-- map('n', 'gl', '<cmd>HopLine<CR>')
+-- map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')
@@ -487,7 +494,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -673,9 +680,7 @@ end
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local function setup_servers()
   require("mason").setup()
@@ -709,14 +714,14 @@ local function setup_servers()
     if lsp == "vuels" then
       opts.root_dir = lsputil.root_pattern('vue.config.js')
     end
-    -- if lsp == "volar" then
-    --   opts.root_dir = lsputil.root_pattern('.volarrc')
-    -- end
+    if lsp == "volar" then
+      opts.root_dir = lsputil.root_pattern('.volarrc')
+    end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
     if lsp == "eslint" then
-      -- opts.root_dir = lsputil.root_pattern('.eslintrc')
+      opts.root_dir = lsputil.root_pattern('.eslintrc')
       opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
