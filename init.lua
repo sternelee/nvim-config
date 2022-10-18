@@ -98,15 +98,15 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  -- use({
-  --     "kylechui/nvim-surround",
-  --     opt = true, event = 'InsertEnter',
-  --     tag = "main",
-  --     config = function()
-  --       require("nvim-surround").setup({})
-  --     end
-  -- })
+  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use({
+      "kylechui/nvim-surround",
+      opt = true, event = 'InsertEnter',
+      tag = "main",
+      config = function()
+        require("nvim-surround").setup({})
+      end
+  })
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
