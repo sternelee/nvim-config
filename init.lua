@@ -98,15 +98,15 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use({
-      "kylechui/nvim-surround",
-      opt = true, event = 'InsertEnter',
-      tag = "main",
-      config = function()
-        require("nvim-surround").setup({})
-      end
-  })
+  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  -- use({
+  --     "kylechui/nvim-surround",
+  --     opt = true, event = 'InsertEnter',
+  --     tag = "main",
+  --     config = function()
+  --       require("nvim-surround").setup({})
+  --     end
+  -- })
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -120,6 +120,7 @@ packer.startup({function()
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
+  use 'numToStr/FTerm.nvim'
 end,
 config = {
   profile = {
@@ -261,7 +262,6 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
-map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')
@@ -275,7 +275,7 @@ map('v', '<leader>sv', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
 map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
 map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
 map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
@@ -290,6 +290,9 @@ map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
+
+map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -323,7 +326,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme kat.nvim'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
