@@ -306,6 +306,14 @@ autocmd({ "TextYankPost" }, {
     group = autogroup("highlight_yank", { clear = true }),
 })
 
+autocmd({ "InsertLeave" }, {
+  pattern = "*",
+  callback = function()
+      execute(':w')
+  end,
+  desc = "save file when switch buffer"
+})
+
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
   map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
