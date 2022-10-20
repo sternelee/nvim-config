@@ -457,7 +457,7 @@ g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
-g.trigger_size = 0.5 * 1048576
+-- g.trigger_size = 0.5 * 1048576
 
 -- 性能足够了
 -- cmd [[
