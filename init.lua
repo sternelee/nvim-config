@@ -713,14 +713,14 @@ local function setup_servers()
         },
       }
     end
-    if lsp == "tsserver" then
-      opts.root_dir = lsputil.root_pattern('package.json')
-      -- opts.capabilities =require('lsp/tsserver').capabilities
-      -- opts.settings = require('lsp/tsserver').settings
-    end
-    -- if lsp == "denols" then
-    --   opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
+    -- if lsp == "tsserver" then
+    --   opts.root_dir = lsputil.root_pattern('package.json')
+    --   opts.capabilities =require('lsp/tsserver').capabilities
+    --   opts.settings = require('lsp/tsserver').settings
     -- end
+    if lsp == "denols" then
+      opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
+    end
     if lsp == "vuels" then
       opts.root_dir = lsputil.root_pattern('vue.config.js')
     end
@@ -750,24 +750,24 @@ end
 setup_servers()
 
 -- eslint autoFixOnSave
-local function can_autofix(client)
-  return client.config.settings.autoFixOnSave or false
-end
+-- local function can_autofix(client)
+--   return client.config.settings.autoFixOnSave or false
+-- end
 
-local function fix_on_save()
-  local clients = vim.lsp.get_active_clients()
-  local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
-  if #can_autofix_clients > 0 then
-    execute('EslintFixAll')
-  end
-end
+-- local function fix_on_save()
+--   local clients = vim.lsp.get_active_clients()
+--   local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
+--   if #can_autofix_clients > 0 then
+--     execute('EslintFixAll')
+--   end
+-- end
 
-autocmd({"BufWritePre"}, {
-  pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
-  -- command = 'EslintFixAll',
-  callback = fix_on_save,
-  desc = "Eslint Fix All"
-})
+-- autocmd({"BufWritePre"}, {
+--   pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
+--   -- command = 'EslintFixAll',
+--   callback = fix_on_save,
+--   desc = "Eslint Fix All"
+-- })
 
 local startify = require('alpha.themes.startify')
 local header = {
