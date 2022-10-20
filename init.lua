@@ -78,7 +78,7 @@ packer.startup({function()
   use {'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function () require'modules.colorizer' end} -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
+  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
   use {'katawful/kat.nvim', tag = '1.0'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline' end}
@@ -99,9 +99,10 @@ packer.startup({function()
   end}
   -- 语法建议
   use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
+    -- "williamboman/mason.nvim",
+    -- "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    "sternelee/nlsp-settings.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -494,7 +495,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme kat.nvim'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -679,15 +680,24 @@ end
 
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
+local nlspsettings = require("nlspsettings")
+
+nlspsettings.setup({
+  config_home = vim.fn.stdpath('config') .. '/nlsp-settings',
+  local_settings_dir = ".nlsp-settings",
+  local_settings_root_markers_fallback = { '.git' },
+  append_default_schemas = true,
+  loader = 'json'
+})
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local function setup_servers()
-  require("mason").setup()
-  require("mason-lspconfig").setup({
-    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
-    automatic_installation = true
-  })
+  -- require("mason").setup()
+  -- require("mason-lspconfig").setup({
+  --   ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
+  --   automatic_installation = true
+  -- })
 
   local servers = { "sumneko_lua", "html", "cssls", "tsserver", "jsonls", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "bashls"}
   for _, lsp in ipairs(servers) do
@@ -705,34 +715,34 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
-      opts.capabilities =require('lsp/tsserver').capabilities
-      opts.settings = require('lsp/tsserver').settings
+      -- opts.capabilities =require('lsp/tsserver').capabilities
+      -- opts.settings = require('lsp/tsserver').settings
     end
-    if lsp == "denols" then
-      opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
-    end
+    -- if lsp == "denols" then
+    --   opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
+    -- end
     if lsp == "vuels" then
       opts.root_dir = lsputil.root_pattern('vue.config.js')
     end
-    if lsp == "volar" then
-      opts.root_dir = lsputil.root_pattern('.volarrc')
-    end
-    if lsp == "sumneko_lua" then
-      opts.settings = require('lsp/sumneko_lua').settings
-    end
+    -- if lsp == "volar" then
+    --   opts.root_dir = lsputil.root_pattern('.volarrc')
+    -- end
+    -- if lsp == "sumneko_lua" then
+    --   opts.settings = require('lsp/sumneko_lua').settings
+    -- end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern('.eslintrc')
-      opts.settings =require('lsp/eslint').settings
+      -- opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
     end
-    if lsp == "tailwindcss" then
-      opts.filetypes = require('lsp/tailwindcss').filetypes
-      opts.capabilities = require('lsp/tailwindcss').capabilities
-      opts.init_options = require('lsp/tailwindcss').init_options
-      opts.settings = require('lsp/tailwindcss').settings
-    end
+    -- if lsp == "tailwindcss" then
+    --   opts.filetypes = require('lsp/tailwindcss').filetypes
+    --   opts.capabilities = require('lsp/tailwindcss').capabilities
+    --   opts.init_options = require('lsp/tailwindcss').init_options
+    --   opts.settings = require('lsp/tailwindcss').settings
+    -- end
     lspconfig[lsp].setup(opts)
    end
 end
