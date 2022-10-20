@@ -70,16 +70,15 @@ packer.startup({function()
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}
-  use {'katawful/kat.nvim', tag = '1.0'}
+  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'katawful/kat.nvim', 'sainnhe/sonokai'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  -- use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
+  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
@@ -98,15 +97,15 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use({
-      "kylechui/nvim-surround",
-      opt = true, event = 'InsertEnter',
-      tag = "main",
-      config = function()
-        require("nvim-surround").setup({})
-      end
-  })
+  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  -- use({
+  --     "kylechui/nvim-surround",
+  --     opt = true, event = 'InsertEnter',
+  --     tag = "main",
+  --     config = function()
+  --       require("nvim-surround").setup({})
+  --     end
+  -- })
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -213,9 +212,9 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
--- map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
--- map('n', 'gl', '<cmd>HopLine<CR>')
--- map('n', 'g/', '<cmd>HopPattern<CR>')
+map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+map('n', 'gl', '<cmd>HopLine<CR>')
+map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
@@ -306,13 +305,14 @@ autocmd({ "TextYankPost" }, {
     group = autogroup("highlight_yank", { clear = true }),
 })
 
-autocmd({ "InsertLeave" }, {
-  pattern = "*",
-  callback = function()
-      execute(':w')
-  end,
-  desc = "save file when switch buffer"
-})
+-- 自动保存
+-- autocmd({ "InsertLeave" }, {
+--   pattern = "*",
+--   callback = function()
+--       execute(':w')
+--   end,
+--   desc = "save file when switch buffer"
+-- })
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -334,7 +334,8 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+g.sonokai_style = 'andromeda'
+cmd 'colorscheme sonokai'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
