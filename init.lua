@@ -70,7 +70,7 @@ packer.startup({function()
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'katawful/kat.nvim', 'sainnhe/sonokai'}
+  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'katawful/kat.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -334,8 +334,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.sonokai_style = 'andromeda'
-cmd 'colorscheme sonokai'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
