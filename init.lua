@@ -69,8 +69,9 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'katawful/kat.nvim'}
+  -- use 'RRethy/nvim-base16'
+  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'sternelee/kat.nvim'}
+  use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -334,7 +335,8 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+g.gruvbox_material_background = 'soft'
+cmd 'colorscheme gruvbox-material'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
