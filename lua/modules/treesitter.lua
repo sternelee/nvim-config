@@ -1,7 +1,8 @@
--- local disableTsOrLsp = function (_, bufnr)
---   local n = vim.api.nvim_buf_line_count(bufnr)
---   return  n > 10000 or n < 10 -- 大于一万行，或小于10行（可能是压缩的js文件）
--- end
+local disableTsOrLsp = function (_, bufnr)
+  local lcount = vim.api.nvim_buf_line_count(bufnr)
+  local bytes = vim.api.nvim_buf_get_offset(bufnr, lcount)
+  return bytes / lcount > 500
+end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
@@ -9,20 +10,20 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
-    -- disable = disableTsOrLsp,
+    disable = disableTsOrLsp,
   },
   rainbow = {
     enable = true,
     extended_mode = true,
-    -- disable = disableTsOrLsp,
+    disable = disableTsOrLsp,
   },
   autotag = {
     enable = true,
-    -- disable = disableTsOrLsp,
+    disable = disableTsOrLsp,
   },
   indent = {
     enable = true,
-    -- disable = disableTsOrLsp,
+    disable = disableTsOrLsp,
   },
   incremental_selection = {
     enable = false
