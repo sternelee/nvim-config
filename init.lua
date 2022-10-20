@@ -335,8 +335,8 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.gruvbox_material_background = 'soft'
-cmd 'colorscheme gruvbox-material'
+g.edge_style = 'neon'
+cmd 'colorscheme edge'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
