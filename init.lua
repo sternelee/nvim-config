@@ -120,7 +120,8 @@ packer.startup({function()
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
-  use 'numToStr/FTerm.nvim'
+  use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
+  use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
 end,
 config = {
   profile = {
@@ -186,7 +187,7 @@ opt('o', 'syntax', 'on')
 opt('o', 'filetype', 'on')
 opt('o', 'timeoutlen', 300)
 opt('o', 'showcmd', true)
-opt('o', 'history', 500)
+opt('o', 'history', 100)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'writebackup', false)
@@ -335,8 +336,8 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.edge_style = 'neon'
-cmd 'colorscheme edge'
+-- g.edge_style = 'neon'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
