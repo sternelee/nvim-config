@@ -122,6 +122,26 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
+    use {
+  'gelguy/wilder.nvim',
+  config = function()
+    local wilder = require('wilder')
+    wilder.set_option('renderer', wilder.popupmenu_renderer({
+      highlighter = wilder.basic_highlighter(),
+    }))
+    wilder.setup({modes = {':', '/', '?'}})
+  end}
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup()
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
 end,
 config = {
   profile = {
@@ -160,7 +180,7 @@ opt('o', 'background', 'dark')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
 opt('w', 'number', true)                              -- Print line number
-opt('o', 'lazyredraw', true)
+-- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
@@ -308,13 +328,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- 自动保存
--- autocmd({ "InsertLeave" }, {
---   pattern = "*",
---   callback = function()
---       execute(':w')
---   end,
---   desc = "save file when switch buffer"
--- })
+require'modules.auto-save'
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
