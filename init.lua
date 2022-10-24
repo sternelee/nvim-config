@@ -122,15 +122,15 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-    use {
-  'gelguy/wilder.nvim',
-  config = function()
-    local wilder = require('wilder')
-    wilder.set_option('renderer', wilder.popupmenu_renderer({
-      highlighter = wilder.basic_highlighter(),
-    }))
-    wilder.setup({modes = {':', '/', '?'}})
-  end}
+  -- use {
+  -- 'gelguy/wilder.nvim',
+  -- config = function()
+  --   local wilder = require('wilder')
+  --   wilder.set_option('renderer', wilder.popupmenu_renderer({
+  --     highlighter = wilder.basic_highlighter(),
+  --   }))
+  --   wilder.setup({modes = {':', '/', '?'}})
+  -- end}
   use({
     "folke/noice.nvim",
     event = "VimEnter",
