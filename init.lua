@@ -78,8 +78,8 @@ packer.startup({function()
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
+  -- use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
@@ -98,15 +98,15 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  -- use({
-  --     "kylechui/nvim-surround",
-  --     opt = true, event = 'InsertEnter',
-  --     tag = "main",
-  --     config = function()
-  --       require("nvim-surround").setup({})
-  --     end
-  -- })
+  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use({
+      "kylechui/nvim-surround",
+      opt = true, event = 'InsertEnter',
+      tag = "main",
+      config = function()
+        require("nvim-surround").setup({})
+      end
+  })
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -122,26 +122,26 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-  use {
-  'gelguy/wilder.nvim',
-  config = function()
-    local wilder = require('wilder')
-    wilder.set_option('renderer', wilder.popupmenu_renderer({
-      highlighter = wilder.basic_highlighter(),
-    }))
-    wilder.setup({modes = {':', '/', '?'}})
-  end}
-  -- use({
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup()
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --     }
-  -- })
+  -- use {
+  -- 'gelguy/wilder.nvim',
+  -- config = function()
+  --   local wilder = require('wilder')
+  --   wilder.set_option('renderer', wilder.popupmenu_renderer({
+  --     highlighter = wilder.basic_highlighter(),
+  --   }))
+  --   wilder.setup({modes = {':', '/', '?'}})
+  -- end}
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup({lsp_progress = { enabled = false }})
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
 end,
 config = {
   profile = {
@@ -234,9 +234,9 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
-map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
-map('n', 'gl', '<cmd>HopLine<CR>')
-map('n', 'g/', '<cmd>HopPattern<CR>')
+-- map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+-- map('n', 'gl', '<cmd>HopLine<CR>')
+-- map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
