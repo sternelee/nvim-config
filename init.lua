@@ -122,26 +122,26 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-  use {
-  'gelguy/wilder.nvim',
-  config = function()
-    local wilder = require('wilder')
-    wilder.set_option('renderer', wilder.popupmenu_renderer({
-      highlighter = wilder.basic_highlighter(),
-    }))
-    wilder.setup({modes = {':', '/', '?'}})
-  end}
-  -- use({
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup({lsp_progress = { enabled = false }})
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --     }
-  -- })
+  -- use {
+  -- 'gelguy/wilder.nvim',
+  -- config = function()
+  --   local wilder = require('wilder')
+  --   wilder.set_option('renderer', wilder.popupmenu_renderer({
+  --     highlighter = wilder.basic_highlighter(),
+  --   }))
+  --   wilder.setup({modes = {':', '/', '?'}})
+  -- end}
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup({lsp_progress = { enabled = false }})
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
 end,
 config = {
   profile = {
@@ -350,8 +350,8 @@ g.markdown_fenced_language = {
 }
 
 --theme
-g.edge_style = 'neon'
-cmd 'colorscheme edge'
+-- g.edge_style = 'neon'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
