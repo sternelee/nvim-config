@@ -78,8 +78,8 @@ packer.startup({function()
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  -- use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
+  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
@@ -135,7 +135,21 @@ packer.startup({function()
     "folke/noice.nvim",
     event = "VimEnter",
     config = function()
-      require("noice").setup({messages = { enabled = false }, lsp_progress = { enabled = false }})
+      require("noice").setup{
+        messages = { enabled = false },
+        lsp_progress = { enabled = false },
+        views = {
+          cmdline_popup = {
+            position = {
+             row = 5,
+            },
+          },
+          popupmenu = {
+            position = {
+             row = 8,
+            },
+          }
+        }}
     end,
     requires = {
       "MunifTanjim/nui.nvim",
@@ -234,9 +248,9 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
--- map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
--- map('n', 'gl', '<cmd>HopLine<CR>')
--- map('n', 'g/', '<cmd>HopPattern<CR>')
+map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+map('n', 'gl', '<cmd>HopLine<CR>')
+map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')

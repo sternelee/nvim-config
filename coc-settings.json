@@ -152,7 +152,11 @@
     "windi",
     "xlpan",
     "xlpfont",
-    "xunleiapp"
+    "xunleiapp",
+    "yunpan",
+    "thunderx",
+    "userid",
+    "gcid"
   ],
   "Lua.telemetry.enable": false,
   "Lua.diagnostics.globals": ["vim", "use", "bit"],
