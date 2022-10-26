@@ -135,7 +135,7 @@ packer.startup({function()
     "folke/noice.nvim",
     event = "VimEnter",
     config = function()
-      require("noice").setup({lsp_progress = { enabled = false }})
+      require("noice").setup({messages = { enabled = false }, lsp_progress = { enabled = false }})
     end,
     requires = {
       "MunifTanjim/nui.nvim",
