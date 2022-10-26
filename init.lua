@@ -99,8 +99,8 @@ packer.startup({function()
   end}
   -- 语法建议
   use {
-    -- "williamboman/mason.nvim",
-    -- "williamboman/mason-lspconfig.nvim",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
     "sternelee/nlsp-settings.nvim"
   }
@@ -399,7 +399,7 @@ map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
-map('n', '<A-j', '<cmd>MoveLine(1)<CR>')
+map('n', '<A-j>', '<cmd>MoveLine(1)<CR>')
 map('n', '<A-k>', '<cmd>MoveLine(-1)<CR>')
 map('v', '<A-j>', '<cmd>MoveBlock(1)<CR>')
 map('v', '<A-K>', '<cmd>MoveBlock(-1)<CR>')
@@ -444,8 +444,8 @@ map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-map('n', '<A-d>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
-map('t', '<A-d>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
+map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
+map('n', '<A-i>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
 map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
@@ -693,11 +693,11 @@ nlspsettings.setup({
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local function setup_servers()
-  -- require("mason").setup()
-  -- require("mason-lspconfig").setup({
-  --   ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
-  --   automatic_installation = true
-  -- })
+  require("mason").setup()
+  require("mason-lspconfig").setup({
+    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
+    automatic_installation = true
+  })
 
   local servers = { "sumneko_lua", "html", "cssls", "tsserver", "jsonls", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "bashls"}
   for _, lsp in ipairs(servers) do
