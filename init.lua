@@ -47,7 +47,7 @@ local packer = require('packer')
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
-  use 'nathom/filetype.nvim'
+  -- use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
