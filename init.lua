@@ -70,7 +70,7 @@ packer.startup({function()
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
@@ -86,8 +86,8 @@ packer.startup({function()
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  -- use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
+  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
@@ -102,7 +102,6 @@ packer.startup({function()
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    "sternelee/nlsp-settings.nvim"
   }
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -171,7 +170,7 @@ packer.startup({function()
   use {'vuki656/package-info.nvim',
     opt = true,
     event = 'BufRead package.json',
-    requires = 'MunifTanjim/nui.nvim',
+    -- requires = 'MunifTanjim/nui.nvim',
     config = function()
       require('package-info').setup{
         package_manager = 'pnpm'
@@ -221,6 +220,33 @@ packer.startup({function()
   -- use {'kevinhwang91/nvim-ufo', opt = true, event = 'InsertEnter', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
+  use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
+  use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup{
+        messages = { enabled = false },
+        lsp_progress = { enabled = false },
+        views = {
+          cmdline_popup = {
+            position = {
+             row = 5,
+            },
+          },
+          popupmenu = {
+            position = {
+             row = 8,
+            },
+          }
+        }}
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
 end,
 config = {
   profile = {
@@ -259,7 +285,7 @@ opt('o', 'background', 'dark')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
 opt('w', 'number', true)                              -- Print line number
-opt('o', 'lazyredraw', true)
+opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'cmdheight', 1)
@@ -310,9 +336,9 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
--- map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
--- map('n', 'gl', '<cmd>HopLine<CR>')
--- map('n', 'g/', '<cmd>HopPattern<CR>')
+map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+map('n', 'gl', '<cmd>HopLine<CR>')
+map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
@@ -444,9 +470,12 @@ map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
-map('n', '<A-i>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
+-- map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
+-- map('n', '<A-i>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
 map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
+
+map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -495,7 +524,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -680,26 +709,31 @@ end
 
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
-local nlspsettings = require("nlspsettings")
-
-nlspsettings.setup({
-  config_home = vim.fn.stdpath('config') .. '/nlsp-settings',
-  local_settings_dir = ".nlsp-settings",
-  local_settings_root_markers_fallback = { '.git' },
-  append_default_schemas = true,
-  loader = 'json'
-})
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local function setup_servers()
-  require("mason").setup()
-  require("mason-lspconfig").setup({
-    ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
-    automatic_installation = true
-  })
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
+  automatic_installation = true
+})
 
-  local servers = { "sumneko_lua", "html", "cssls", "tsserver", "jsonls", "denols", "vuels", "volar", "rust_analyzer", "emmet_ls", "eslint", "tailwindcss", "bashls"}
+local function setup_servers()
+  local servers = {
+    "sumneko_lua",
+    "html",
+    "cssls",
+    "tsserver",
+    "jsonls",
+    "denols",
+    "vuels",
+    "volar",
+    "rust_analyzer",
+    "emmet_ls",
+    "eslint",
+    "tailwindcss",
+    "bashls"
+  }
   for _, lsp in ipairs(servers) do
     local opts = {
       on_attach = on_attach,
@@ -713,36 +747,36 @@ local function setup_servers()
         },
       }
     end
-    -- if lsp == "tsserver" then
-    --   opts.root_dir = lsputil.root_pattern('package.json')
-    --   opts.capabilities =require('lsp/tsserver').capabilities
-    --   opts.settings = require('lsp/tsserver').settings
-    -- end
+    if lsp == "tsserver" then
+      opts.root_dir = lsputil.root_pattern('package.json')
+      opts.capabilities =require('lsp/tsserver').capabilities
+      opts.settings = require('lsp/tsserver').settings
+    end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
     if lsp == "vuels" then
       opts.root_dir = lsputil.root_pattern('vue.config.js')
     end
-    -- if lsp == "volar" then
-    --   opts.root_dir = lsputil.root_pattern('.volarrc')
-    -- end
-    -- if lsp == "sumneko_lua" then
-    --   opts.settings = require('lsp/sumneko_lua').settings
-    -- end
+    if lsp == "volar" then
+      opts.root_dir = lsputil.root_pattern('.volarrc')
+    end
+    if lsp == "sumneko_lua" then
+      opts.settings = require('lsp/sumneko_lua').settings
+    end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern('.eslintrc')
-      -- opts.settings =require('lsp/eslint').settings
+      opts.settings =require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
     end
-    -- if lsp == "tailwindcss" then
-    --   opts.filetypes = require('lsp/tailwindcss').filetypes
-    --   opts.capabilities = require('lsp/tailwindcss').capabilities
-    --   opts.init_options = require('lsp/tailwindcss').init_options
-    --   opts.settings = require('lsp/tailwindcss').settings
-    -- end
+    if lsp == "tailwindcss" then
+      opts.filetypes = require('lsp/tailwindcss').filetypes
+      opts.capabilities = require('lsp/tailwindcss').capabilities
+      opts.init_options = require('lsp/tailwindcss').init_options
+      opts.settings = require('lsp/tailwindcss').settings
+    end
     lspconfig[lsp].setup(opts)
    end
 end
@@ -750,24 +784,24 @@ end
 setup_servers()
 
 -- eslint autoFixOnSave
--- local function can_autofix(client)
---   return client.config.settings.autoFixOnSave or false
--- end
+local function can_autofix(client)
+  return client.config.settings.autoFixOnSave or false
+end
 
--- local function fix_on_save()
---   local clients = vim.lsp.get_active_clients()
---   local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
---   if #can_autofix_clients > 0 then
---     execute('EslintFixAll')
---   end
--- end
+local function fix_on_save()
+  local clients = vim.lsp.get_active_clients()
+  local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
+  if #can_autofix_clients > 0 then
+    execute('EslintFixAll')
+  end
+end
 
--- autocmd({"BufWritePre"}, {
---   pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
---   -- command = 'EslintFixAll',
---   callback = fix_on_save,
---   desc = "Eslint Fix All"
--- })
+autocmd({"BufWritePre"}, {
+  pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
+  -- command = 'EslintFixAll',
+  callback = fix_on_save,
+  desc = "Eslint Fix All"
+})
 
 local startify = require('alpha.themes.startify')
 local header = {
