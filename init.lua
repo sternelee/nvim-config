@@ -139,7 +139,7 @@ packer.startup({function()
   use {'glepnir/lspsaga.nvim', opt = true, event = 'BufRead', branch = 'main', config = function() require'modules.saga' end}
   use {'weilbith/nvim-code-action-menu', opt = true, cmd = 'CodeActionMenu'}
   use 'onsails/lspkind-nvim'
-  use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}
+  -- use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
   -- rust
   use {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -154,27 +154,9 @@ packer.startup({function()
         }
       })
     end}
-  use {'Saecki/crates.nvim',
-    opt = true,
-    event = { "BufRead Cargo.toml" },
-    config = function()
-        require('crates').setup()
-    end}
-  use {'David-Kunz/cmp-npm',
-    opt = true,
-    event = 'BufRead package.json',
-    config = function()
-      require('cmp-npm').setup({})
-    end}
-  use {'vuki656/package-info.nvim',
-    opt = true,
-    event = 'BufRead package.json',
-    -- requires = 'MunifTanjim/nui.nvim',
-    config = function()
-      require('package-info').setup{
-        package_manager = 'pnpm'
-      }
-    end}
+  use {'Saecki/crates.nvim', opt = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end}
+  use {'David-Kunz/cmp-npm', opt = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end}
+  use {'vuki656/package-info.nvim', opt = true, event = 'BufRead package.json', config = function() require('package-info').setup{ package_manager = 'pnpm'} end}
   use {'NTBBloodbath/rest.nvim', opt = true, ft = 'http', config = function() require'rest-nvim'.setup() end}
   use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump', 'AnyJumpVisual', 'AnyJumpBack'}}
   use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
@@ -227,7 +209,7 @@ packer.startup({function()
     config = function()
       require("noice").setup{
         messages = { enabled = false },
-        lsp_progress = { enabled = false },
+        -- lsp_progress = { enabled = false },
         views = {
           cmdline_popup = {
             position = {
