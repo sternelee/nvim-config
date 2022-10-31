@@ -694,16 +694,17 @@ local function setup_servers()
     "sumneko_lua",
     "html",
     "cssls",
-    "tsserver",
     "jsonls",
-    "denols",
+    "emmet_ls",
     "vuels",
     "volar",
+    "tsserver",
+    "denols",
     "rust_analyzer",
-    "emmet_ls",
     "eslint",
     "tailwindcss",
-    "bashls"
+    "bashls",
+    "marksman"
   }
   for _, lsp in ipairs(servers) do
     local opts = {
