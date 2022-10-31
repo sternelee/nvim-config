@@ -112,7 +112,6 @@ packer.startup({function()
     end,
   })
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function () require'modules.typescript' end}
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
   use {'hrsh7th/nvim-cmp', requires = {
@@ -684,16 +683,6 @@ local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  if client.name == 'tsserver' then
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-
-    local ts_lsputils = require("nvim-lsp-ts-utils")
-    local init_options = require("nvim-lsp-ts-utils").init_options
-    ts_lsputils.setup(init_options)
-    ts_lsputils.setup_client(client)
-  end
-
   if client.name == 'tailwindcss' then
     if client.server_capabilities.colorProvider then
       require"lsp/documentcolors".buf_attach(bufnr)
@@ -714,7 +703,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "html", "cssls", "tsserver", "emmet_ls"},
+  ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls"},
   automatic_installation = true
 })
 
