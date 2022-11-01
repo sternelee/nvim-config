@@ -13,6 +13,8 @@ local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
 -- local usercmd = vim.api.nvim_create_user_command
 
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
@@ -69,7 +71,7 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- use 'RRethy/nvim-base16'
+  use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'sternelee/kat.nvim'}
   use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
@@ -99,14 +101,7 @@ packer.startup({function()
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use({
-      "kylechui/nvim-surround",
-      opt = true, event = 'InsertEnter',
-      tag = "main",
-      config = function()
-        require("nvim-surround").setup({})
-      end
-  })
+  use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -122,15 +117,6 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-  -- use {
-  -- 'gelguy/wilder.nvim',
-  -- config = function()
-  --   local wilder = require('wilder')
-  --   wilder.set_option('renderer', wilder.popupmenu_renderer({
-  --     highlighter = wilder.basic_highlighter(),
-  --   }))
-  --   wilder.setup({modes = {':', '/', '?'}})
-  -- end}
   use({
     "folke/noice.nvim",
     event = "VimEnter",
@@ -365,7 +351,7 @@ g.markdown_fenced_language = {
 
 --theme
 -- g.edge_style = 'neon'
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
