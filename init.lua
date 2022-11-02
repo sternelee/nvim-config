@@ -198,6 +198,7 @@ packer.startup({function()
   use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
+  use {'PatschD/zippy.nvim', opt = true, event = 'InsertEnter'}
   -- use {'kevinhwang91/nvim-ufo', opt = true, event = 'InsertEnter', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
@@ -455,8 +456,10 @@ map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
 -- map('n', '<A-i>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
 map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 
-map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+
+map('n', '<leader>lg', '<mcd>lua require("zippy").insert_print()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
