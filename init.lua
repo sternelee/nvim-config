@@ -348,8 +348,8 @@ map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
 map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
 map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 -- session
-map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
-map('n', '<leader>ss', '<cmd>SessionSave<CR>')
+-- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
+-- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 -- diffview
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
@@ -505,7 +505,7 @@ let bufferline.icons = 'both'
  }
 
 --theme
-cmd 'colorscheme kat.nvim'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -716,6 +716,7 @@ local function setup_servers()
       opts.settings = {
         json = {
           schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
         },
       }
     end
