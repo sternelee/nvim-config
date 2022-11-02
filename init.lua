@@ -351,7 +351,8 @@ g.markdown_fenced_language = {
 
 --theme
 -- g.edge_style = 'neon'
-cmd 'colorscheme base16-ayu-dark'
+-- g.everforest_background = 'hard'
+cmd 'colorscheme synthwave84'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -455,7 +456,7 @@ g.coc_global_extensions = {
   'coc-gitignore',
   'coc-toml',
   'coc-lightbulb',
-  'coc-highlight',
+  -- 'coc-highlight',
   'coc-pairs',
   'coc-htmlhint',
   'coc-yank',
