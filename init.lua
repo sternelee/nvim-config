@@ -73,7 +73,7 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'sternelee/kat.nvim'}
-  use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
+  -- use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -352,7 +352,7 @@ g.markdown_fenced_language = {
 --theme
 -- g.edge_style = 'neon'
 -- g.everforest_background = 'hard'
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
