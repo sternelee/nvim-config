@@ -19,7 +19,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-g.mapleader = " "                                                     --leader
+g.mapleader = " " --leader
 g.maplocalleader = ","
 
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
@@ -27,7 +27,7 @@ nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
-vim.o.sessionoptions="buffers,help,tabpages"
+vim.o.sessionoptions = "buffers,help,tabpages"
 vim.opt.fillchars:append('fold:•')
 
 nvim_exec([[
@@ -38,7 +38,7 @@ filetype indent on
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
 -- https://github.com/rockerBOO/awesome-neovim
@@ -48,55 +48,63 @@ end
 -- log: nvim -V9myNvim.log
 cmd [[packadd packer.nvim]]
 local packer = require('packer')
-packer.startup({function()
+packer.startup({ function()
   use 'wbthomason/packer.nvim'
   use 'lewis6991/impatient.nvim'
   use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
+  use { 'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead' }
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use {'windwp/windline.nvim', config = function() require('modules.windline') end}
-  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
+  use { 'windwp/windline.nvim', config = function() require('modules.windline') end }
+  use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle',
+    config = function() require 'modules.nvim-tree' end }
   use 'goolord/alpha-nvim'
   -- git相关
-  use {'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function () require'modules.gitsigns' end}
+  use { 'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function() require 'modules.gitsigns' end }
   use 'tpope/vim-fugitive'
-  use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
-  use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end}
-  use {'f-person/git-blame.nvim', opt = true, event = 'BufRead'}-- 显示git message
-  use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
-  use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
+  use { 'kdheepak/lazygit.nvim', opt = true,
+    cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
+  use { 'akinsho/git-conflict.nvim', opt = true,
+    cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone',
+      'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end }
+  use { 'f-person/git-blame.nvim', opt = true, event = 'BufRead' } -- 显示git message
+  use { 'rbong/vim-flog', opt = true, cmd = { 'Flog' } }
+  use { 'sindrets/diffview.nvim', opt = true, cmd = { 'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
+    config = function() require('diffview').setup() end }
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter' }
+  use { 'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead',
+    config = function() require 'treesitter-context'.setup() end }
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
-  use {'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function () require'modules.colorizer' end} -- 色值高亮
+  use { 'folke/twilight.nvim', opt = true, cmd = { 'Twilight' }, config = function() require('twilight'):setup() end }
+  use { 'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function() require 'modules.colorizer' end } -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
-  use {'katawful/kat.nvim', tag = '1.0'}
+  use { 'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim' }
+  use { 'katawful/kat.nvim', tag = '1.0' }
   -- 显示导航线
-  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline' end}
-  use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
+  use { 'lukas-reineke/indent-blankline.nvim', event = 'BufRead',
+    config = function() require 'modules.indent_blankline' end }
+  use { 'mg979/vim-visual-multi', opt = true, event = 'InsertEnter' }
+  use { 'terryma/vim-expand-region', opt = true, event = 'BufRead' }
+  use { 'fedepujol/move.nvim', opt = true, event = 'BufRead' }
+  use { 'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end }
+  use { 'phaazon/hop.nvim', opt = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' },
+    config = function() require('hop'):setup() end }
   -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
-  use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
-  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
+  use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end }
+  use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
     require('reach').setup({
-     notifications = true
+      notifications = true
     })
-  end}
+  end }
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -111,37 +119,43 @@ packer.startup({function()
       require("lsp_lines").setup()
     end,
   })
-  use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = {'typescript', 'typescriptreact', 'vue'}, config = function () require'modules.typescript' end}
+  use { 'jose-elias-alvarez/typescript.nvim', opt = true, ft = { 'typescript', 'typescriptreact', 'vue' },
+    config = function() require 'modules.typescript' end }
   use 'b0o/schemastore.nvim' -- json server
   use { 'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
-  use {'hrsh7th/nvim-cmp', requires = {
-    {'petertriho/cmp-git'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'hrsh7th/cmp-buffer'},
-    {'saadparwaiz1/cmp_luasnip'},
-    {'rafamadriz/friendly-snippets'},
-    {'hrsh7th/cmp-calc'},
-    {'hrsh7th/cmp-emoji'},
-    {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    {'hrsh7th/cmp-cmdline'},
+  use { 'hrsh7th/nvim-cmp', requires = {
+    { 'petertriho/cmp-git' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/cmp-buffer' },
+    { 'saadparwaiz1/cmp_luasnip' },
+    { 'rafamadriz/friendly-snippets' },
+    { 'hrsh7th/cmp-calc' },
+    { 'hrsh7th/cmp-emoji' },
+    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+    { 'hrsh7th/cmp-cmdline' },
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
     -- {'ray-x/cmp-treesitter'},
     -- {'f3fora/cmp-spell'}, -- look更好
-  }}
-  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function ()
+  } }
+  use { 'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function()
     require('refactoring').setup()
-    require'telescope'.load_extension('refactoring')
-    end}
+    require 'telescope'.load_extension('refactoring')
+  end }
   -- 语法提示
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  use {'glepnir/lspsaga.nvim', opt = true, event = 'BufRead', branch = 'main', config = function() require'modules.saga' end}
-  use {'weilbith/nvim-code-action-menu', opt = true, cmd = 'CodeActionMenu'}
+  use { 'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end }
+  use { 'glepnir/lspsaga.nvim', opt = true, event = 'BufRead', branch = 'main',
+    config = function() require 'modules.saga' end }
+  use { 'weilbith/nvim-code-action-menu', opt = true, cmd = 'CodeActionMenu' }
   use 'onsails/lspkind-nvim'
+  -- use { 'jose-elias-alvarez/null-ls.nvim', opt = true, event = 'BufRead',
+  --   config = function() require 'modules.null-ls' end }
+  -- use { "rcarriga/nvim-dap-ui", opt = true, event = 'BufRead', requires = { "mfussenegger/nvim-dap" },
+  -- config = function() require 'modules.dap' end }
   -- use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
   -- rust
-  use {'simrat39/rust-tools.nvim',
+  use { 'simrat39/rust-tools.nvim',
     ft = 'rust',
     event = 'BufRead',
     config = function()
@@ -153,26 +167,32 @@ packer.startup({function()
           hover_actions = { auto_focus = true }
         }
       })
-    end}
-  use {'Saecki/crates.nvim', opt = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end}
-  use {'David-Kunz/cmp-npm', opt = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end}
-  use {'vuki656/package-info.nvim', opt = true, event = 'BufRead package.json', config = function() require('package-info').setup{ package_manager = 'pnpm'} end}
-  use {'NTBBloodbath/rest.nvim', opt = true, ft = 'http', config = function() require'rest-nvim'.setup() end}
-  use {'pechorin/any-jump.vim', opt = true, cmd = {'AnyJump', 'AnyJumpVisual', 'AnyJumpBack'}}
-  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {'rmagatti/goto-preview', opt = true, ft = {'typescript', 'javascript', 'typescriptreact', 'rust', 'vue'}, evnet = 'BufRead', config = function() require('goto-preview').setup {} end}
+    end }
+  use { 'Saecki/crates.nvim', opt = true, event = { "BufRead Cargo.toml" },
+    config = function() require('crates').setup() end }
+  use { 'David-Kunz/cmp-npm', opt = true, event = 'BufRead package.json',
+    config = function() require('cmp-npm').setup({}) end }
+  use { 'vuki656/package-info.nvim', opt = true, event = 'BufRead package.json',
+    config = function() require('package-info').setup { package_manager = 'pnpm' } end }
+  use { 'NTBBloodbath/rest.nvim', opt = true, ft = 'http', config = function() require 'rest-nvim'.setup() end }
+  use { 'pechorin/any-jump.vim', opt = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' } }
+  use { 'editorconfig/editorconfig-vim', opt = true, event = 'BufRead' }
+  use { 'rmagatti/goto-preview', opt = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' },
+    evnet = 'BufRead', config = function() require('goto-preview').setup {} end }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  use {'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost'}
+  use { 'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost' }
   -- 方便操作
-  use {"max397574/better-escape.nvim", opt = true, event = 'InsertEnter', config = function() require("better_escape").setup() end}
+  use { "max397574/better-escape.nvim", opt = true, event = 'InsertEnter',
+    config = function() require("better_escape").setup() end }
   -- use {"ellisonleao/glow.nvim", opt = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end}
-  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
-  use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Mkdir', 'Rename'}}
-  use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  use { 'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install',
+    cmd = 'MarkdownPreview' }
+  use { 'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end }
+  use { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Mkdir', 'Rename' } }
+  use { 'voldikss/vim-translator', opt = true, cmd = { 'Translate' } } -- npm install fanyi -g 安装翻译
+  use { 'tpope/vim-commentary', opt = true, event = 'BufRead' }
+  use { 'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end }
+  use { 'machakann/vim-sandwich', opt = true, event = 'InsertEnter' }
   -- use({
   --   "kylechui/nvim-surround",
   --   tag = "main",
@@ -180,93 +200,94 @@ packer.startup({function()
   --   config = function()
   --       require("nvim-surround").setup{}
   --   end})
-  use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
+  use { 'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function() require 'modules.marks' end }
   use 'folke/which-key.nvim' -- 提示leader按键
-  use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
-  use {'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter'}
-  use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function () require'modules.todo' end}
-  use {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end} -- 方便写注释
-  use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
-  use {'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood'}
-  use {'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require'modules.formatter' end}
+  use { 'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead' } -- 彩虹匹配
+  use { 'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter' }
+  use { 'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function() require 'modules.todo' end }
+  use { 'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end } -- 方便写注释
+  use { 'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead' }
+  use { 'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood' }
+  use { 'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require 'modules.formatter' end }
   use 'rcarriga/nvim-notify'
   -- use {
   -- "vigoux/notifier.nvim",
   -- config = function()
   --   require'notifier'.setup {}
   -- end}
-  use {'metakirby5/codi.vim', opt = true, cmd = {'Codi'}}
-  use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
-  use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'PatschD/zippy.nvim', opt = true, event = 'InsertEnter'}
+  use { 'metakirby5/codi.vim', opt = true, cmd = { 'Codi' } }
+  use { 'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end }
+  use { 'tpope/vim-repeat', opt = true, event = 'InsertEnter' }
+  use { 'PatschD/zippy.nvim', opt = true, event = 'InsertEnter' }
   -- use {'kevinhwang91/nvim-ufo', opt = true, event = 'InsertEnter', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
-  use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
-  use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
-  use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
-  use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
+  use { 'wakatime/vim-wakatime', opt = true, event = 'BufRead' }
+  use { 'gennaro-tedesco/nvim-jqx', opt = true, cmd = { 'JqxList', 'JqxQuery' } }
+  use { 'numToStr/FTerm.nvim', opt = true, event = 'BufRead' }
+  use { 'is0n/fm-nvim', opt = true, event = 'BufRead' }
   use({
     "folke/noice.nvim",
     event = "VimEnter",
     config = function()
-      require("noice").setup{
+      require("noice").setup {
         messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
           cmdline_popup = {
             position = {
-             row = 5,
+              row = 5,
             },
           },
           popupmenu = {
             position = {
-             row = 8,
+              row = 8,
             },
           }
-        }}
+        }
+      }
     end,
     requires = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
-      }
+    }
   })
 end,
-config = {
-  profile = {
-    enabled = true,
-    threshold = 1
-  }
-}})
+  config = {
+    profile = {
+      enabled = true,
+      threshold = 1
+    }
+  } })
 
 --settings
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
 local function opt(scope, key, value)
   scopes[scope][key] = value
   if scope ~= 'o' then scopes['o'][key] = value end
 end
 
 local indent = 2
-opt('b', 'expandtab', true)                           -- Use spaces instead of tabs
-opt('b', 'shiftwidth', indent)                        -- Size of an indent
-opt('b', 'smartindent', true)                         -- Insert indents automatically
-opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
-opt('o', 'completeopt', 'menu,menuone,noselect')      -- Completion options
-opt('o', 'hidden', true)                              -- Enable modified buffers in background
-opt('o', 'scrolloff', 3)                              -- Lines of context
-opt('o', 'shiftround', true)                          -- Round indent
-opt('o', 'sidescrolloff', 8)                          -- Columns of context
-opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
-opt('o', 'splitbelow', true)                          -- Put new windows below current
-opt('o', 'splitright', true)                          -- Put new windows right of current
-opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板相通
-opt('o', 'pumblend', 25 )
+opt('b', 'expandtab', true) -- Use spaces instead of tabs
+opt('b', 'shiftwidth', indent) -- Size of an indent
+opt('b', 'smartindent', true) -- Insert indents automatically
+opt('b', 'tabstop', indent) -- Number of spaces tabs count for
+opt('o', 'completeopt', 'menu,menuone,noselect') -- Completion options
+opt('o', 'hidden', true) -- Enable modified buffers in background
+opt('o', 'scrolloff', 3) -- Lines of context
+opt('o', 'shiftround', true) -- Round indent
+opt('o', 'sidescrolloff', 8) -- Columns of context
+opt('o', 'smartcase', true) -- Don't ignore case with capitals
+opt('o', 'splitbelow', true) -- Put new windows below current
+opt('o', 'splitright', true) -- Put new windows right of current
+opt('o', 'termguicolors', true) -- True color support
+opt('o', 'clipboard', 'unnamedplus') -- 与系统剪切板相通
+opt('o', 'pumblend', 25)
 opt('o', 'softtabstop', 2)
 opt('o', 'swapfile', false)
 opt('o', 'showmode', false)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
-opt('w', 'number', true)                              -- Print line number
+opt('w', 'number', true) -- Print line number
 opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
@@ -304,7 +325,7 @@ opt('o', 'showtabline', 2)
 
 --mappings
 local function map(mode, lhs, rhs)
-  local options = {noremap = true}
+  local options = { noremap = true }
   remap(mode, lhs, rhs, options)
 end
 
@@ -315,14 +336,14 @@ map('v', 'P', '"0p')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
-map('n', 'j', 'gj')                                                    --move by visual line not actual line
+map('n', 'j', 'gj') --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
-map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
+map('n', 'gw', '<cmd>HopWord<CR>') --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
-map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
+map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 -- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
@@ -355,7 +376,7 @@ map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
 -- wincmd
-map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
+map('n', '<c-k>', '<cmd>wincmd k<CR>') --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
 map('n', '<c-l>', '<cmd>wincmd l<CR>')
@@ -461,19 +482,19 @@ map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 map('n', '<leader>lg', '<mcd>lua require("zippy").insert_print()<CR>')
 
-cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
+cmd [[autocmd BufWritePre * %s/\s\+$//e]] --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
 
 autocmd({ "TextYankPost" }, {
-    pattern = "*",
-    callback = function()
-        vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
-    end,
-    desc = "Highlight yanked text",
-    group = autogroup("highlight_yank", { clear = true }),
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
+  end,
+  desc = "Highlight yanked text",
+  group = autogroup("highlight_yank", { clear = true }),
 })
 
-autocmd({"FileType"}, {
+autocmd({ "FileType" }, {
   pattern = "*.toml",
   callback = function()
     require('cmp').setup.buffer { sources = { { name = 'crates' } } }
@@ -481,7 +502,7 @@ autocmd({"FileType"}, {
   desc = "Add cmp source for toml",
 })
 
-autocmd({"FileType"}, {
+autocmd({ "FileType" }, {
   pattern = "*.json",
   callback = function()
     require('cmp').setup.buffer { sources = { { name = 'npm', keyword_length = 3 } } }
@@ -489,9 +510,9 @@ autocmd({"FileType"}, {
   desc = "Add cmp source for json",
 })
 
-local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+local numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 for _, num in pairs(numbers) do
-  map('n', '<leader>'..num, '<cmd>BufferGoto '..num..'<CR>')
+  map('n', '<leader>' .. num, '<cmd>BufferGoto ' .. num .. '<CR>')
 end
 map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
 
@@ -503,21 +524,21 @@ let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
 
- g.markdown_fenced_language = {
-   "ts=typescript"
- }
+g.markdown_fenced_language = {
+  "ts=typescript"
+}
 
 --theme
 cmd 'colorscheme vscode'
 
 -- editorconfig-vim
-g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
+g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
 
 -- vim-better-whitespace
-g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
+g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
 
 local notify = require("notify")
-notify.setup{
+notify.setup {
   background_colour = '#000000'
 }
 vim.notify = notify
@@ -539,13 +560,13 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   })
 end
 
-require'modules.telescope'
-require'modules.treesitter'
+require 'modules.telescope'
+require 'modules.treesitter'
 
 local lspkind = require('lspkind')
-require'lspkind'.init()
+require 'lspkind'.init()
 
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 require("cmp_git").setup()
 local luasnip = require("luasnip")
@@ -575,17 +596,17 @@ cmp.setup({
     }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-          cmp.select_next_item()
+        cmp.select_next_item()
       elseif luasnip.expandable() then
-          luasnip.expand()
+        luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
+        luasnip.expand_or_jump()
       elseif require("neogen").jumpable() then
-          require("neogen").jump_next()
+        require("neogen").jump_next()
       elseif check_backspace() then
-          fallback()
+        fallback()
       else
-          fallback()
+        fallback()
       end
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
@@ -603,7 +624,7 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp', priority = 8 },
     { name = 'luasnip', priority = 7 },
-    { name = 'buffer', option={keyword_length=2} },
+    { name = 'buffer', option = { keyword_length = 2 } },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },
@@ -618,13 +639,13 @@ cmp.setup({
     format = lspkind.cmp_format({
       mode = 'symbol_text', -- show only symbol annotations
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      before = function (entry, vim_item)
+      before = function(entry, vim_item)
         return vim_item
       end
     })
   },
   flags = {
-      debounce_text_changes = 150,
+    debounce_text_changes = 150,
   },
   window = {
     completion = cmp.config.window.bordered(),
@@ -666,11 +687,12 @@ local handlers = {
 
 local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if client.name == 'tailwindcss' then
     if client.server_capabilities.colorProvider then
-      require"lsp/documentcolors".buf_attach(bufnr)
+      require "lsp/documentcolors".buf_attach(bufnr)
     end
   end
 
@@ -688,7 +710,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls"},
+  ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls" },
   automatic_installation = true
 })
 
@@ -725,7 +747,7 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
-      opts.capabilities =require('lsp/tsserver').capabilities
+      opts.capabilities = require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
@@ -742,7 +764,7 @@ local function setup_servers()
     end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern('.eslintrc')
-      opts.settings =require('lsp/eslint').settings
+      opts.settings = require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
@@ -754,7 +776,7 @@ local function setup_servers()
       opts.settings = require('lsp/tailwindcss').settings
     end
     lspconfig[lsp].setup(opts)
-   end
+  end
 end
 
 setup_servers()
@@ -772,8 +794,8 @@ local function fix_on_save()
   end
 end
 
-autocmd({"BufWritePre"}, {
-  pattern = {"*.tsx", "*.ts", "*.jsx", "*.js", "*.vue"},
+autocmd({ "BufWritePre" }, {
+  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
   -- command = 'EslintFixAll',
   callback = fix_on_save,
   desc = "Eslint Fix All"
@@ -781,22 +803,22 @@ autocmd({"BufWritePre"}, {
 
 local startify = require('alpha.themes.startify')
 local header = {
-   '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
-   '│ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ │',
-   '│ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ │',
-   '│ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ │',
-   '│ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ │',
-   '│ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ │',
-   '│ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ │',
-   '│ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ │',
-   '│ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ │',
-   '│ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ │',
-   '│ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ │',
-   '│ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ │',
-   '│ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ │',
-   '│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │',
-   '│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │',
-   '┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙',
+  '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
+  '│ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ │',
+  '│ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ │',
+  '│ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ │',
+  '│ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ │',
+  '│ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ │',
+  '│ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ │',
+  '│ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ │',
+  '│ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ │',
+  '│ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ │',
+  '│ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ │',
+  '│ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ │',
+  '│ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ │',
+  '│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │',
+  '│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │',
+  '┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙',
 }
 
 -- 布局
@@ -804,9 +826,9 @@ startify.section.header.val = header
 -- 高亮
 -- startify.section.header.opts.hl = 'AlphaHeader'
 
-require'alpha'.setup(startify.opts)
+require 'alpha'.setup(startify.opts)
 
-require'which-key'.setup{}
+require 'which-key'.setup {}
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
 cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
