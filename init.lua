@@ -456,7 +456,7 @@ g.coc_global_extensions = {
   'coc-gitignore',
   'coc-toml',
   'coc-lightbulb',
-  -- 'coc-highlight',
+  'coc-highlight',
   'coc-pairs',
   'coc-htmlhint',
   'coc-yank',
