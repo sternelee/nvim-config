@@ -207,14 +207,18 @@ packer.startup({ function()
   use { 'gennaro-tedesco/nvim-jqx', opt = true, cmd = { 'JqxList', 'JqxQuery' } }
   use { 'numToStr/FTerm.nvim', opt = true, event = 'BufRead' }
   use { 'is0n/fm-nvim', opt = true, event = 'BufRead' }
-  use({
+  use {
     "folke/noice.nvim",
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        messages = { enabled = false },
+        -- messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
+          messages = {
+            view = "split",
+            enter = true,
+          },
           cmdline_popup = {
             position = {
               row = 5,
@@ -232,7 +236,7 @@ packer.startup({ function()
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     }
-  })
+  }
 end,
   config = {
     profile = {
@@ -512,7 +516,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
