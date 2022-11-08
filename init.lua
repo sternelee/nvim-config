@@ -61,7 +61,7 @@ packer.startup({function()
   use 'goolord/alpha-nvim'
   -- git相关
   use 'tpope/vim-fugitive'
-  use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
+  -- use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end}
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
@@ -85,11 +85,11 @@ packer.startup({function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
-  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
-    require('reach').setup({
-     notifications = true
-    })
-  end}
+  -- use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
+  --   require('reach').setup({
+  --    notifications = true
+  --   })
+  -- end}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use 'fannheyward/telescope-coc.nvim'
@@ -99,7 +99,12 @@ packer.startup({function()
   -- 方便操作
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
+  -- use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end}
   -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
@@ -241,7 +246,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>C', '<cmd>Telescope coc<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
@@ -310,7 +316,7 @@ map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LazyGit
-map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
+-- map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
