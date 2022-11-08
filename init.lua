@@ -64,7 +64,7 @@ packer.startup({ function()
   -- git相关
   use { 'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function() require 'modules.gitsigns' end }
   use 'tpope/vim-fugitive'
-  use { 'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
+  -- use { 'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
   use { 'akinsho/git-conflict.nvim', opt = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end }
   use { 'f-person/git-blame.nvim', opt = true, event = 'BufRead' } -- 显示git message
   use { 'rbong/vim-flog', opt = true, cmd = { 'Flog' } }
@@ -94,7 +94,7 @@ packer.startup({ function()
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
   use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
-  use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
+  -- use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -173,7 +173,12 @@ packer.startup({ function()
   use { 'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end }
   use { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Mkdir', 'Rename' } }
   use { 'voldikss/vim-translator', opt = true, cmd = { 'Translate' } } -- npm install fanyi -g 安装翻译
-  use { 'tpope/vim-commentary', opt = true, event = 'BufRead' }
+  -- use { 'tpope/vim-commentary', opt = true, event = 'BufRead' }
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end}
   use { 'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end }
   use { 'machakann/vim-sandwich', opt = true, event = 'InsertEnter' }
   -- use({
@@ -333,8 +338,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')
@@ -387,7 +392,7 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
-map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
+-- map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
 
 -- refactoring
 map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
