@@ -110,6 +110,7 @@ packer.startup({function()
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
+  use { 'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter' }
   use {'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function () require'modules.todo' end}
   use {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end} -- 方便写注释
   use {'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead'}
@@ -471,37 +472,40 @@ g.coc_global_extensions = {
   'coc-symbol-line',
   '@yaegassy/coc-tailwindcss3',
   'coc-docthis',
-  'coc-spell-checker'
+  'coc-spell-checker',
+  'coc-vetur',
+  '@yaegassy/coc-volar',
+  '@yaegassy/coc-volar-tools'
 }
 
--- g.coc_start_at_startup=0
+g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
--- g.trigger_size = 0.5 * 1048576
+g.trigger_size = 0.5 * 1048576
 
 -- 性能足够了
--- cmd [[
---   augroup hugefile
---     autocmd!
---     autocmd BufReadPre *
---        \ let size = getfsize(expand('<afile>')) |
---        \ if (size > g:trigger_size) || (size == -2) |
---   	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
---        \   exec 'CocDisable' |
---        \ else |
---        \   exec 'CocEnable' |
---        \ endif |
---        \ unlet size
---   augroup END
--- ]]
+cmd [[
+  augroup hugefile
+    autocmd!
+    autocmd BufReadPre *
+       \ let size = getfsize(expand('<afile>')) |
+       \ if (size > g:trigger_size) || (size == -2) |
+  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+       \   exec 'CocDisable' |
+       \ else |
+       \   exec 'CocEnable' |
+       \ endif |
+       \ unlet size
+  augroup END
+]]
 
 require'modules.coc'
 
--- cmd [[
---   function! CocTimerStart(timer)
---       exec "CocStart"
---   endfunction
---   call timer_start(2000,'CocTimerStart',{'repeat':1})
--- ]]
+cmd [[
+  function! CocTimerStart(timer)
+      exec "CocStart"
+  endfunction
+  call timer_start(2000,'CocTimerStart',{'repeat':1})
+]]
