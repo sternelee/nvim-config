@@ -20,6 +20,11 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
+-- g.do_filetype_lua = 1 -- nvim > 0.7
+g.did_load_filetypes = 0
+g.mapleader = " "                                                     --leader
+g.maplocalleader = ","
+
 nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
 
 --set shortmess
@@ -49,7 +54,7 @@ local packer = require('packer')
 packer.startup({function()
   use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim'}
-  -- use 'nathom/filetype.nvim'
+  use 'nathom/filetype.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
@@ -105,8 +110,8 @@ packer.startup({function()
     config = function()
         require('Comment').setup()
     end}
-  -- use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
+  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  -- use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -227,11 +232,11 @@ local function map(mode, lhs, rhs)
   remap(mode, lhs, rhs, options)
 end
 
-g.do_filetype_lua = 1 -- nvim > 0.7
-g.did_load_filetypes = 0
-g.mapleader = " "                                                     --leader
-g.maplocalleader = ","
+map('v', 'x', 'd')
+map('v', 'd', '"_d')
+map('n', 'P', '"0p')
 map('v', 'P', '"0p')
+map('v', 'p', '"0p')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
