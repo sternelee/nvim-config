@@ -128,31 +128,31 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-  use({
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("noice").setup{
-        messages = { enabled = false },
-        lsp_progress = { enabled = false },
-        views = {
-          cmdline_popup = {
-            position = {
-             row = 5,
-            },
-          },
-          popupmenu = {
-            position = {
-             row = 8,
-            },
-          }
-        }}
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-      }
-  })
+  -- use({
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("noice").setup{
+  --       messages = { enabled = false },
+  --       lsp_progress = { enabled = false },
+  --       views = {
+  --         cmdline_popup = {
+  --           position = {
+  --            row = 5,
+  --           },
+  --         },
+  --         popupmenu = {
+  --           position = {
+  --            row = 8,
+  --           },
+  --         }
+  --       }}
+  --   end,
+  --   requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --     }
+  -- })
 end,
 config = {
   profile = {
@@ -234,9 +234,9 @@ end
 
 map('v', 'x', 'd')
 map('v', 'd', '"_d')
-map('n', 'P', '"0p')
-map('v', 'P', '"0p')
-map('v', 'p', '"0p')
+-- map('n', 'P', '"0p')
+-- map('v', 'P', '"0p')
+-- map('v', 'p', '"0p')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
