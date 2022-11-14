@@ -323,9 +323,9 @@ end
 
 map('v', 'x', 'd')
 map('v', 'd', '"_d')
-map('n', 'P', '"0p')
-map('v', 'P', '"0p')
-map('v', 'p', '"0p')
+-- map('n', 'P', '"0p')
+-- map('v', 'P', '"0p')
+-- map('v', 'p', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -524,7 +524,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme kat.nvim'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
