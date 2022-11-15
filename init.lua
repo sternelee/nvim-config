@@ -218,7 +218,7 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        messages = { enabled = false },
+        -- messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
           messages = {
@@ -527,7 +527,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme base16-atlas'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
