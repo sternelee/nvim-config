@@ -26,7 +26,7 @@ require'gitsigns'.setup {
     ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
   },
-  current_line_blame = false,
+  current_line_blame = true,
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default

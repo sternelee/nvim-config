@@ -6,7 +6,7 @@ capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 
 -- Settings
 
-local filetypes = { "astro", "astro-markdown", "html", "javascript", "javascriptreact","typescript", "typescriptreact", "vue", "svelte" }
+local filetypes = { "astro", "astro-markdown", "html", "javascript", "javascriptreact","typescript", "typescriptreact", "vue", "svelte", "rust", "rs" }
 
 local init_options = {
   userLanguages = {
@@ -28,6 +28,8 @@ local settings = {
     },
     experimental = {
       classRegex = {
+        [[class="([^"]*)]],
+        "class=\\s+\"([^\"]*)",
         "tw`([^`]*)",
         "tw=\"([^\"]*)",
         "tw={\"([^\"}]*)",

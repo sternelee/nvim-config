@@ -66,7 +66,7 @@ packer.startup({ function()
   use 'tpope/vim-fugitive'
   -- use { 'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
   use { 'akinsho/git-conflict.nvim', opt = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end }
-  use { 'f-person/git-blame.nvim', opt = true, event = 'BufRead' } -- 显示git message
+  -- use { 'f-person/git-blame.nvim', opt = true, event = 'BufRead' } -- 显示git message; use gitisigns
   use { 'rbong/vim-flog', opt = true, cmd = { 'Flog' } }
   use { 'sindrets/diffview.nvim', opt = true, cmd = { 'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles' }, config = function() require('diffview').setup() end }
   -- 语法高亮
@@ -93,7 +93,8 @@ packer.startup({ function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
-  use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
+  -- use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
+  use{'gnikdroy/projections.nvim', opt = true, event = 'VimEnter', config = function() require('modules.projections') end}
   -- use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {
@@ -242,6 +243,8 @@ packer.startup({ function()
       "rcarriga/nvim-notify",
     }
   }
+  use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
+  use {"nvim-zh/colorful-winsep.nvim", config = function () require('colorful-winsep').setup() end}
 end,
   config = {
     profile = {
@@ -350,7 +353,7 @@ map('n', 'fg', '<cmd>Telescope git_files<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
-map('n', 'fp', '<cmd>Telescope projects<CR>')
+-- map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
@@ -524,7 +527,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
@@ -765,6 +768,8 @@ local function setup_servers()
       }
     end
     if lsp == "tailwindcss" then
+      opts.root_dir = lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+    'postcss.config.ts', 'package.json', 'node_modules')
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
