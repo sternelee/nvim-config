@@ -93,8 +93,8 @@ packer.startup({ function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
-  -- use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
-  use{'gnikdroy/projections.nvim', opt = true, event = 'VimEnter', config = function() require('modules.projections') end}
+  use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
+  -- use{'gnikdroy/projections.nvim', config = function() require('modules.projections') end}
   -- use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {
@@ -353,7 +353,7 @@ map('n', 'fg', '<cmd>Telescope git_files<CR>')
 map('n', 'ft', '<cmd>Telescope treesitter<CR>')
 map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
--- map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
