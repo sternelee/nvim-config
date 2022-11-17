@@ -64,7 +64,7 @@ packer.startup({ function()
   -- git相关
   use { 'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function() require 'modules.gitsigns' end }
   use 'tpope/vim-fugitive'
-  -- use { 'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
+  use { 'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' } }
   use { 'akinsho/git-conflict.nvim', opt = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end }
   -- use { 'f-person/git-blame.nvim', opt = true, event = 'BufRead' } -- 显示git message; use gitisigns
   use { 'rbong/vim-flog', opt = true, cmd = { 'Flog' } }
@@ -102,6 +102,13 @@ packer.startup({ function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
+  -- use({
+  --   "folke/neoconf.nvim",
+  --   module = "neoconf",
+  --   config = function()
+  --     require("neoconf").setup()
+  --   end,
+  -- })
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opt = true,
@@ -205,6 +212,7 @@ packer.startup({ function()
   --   require'notifier'.setup {}
   -- end}
   use { 'metakirby5/codi.vim', opt = true, cmd = { 'Codi' } }
+  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use { 'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end }
   use { 'tpope/vim-repeat', opt = true, event = 'InsertEnter' }
   use { 'PatschD/zippy.nvim', opt = true, event = 'InsertEnter' }
@@ -218,7 +226,7 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        -- messages = { enabled = false },
+        messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
           messages = {
@@ -398,7 +406,7 @@ map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
 map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
--- map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
+map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
 
 -- refactoring
 map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
@@ -478,6 +486,10 @@ map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
+-- sniprun
+map('n', "<A-r>", ":SnipRun<CR>")
+map('v', "<A-r>", ":'<,'>SnipRun<CR>")
+
 map('n', '<leader>lg', '<mcd>lua require("zippy").insert_print()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]] --remove trailing whitespaces
@@ -525,9 +537,10 @@ let bufferline.icons = 'both'
 g.markdown_fenced_language = {
   "ts=typescript"
 }
+g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-atlas'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
@@ -557,6 +570,8 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
     end,
   })
 end
+
+-- local utils = require'utils'
 
 require 'modules.telescope'
 require 'modules.treesitter'
@@ -712,23 +727,41 @@ require("mason-lspconfig").setup({
   automatic_installation = true
 })
 
+local servers = {
+  "sumneko_lua",
+  "html",
+  "cssls",
+  "jsonls",
+  "emmet_ls",
+  "vuels",
+  "volar",
+  "tsserver",
+  "denols",
+  "rust_analyzer",
+  "eslint",
+  "tailwindcss",
+  "bashls",
+  "marksman"
+}
+
+-- 支持读取coc-settings的配置, 需要从项目根上启动
+-- local local_path = lsputil.root_pattern('.git')
+-- print(local_path())
+-- local local_config = utils.read_file(".vim/coc-settings.json")
+-- local eslint_autofix = false
+-- if local_config ~= nil then
+--   local volar_local = local_config['volar.enable']
+--   local vuels_local = local_config['vetur.enable']
+--   eslint_autofix = local_config['eslint.autoFixOnSave']
+--   if volar_local ~= nil and volar_local == false then
+--     servers['volar'] = nil
+--   end
+--   if vuels_local ~= nil and vuels_local == false then
+--     servers['vuels'] = nil
+--   end
+-- end
+
 local function setup_servers()
-  local servers = {
-    "sumneko_lua",
-    "html",
-    "cssls",
-    "jsonls",
-    "emmet_ls",
-    "vuels",
-    "volar",
-    "tsserver",
-    "denols",
-    "rust_analyzer",
-    "eslint",
-    "tailwindcss",
-    "bashls",
-    "marksman"
-  }
   for _, lsp in ipairs(servers) do
     local opts = {
       on_attach = on_attach,
@@ -784,6 +817,7 @@ setup_servers()
 -- eslint autoFixOnSave
 local function can_autofix(client)
   return client.config.settings.autoFixOnSave or false
+  -- return eslint_autofix or false
 end
 
 local function fix_on_save()
