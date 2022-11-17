@@ -1,5 +1,5 @@
 require("projections").setup({
-  workspaces = { "~/dev" },
+  workspaces = { "~/.config/nvim/workspace" },
   patterns = { ".git", ".svn", ".hg" },
   store_hooks = { pre = nil, post = nil },
   restore_hooks = { pre = nil, post = nil },

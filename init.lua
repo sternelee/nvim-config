@@ -334,9 +334,8 @@ end
 
 map('v', 'x', 'd')
 map('v', 'd', '"_d')
--- map('n', 'P', '"0p')
--- map('v', 'P', '"0p')
--- map('v', 'p', '"0p')
+map('n', 'P', '"0p')
+map('v', 'P', '"0p')
 -- map('i', 'jk', '<esc>')                                               --jk to exit
 -- map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -371,13 +370,6 @@ map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
 map('n', '<leader>th', '<cmd>TSDisable highlight<CR>')
--- nvim-lsp-ts-lsputils
-map('n', '<leader>to', '<cmd>TSLspOrganize<CR>')
-map('n', '<leader>tn', '<cmd>TSLspRenameFile<CR>')
-map('n', '<leader>ti', '<cmd>TSLspImportAll<CR>')
--- session
--- map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
--- map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 -- diffview
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
@@ -424,13 +416,13 @@ map('n', '<leader>al', '<cmd>AnyJumpLastResults<CR>')
 -- goto-preview
 map('n', 'gpd', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 map('n', 'gpi', '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
-map('n', 'gP', '<cmd>lua require("goto-preview").close_all_win()<CR>')
+map('n', 'gP',  '<cmd>lua require("goto-preview").close_all_win()<CR>')
 map('n', 'gpr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- spectre
-map('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>')
+map('n', '<leader>S',  '<cmd>lua require("spectre").open()<CR>')
 map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>')
-map('v', '<leader>s', '<cmd>lua require("spectre").open_visual()<CR>')
+map('v', '<leader>s',  '<cmd>lua require("spectre").open_visual()<CR>')
 map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 
 -- move.nvim
