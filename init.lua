@@ -201,7 +201,7 @@ packer.startup({ function()
   use { 'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require 'modules.formatter' end }
   use 'rcarriga/nvim-notify'
   use { 'metakirby5/codi.vim', opt = true, cmd = { 'Codi' } }
-  use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use { 'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end }
   use { 'tpope/vim-repeat', opt = true, event = 'InsertEnter' }
   use { 'PatschD/zippy.nvim', opt = true, event = 'InsertEnter' }
@@ -467,8 +467,8 @@ map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 -- sniprun
-map('n', "<A-n>", ":SnipRun<CR>")
-map('v', "<A-n>", ":'<,'>SnipRun<CR>")
+-- map('n', "<A-n>", ":SnipRun<CR>")
+-- map('v', "<A-n>", ":'<,'>SnipRun<CR>")
 
 map('n', '<leader>lg', '<mcd>lua require("zippy").insert_print()<CR>')
 
