@@ -72,30 +72,28 @@ packer.startup({ function()
   -- 语法高亮
   use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter' }
-  use { 'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead',
-    config = function() require 'treesitter-context'.setup() end }
+  use { 'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require 'treesitter-context'.setup() end }
   -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
   use { 'folke/twilight.nvim', opt = true, cmd = { 'Twilight' }, config = function() require('twilight'):setup() end }
   use { 'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function() require 'modules.colorizer' end } -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use { 'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim' }
-  use { 'katawful/kat.nvim', tag = '1.0' }
+  -- use { 'katawful/kat.nvim', tag = '1.0' }
   -- 显示导航线
   use { 'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require 'modules.indent_blankline' end}
   use { 'mg979/vim-visual-multi', opt = true, event = 'InsertEnter' }
   use { 'terryma/vim-expand-region', opt = true, event = 'BufRead' }
   use { 'fedepujol/move.nvim', opt = true, event = 'BufRead' }
   use { 'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  use { 'phaazon/hop.nvim', opt = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' },
-    config = function() require('hop'):setup() end }
+  use { 'phaazon/hop.nvim', opt = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' }, config = function() require('hop'):setup() end }
   -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
   use { 'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
   -- use{'gnikdroy/projections.nvim', config = function() require('modules.projections') end}
-  -- use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
+  use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {
     "williamboman/mason.nvim",
@@ -182,11 +180,7 @@ packer.startup({ function()
   use { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Mkdir', 'Rename' } }
   use { 'voldikss/vim-translator', opt = true, cmd = { 'Translate' } } -- npm install fanyi -g 安装翻译
   -- use { 'tpope/vim-commentary', opt = true, event = 'BufRead' }
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end}
+  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
   use { 'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end }
   use { 'machakann/vim-sandwich', opt = true, event = 'InsertEnter' }
   -- use({
@@ -206,11 +200,6 @@ packer.startup({ function()
   use { 'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood' }
   use { 'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require 'modules.formatter' end }
   use 'rcarriga/nvim-notify'
-  -- use {
-  -- "vigoux/notifier.nvim",
-  -- config = function()
-  --   require'notifier'.setup {}
-  -- end}
   use { 'metakirby5/codi.vim', opt = true, cmd = { 'Codi' } }
   use { 'michaelb/sniprun', run = 'bash ./install.sh'}
   use { 'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end }
@@ -252,7 +241,6 @@ packer.startup({ function()
     }
   }
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-  use {"nvim-zh/colorful-winsep.nvim", config = function () require('colorful-winsep').setup() end}
 end,
   config = {
     profile = {
@@ -351,8 +339,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')
@@ -436,8 +424,8 @@ map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
 -- ufo
-map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
-map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+-- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+-- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
 -- map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -479,8 +467,8 @@ map('n', '<A-i>', '<cmd>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 -- sniprun
-map('n', "<A-r>", ":SnipRun<CR>")
-map('v', "<A-r>", ":'<,'>SnipRun<CR>")
+map('n', "<A-n>", ":SnipRun<CR>")
+map('v', "<A-n>", ":'<,'>SnipRun<CR>")
 
 map('n', '<leader>lg', '<mcd>lua require("zippy").insert_print()<CR>')
 
