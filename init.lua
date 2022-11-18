@@ -66,7 +66,7 @@ packer.startup({function()
   use 'goolord/alpha-nvim'
   -- git相关
   use 'tpope/vim-fugitive'
-  -- use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
+  use {'kdheepak/lazygit.nvim', opt = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}}
   use {'akinsho/git-conflict.nvim', opt = true, cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end}
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
@@ -77,7 +77,7 @@ packer.startup({function()
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'sternelee/kat.nvim'}
+  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
   -- use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
@@ -90,11 +90,7 @@ packer.startup({function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
-  -- use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function()
-  --   require('reach').setup({
-  --    notifications = true
-  --   })
-  -- end}
+  use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use 'fannheyward/telescope-coc.nvim'
@@ -105,11 +101,7 @@ packer.startup({function()
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   -- use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end}
+  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   -- use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
@@ -128,31 +120,32 @@ packer.startup({function()
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
-  -- use({
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup{
-  --       messages = { enabled = false },
-  --       lsp_progress = { enabled = false },
-  --       views = {
-  --         cmdline_popup = {
-  --           position = {
-  --            row = 5,
-  --           },
-  --         },
-  --         popupmenu = {
-  --           position = {
-  --            row = 8,
-  --           },
-  --         }
-  --       }}
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --     }
-  -- })
+  use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup{
+        messages = { enabled = false },
+        lsp_progress = { enabled = false },
+        views = {
+          cmdline_popup = {
+            position = {
+             row = 5,
+            },
+          },
+          popupmenu = {
+            position = {
+             row = 8,
+            },
+          }
+        }}
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      }
+  })
 end,
 config = {
   profile = {
@@ -234,9 +227,8 @@ end
 
 map('v', 'x', 'd')
 map('v', 'd', '"_d')
--- map('n', 'P', '"0p')
--- map('v', 'P', '"0p')
--- map('v', 'p', '"0p')
+map('n', 'P', '"0p')
+map('v', 'P', '"0p')
 map('i', 'jk', '<esc>')                                               --jk to exit
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
@@ -252,8 +244,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>C', '<cmd>Telescope coc<CR>')
 map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
@@ -268,8 +260,6 @@ map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
-map('n', '<leader>sl', '<cmd>SessionLoad<CR>')
-map('n', '<leader>ss', '<cmd>SessionSave<CR>')
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>to', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tc', '<cmd>DiffviewClose<CR>')
