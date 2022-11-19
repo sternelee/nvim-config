@@ -78,6 +78,7 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
+  use { 'Everblush/everblush.nvim', as = 'everblush' }
   -- use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
@@ -354,7 +355,9 @@ g.markdown_fenced_language = {
 --theme
 -- g.edge_style = 'neon'
 -- g.everforest_background = 'hard'
-cmd 'colorscheme base16-ayu-dark'
+local everblush = require('everblush')
+everblush.setup({ nvim_tree = { contrast = true }, transparent_background = true })
+cmd 'colorscheme everblush'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
