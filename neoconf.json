@@ -1,0 +1,41 @@
+{
+  "neoconf": {
+    "import": {
+      "coc": true,
+      "vscode": true,
+      "nlsp": false
+    },
+    "plugins": {
+      "sumneko_lua": {
+        "enabled": false
+      }
+    }
+  },
+  "lspconfig": {
+    "tsserver": {
+      "typescript.inlayHints.parameterNames.enabled": "all",
+      "javascript.inlayHints.parameterNames.enabled": "all"
+    },
+    "tailwindcss": {
+      "tailwindCSS.lint.cssConflict": "warning",
+      "tailwindCSS.lint.invalidApply": "error",
+      "tailwindCSS.lint.invalidScreen": "error",
+      "tailwindCSS.lint.invalidVariant": "error",
+      "tailwindCSS.lint.invalidConfigPath": "error",
+      "tailwindCSS.lint.recommendedVariantOrder": "warning",
+      "tailwindCSS.lint.invalidTailwindDirective": "error",
+      "tailwindCSS.experimental.classRegex": ["class=\\s+\"([^\"]*)", "tw`([^`]*)", "tw=\"([^\"]*)", "tw={\"([^\"}]*)", "tw\\.\\w+`([^`]*)", "tw\\(.*?\\)`([^`]*)"]
+    },
+    "eslint": {
+      "eslint.codeActionsOnSave.mode": "all",
+      "eslint.format.enable": true,
+      "eslint.packageManager": "pnpm",
+      "eslint.run": "onType",
+      "eslint.onIgnoredFiles": "off",
+      "eslint.codeAction.disableRuleComment": {
+        "enable": true,
+        "location": "separateLine"
+      }
+    }
+  }
+}

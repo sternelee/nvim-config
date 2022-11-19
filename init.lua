@@ -100,13 +100,7 @@ packer.startup({ function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use({
-  --   "folke/neoconf.nvim",
-  --   module = "neoconf",
-  --   config = function()
-  --     require("neoconf").setup()
-  --   end,
-  -- })
+  use { "folke/neoconf.nvim"}
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opt = true,
@@ -528,6 +522,7 @@ g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
 
+require("neoconf").setup()
 local notify = require("notify")
 notify.setup {
   background_colour = '#000000'
@@ -759,13 +754,13 @@ local function setup_servers()
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
       opts.capabilities = require('lsp/tsserver').capabilities
-      opts.settings = require('lsp/tsserver').settings
+      -- opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
     if lsp == "vuels" then
-      opts.root_dir = lsputil.root_pattern('vue.config.js')
+      opts.root_dir = lsputil.root_pattern('.veturrc')
     end
     if lsp == "volar" then
       opts.root_dir = lsputil.root_pattern('.volarrc')
@@ -775,7 +770,7 @@ local function setup_servers()
     end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
-      opts.settings = require('lsp/eslint').settings
+      -- opts.settings = require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
@@ -786,7 +781,7 @@ local function setup_servers()
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
-      opts.settings = require('lsp/tailwindcss').settings
+      -- opts.settings = require('lsp/tailwindcss').settings
     end
     lspconfig[lsp].setup(opts)
   end
@@ -795,25 +790,25 @@ end
 setup_servers()
 
 -- eslint autoFixOnSave
-local function can_autofix(client)
-  return client.config.settings.autoFixOnSave or false
-  -- return eslint_autofix or false
-end
-
-local function fix_on_save()
-  local clients = vim.lsp.get_active_clients()
-  local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
-  if #can_autofix_clients > 0 then
-    execute('EslintFixAll')
-  end
-end
-
-autocmd({ "BufWritePre" }, {
-  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
-  -- command = 'EslintFixAll',
-  callback = fix_on_save,
-  desc = "Eslint Fix All"
-})
+-- local function can_autofix(client)
+--   return client.config.settings.autoFixOnSave or false
+--   -- return eslint_autofix or false
+-- end
+--
+-- local function fix_on_save()
+--   local clients = vim.lsp.get_active_clients()
+--   local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
+--   if #can_autofix_clients > 0 then
+--     execute('EslintFixAll')
+--   end
+-- end
+--
+-- autocmd({ "BufWritePre" }, {
+--   pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
+--   -- command = 'EslintFixAll',
+--   callback = fix_on_save,
+--   desc = "Eslint Fix All"
+-- })
 
 local startify = require('alpha.themes.startify')
 local header = {
