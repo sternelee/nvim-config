@@ -78,7 +78,6 @@ packer.startup({function()
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
-  use { 'Everblush/everblush.nvim', as = 'everblush' }
   -- use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
@@ -355,9 +354,7 @@ g.markdown_fenced_language = {
 --theme
 -- g.edge_style = 'neon'
 -- g.everforest_background = 'hard'
-local everblush = require('everblush')
-everblush.setup({ nvim_tree = { contrast = true }, transparent_background = true })
-cmd 'colorscheme everblush'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
@@ -476,7 +473,7 @@ g.coc_global_extensions = {
   '@yaegassy/coc-volar-tools'
 }
 
-g.coc_start_at_startup=0
+-- g.coc_start_at_startup=0
 g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
@@ -484,26 +481,26 @@ g.coc_selectmode_mapping = 0
 g.trigger_size = 0.5 * 1048576
 
 -- 性能足够了
-cmd [[
-  augroup hugefile
-    autocmd!
-    autocmd BufReadPre *
-       \ let size = getfsize(expand('<afile>')) |
-       \ if (size > g:trigger_size) || (size == -2) |
-  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
-       \   exec 'CocDisable' |
-       \ else |
-       \   exec 'CocEnable' |
-       \ endif |
-       \ unlet size
-  augroup END
-]]
+-- cmd [[
+--   augroup hugefile
+--     autocmd!
+--     autocmd BufReadPre *
+--        \ let size = getfsize(expand('<afile>')) |
+--        \ if (size > g:trigger_size) || (size == -2) |
+--   	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+--        \   exec 'CocDisable' |
+--        \ else |
+--        \   exec 'CocEnable' |
+--        \ endif |
+--        \ unlet size
+--   augroup END
+-- ]]
 
 require'modules.coc'
 
-cmd [[
-  function! CocTimerStart(timer)
-      exec "CocStart"
-  endfunction
-  call timer_start(2000,'CocTimerStart',{'repeat':1})
-]]
+-- cmd [[
+--   function! CocTimerStart(timer)
+--       exec "CocStart"
+--   endfunction
+--   call timer_start(2000,'CocTimerStart',{'repeat':1})
+-- ]]
