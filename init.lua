@@ -141,7 +141,7 @@ packer.startup({ function()
   --   config = function() require 'modules.null-ls' end }
   -- use { "rcarriga/nvim-dap-ui", opt = true, event = 'BufRead', requires = { "mfussenegger/nvim-dap" },
   -- config = function() require 'modules.dap' end }
-  -- use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
+  use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
   -- rust
   use { 'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -209,8 +209,8 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        -- messages = { enabled = false },
-        -- lsp_progress = { enabled = false },
+        messages = { enabled = false },
+        lsp_progress = { enabled = false },
         views = {
           messages = {
             view = "split",
