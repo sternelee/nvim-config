@@ -100,7 +100,7 @@ packer.startup({ function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  use { "folke/neoconf.nvim"}
+  -- use { "folke/neoconf.nvim"}
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opt = true,
@@ -522,7 +522,7 @@ g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
 
-require("neoconf").setup()
+-- require("neoconf").setup()
 local notify = require("notify")
 notify.setup {
   background_colour = '#000000'
@@ -752,7 +752,7 @@ local function setup_servers()
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
       opts.capabilities = require('lsp/tsserver').capabilities
-      -- opts.settings = require('lsp/tsserver').settings
+      opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
@@ -768,7 +768,7 @@ local function setup_servers()
     end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
-      -- opts.settings = require('lsp/eslint').settings
+      opts.settings = require('lsp/eslint').settings
       opts.handlers = {
         ['window/showMessageRequest'] = function(_, result, params) return result end
       }
@@ -779,7 +779,7 @@ local function setup_servers()
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
-      -- opts.settings = require('lsp/tailwindcss').settings
+      opts.settings = require('lsp/tailwindcss').settings
     end
     lspconfig[lsp].setup(opts)
   end
