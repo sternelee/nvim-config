@@ -354,7 +354,7 @@ g.markdown_fenced_language = {
 --theme
 -- g.edge_style = 'neon'
 -- g.everforest_background = 'hard'
-cmd 'colorscheme vscode'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
