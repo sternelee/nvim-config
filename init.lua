@@ -720,8 +720,6 @@ local servers = {
 }
 
 -- 支持读取coc-settings的配置, 需要从项目根上启动
--- local local_path = lsputil.root_pattern('.git')
--- print(local_path())
 -- local local_config = utils.read_file(".vim/coc-settings.json")
 -- local eslint_autofix = false
 -- if local_config ~= nil then
@@ -790,25 +788,25 @@ end
 setup_servers()
 
 -- eslint autoFixOnSave
--- local function can_autofix(client)
---   return client.config.settings.autoFixOnSave or false
---   -- return eslint_autofix or false
--- end
---
--- local function fix_on_save()
---   local clients = vim.lsp.get_active_clients()
---   local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
---   if #can_autofix_clients > 0 then
---     execute('EslintFixAll')
---   end
--- end
---
--- autocmd({ "BufWritePre" }, {
---   pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
---   -- command = 'EslintFixAll',
---   callback = fix_on_save,
---   desc = "Eslint Fix All"
--- })
+local function can_autofix(client)
+  return client.config.settings.autoFixOnSave or false
+  -- return eslint_autofix or false
+end
+
+local function fix_on_save()
+  local clients = vim.lsp.get_active_clients()
+  local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
+  if #can_autofix_clients > 0 then
+    execute('EslintFixAll')
+  end
+end
+
+autocmd({ "BufWritePre" }, {
+  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
+  -- command = 'EslintFixAll',
+  callback = fix_on_save,
+  desc = "Eslint Fix All"
+})
 
 local startify = require('alpha.themes.startify')
 local header = {
