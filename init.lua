@@ -443,6 +443,7 @@ cmd [[
   highlight MarkSignNumHL guifg=#E5C07B
   highlight MarkVirtTextHL guifg=#98C379
   highlight Normal ctermbg=NONE guibg=NONE
+  hi! link CocMenuSel CmpItemAbbrMatch
 ]]
 
 -- coc
