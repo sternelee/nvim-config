@@ -21,7 +21,7 @@ g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
 -- g.do_filetype_lua = 1 -- nvim > 0.7
-g.did_load_filetypes = 0
+-- g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 
@@ -126,7 +126,7 @@ packer.startup({function()
     event = "VimEnter",
     config = function()
       require("noice").setup{
-        -- messages = { enabled = false },
+        messages = { enabled = false },
         lsp_progress = { enabled = false },
         views = {
           cmdline_popup = {
