@@ -546,8 +546,6 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   })
 end
 
--- local utils = require'utils'
-
 require 'modules.telescope'
 require 'modules.treesitter'
 
@@ -718,21 +716,6 @@ local servers = {
   "bashls",
   "marksman"
 }
-
--- 支持读取coc-settings的配置, 需要从项目根上启动
--- local local_config = utils.read_file(".vim/coc-settings.json")
--- local eslint_autofix = false
--- if local_config ~= nil then
---   local volar_local = local_config['volar.enable']
---   local vuels_local = local_config['vetur.enable']
---   eslint_autofix = local_config['eslint.autoFixOnSave']
---   if volar_local ~= nil and volar_local == false then
---     servers['volar'] = nil
---   end
---   if vuels_local ~= nil and vuels_local == false then
---     servers['vuels'] = nil
---   end
--- end
 
 local function setup_servers()
   for _, lsp in ipairs(servers) do
