@@ -121,31 +121,31 @@ packer.startup({function()
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-  use({
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("noice").setup{
-        messages = { enabled = false },
-        lsp_progress = { enabled = false },
-        views = {
-          cmdline_popup = {
-            position = {
-             row = 5,
-            },
-          },
-          popupmenu = {
-            position = {
-             row = 8,
-            },
-          }
-        }}
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-      }
-  })
+  -- use({
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("noice").setup{
+  --       messages = { enabled = false },
+  --       lsp_progress = { enabled = false },
+  --       views = {
+  --         cmdline_popup = {
+  --           position = {
+  --            row = 5,
+  --           },
+  --         },
+  --         popupmenu = {
+  --           position = {
+  --            row = 8,
+  --           },
+  --         }
+  --       }}
+  --   end,
+  --   requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --     }
+  -- })
 end,
 config = {
   profile = {
@@ -187,7 +187,7 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
