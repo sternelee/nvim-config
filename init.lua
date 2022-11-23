@@ -734,7 +734,7 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
-      opts.capabilities = require('lsp/tsserver').capabilities
+      -- opts.capabilities = require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
