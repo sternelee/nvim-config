@@ -164,7 +164,7 @@ packer.startup({ function()
   use { 'editorconfig/editorconfig-vim', opt = true, event = 'BufRead' }
   use { 'rmagatti/goto-preview', opt = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, evnet = 'BufRead', config = function() require('goto-preview').setup {} end }
   -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  use { 'yardnsm/vim-import-cost', opt = true, cmd = 'ImportCost' }
+  use { 'yardnsm/vim-import-cost', run = 'npm install --production' }
   -- 方便操作
   use { "max397574/better-escape.nvim", opt = true, event = 'InsertEnter',
     config = function() require("better_escape").setup() end }
