@@ -71,14 +71,13 @@ packer.startup({function()
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
-  use { 'kevinhwang91/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
   use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
-  -- use {'sainnhe/sonokai', 'sainnhe/gruvbox-material', 'sainnhe/everforest', 'sainnhe/edge'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -86,7 +85,6 @@ packer.startup({function()
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
@@ -100,10 +98,8 @@ packer.startup({function()
   -- 方便操作
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  -- use {'tpope/vim-commentary', opt = true, event = 'BufRead'}
   use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
-  -- use {"kylechui/nvim-surround", opt = true, event = 'InsertEnter', tag = "main", config = function() require("nvim-surround").setup({}) end}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
   use {'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead'} -- 彩虹匹配
@@ -121,47 +117,21 @@ packer.startup({function()
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-  -- use {
-  --   'gelguy/wilder.nvim',
-  --   config = function()
-  --     local wilder = require('wilder')
-  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
-  --       wilder.popupmenu_palette_theme({
-  --         border = 'rounded',
-  --         max_height = '75%',      -- max height of the palette
-  --         min_height = 0,          -- set to the same as 'max_height' for a fixed height window
-  --         prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
-  --         reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
-  --       })
-  --     ))
-  --     wilder.setup({modes = {':', '/', '?'}})
-  --   end,
-  -- }
-  use({
-    "folke/noice.nvim",
-    event = "VimEnter",
+  use {
+    'gelguy/wilder.nvim',
     config = function()
-      require("noice").setup{
-        messages = { enabled = false },
-        lsp_progress = { enabled = false },
-        views = {
-          cmdline_popup = {
-            position = {
-             row = 5,
-            },
-          },
-          popupmenu = {
-            position = {
-             row = 8,
-            },
-          }
-        }}
+      local wilder = require('wilder')
+      wilder.set_option('renderer', wilder.renderer_mux({
+        [':'] = wilder.popupmenu_renderer({
+          highlighter = wilder.basic_highlighter(),
+        }),
+        ['/'] = wilder.wildmenu_renderer({
+          highlighter = wilder.basic_highlighter(),
+        }),
+      }))
+      wilder.setup({modes = {':', '/', '?'}})
     end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-      }
-  })
+  }
 end,
 config = {
   profile = {
@@ -328,7 +298,7 @@ map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LazyGit
--- map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
+map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
