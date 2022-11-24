@@ -83,7 +83,7 @@ packer.startup({function()
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
+  -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -94,11 +94,11 @@ packer.startup({function()
   use 'fannheyward/telescope-coc.nvim'
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
-  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
   -- 方便操作
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
   use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
+  use { 'yardnsm/vim-import-cost', run = 'npm install --production' }
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
@@ -340,10 +340,7 @@ g.markdown_fenced_language = {
 --theme
 -- g.edge_style = 'neon'
 -- g.everforest_background = 'hard'
-cmd 'colorscheme base16-ayu-dark'
-
--- editorconfig-vim
-g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*', ''}
+cmd 'colorscheme vscode'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}

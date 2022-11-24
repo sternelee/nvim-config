@@ -3,6 +3,7 @@
   "coc.preferences.extensionUpdateCheck": "weekly",
   "coc.preferences.messageLevel": "warning",
   "coc.preferences.enableMessageDialog": true,
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": true,
   "semanticTokens.enable": false,
