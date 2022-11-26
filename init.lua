@@ -85,13 +85,15 @@ packer.startup({function()
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   -- use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
+  -- use 'nvim-telescope/telescope.nvim'
+  -- use 'nvim-telescope/telescope-file-browser.nvim'
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
   use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
+  use {'junegunn/fzf', rtp = '~/.fzf', run = './install --all'}
+  use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf'}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-  use 'fannheyward/telescope-coc.nvim'
+  -- use 'fannheyward/telescope-coc.nvim'
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   -- 方便操作
@@ -227,21 +229,31 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
-map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
-map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>*', '<cmd>Telescope<CR>')                   --fuzzy
+-- map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+-- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 -- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
-map('n', '<leader>C', '<cmd>Telescope coc<CR>')
-map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
-map('n', 'gs', '<cmd>Telescope grep_string<CR>')
-map('n', 'fg', '<cmd>Telescope git_files<CR>')
-map('n', 'ft', '<cmd>Telescope treesitter<CR>')
-map('n', 'fc', '<cmd>Telescope commands<CR>')
-map('n', 'fe', '<cmd>Telescope file_browser<CR>')
-map('n', 'fp', '<cmd>Telescope projects<CR>')
-map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
+-- map('n', '<leader>C', '<cmd>Telescope coc<CR>')
+-- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+-- map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+-- map('n', 'gs', '<cmd>Telescope grep_string<CR>')
+-- map('n', 'fg', '<cmd>Telescope git_files<CR>')
+-- map('n', 'ft', '<cmd>Telescope treesitter<CR>')
+-- map('n', 'fc', '<cmd>Telescope commands<CR>')
+-- map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+-- map('n', 'fp', '<cmd>Telescope projects<CR>')
+-- map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
+-- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+
+map('n', '<leader>f', '<cmd>Files<CR>')
+map('n', '<leader>b', '<cmd>Buffers<CR>')
+map('n', '<leader>m', '<cmd>Marks<CR>')
+map('n', '<leader>C', '<cmd>CocFzfList<CR>')
+map('n', '<leader>/', '<cmd>Rg<CR>')
+map('n', 'fg', '<cmd>GFiles<CR>')
+map('n', 'fc', '<cmd>Commands<CR>')
+map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
+
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
@@ -351,7 +363,7 @@ notify.setup{
 }
 vim.notify = notify
 
-require'modules.telescope'
+-- require'modules.telescope'
 require'modules.treesitter'
 
 local startify = require('alpha.themes.startify')
