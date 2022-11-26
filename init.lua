@@ -225,6 +225,7 @@ map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
 map('n', '<leader>:', '<cmd>terminal<CR>')
+map('n', '<leader>*', '<cmd>FzfLua<CR>')
 map('n', '<leader>f', '<cmd>lua require("fzf-lua").files()<CR>')
 map('n', '<leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>')
 map('n', '<leader>m', '<cmd>lua require("fzf-lua").marks()<CR>')
@@ -344,6 +345,7 @@ notify.setup{
 }
 vim.notify = notify
 
+require'modules.fzf'
 require'modules.treesitter'
 
 local startify = require('alpha.themes.startify')
