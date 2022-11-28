@@ -71,7 +71,7 @@ packer.startup({function()
   use {'rbong/vim-flog', opt = true, cmd = {'Flog'}}
   use {'sindrets/diffview.nvim', opt = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end}
   -- 语法高亮
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'kevinhwang91/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
@@ -90,6 +90,14 @@ packer.startup({function()
   use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf', 'ibhagwan/fzf-lua'}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
+  use {
+    'weilbith/nvim-code-action-menu',
+    after = 'coc.nvim',
+    requires = 'xiyaowong/coc-code-action-menu.nvim',
+    config = function()
+      require 'coc-code-action-menu'
+    end,
+  }
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   -- 方便操作
@@ -237,6 +245,7 @@ map('n', 'fg', '<cmd>lua require("fzf-lua").git_files()<CR>')
 map('n', 'fc', '<cmd>lua require("fzf-lua").commands()<CR>')
 map('n', '<leader>C', '<cmd>CocFzfList<CR>')
 map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
+map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
@@ -323,7 +332,7 @@ map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
 --barbar
 nvim_exec([[
 let bufferline = get(g:, 'bufferline', {})
-let bufferline.animation = v:false
+let bufferline.animation = v:true
 let bufferline.auto_hide = v:true
 let bufferline.icons = 'both'
 ]], false)
@@ -334,7 +343,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme base16-ayu-dark'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}

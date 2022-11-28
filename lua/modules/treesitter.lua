@@ -4,6 +4,10 @@ local disableTsOrLsp = function (_, bufnr)
   return bytes / lcount > 500
 end
 
+-- local present, ts_config = pcall(require, "nvim-treesitter.configs")
+-- if not present then
+--   return
+-- end
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
