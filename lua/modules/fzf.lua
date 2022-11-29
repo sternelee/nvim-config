@@ -10,7 +10,7 @@ require'fzf-lua'.setup {
     border           = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     fullscreen       = false,           -- start fullscreen?
     preview = {
-      default     = 'bat',           -- override the default previewer?
+      default        = 'builtin',           -- override the default previewer?
       border         = 'border',        -- border|noborder, applies only to
       wrap           = 'nowrap',        -- wrap|nowrap
       hidden         = 'nohidden',      -- hidden|nohidden
