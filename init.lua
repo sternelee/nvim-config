@@ -87,7 +87,7 @@ packer.startup({function()
   use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
   use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   use {'junegunn/fzf', rtp = '~/.fzf', run = './install --all'}
-  use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf', 'ibhagwan/fzf-lua'}
+  use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf', 'ibhagwan/fzf-lua', 'benwainwright/fzf-project'}
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use {

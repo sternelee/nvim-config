@@ -1,3 +1,5 @@
+vim.g.fzfSwitchProjectWorkspaces = {'~/www', '~/www/xunlei'}
+
 local actions = require "fzf-lua.actions"
 require'fzf-lua'.setup {
   global_resume      = true,            -- enable global `resume`?
