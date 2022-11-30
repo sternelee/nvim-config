@@ -430,6 +430,7 @@ cmd [[
   highlight MarkVirtTextHL guifg=#98C379
   highlight Normal ctermbg=NONE guibg=NONE
   hi! link CocMenuSel CmpItemAbbrMatch
+  hi! link CocInlayHint Comment
 ]]
 
 -- coc
