@@ -120,10 +120,10 @@ require'fzf-lua'.setup {
     builtin = {
       syntax          = true,         -- preview syntax highlight?
       syntax_limit_l  = 0,            -- syntax limit (lines), 0=nolimit
-      syntax_limit_b  = 1024*1024,    -- syntax limit (bytes), 0=nolimit
-      limit_b         = 1024*1024*10, -- preview limit (bytes), 0=nolimit
+      syntax_limit_b  = 0,    -- syntax limit (bytes), 0=nolimit
+      limit_b         = 0, -- preview limit (bytes), 0=nolimit
       extensions      = {
-        ["png"]       = { "viu", "-b" },
+        ["png"]       = { "viu" },
         ["jpg"]       = { "ueberzug" },
       },
       ueberzug_scaler = "cover",
