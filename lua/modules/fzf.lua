@@ -41,13 +41,10 @@ require'fzf-lua'.setup {
   },
   keymap = {
     builtin = {
-      -- neovim `:tmap` mappings for the fzf win
       ["<F1>"]        = "toggle-help",
       ["<F2>"]        = "toggle-fullscreen",
-      -- Only valid with the 'builtin' previewer
       ["<F3>"]        = "toggle-preview-wrap",
       ["<F4>"]        = "toggle-preview",
-      -- Rotate preview clockwise/counter-clockwise
       ["<F5>"]        = "toggle-preview-ccw",
       ["<F6>"]        = "toggle-preview-cw",
       ["<S-down>"]    = "preview-page-down",
@@ -114,7 +111,6 @@ require'fzf-lua'.setup {
       cmd_untracked   = "git diff --color --no-index /dev/null",
     },
     man = {
-      -- NOTE: remove the `-c` flag when using man-db
       cmd             = "man -c %s | col -bx",
     },
     builtin = {
@@ -154,23 +150,15 @@ require'fzf-lua'.setup {
       git_icons     = true,           -- show git icons?
       file_icons    = true,           -- show file icons?
       color_icons   = true,           -- colorize file|git icons
-      -- force display the cwd header line regardles of your current working
-      -- directory can also be used to hide the header when not wanted
-      -- show_cwd_header = true
     },
     status = {
       prompt        = 'GitStatus❯ ',
-      -- consider using `git status -su` if you wish to see
-      -- untracked files individually under their subfolders
       cmd           = "git status -s",
       file_icons    = true,
       git_icons     = true,
       color_icons   = true,
       previewer     = "git_diff",
-      -- uncomment if you wish to use git-delta as pager
-      --preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
       actions = {
-        -- actions inherit from 'actions.files' and merge
         ["right"]   = { actions.git_unstage, actions.resume },
         ["left"]    = { actions.git_stage, actions.resume },
       },
@@ -179,8 +167,6 @@ require'fzf-lua'.setup {
       prompt        = 'Commits❯ ',
       cmd           = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset'",
       preview       = "git show --pretty='%Cred%H%n%Cblue%an <%ae>%n%C(yellow)%cD%n%Cgreen%s' --color {1}",
-      -- uncomment if you wish to use git-delta as pager
-      --preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
       actions = {
         ["default"] = actions.git_checkout,
       },
@@ -225,10 +211,6 @@ require'fzf-lua'.setup {
       ["C"]           = { icon = "C", color = "yellow" },
       ["T"]           = { icon = "T", color = "magenta" },
       ["?"]           = { icon = "?", color = "magenta" },
-      -- override git icons?
-      -- ["M"]        = { icon = "★", color = "red" },
-      -- ["D"]        = { icon = "✗", color = "red" },
-      -- ["A"]        = { icon = "+", color = "green" },
     },
   },
   grep = {
