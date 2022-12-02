@@ -113,6 +113,7 @@
   "outline.sortBy": "position",
   "outline.splitCommand": "botright 40vs",
   "outline.showLineNumber": true,
+  "cSpell.enabled": false,
   "cSpell.ignoreWords": [
     "xunlei",
     "nvim",
