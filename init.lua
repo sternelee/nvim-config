@@ -83,8 +83,7 @@ packer.startup({function()
   use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
-  use {'ahmedkhalf/project.nvim', config = function() require'project_nvim'.setup{} end}
-  use { 'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
+  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   use {'junegunn/fzf', rtp = '~/.fzf', run = './install --all'}
   use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf', 'ibhagwan/fzf-lua', 'benwainwright/fzf-project'}
   -- 语法建议
@@ -178,7 +177,7 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -235,7 +234,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>FzfLua<CR>')
 map('n', '<leader>f', '<cmd>lua require("fzf-lua").files()<CR>')
 map('n', '<leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>')
-map('n', '<leader>m', '<cmd>lua require("fzf-lua").marks()<CR>')
+-- map('n', '<leader>m', '<cmd>lua require("fzf-lua").marks()<CR>')
+map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 map('n', '<leader>\'', '<cmd>lua require("fzf-lua").resume()<CR>')
 map('n', '<leader>/', '<cmd>lua require("fzf-lua").live_grep()<CR>')
 map('n', 'gs', '<cmd>lua require("fzf-lua").grep_cword()<CR>')
