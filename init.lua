@@ -208,7 +208,7 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        -- messages = { enabled = false },
+        messages = { enabled = false },
         lsp_progress = { enabled = false },
         views = {
           messages = {
@@ -233,7 +233,7 @@ packer.startup({ function()
       "rcarriga/nvim-notify",
     }
   }
-  use {"petertriho/nvim-scrollbar"}
+  use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
 end,
   config = {
     profile = {
