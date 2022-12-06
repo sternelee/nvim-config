@@ -57,6 +57,7 @@ packer.startup({function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
+  use {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end}
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
@@ -464,7 +465,7 @@ g.coc_global_extensions = {
 }
 
 g.coc_start_at_startup=0
-g.coc_default_semantic_highlight_groups = 1
+g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
