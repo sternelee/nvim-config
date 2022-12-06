@@ -55,6 +55,7 @@ packer.startup({ function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use { 'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead' }
+  -- use 'LunarVim/bigfile.nvim'
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
