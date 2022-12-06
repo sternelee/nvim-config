@@ -55,7 +55,7 @@ packer.startup({ function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use { 'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead' }
-  -- use 'LunarVim/bigfile.nvim'
+  use 'LunarVim/bigfile.nvim'
   -- 状态栏
   use 'romgrk/barbar.nvim'
   use 'kyazdani42/nvim-web-devicons'
@@ -219,7 +219,7 @@ packer.startup({ function()
           },
           cmdline_popup = {
             position = {
-              row = 5,
+              row = 8,
             },
           },
           popupmenu = {
@@ -709,7 +709,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  "vuels",
+  -- "vuels",
   "volar",
   "tsserver",
   "denols",
@@ -743,12 +743,12 @@ local function setup_servers()
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
-    if lsp == "vuels" then
-      opts.root_dir = lsputil.root_pattern('.veturrc')
-    end
-    if lsp == "volar" then
-      opts.root_dir = lsputil.root_pattern('.volarrc')
-    end
+    -- if lsp == "vuels" then
+    --   opts.root_dir = lsputil.root_pattern('.veturrc')
+    -- end
+    -- if lsp == "volar" then
+    --   opts.root_dir = lsputil.root_pattern('.volarrc')
+    -- end
     if lsp == "sumneko_lua" then
       opts.settings = require('lsp/sumneko_lua').settings
     end
