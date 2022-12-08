@@ -345,7 +345,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
@@ -458,41 +458,42 @@ g.coc_global_extensions = {
   -- 'coc-translator',
   'coc-markdownlint',
   'coc-symbol-line',
-  '@yaegassy/coc-tailwindcss3',
   'coc-docthis',
   'coc-spell-checker',
   'coc-vetur',
   '@yaegassy/coc-volar',
-  '@yaegassy/coc-volar-tools'
+  '@yaegassy/coc-volar-tools',
+  '@yaegassy/coc-tailwindcss3',
+  '@yaegassy/coc-marksman'
 }
 
--- g.coc_start_at_startup = 0
+g.coc_start_at_startup = 0
 g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
--- g.trigger_size = 0.5 * 1048576
+g.trigger_size = 0.5 * 1048576
 
--- cmd [[
---   augroup hugefile
---     autocmd!
---     autocmd BufReadPre *
---        \ let size = getfsize(expand('<afile>')) |
---        \ if (size > g:trigger_size) || (size == -2) |
---   	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
---        \   exec 'CocDisable' |
---        \ else |
---        \   exec 'CocEnable' |
---        \ endif |
---        \ unlet size
---   augroup END
--- ]]
+cmd [[
+  augroup hugefile
+    autocmd!
+    autocmd BufReadPre *
+       \ let size = getfsize(expand('<afile>')) |
+       \ if (size > g:trigger_size) || (size == -2) |
+  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+       \   exec 'CocDisable' |
+       \ else |
+       \   exec 'CocEnable' |
+       \ endif |
+       \ unlet size
+  augroup END
+]]
 
 require'modules.coc'
 
--- cmd [[
---   function! CocTimerStart(timer)
---       exec "CocStart"
---   endfunction
---   call timer_start(2000,'CocTimerStart',{'repeat':1})
--- ]]
+cmd [[
+  function! CocTimerStart(timer)
+      exec "CocStart"
+  endfunction
+  call timer_start(2000,'CocTimerStart',{'repeat':1})
+]]
