@@ -22,7 +22,9 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-nvim_exec([[set guifont=VictorMono\ NF:h16]], false)
+nvim_exec([[set guifont=Operator\ Mono\ Lig:h18,VictorMono\ NF:h16]], false)
+g.neovide_scale_factor = 1.0
+g.neovide_input_macos_alt_is_meta = true
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -78,8 +80,7 @@ packer.startup({ function()
   use {'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function() require 'modules.colorizer' end } -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
-  -- use { 'katawful/kat.nvim', tag = '1.0' }
+  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require 'modules.indent_blankline' end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -141,7 +142,7 @@ packer.startup({ function()
   --   config = function() require 'modules.null-ls' end }
   -- use { "rcarriga/nvim-dap-ui", opt = true, event = 'BufRead', requires = { "mfussenegger/nvim-dap" },
   -- config = function() require 'modules.dap' end }
-  use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
+  -- use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
   -- rust
   use { 'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -208,8 +209,8 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        messages = { enabled = false },
-        lsp_progress = { enabled = false },
+        -- messages = { enabled = false },
+        -- lsp_progress = { enabled = false },
         views = {
           messages = {
             view = "split",
