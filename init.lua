@@ -92,6 +92,7 @@ packer.startup({ function()
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-packer.nvim'
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
   -- use{'gnikdroy/projections.nvim', config = function() require('modules.projections') end}
   use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}

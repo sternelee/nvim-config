@@ -67,6 +67,14 @@ require('telescope').setup {
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewer_maker,
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      }
+    },
 
     mappings = {
       i = {
@@ -130,6 +138,7 @@ require('telescope').setup {
   },
 }
 
+require('telescope').load_extension('fzf')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('packer')
