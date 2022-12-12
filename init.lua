@@ -467,33 +467,33 @@ g.coc_global_extensions = {
   '@yaegassy/coc-marksman'
 }
 
-g.coc_start_at_startup = 0
+-- g.coc_start_at_startup = 0
 g.coc_default_semantic_highlight_groups = 0
 g.coc_enable_locationlist = 0
 g.coc_selectmode_mapping = 0
 
-g.trigger_size = 0.5 * 1048576
+-- g.trigger_size = 0.5 * 1048576
 
-cmd [[
-  augroup hugefile
-    autocmd!
-    autocmd BufReadPre *
-       \ let size = getfsize(expand('<afile>')) |
-       \ if (size > g:trigger_size) || (size == -2) |
-  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
-       \   exec 'CocDisable' |
-       \ else |
-       \   exec 'CocEnable' |
-       \ endif |
-       \ unlet size
-  augroup END
-]]
+-- cmd [[
+--   augroup hugefile
+--     autocmd!
+--     autocmd BufReadPre *
+--        \ let size = getfsize(expand('<afile>')) |
+--        \ if (size > g:trigger_size) || (size == -2) |
+--   	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+--        \   exec 'CocDisable' |
+--        \ else |
+--        \   exec 'CocEnable' |
+--        \ endif |
+--        \ unlet size
+--   augroup END
+-- ]]
 
 require'modules.coc'
 
-cmd [[
-  function! CocTimerStart(timer)
-      exec "CocStart"
-  endfunction
-  call timer_start(2000,'CocTimerStart',{'repeat':1})
-]]
+-- cmd [[
+--   function! CocTimerStart(timer)
+--       exec "CocStart"
+--   endfunction
+--   call timer_start(2000,'CocTimerStart',{'repeat':1})
+-- ]]
