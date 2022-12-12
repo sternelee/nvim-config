@@ -323,7 +323,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- 自动保存
-require'modules.auto-save'
+-- require'modules.auto-save'
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
@@ -345,7 +345,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
@@ -464,13 +464,14 @@ g.coc_global_extensions = {
   '@yaegassy/coc-volar',
   '@yaegassy/coc-volar-tools',
   '@yaegassy/coc-tailwindcss3',
-  '@yaegassy/coc-marksman'
+  '@yaegassy/coc-marksman',
+  'coc-todo-tree'
 }
 
 -- g.coc_start_at_startup = 0
-g.coc_default_semantic_highlight_groups = 0
-g.coc_enable_locationlist = 0
-g.coc_selectmode_mapping = 0
+g.coc_default_semantic_highlight_groups = 1
+-- g.coc_enable_locationlist = 0
+-- g.coc_selectmode_mapping = 0
 
 -- g.trigger_size = 0.5 * 1048576
 
