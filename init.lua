@@ -94,7 +94,6 @@ packer.startup({ function()
   use 'nvim-telescope/telescope-packer.nvim'
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
-  -- use{'gnikdroy/projections.nvim', config = function() require('modules.projections') end}
   use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
   -- 语法建议
   use {
@@ -103,14 +102,14 @@ packer.startup({ function()
     "neovim/nvim-lspconfig",
   }
   use {'aduros/ai.vim', opt = true, cmd = 'AI'}
-  use({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    opt = true,
-    event = 'BufRead',
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+  -- use({
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   opt = true,
+  --   event = 'BufRead',
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- })
   use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end}
   use 'b0o/schemastore.nvim' -- json server
   use {'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
@@ -210,7 +209,7 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        -- messages = { enabled = false },
+        messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
           messages = {
@@ -737,7 +736,7 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
-      -- opts.capabilities = require('lsp/tsserver').capabilities
+      opts.capabilities = require('lsp/tsserver').capabilities
       opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
