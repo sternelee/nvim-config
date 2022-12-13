@@ -205,28 +205,7 @@ packer.startup({ function()
   use {
     "folke/noice.nvim",
     event = "VimEnter",
-    config = function()
-      require("noice").setup {
-        -- messages = { enabled = false },
-        -- lsp_progress = { enabled = false },
-        views = {
-          messages = {
-            view = "split",
-            enter = true,
-          },
-          cmdline_popup = {
-            position = {
-              row = 8,
-            },
-          },
-          popupmenu = {
-            position = {
-              row = 8,
-            },
-          }
-        }
-      }
-    end,
+    config = function() require'modules.noice' end,
     requires = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
