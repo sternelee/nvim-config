@@ -102,6 +102,7 @@ packer.startup({ function()
     "neovim/nvim-lspconfig",
   }
   use {'aduros/ai.vim', opt = true, cmd = 'AI'}
+  use {'mfussenegger/nvim-lint', config = function() require'modules.lint' end}
   -- use({
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   opt = true,
