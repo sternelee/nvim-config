@@ -101,6 +101,7 @@ packer.startup({function()
   }
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
+  use {'aduros/ai.vim', opt = true, cmd = 'AI'}
   -- 方便操作
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
@@ -490,11 +491,11 @@ g.coc_default_semantic_highlight_groups = 1
 --   augroup END
 -- ]]
 
-require'modules.coc'
-
 -- cmd [[
 --   function! CocTimerStart(timer)
 --       exec "CocStart"
 --   endfunction
 --   call timer_start(2000,'CocTimerStart',{'repeat':1})
 -- ]]
+
+require'modules.coc'
