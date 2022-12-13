@@ -102,7 +102,7 @@ packer.startup({ function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  -- use { "folke/neoconf.nvim"}
+  use {'aduros/ai.vim', opt = true, cmd = 'AI'}
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opt = true,
