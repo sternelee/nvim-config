@@ -207,7 +207,7 @@ packer.startup({ function()
     event = "VimEnter",
     config = function()
       require("noice").setup {
-        messages = { enabled = false },
+        -- messages = { enabled = false },
         -- lsp_progress = { enabled = false },
         views = {
           messages = {
@@ -576,10 +576,7 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
+    ["<CR>"] = cmp.mapping.confirm { select = false },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -587,25 +584,27 @@ cmp.setup({
         luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
-      elseif require("neogen").jumpable() then
-        require("neogen").jump_next()
       elseif check_backspace() then
-        fallback()
+        cmp.complete()
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, {
+      "i",
+      "s",
+    }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
-      elseif require("neogen").jumpable() then
-        require("neogen").jump_prev()
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, {
+      "i",
+      "s",
+    }),
   },
   sources = {
     { name = 'nvim_lsp', priority = 8 },
@@ -630,9 +629,9 @@ cmp.setup({
       end
     })
   },
-  flags = {
-    debounce_text_changes = 150,
-  },
+  -- flags = {
+  --   debounce_text_changes = 150,
+  -- },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered()
