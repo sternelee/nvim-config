@@ -6,7 +6,7 @@
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": true,
-  "semanticTokens.enable": true,
+  "semanticTokens.enable": false,
   "semanticTokens.incrementTypes": [
     "variable",
     "string",
@@ -78,10 +78,6 @@
     "operator": "Ψ",
     "typeParameter": ""
   },
-  "diagnostic.errorSign": "😡",
-  "diagnostic.warningSign": "😤",
-  "diagnostic.infoSign": "😥",
-  "diagnostic.hintSign": "😐",
   "diagnostic.floatConfig": {
     "border": true,
     "borderhighlight": "FloatBorder",
