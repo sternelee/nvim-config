@@ -1,7 +1,7 @@
 local api = vim.api
 local fn = vim.fn
 
-local delay = 500 -- ms
+local delay = 1000 -- ms
 
 local autosave = api.nvim_create_augroup("autosave", { clear = true })
 -- Initialization
@@ -26,7 +26,7 @@ api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
         if not queued then
             vim.cmd("silent w")
             api.nvim_buf_set_var(ctx.buf, "autosave_queued", true)
-            vim.notify("Saved at " .. os.date("%H:%M:%S"))
+            vim.notify("Saved at " .. os.date("%H:%M:%S"), 'info', { timeout = 500 })
         end
 
         local block = api.nvim_buf_get_var(ctx.buf, "autosave_block")

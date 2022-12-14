@@ -1,4 +1,4 @@
-local disableTsOrLsp = function (_, bufnr)
+local disableTsOrLsp = function (lang, bufnr)
   local lcount = vim.api.nvim_buf_line_count(bufnr)
   local bytes = vim.api.nvim_buf_get_offset(bufnr, lcount)
   return bytes / lcount > 500
