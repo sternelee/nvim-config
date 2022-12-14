@@ -254,7 +254,7 @@ opt('w', 'number', true) -- Print line number
 opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
