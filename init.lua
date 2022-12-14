@@ -466,7 +466,9 @@ g.coc_global_extensions = {
   '@yaegassy/coc-volar-tools',
   '@yaegassy/coc-tailwindcss3',
   '@yaegassy/coc-marksman',
-  'coc-todo-tree'
+  'coc-todo-tree',
+  'coc-html-css-support',
+  'coc-stylelint'
 }
 
 -- g.coc_start_at_startup = 0

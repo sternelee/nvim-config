@@ -193,5 +193,13 @@
   "Lua.telemetry.enable": false,
   "Lua.diagnostics.globals": ["vim", "use", "bit"],
   "Lua.hint.enable": false,
-  "languageserver": {}
+  "languageserver": {},
+  "html-css-support.enabledLanguages": [
+    "html",
+    "vue",
+    "blade",
+    "htmldjango",
+    "typescriptreact",
+    "javascriptreact"
+  ]
 }
