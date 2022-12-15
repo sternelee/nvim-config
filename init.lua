@@ -25,18 +25,6 @@ g.maplocalleader = ","
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
--- for neovide
-g.neovide_refresh_rate=65
--- g.neovide_transparency=0.8
-g.neovide_cursor_animation_length=0.05
-g.neovide_cursor_trail_length=0.01
-g.neovide_cursor_vfx_mode = "pixiedust"
-g.neovide_remember_dimensions = true;
--- g.neovide_cursor_vfx_particle_phase=1.5
--- g.neovide_cursor_vfx_particle_curl=1.0
-g.neovide_scroll_animation_length = 0.2
--- g.neovide_profiler = true;
-
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
@@ -86,8 +74,7 @@ packer.startup({function()
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'}
+  use {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'}
   -- 显示导航线
   use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end}
   use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
@@ -130,6 +117,7 @@ packer.startup({function()
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
+  use {'godlygeek/tabular', opt = true, event = 'InsertEnter'}
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
@@ -354,7 +342,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme synthwave84'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
