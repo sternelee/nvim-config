@@ -10,7 +10,12 @@ require('lualine').setup({
     globalstatus = true,
   },
   sections = {
-    lualine_a = {'mode'},
+    lualine_a = {'mode',
+      -- function ()
+      --   local animated = {"⚀", "⚁", "⚂", "⚃", "⚄"}
+      --   return animated[os.date("%S") % #animated + 1]
+      -- end
+    },
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filesize', 'filename', 'b:coc_current_function', 'g:coc_status'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},

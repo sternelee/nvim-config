@@ -20,14 +20,22 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
--- g.do_filetype_lua = 1 -- nvim > 0.7
--- g.did_load_filetypes = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 
-nvim_exec([[set guifont=Operator\ Mono\ Lig:h18,VictorMono\ NF:h18]], false)
-g.neovide_scale_factor = 1.0
-g.neovide_input_macos_alt_is_meta = true
+nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+
+-- for neovide
+g.neovide_refresh_rate=65
+-- g.neovide_transparency=0.8
+g.neovide_cursor_animation_length=0.05
+g.neovide_cursor_trail_length=0.01
+g.neovide_cursor_vfx_mode = "pixiedust"
+g.neovide_remember_dimensions = true;
+-- g.neovide_cursor_vfx_particle_phase=1.5
+-- g.neovide_cursor_vfx_particle_curl=1.0
+g.neovide_scroll_animation_length = 0.2
+-- g.neovide_profiler = true;
 
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
