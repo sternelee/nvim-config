@@ -114,7 +114,7 @@ packer.startup({function()
   use 'rcarriga/nvim-notify'
   use {'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end}
   use {'tpope/vim-repeat', opt = true, event = 'InsertEnter'}
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
   use {'wakatime/vim-wakatime', opt = true, event = 'BufRead'}
   use {'gennaro-tedesco/nvim-jqx', opt = true, cmd = {'JqxList', 'JqxQuery'}}
   use {'godlygeek/tabular', opt = true, event = 'InsertEnter'}
@@ -177,14 +177,16 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
-opt('o', 'foldmethod', 'indent')
+-- opt('o', 'foldmethod', 'indent')
+opt('o', 'foldmethod', 'expr')
+opt('o', 'foldexpr', 'nvim_treesitter#foldexpr()')
 -- opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
 opt('o', 'foldlevel', 99)
@@ -398,25 +400,6 @@ require'colorizer'.setup{
 
 require'modules.lualine'
 
-cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
-cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
-cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
-cmd([[ let @c=":cd %:h \<CR>" ]])
--- 按 @g 运行代码
--- All previous macros have been changed to autocmd, @g macro will run current file
-cmd [[
-	augroup run_file
-		autocmd BufEnter *.java let @g=":w\<CR>:vsp | terminal java %\<CR>i"
-		autocmd BufEnter *.py let @g=":w\<CR>:vsp |terminal python %\<CR>i"
-		autocmd BufEnter *.asm let @g=":w\<CR> :!nasm -f elf64 -o out.o % && ld out.o -o a.out \<CR> | :vsp |terminal ./a.out\<CR>i"
-		autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ %\<CR> | :vsp |terminal ./a.out\<CR>i"
-		autocmd BufEnter *.c let @g=":w\<CR> :!gcc %\<CR> | :vsp |terminal ./a.out\<CR>i"
-		autocmd BufEnter *.go let @g=":w\<CR> :vsp | terminal go run % \<CR>i"
-		autocmd BufEnter *.js let @g=":w\<CR> :vsp | terminal node % \<CR>i"
-		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
-	augroup end
-]]
-
 cmd [[
   highlight IndentBlanklineIndent1 guifg=#E06C75
   highlight IndentBlanklineIndent2 guifg=#E5C07B
@@ -560,4 +543,24 @@ cmd[[
   endfunction
 
   autocmd User CocDiagnosticChange call s:DiagnosticNotify()
+]]
+
+-- 代码运行指令
+cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
+cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
+cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
+cmd([[ let @c=":cd %:h \<CR>" ]])
+-- 按 @g 运行代码
+-- All previous macros have been changed to autocmd, @g macro will run current file
+cmd [[
+	augroup run_file
+		autocmd BufEnter *.java let @g=":w\<CR>:vsp | terminal java %\<CR>i"
+		autocmd BufEnter *.py let @g=":w\<CR>:vsp |terminal python %\<CR>i"
+		autocmd BufEnter *.asm let @g=":w\<CR> :!nasm -f elf64 -o out.o % && ld out.o -o a.out \<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ %\<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.c let @g=":w\<CR> :!gcc %\<CR> | :vsp |terminal ./a.out\<CR>i"
+		autocmd BufEnter *.go let @g=":w\<CR> :vsp | terminal go run % \<CR>i"
+		autocmd BufEnter *.js let @g=":w\<CR> :vsp | terminal node % \<CR>i"
+		autocmd BufEnter *.html let @g=":w\<CR> :silent !chromium % \<CR>"
+	augroup end
 ]]
