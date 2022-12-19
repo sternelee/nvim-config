@@ -71,6 +71,7 @@ packer.startup({function()
   -- 语法高亮
   use {'kevinhwang91/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end}
+  -- use {"ziontee113/syntax-tree-surfer", opt = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end}
   use {'folke/twilight.nvim', opt = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end}
   use 'NvChad/nvim-colorizer.lua' -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
@@ -97,11 +98,13 @@ packer.startup({function()
   -- 语法提示
   use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}}
   use {'aduros/ai.vim', opt = true, cmd = 'AI'}
+  use {'vuki656/package-info.nvim', opt = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end}
+  use {'Saecki/crates.nvim', opt = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end}
   -- 方便操作
   use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
   use {'voldikss/vim-translator', opt = true, cmd = {'Translate'}} -- npm install fanyi -g 安装翻译
-  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
-  use { 'yardnsm/vim-import-cost', run = 'npm install --production' }
+  use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
+  use {'yardnsm/vim-import-cost', run = 'npm install --production' }
   use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
   use {'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function () require'modules.marks' end}
   use 'folke/which-key.nvim' -- 提示leader按键
@@ -178,7 +181,7 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -230,10 +233,13 @@ map('n', ';b', '<C-b>')
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
+
 map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
+
 map('n', '<leader>:', '<cmd>terminal<CR>')
+
 map('n', '<leader>*', '<cmd>FzfLua<CR>')
 map('n', '<leader>f', '<cmd>lua require("fzf-lua").files()<CR>')
 map('n', '<leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>')
@@ -249,13 +255,24 @@ map('n', '<leader>C', '<cmd>CocFzfList<CR>')
 map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
+map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
+map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
+map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
+
+map('n', '<leader>ct', '<cmd>lua require("crates").toggle()<CR>')
+map('n', '<leader>cv', '<cmd>lua require("crates").show_versions_popup()<CR>')
+
 map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
+
 map('n', '<leader>tw', '<cmd>Translate<CR>')
+
 map('n', '<leader>tv', '<cmd>DocsViewToggle<CR>')
 map('n', '<leader>to', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tc', '<cmd>DiffviewClose<CR>')
+
 map('n', '<c-k>', '<cmd>wincmd k<CR>')                                 --ctrlhjkl to navigate splits
 map('n', '<c-j>', '<cmd>wincmd j<CR>')
 map('n', '<c-h>', '<cmd>wincmd h<CR>')
@@ -449,6 +466,7 @@ g.coc_global_extensions = {
   'coc-todo-tree',
   'coc-html-css-support',
   'coc-stylelint'
+  -- 'coc-ds-pinyin-lsp'
 }
 
 g.coc_start_at_startup = 0
