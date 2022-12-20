@@ -184,7 +184,7 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -343,7 +343,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- 自动保存
--- require'modules.auto-save'
+require'modules.auto-save'
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
