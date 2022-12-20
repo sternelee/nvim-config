@@ -83,8 +83,9 @@ packer.startup({function()
   use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
   use {'phaazon/hop.nvim', opt = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end}
   use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
-  use {'junegunn/fzf', rtp = '~/.fzf', run = './install --all'}
-  use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf', 'ibhagwan/fzf-lua'}
+  -- use {'junegunn/fzf', rtp = '~/.fzf', run = './install --all'}
+  -- use {'junegunn/fzf.vim', 'antoinemadec/coc-fzf'}
+  use 'ibhagwan/fzf-lua'
   -- 语法建议
   use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
   use {
@@ -127,22 +128,22 @@ packer.startup({function()
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-  use {
-    'gelguy/wilder.nvim',
-    config = function()
-      local wilder = require('wilder')
-      wilder.set_option('renderer', wilder.popupmenu_renderer(
-        wilder.popupmenu_palette_theme({
-          border = 'rounded',
-          max_height = '75%',      -- max height of the palette
-          min_height = 0,          -- set to the same as 'max_height' for a fixed height window
-          prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
-          reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
-        })
-      ))
-      wilder.setup({modes = {':', '/', '?'}})
-    end,
-  }
+  -- use {
+  --   'gelguy/wilder.nvim',
+  --   config = function()
+  --     local wilder = require('wilder')
+  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
+  --       wilder.popupmenu_palette_theme({
+  --         border = 'rounded',
+  --         max_height = '75%',      -- max height of the palette
+  --         min_height = 0,          -- set to the same as 'max_height' for a fixed height window
+  --         prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
+  --         reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
+  --       })
+  --     ))
+  --     wilder.setup({modes = {':', '/', '?'}})
+  --   end,
+  -- }
 end,
 config = {
   profile = {
@@ -184,7 +185,8 @@ opt('w', 'number', true)                              -- Print line number
 -- opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 0)
+-- opt('o', 'shortmess', 'a')
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -254,8 +256,8 @@ map('n', 'gs', '<cmd>lua require("fzf-lua").grep_cword()<CR>')
 map('n', 'fp', '<cmd>lua require("fzf-lua").grep_project()<CR>')
 map('n', 'fg', '<cmd>lua require("fzf-lua").git_files()<CR>')
 map('n', 'fc', '<cmd>lua require("fzf-lua").commands()<CR>')
-map('n', '<leader>C', '<cmd>CocFzfList<CR>')
-map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
+-- map('n', '<leader>C', '<cmd>CocFzfList<CR>')
+-- map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
@@ -343,7 +345,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- 自动保存
-require'modules.auto-save'
+-- require'modules.auto-save'
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
