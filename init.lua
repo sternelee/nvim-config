@@ -128,23 +128,23 @@ packer.startup({function()
   use {'numToStr/FTerm.nvim', opt = true, event = 'BufRead'}
   use {'is0n/fm-nvim', opt = true, event = 'BufRead'}
   use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-  -- use {
-  --   'gelguy/wilder.nvim',
-  --   config = function()
-  --     local wilder = require('wilder')
-  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
-  --       wilder.popupmenu_palette_theme({
-  --         border = 'rounded',
-  --         max_height = '75%',      -- max height of the palette
-  --         min_height = 0,          -- set to the same as 'max_height' for a fixed height window
-  --         prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
-  --         reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
-  --       })
-  --     ))
-  --     wilder.setup({modes = {':', '/', '?'}})
-  --   end,
-  -- }
-  use {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}}
+  use {
+    'gelguy/wilder.nvim',
+    config = function()
+      local wilder = require('wilder')
+      wilder.set_option('renderer', wilder.popupmenu_renderer(
+        wilder.popupmenu_palette_theme({
+          border = 'rounded',
+          max_height = '75%',      -- max height of the palette
+          min_height = 0,          -- set to the same as 'max_height' for a fixed height window
+          prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
+          reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
+        })
+      ))
+      wilder.setup({modes = {':', '/', '?'}})
+    end,
+  }
+  -- use {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}}
 end,
 config = {
   profile = {
@@ -346,7 +346,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- 自动保存
-require'modules.auto-save'
+-- require'modules.auto-save'
 
 local numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 for _, num in pairs(numbers) do
