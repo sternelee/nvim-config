@@ -1,7 +1,7 @@
 local ok, _ = pcall(require, 'impatient')
 if ok then
-  -- require('impatient') -- 必须是第一加载
-  require('impatient').enable_profile()
+  require('impatient') -- 必须是第一加载
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -57,9 +57,9 @@ packer.startup({function()
   use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
   use {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end}
   -- 状态栏
-  use 'romgrk/barbar.nvim'
+  use {'romgrk/barbar.nvim', opt = true, event = 'BufRead'}
   use 'kyazdani42/nvim-web-devicons'
-  use 'nvim-lualine/lualine.nvim'
+  use {'nvim-lualine/lualine.nvim', opt = true, event = 'BufRead', config = function() require'modules.lualine' end}
   use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end}
   use 'goolord/alpha-nvim'
   -- git相关
@@ -144,6 +144,7 @@ packer.startup({function()
   --     wilder.setup({modes = {':', '/', '?'}})
   --   end,
   -- }
+  use {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}}
 end,
 config = {
   profile = {
@@ -186,7 +187,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -420,8 +421,6 @@ require'colorizer'.setup{
     sass = { enable = true, parsers = { css } }
   }
 }
-
-require'modules.lualine'
 
 cmd [[
   highlight IndentBlanklineIndent1 guifg=#E06C75
