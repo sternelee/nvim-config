@@ -1,5 +1,5 @@
 require("noice").setup {
-  -- messages = { enabled = false },
+  messages = { enabled = true, view_error = nil },
   lsp_progress = { enabled = false },
   views = {
     messages = {
