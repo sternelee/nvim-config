@@ -6,7 +6,7 @@
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": true,
-  "semanticTokens.enable": false,
+  "semanticTokens.enable": true,
   "semanticTokens.incrementTypes": [
     "variable",
     "string",
