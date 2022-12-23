@@ -115,14 +115,15 @@
   "tsserver.implicitProjectConfig.experimentalDecorators": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
   "javascript.inlayHints.parameterNames.enabled": "all",
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.semicolons": "remove",
   "typescript.format.semicolons": "remove",
   "eslint.packageManager": "pnpm",
   "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
   "json.trace.server": "off",
   "json.schemas": [
     {
