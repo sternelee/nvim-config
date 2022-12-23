@@ -73,7 +73,7 @@ require("lazy").setup({
   {'rbong/vim-flog', lazy = true, cmd = {'Flog'}},
   {'sindrets/diffview.nvim', lazy = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end},
   -- 语法高亮
-  {'kevinhwang91/nvim-treesitter', build = ':TSUpdate'},
+  {'kevinhwang91/nvim-treesitter', lazy = false, build = ':TSUpdate'},
   {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
@@ -201,7 +201,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
