@@ -87,7 +87,7 @@ require("lazy").setup({
   {'fedepujol/move.nvim', lazy = true, event = 'BufRead'},
   {'phaazon/hop.nvim', lazy = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', lazy = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end},
-  {'junegunn/fzf', rtp = '~/.fzf', build = './install --all'},
+  {'junegunn/fzf', dir = '~/.fzf', build = './install --all'},
   {'junegunn/fzf.vim', 'antoinemadec/coc-fzf'},
   'ibhagwan/fzf-lua',
   -- 语法建议
@@ -132,23 +132,17 @@ require("lazy").setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'BufRead'},
   {'is0n/fm-nvim', lazy = true, event = 'BufRead'},
   {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end},
-  -- {
-  --   'gelguy/wilder.nvim',
-  --   config = function()
-  --     local wilder = require('wilder')
-  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
-  --       wilder.popupmenu_palette_theme({
-  --         border = 'rounded',
-  --         max_height = '75%',      -- max height of the palette
-  --         min_height = 0,          -- set to the same as 'max_height' for a fixed height window
-  --         prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
-  --         reverse = 0,             -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
-  --       })
-  --     ))
-  --     wilder.setup({modes = {':', '/', '?'}})
-  --   end,
-  -- },
-  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {
+    'gelguy/wilder.nvim',
+    config = function()
+      local wilder = require('wilder')
+      wilder.set_option('renderer', wilder.popupmenu_renderer({
+        highlighter = wilder.basic_highlighter(),
+      }))
+      wilder.setup({modes = {':', '/', '?'}})
+    end,
+  },
+  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
 }, {
   ui = {
     icons = {
@@ -201,7 +195,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -271,8 +265,8 @@ map('n', 'gs', '<cmd>lua require("fzf-lua").grep_cword()<CR>')
 map('n', 'fp', '<cmd>lua require("fzf-lua").grep_project()<CR>')
 map('n', 'fg', '<cmd>lua require("fzf-lua").git_files()<CR>')
 map('n', 'fc', '<cmd>lua require("fzf-lua").commands()<CR>')
--- map('n', '<leader>C', '<cmd>CocFzfList<CR>')
--- map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
+map('n', '<leader>C', '<cmd>CocFzfList<CR>')
+map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
