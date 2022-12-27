@@ -5,7 +5,7 @@ if ok then
 end
 local cmd = vim.cmd
 local g = vim.g
-local fn = vim.fn
+-- local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
@@ -59,7 +59,7 @@ require("lazy").setup({
   'nathom/filetype.nvim',
   'nvim-lua/plenary.nvim',
   'nvim-lua/popup.nvim',
-  {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'BufRead'},
+  {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
   'LunarVim/bigfile.nvim',
   -- 状态栏
   'romgrk/barbar.nvim',
@@ -68,7 +68,7 @@ require("lazy").setup({
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require 'modules.nvim-tree' end},
   'goolord/alpha-nvim',
   -- git相关
-  {'lewis6991/gitsigns.nvim', lazy = true, event = 'BufRead', config = function() require 'modules.gitsigns' end},
+  {'lewis6991/gitsigns.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.gitsigns' end},
   'tpope/vim-fugitive',
   {'kdheepak/lazygit.nvim', lazy = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' }},
   {'akinsho/git-conflict.nvim', lazy = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end},
@@ -76,27 +76,27 @@ require("lazy").setup({
   {'sindrets/diffview.nvim', lazy = true, cmd = { 'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles' }, config = function() require('diffview').setup() end},
   -- 语法高亮
   {'kevinhwang91/nvim-treesitter', build = ':TSUpdate'},
-  {'nvim-treesitter/nvim-treesitter-textobjects', lazy = true, event = 'InsertEnter'},
-  {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'BufRead', config = function() require 'treesitter-context'.setup() end},
-  -- {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end},
+  {'nvim-treesitter/nvim-treesitter-textobjects', lazy = true, event = 'VeryLazy'},
+  {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'VeryLazy', config = function() require 'treesitter-context'.setup() end},
+  -- {'haringsrob/nvim_context_vt', event = 'VeryLazy', config = function() require('nvim_context_vt'):setup() end},
   {'folke/twilight.nvim', lazy = true, cmd = { 'Twilight' }, config = function() require('twilight'):setup() end},
-  {'NvChad/nvim-colorizer.lua', lazy = true, event = 'BufRead', config = function() require 'modules.colorizer' end }, -- 色值高亮
+  {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VeryLazy', config = function() require 'modules.colorizer' end }, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   'RRethy/nvim-base16',
   {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
   -- 显示导航线
-  {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require 'modules.indent_blankline' end},
-  {'mg979/vim-visual-multi', lazy = true, event = 'InsertEnter'},
-  {'terryma/vim-expand-region', lazy = true, event = 'BufRead'},
-  {'fedepujol/move.nvim', lazy = true, event = 'BufRead'},
-  {'kevinhwang91/nvim-hlslens', lazy = true, event = 'BufRead', config = function() require('modules.hlslens') end},
+  {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require 'modules.indent_blankline' end},
+  {'mg979/vim-visual-multi', lazy = true, event = 'VeryLazy'},
+  {'terryma/vim-expand-region', lazy = true, event = 'VeryLazy'},
+  {'fedepujol/move.nvim', lazy = true, event = 'VeryLazy'},
+  {'kevinhwang91/nvim-hlslens', lazy = true, event = 'VeryLazy', config = function() require('modules.hlslens') end},
   {'phaazon/hop.nvim', lazy = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' }, config = function() require('hop'):setup() end},
-  -- {'ggandor/lightspeed.nvim', lazy = true, event = 'BufRead'},
+  -- {'ggandor/lightspeed.nvim', lazy = true, event = 'VeryLazy'},
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-file-browser.nvim',
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end},
-  {'toppair/reach.nvim', lazy = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end},
+  {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   -- 语法建议
   {
     "williamboman/mason.nvim",
@@ -108,7 +108,7 @@ require("lazy").setup({
   -- ({
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   lazy = true,
-  --   event = 'BufRead',
+  --   event = 'VeryLazy',
   --   config = function()
   --     require("lsp_lines").setup()
   --   end,
@@ -130,24 +130,24 @@ require("lazy").setup({
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
   }},
-  {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'BufRead', config = function()
+  {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'VeryLazy', config = function()
     require('refactoring').setup()
     require 'telescope'.load_extension('refactoring')
   end},
   -- 语法提示
-  {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end},
-  {'glepnir/lspsaga.nvim', lazy = true, event = 'BufRead', branch = 'main', config = function() require 'modules.saga' end},
+  {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf'):setup() end},
+  {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
-  -- { 'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'BufRead',
+  -- { 'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy',
   --   config = function() require 'modules.null-ls' end },
-  -- { "rcarriga/nvim-dap-ui", lazy = true, event = 'BufRead', dependencies = { "mfussenegger/nvim-dap" },
+  -- { "rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap" },
   -- config = function() require 'modules.dap' end },
-  -- {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}, -- 用noice代替
+  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
   { 'simrat39/rust-tools.nvim',
     ft = 'rust',
-    event = 'BufRead',
+    event = 'VeryLazy',
     config = function()
       require('rust-tools').setup({
         tools = {
@@ -163,48 +163,48 @@ require("lazy").setup({
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
-  {'editorconfig/editorconfig-vim', lazy = true, event = 'BufRead'},
-  {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, evnet = 'BufRead', config = function() require('goto-preview').setup {} end},
+  {'editorconfig/editorconfig-vim', lazy = true, event = 'VeryLazy'},
+  {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   {'yardnsm/vim-import-cost', build = 'npm install --production'},
   -- 方便操作
-  {"max397574/better-escape.nvim", lazy = true, event = 'InsertEnter', config = function() require("better_escape").setup() end},
+  {"max397574/better-escape.nvim", lazy = true, event = 'VeryLazy', config = function() require("better_escape").setup() end},
   -- {"ellisonleao/glow.nvim", lazy = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
-  {'nacro90/numb.nvim', lazy = true, event = 'BufRead', config = function() require('numb').setup() end},
+  {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'tpope/vim-eunuch', lazy = true, cmd = { 'Delete', 'Mkdir', 'Rename' }},
   {'voldikss/vim-translator', lazy = true, cmd = { 'Translate' }}, -- npm install fanyi -g 安装翻译
-  -- {'tpope/vim-commentary', lazy = true, event = 'BufRead' },
+  -- {'tpope/vim-commentary', lazy = true, event = 'VeryLazy' },
   {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
-  {'ZhiyuanLck/smart-pairs', lazy = true, event = 'InsertEnter', config = function() require('pairs'):setup() end},
-  {'machakann/vim-sandwich', lazy = true, event = 'InsertEnter'},
-  -- use({
+  {'ZhiyuanLck/smart-pairs', lazy = true, event = 'VeryLazy', config = function() require('pairs'):setup() end},
+  {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
+  -- {
   --   "kylechui/nvim-surround",
   --   tag = "main",
-  --   lazy = true, event = 'InsertEnter',
+  --   lazy = true, event = 'VeryLazy',
   --   config = function()
   --       require("nvim-surround").setup{}
-  --   end})
-  { 'chentoast/marks.nvim', lazy = true, event = 'BufRead', config = function() require 'modules.marks' end },
+  --   end},
+  { 'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.marks' end },
   'folke/which-key.nvim', -- 提示leader按键
-  { 'p00f/nvim-ts-rainbow', lazy = true, event = 'BufRead' }, -- 彩虹匹配
-  { 'windwp/nvim-ts-autotag', lazy = true, event = 'InsertEnter' },
-  { 'folke/todo-comments.nvim', lazy = true, event = 'InsertEnter', config = function() require 'modules.todo' end },
+  { 'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy' }, -- 彩虹匹配
+  { 'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
+  { 'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.todo' end },
   { 'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end } ,-- 方便写注释
-  { 'ntpeters/vim-better-whitespace', lazy = true, event = 'BufRead' },
+  { 'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy' },
   { 'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood' },
   { 'mhartington/formatter.nvim', lazy = true, cmd = 'Format', config = function() require 'modules.formatter' end },
   'rcarriga/nvim-notify',
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
   -- { 'michaelb/sniprun', build = 'bash ./install.sh'}
-  { 'nvim-pack/nvim-spectre', lazy = true, event = 'InsertEnter', config = function() require('spectre').setup() end },
-  { 'tpope/vim-repeat', lazy = true, event = 'InsertEnter' },
-  { 'PatschD/zippy.nvim', lazy = true, event = 'InsertEnter' },
-  -- {'kevinhwang91/nvim-ufo', lazy = true, event = 'InsertEnter', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
-  { 'wakatime/vim-wakatime', lazy = true, event = 'BufRead' },
+  { 'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end },
+  { 'tpope/vim-repeat', lazy = true, event = 'VeryLazy' },
+  { 'PatschD/zippy.nvim', lazy = true, event = 'VeryLazy' },
+  {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
+  { 'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy' },
   { 'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' } },
-  { 'numToStr/FTerm.nvim', lazy = true, event = 'BufRead' },
-  { 'is0n/fm-nvim', lazy = true, event = 'BufRead' },
+  { 'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy' },
+  { 'is0n/fm-nvim', lazy = true, event = 'VeryLazy' },
   {
     "folke/noice.nvim",
     event = "VimEnter",
@@ -504,7 +504,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
@@ -619,9 +619,9 @@ cmp.setup({
       end
     })
   },
-  -- flags = {
-  --   debounce_text_changes = 150,
-  -- },
+  flags = {
+    debounce_text_changes = 150,
+  },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered()
