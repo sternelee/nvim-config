@@ -37,84 +37,86 @@ filetype plugin on
 filetype indent on
 ]], false)
 
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-end
-
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
-cmd [[packadd packer.nvim]]
-local packer = require('packer')
-packer.startup({ function()
-  use 'wbthomason/packer.nvim'
-  use 'lewis6991/impatient.nvim'
-  use 'nathom/filetype.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-lua/popup.nvim'
-  use {'antoinemadec/FixCursorHold.nvim', opt = true, event = 'BufRead'}
-  use 'LunarVim/bigfile.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  })
+end
+vim.opt.runtimepath:prepend(lazypath)
+require("lazy").setup({
+  'lewis6991/impatient.nvim',
+  'nathom/filetype.nvim',
+  'nvim-lua/plenary.nvim',
+  'nvim-lua/popup.nvim',
+  {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'BufRead'},
+  'LunarVim/bigfile.nvim',
   -- 状态栏
-  use 'romgrk/barbar.nvim'
-  use 'kyazdani42/nvim-web-devicons'
-  use {'windwp/windline.nvim', config = function() require('modules.windline') end}
-  use {'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTreeToggle', config = function() require 'modules.nvim-tree' end}
-  use 'goolord/alpha-nvim'
+  'romgrk/barbar.nvim',
+  'kyazdani42/nvim-web-devicons',
+  {'windwp/windline.nvim', config = function() require('modules.windline') end},
+  {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require 'modules.nvim-tree' end},
+  'goolord/alpha-nvim',
   -- git相关
-  use {'lewis6991/gitsigns.nvim', opt = true, event = 'BufRead', config = function() require 'modules.gitsigns' end}
-  use 'tpope/vim-fugitive'
-  use {'kdheepak/lazygit.nvim', opt = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' }}
-  use {'akinsho/git-conflict.nvim', opt = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end}
-  use {'rbong/vim-flog', opt = true, cmd = { 'Flog' }}
-  use {'sindrets/diffview.nvim', opt = true, cmd = { 'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles' }, config = function() require('diffview').setup() end}
+  {'lewis6991/gitsigns.nvim', lazy = true, event = 'BufRead', config = function() require 'modules.gitsigns' end},
+  'tpope/vim-fugitive',
+  {'kdheepak/lazygit.nvim', lazy = true, cmd = { 'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile' }},
+  {'akinsho/git-conflict.nvim', lazy = true, cmd = { 'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict' }, config = function() require('git-conflict').setup() end},
+  {'rbong/vim-flog', lazy = true, cmd = { 'Flog' }},
+  {'sindrets/diffview.nvim', lazy = true, cmd = { 'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles' }, config = function() require('diffview').setup() end},
   -- 语法高亮
-  use {'kevinhwang91/nvim-treesitter', run = ':TSUpdate'}
-  use {'nvim-treesitter/nvim-treesitter-textobjects', opt = true, event = 'InsertEnter'}
-  use {'nvim-treesitter/nvim-treesitter-context', opt = true, event = 'BufRead', config = function() require 'treesitter-context'.setup() end}
-  -- use {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end}
-  use {'folke/twilight.nvim', opt = true, cmd = { 'Twilight' }, config = function() require('twilight'):setup() end}
-  use {'NvChad/nvim-colorizer.lua', opt = true, event = 'BufRead', config = function() require 'modules.colorizer' end } -- 色值高亮
+  {'kevinhwang91/nvim-treesitter', build = ':TSUpdate'},
+  {'nvim-treesitter/nvim-treesitter-textobjects', lazy = true, event = 'InsertEnter'},
+  {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'BufRead', config = function() require 'treesitter-context'.setup() end},
+  -- {'haringsrob/nvim_context_vt', event = 'BufRead', config = function() require('nvim_context_vt'):setup() end},
+  {'folke/twilight.nvim', lazy = true, cmd = { 'Twilight' }, config = function() require('twilight'):setup() end},
+  {'NvChad/nvim-colorizer.lua', lazy = true, event = 'BufRead', config = function() require 'modules.colorizer' end }, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  use 'RRethy/nvim-base16'
-  use {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'}
+  'RRethy/nvim-base16',
+  {'Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
   -- 显示导航线
-  use {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require 'modules.indent_blankline' end}
-  use {'mg979/vim-visual-multi', opt = true, event = 'InsertEnter'}
-  use {'terryma/vim-expand-region', opt = true, event = 'BufRead'}
-  use {'fedepujol/move.nvim', opt = true, event = 'BufRead'}
-  use {'kevinhwang91/nvim-hlslens', opt = true, event = 'BufRead', config = function() require('modules.hlslens') end}
-  use {'phaazon/hop.nvim', opt = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' }, config = function() require('hop'):setup() end}
-  -- use {'ggandor/lightspeed.nvim', opt = true, event = 'BufRead'}
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
-  use 'nvim-telescope/telescope-packer.nvim'
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end}
-  use {'toppair/reach.nvim', opt = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end}
+  {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require 'modules.indent_blankline' end},
+  {'mg979/vim-visual-multi', lazy = true, event = 'InsertEnter'},
+  {'terryma/vim-expand-region', lazy = true, event = 'BufRead'},
+  {'fedepujol/move.nvim', lazy = true, event = 'BufRead'},
+  {'kevinhwang91/nvim-hlslens', lazy = true, event = 'BufRead', config = function() require('modules.hlslens') end},
+  {'phaazon/hop.nvim', lazy = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' }, config = function() require('hop'):setup() end},
+  -- {'ggandor/lightspeed.nvim', lazy = true, event = 'BufRead'},
+  'nvim-telescope/telescope.nvim',
+  'nvim-telescope/telescope-file-browser.nvim',
+  {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end},
+  {'toppair/reach.nvim', lazy = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end},
   -- 语法建议
-  use {
+  {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-  }
-  use {'aduros/ai.vim', opt = true, cmd = 'AI'}
-  use {'mfussenegger/nvim-lint', config = function() require'modules.lint' end}
-  -- use({
+  },
+  {'aduros/ai.vim', lazy = true, cmd = 'AI'},
+  {'mfussenegger/nvim-lint', config = function() require'modules.lint' end},
+  -- ({
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   opt = true,
+  --   lazy = true,
   --   event = 'BufRead',
   --   config = function()
   --     require("lsp_lines").setup()
   --   end,
-  -- })
-  use {'jose-elias-alvarez/typescript.nvim', opt = true, ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end}
-  use 'b0o/schemastore.nvim' -- json server
-  use {'L3MON4D3/LuaSnip', requires = { 'rafamadriz/friendly-snippets' } }
-  use {'hrsh7th/nvim-cmp', requires = {
+  -- }),
+  {'jose-elias-alvarez/typescript.nvim', lazy = true, ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
+  'b0o/schemastore.nvim', -- json server
+  {'L3MON4D3/LuaSnip', dependencies = { 'rafamadriz/friendly-snippets' } },
+  {'hrsh7th/nvim-cmp', dependencies = {
     { 'petertriho/cmp-git' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-buffer' },
@@ -127,23 +129,23 @@ packer.startup({ function()
     -- {'octaltree/cmp-look'}, -- 太多了
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-  }}
-  use {'ThePrimeagen/refactoring.nvim', opt = true, event = 'BufRead', config = function()
+  }},
+  {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'BufRead', config = function()
     require('refactoring').setup()
     require 'telescope'.load_extension('refactoring')
-  end}
+  end},
   -- 语法提示
-  use {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end}
-  use {'glepnir/lspsaga.nvim', opt = true, event = 'BufRead', branch = 'main', config = function() require 'modules.saga' end}
-  use {'weilbith/nvim-code-action-menu', opt = true, cmd = 'CodeActionMenu'}
-  use 'onsails/lspkind-nvim'
-  -- use { 'jose-elias-alvarez/null-ls.nvim', opt = true, event = 'BufRead',
-  --   config = function() require 'modules.null-ls' end }
-  -- use { "rcarriga/nvim-dap-ui", opt = true, event = 'BufRead', requires = { "mfussenegger/nvim-dap" },
-  -- config = function() require 'modules.dap' end }
-  -- use {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end} -- 用noice代替
+  {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'BufRead', config = function() require('bqf'):setup() end},
+  {'glepnir/lspsaga.nvim', lazy = true, event = 'BufRead', branch = 'main', config = function() require 'modules.saga' end},
+  {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
+  'onsails/lspkind-nvim',
+  -- { 'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'BufRead',
+  --   config = function() require 'modules.null-ls' end },
+  -- { "rcarriga/nvim-dap-ui", lazy = true, event = 'BufRead', dependencies = { "mfussenegger/nvim-dap" },
+  -- config = function() require 'modules.dap' end },
+  -- {'j-hui/fidget.nvim', event = 'BufRead', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
-  use { 'simrat39/rust-tools.nvim',
+  { 'simrat39/rust-tools.nvim',
     ft = 'rust',
     event = 'BufRead',
     config = function()
@@ -155,71 +157,81 @@ packer.startup({ function()
           hover_actions = { auto_focus = true }
         }
       })
-    end }
-  use {'Saecki/crates.nvim', opt = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end}
-  use {'David-Kunz/cmp-npm', opt = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end}
-  use {'vuki656/package-info.nvim', opt = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end}
-  use {'NTBBloodbath/rest.nvim', opt = true, ft = 'http', config = function() require 'rest-nvim'.setup() end}
-  use {'pechorin/any-jump.vim', opt = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }}
-  use {'editorconfig/editorconfig-vim', opt = true, event = 'BufRead'}
-  use {'rmagatti/goto-preview', opt = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, evnet = 'BufRead', config = function() require('goto-preview').setup {} end}
-  -- use {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  use {'yardnsm/vim-import-cost', run = 'npm install --production'}
+    end },
+  {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
+  {'David-Kunz/cmp-npm', lazy = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end},
+  {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
+  {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
+  {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
+  {'editorconfig/editorconfig-vim', lazy = true, event = 'BufRead'},
+  {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, evnet = 'BufRead', config = function() require('goto-preview').setup {} end},
+  -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
+  {'yardnsm/vim-import-cost', build = 'npm install --production'},
   -- 方便操作
-  use {"max397574/better-escape.nvim", opt = true, event = 'InsertEnter', config = function() require("better_escape").setup() end}
-  -- use {"ellisonleao/glow.nvim", opt = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end}
-  use {'iamcco/markdown-preview.nvim', opt = true, ft = 'markdown', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-  use {'nacro90/numb.nvim', opt = true, event = 'BufRead', config = function() require('numb').setup() end}
-  use {'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Mkdir', 'Rename' }}
-  use {'voldikss/vim-translator', opt = true, cmd = { 'Translate' }} -- npm install fanyi -g 安装翻译
-  -- use {'tpope/vim-commentary', opt = true, event = 'BufRead' }
-  use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
-  use {'ZhiyuanLck/smart-pairs', opt = true, event = 'InsertEnter', config = function() require('pairs'):setup() end}
-  use {'machakann/vim-sandwich', opt = true, event = 'InsertEnter'}
+  {"max397574/better-escape.nvim", lazy = true, event = 'InsertEnter', config = function() require("better_escape").setup() end},
+  -- {"ellisonleao/glow.nvim", lazy = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end},
+  {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
+  {'nacro90/numb.nvim', lazy = true, event = 'BufRead', config = function() require('numb').setup() end},
+  {'tpope/vim-eunuch', lazy = true, cmd = { 'Delete', 'Mkdir', 'Rename' }},
+  {'voldikss/vim-translator', lazy = true, cmd = { 'Translate' }}, -- npm install fanyi -g 安装翻译
+  -- {'tpope/vim-commentary', lazy = true, event = 'BufRead' },
+  {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
+  {'ZhiyuanLck/smart-pairs', lazy = true, event = 'InsertEnter', config = function() require('pairs'):setup() end},
+  {'machakann/vim-sandwich', lazy = true, event = 'InsertEnter'},
   -- use({
   --   "kylechui/nvim-surround",
   --   tag = "main",
-  --   opt = true, event = 'InsertEnter',
+  --   lazy = true, event = 'InsertEnter',
   --   config = function()
   --       require("nvim-surround").setup{}
   --   end})
-  use { 'chentoast/marks.nvim', opt = true, event = 'BufRead', config = function() require 'modules.marks' end }
-  use 'folke/which-key.nvim' -- 提示leader按键
-  use { 'p00f/nvim-ts-rainbow', opt = true, event = 'BufRead' } -- 彩虹匹配
-  use { 'windwp/nvim-ts-autotag', opt = true, event = 'InsertEnter' }
-  use { 'folke/todo-comments.nvim', opt = true, event = 'InsertEnter', config = function() require 'modules.todo' end }
-  use { 'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end } -- 方便写注释
-  use { 'ntpeters/vim-better-whitespace', opt = true, event = 'BufRead' }
-  use { 'ThePrimeagen/vim-be-good', opt = true, cmd = 'VimBeGood' }
-  use { 'mhartington/formatter.nvim', opt = true, cmd = 'Format', config = function() require 'modules.formatter' end }
-  use 'rcarriga/nvim-notify'
-  use { 'metakirby5/codi.vim', opt = true, cmd = { 'Codi' } }
-  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
-  use { 'nvim-pack/nvim-spectre', opt = true, event = 'InsertEnter', config = function() require('spectre').setup() end }
-  use { 'tpope/vim-repeat', opt = true, event = 'InsertEnter' }
-  use { 'PatschD/zippy.nvim', opt = true, event = 'InsertEnter' }
-  -- use {'kevinhwang91/nvim-ufo', opt = true, event = 'InsertEnter', requires = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}
-  use { 'wakatime/vim-wakatime', opt = true, event = 'BufRead' }
-  use { 'gennaro-tedesco/nvim-jqx', opt = true, cmd = { 'JqxList', 'JqxQuery' } }
-  use { 'numToStr/FTerm.nvim', opt = true, event = 'BufRead' }
-  use { 'is0n/fm-nvim', opt = true, event = 'BufRead' }
-  use {
+  { 'chentoast/marks.nvim', lazy = true, event = 'BufRead', config = function() require 'modules.marks' end },
+  'folke/which-key.nvim', -- 提示leader按键
+  { 'p00f/nvim-ts-rainbow', lazy = true, event = 'BufRead' }, -- 彩虹匹配
+  { 'windwp/nvim-ts-autotag', lazy = true, event = 'InsertEnter' },
+  { 'folke/todo-comments.nvim', lazy = true, event = 'InsertEnter', config = function() require 'modules.todo' end },
+  { 'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end } ,-- 方便写注释
+  { 'ntpeters/vim-better-whitespace', lazy = true, event = 'BufRead' },
+  { 'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood' },
+  { 'mhartington/formatter.nvim', lazy = true, cmd = 'Format', config = function() require 'modules.formatter' end },
+  'rcarriga/nvim-notify',
+  { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
+  -- { 'michaelb/sniprun', build = 'bash ./install.sh'}
+  { 'nvim-pack/nvim-spectre', lazy = true, event = 'InsertEnter', config = function() require('spectre').setup() end },
+  { 'tpope/vim-repeat', lazy = true, event = 'InsertEnter' },
+  { 'PatschD/zippy.nvim', lazy = true, event = 'InsertEnter' },
+  -- {'kevinhwang91/nvim-ufo', lazy = true, event = 'InsertEnter', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
+  { 'wakatime/vim-wakatime', lazy = true, event = 'BufRead' },
+  { 'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' } },
+  { 'numToStr/FTerm.nvim', lazy = true, event = 'BufRead' },
+  { 'is0n/fm-nvim', lazy = true, event = 'BufRead' },
+  {
     "folke/noice.nvim",
     event = "VimEnter",
     config = function() require'modules.noice' end,
-    requires = {
+    dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     }
-  }
-  use {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end}
-end,
-  config = {
-    profile = {
-      enabled = true,
-      threshold = 1
-    }
-  } })
+  },
+  {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end},
+  }, {
+  ui = {
+    icons = {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+    },
+  },
+})
 
 --settings
 local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
@@ -229,7 +241,7 @@ local function opt(scope, key, value)
 end
 
 local indent = 2
-opt('b', 'expandtab', true) -- Use spaces instead of tabs
+opt('b', 'expandtab', true) -- spaces instead of tabs
 opt('b', 'shiftwidth', indent) -- Size of an indent
 opt('b', 'smartindent', true) -- Insert indents automatically
 opt('b', 'tabstop', indent) -- Number of spaces tabs count for
@@ -356,8 +368,6 @@ map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
-map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
-map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 map('n', '<leader><leader>g', '<cmd>LazyGit<CR>')
 
 -- refactoring
