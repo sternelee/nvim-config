@@ -103,6 +103,7 @@ require("lazy").setup({
   -- 语法提示
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   {'aduros/ai.vim', lazy = true, cmd = 'AI'},
+  -- {'dense-analysis/neural'}
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
@@ -129,6 +130,9 @@ require("lazy").setup({
   {'wakatime/vim-wakatime', lazy = true, event = 'BufRead'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', lazy = true, event = 'InsertEnter'},
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'InsertEnter', config = function ()
+    require("autoclose").setup({})
+  end},
   {'numToStr/FTerm.nvim', lazy = true, event = 'BufRead'},
   {'is0n/fm-nvim', lazy = true, event = 'BufRead'},
   {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end},
