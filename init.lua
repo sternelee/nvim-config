@@ -104,6 +104,7 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
   },
   {'aduros/ai.vim', lazy = true, cmd = 'AI'},
+  -- {'dense-analysis/neural'},
   {'mfussenegger/nvim-lint', config = function() require'modules.lint' end},
   -- ({
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -139,13 +140,13 @@ require("lazy").setup({
   {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
-  -- { 'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy',
+  -- {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy',
   --   config = function() require 'modules.null-ls' end },
-  -- { "rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap" },
-  -- config = function() require 'modules.dap' end },
+  -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"},
+  -- config = function() require 'modules.dap' end},
   -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
-  { 'simrat39/rust-tools.nvim',
+  {'simrat39/rust-tools.nvim',
     ft = 'rust',
     event = 'VeryLazy',
     config = function()
@@ -157,7 +158,7 @@ require("lazy").setup({
           hover_actions = { auto_focus = true }
         }
       })
-    end },
+    end},
   {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
   {'David-Kunz/cmp-npm', lazy = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
@@ -185,26 +186,30 @@ require("lazy").setup({
   --   config = function()
   --       require("nvim-surround").setup{}
   --   end},
-  { 'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.marks' end },
+  {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.marks' end},
   'folke/which-key.nvim', -- 提示leader按键
-  { 'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy' }, -- 彩虹匹配
-  { 'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
-  { 'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.todo' end },
-  { 'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end } ,-- 方便写注释
-  { 'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy' },
-  { 'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood' },
-  { 'mhartington/formatter.nvim', lazy = true, cmd = 'Format', config = function() require 'modules.formatter' end },
+  {'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
+  {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy'},
+  {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.todo' end},
+  {'danymat/neogen', config = function() require 'neogen'.setup { enabled = true } end} ,-- 方便写注释
+  {'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy'},
+  {'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood'},
+  {'mhartington/formatter.nvim', lazy = true, cmd = 'Format', config = function() require 'modules.formatter' end},
   'rcarriga/nvim-notify',
-  { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
-  -- { 'michaelb/sniprun', build = 'bash ./install.sh'}
-  { 'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end },
-  { 'tpope/vim-repeat', lazy = true, event = 'VeryLazy' },
-  { 'PatschD/zippy.nvim', lazy = true, event = 'VeryLazy' },
+  {'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' }},
+  -- {'michaelb/sniprun', build = 'bash ./install.sh'}
+  {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end},
+  {'tpope/vim-repeat', lazy = true, event = 'VeryLazy'},
+  {'PatschD/zippy.nvim', lazy = true, event = 'VeryLazy'},
   {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
-  { 'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy' },
-  { 'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' } },
-  { 'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy' },
-  { 'is0n/fm-nvim', lazy = true, event = 'VeryLazy' },
+  {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
+  {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' }},
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
+    require("autoclose").setup({})
+  end},
+  {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
+  {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
+  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {
     "folke/noice.nvim",
     event = "VimEnter",
