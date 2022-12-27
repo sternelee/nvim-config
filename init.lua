@@ -63,7 +63,7 @@ require("lazy").setup({
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'BufRead'},
   'kyazdani42/nvim-web-devicons',
-  {'nvim-lualine/lualine.nvim', lazy = true, event = 'BufRead', config = function() require'modules.lualine' end},
+  {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   'goolord/alpha-nvim',
   -- git相关
@@ -199,7 +199,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
