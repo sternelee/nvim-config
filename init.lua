@@ -766,7 +766,6 @@ setup_servers()
 -- eslint autoFixOnSave
 local function can_autofix(client)
   return client.config.settings.autoFixOnSave or false
-  -- return eslint_autofix or false
 end
 
 local function fix_on_save()
