@@ -53,15 +53,14 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.runtimepath:prepend(lazypath)
-require("lazy").setup({
-  'wbthomason/packer.nvim',
+require('lazy').setup({
   {'lewis6991/impatient.nvim'},
   'nvim-lua/plenary.nvim',
   'nvim-lua/popup.nvim',
-  {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'BufRead'},
+  {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
-  {'romgrk/barbar.nvim', lazy = true, event = 'BufRead'},
+  {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
   'kyazdani42/nvim-web-devicons',
   {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
@@ -74,19 +73,19 @@ require("lazy").setup({
   {'sindrets/diffview.nvim', lazy = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end},
   -- 语法高亮
   {'kevinhwang91/nvim-treesitter', lazy = false, build = ':TSUpdate'},
-  {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'BufRead', config = function() require'treesitter-context'.setup() end},
+  {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'VeryLazy', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   'NvChad/nvim-colorizer.lua', -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
   -- 显示导航线
-  {'lukas-reineke/indent-blankline.nvim', event = 'BufRead', config = function() require'modules.indent_blankline'end},
-  {'mg979/vim-visual-multi', lazy = true, event = 'InsertEnter'},
-  {'terryma/vim-expand-region', lazy = true, event = 'BufRead'},
-  {'fedepujol/move.nvim', lazy = true, event = 'BufRead'},
+  {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end},
+  {'mg979/vim-visual-multi', lazy = true, event = 'VeryLazy'},
+  {'terryma/vim-expand-region', lazy = true, event = 'VeryLazy'},
+  {'fedepujol/move.nvim', lazy = true, event = 'VeryLazy'},
   {'phaazon/hop.nvim', lazy = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
-  {'toppair/reach.nvim', lazy = true, event = 'BufRead', config = function() require('reach').setup{ notifications = true } end},
+  {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   {'junegunn/fzf', dir = '~/.fzf', build = './install --all'},
   {'junegunn/fzf.vim', 'antoinemadec/coc-fzf'},
   'ibhagwan/fzf-lua',
@@ -94,7 +93,6 @@ require("lazy").setup({
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
   {
     'weilbith/nvim-code-action-menu',
-    after = 'coc.nvim',
     dependencies = 'xiyaowong/coc-code-action-menu.nvim',
     config = function()
       require 'coc-code-action-menu'
@@ -110,34 +108,36 @@ require("lazy").setup({
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
   -- 方便操作
-  {'nacro90/numb.nvim', lazy = true, event = 'BufRead', config = function() require('numb').setup() end},
+  {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
   {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
   {'yardnsm/vim-import-cost', build = 'npm install --production' },
-  {'machakann/vim-sandwich', lazy = true, event = 'InsertEnter'},
-  {'chentoast/marks.nvim', lazy = true, event = 'BufRead', config = function () require'modules.marks' end},
+  {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
+  {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   'folke/which-key.nvim', -- 提示leader按键
-  {'p00f/nvim-ts-rainbow', lazy = true, event = 'BufRead'}, -- 彩虹匹配
-  { 'windwp/nvim-ts-autotag', lazy = true, event = 'InsertEnter' },
-  {'folke/todo-comments.nvim', lazy = true, event = 'InsertEnter', config = function () require'modules.todo' end},
+  {'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
+  { 'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
+  {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
   {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
-  {'ntpeters/vim-better-whitespace', lazy = true, event = 'BufRead'},
+  {'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy'},
   {'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood'},
   'rcarriga/nvim-notify',
-  {'nvim-pack/nvim-spectre', lazy = true, event = 'InsertEnter', config = function() require('spectre').setup() end},
-  {'tpope/vim-repeat', lazy = true, event = 'InsertEnter'},
-  -- {'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
-  {'wakatime/vim-wakatime', lazy = true, event = 'BufRead'},
+  {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end},
+  {'tpope/vim-repeat', lazy = true, event = 'VeryLazy'},
+  {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
+  {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = {'JqxList', 'JqxQuery'}},
-  {'godlygeek/tabular', lazy = true, event = 'InsertEnter'},
-  {'m4xshen/autoclose.nvim', lazy = true, event = 'InsertEnter', config = function ()
+  {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
     require("autoclose").setup({})
   end},
-  {'numToStr/FTerm.nvim', lazy = true, event = 'BufRead'},
-  {'is0n/fm-nvim', lazy = true, event = 'BufRead'},
-  {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end},
+  {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
+  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
+  {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
   {
     'gelguy/wilder.nvim',
+    lazy = true,
+    event = 'VeryLazy',
     config = function()
       local wilder = require('wilder')
       wilder.set_option('renderer', wilder.popupmenu_renderer({
@@ -206,9 +206,9 @@ opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
--- opt('o', 'foldmethod', 'indent')
-opt('o', 'foldmethod', 'expr')
-opt('o', 'foldexpr', 'nvim_treesitter#foldexpr()')
+opt('o', 'foldmethod', 'indent')
+-- opt('o', 'foldmethod', 'expr')
+-- opt('o', 'foldexpr', 'nvim_treesitter#foldexpr()')
 -- opt('o', 'foldcolumn', '1')
 opt('o', 'foldenable', true)
 opt('o', 'foldlevel', 99)
@@ -311,8 +311,6 @@ map('n', '<leader>gl', '<cmd>Git pull<CR>')
 map('n', '<leader>gu', '<cmd>Git push<CR>')
 map('n', '<leader>gr', '<cmd>Git reset --hard<CR>')
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
-map('n', '<leader><leader>i', '<cmd>PackerInstall<CR>')
-map('n', '<leader><leader>u', '<cmd>PackerUpdate<CR>')
 
 map('n', '<leader>j', '<cmd>AnyJump<CR>')
 map('v', '<leader>j', '<cmd>AnyJumpVisual<CR>')

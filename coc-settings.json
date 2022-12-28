@@ -6,7 +6,7 @@
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.source.file.triggerCharacters": ["/"],
   "signature.enable": true,
-  "semanticTokens.enable": true,
+  "semanticTokens.enable": false,
   "semanticTokens.incrementTypes": [
     "variable",
     "string",
@@ -37,7 +37,7 @@
   "codeLens.subseparator": " │ ",
   "codeLens.position": "eol",
   "suggest.enablePreselect": true,
-  "suggest.noselect": false,
+  "suggest.noselect": true,
   "suggest.virtualText": true,
   "suggest.defaultSortMethod": "length",
   "suggest.snippetIndicator": "",
