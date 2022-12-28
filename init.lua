@@ -210,16 +210,16 @@ require("lazy").setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {
-    "folke/noice.nvim",
+    'folke/noice.nvim',
     event = "VimEnter",
     config = function() require'modules.noice' end,
     dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
     }
   },
-  {"petertriho/nvim-scrollbar", config = function()require("scrollbar").setup() end},
-  }, {
+  {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
+}, {
   ui = {
     icons = {
       cmd = "⌘",
