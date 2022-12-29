@@ -6,10 +6,10 @@ end
 local cmd = vim.cmd
 local g = vim.g
 -- local fn = vim.fn
-local execute = vim.api.nvim_command
+-- local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
--- local keymap = vim.keymap.set
+local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
 -- local usercmd = vim.api.nvim_create_user_command
@@ -219,6 +219,25 @@ require("lazy").setup({
     }
   },
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
+  {'cshuaimin/ssr.nvim',
+  lazy = true,
+  event = 'VeryLazy',
+  module = 'ssr',
+  config = function()
+    require("ssr").setup {
+      min_width = 50,
+      min_height = 5,
+      max_width = 120,
+      max_height = 25,
+      keymaps = {
+        close = "q",
+        next_match = "n",
+        prev_match = "N",
+        replace_confirm = "<cr>",
+        replace_all = "<leader><cr>",
+      },
+    }
+  end}
 }, {
   ui = {
     icons = {
@@ -409,9 +428,10 @@ map('n', '<A-h>', '<cmd>MoveHChar(-1)<CR>')
 map('v', '<A-l>', '<cmd>MoveHBlock(1)<CR>')
 map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 
+keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- ufo
--- map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
--- map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
+map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
+map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
 -- map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
@@ -658,130 +678,6 @@ cmp.setup.cmdline(':', {
 
 -- LSP config
 require('lsp/config')
-
-local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
-}
-
-local on_attach = function(client, bufnr)
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  if client.name == 'tailwindcss' then
-    if client.server_capabilities.colorProvider then
-      require "lsp/documentcolors".buf_attach(bufnr)
-    end
-  end
-
-  -- if client.name ~= 'jsonls' then
-  --   local msg = string.format("Language server %s started!", client.name)
-  --   notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
-  -- end
-
-end
-
-local lspconfig = require("lspconfig")
-local lsputil = require 'lspconfig.util'
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls" },
-  automatic_installation = true
-})
-
-local servers = {
-  "sumneko_lua",
-  "html",
-  "cssls",
-  "jsonls",
-  "emmet_ls",
-  "vuels",
-  "volar",
-  "tsserver",
-  "denols",
-  "rust_analyzer",
-  "eslint",
-  "tailwindcss",
-  "bashls",
-  "marksman"
-}
-
-local function setup_servers()
-  for _, lsp in ipairs(servers) do
-    local opts = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      handlers = handlers,
-    }
-    if lsp == "jsonls" then
-      opts.settings = {
-        json = {
-          schemas = require('schemastore').json.schemas(),
-          validate = { enable = true },
-        },
-      }
-    end
-    if lsp == "tsserver" then
-      opts.root_dir = lsputil.root_pattern('package.json')
-      opts.capabilities = require('lsp/tsserver').capabilities
-      opts.settings = require('lsp/tsserver').settings
-    end
-    if lsp == "denols" then
-      opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
-    end
-    if lsp == "vuels" then
-      opts.root_dir = lsputil.root_pattern('.veturrc')
-    end
-    if lsp == "volar" then
-      opts.root_dir = lsputil.root_pattern('.volarrc')
-    end
-    if lsp == "sumneko_lua" then
-      opts.settings = require('lsp/sumneko_lua').settings
-    end
-    if lsp == "eslint" then
-      opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
-      opts.settings = require('lsp/eslint').settings
-      opts.handlers = {
-        ['window/showMessageRequest'] = function(_, result, params) return result end
-      }
-    end
-    if lsp == "tailwindcss" then
-      opts.root_dir = lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
-    'postcss.config.ts', 'package.json', 'node_modules')
-      opts.filetypes = require('lsp/tailwindcss').filetypes
-      opts.capabilities = require('lsp/tailwindcss').capabilities
-      opts.init_options = require('lsp/tailwindcss').init_options
-      opts.settings = require('lsp/tailwindcss').settings
-    end
-    lspconfig[lsp].setup(opts)
-  end
-end
-
-setup_servers()
-
--- eslint autoFixOnSave
-local function can_autofix(client)
-  return client.config.settings.autoFixOnSave or false
-end
-
-local function fix_on_save()
-  local clients = vim.lsp.get_active_clients()
-  local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
-  if #can_autofix_clients > 0 then
-    execute('EslintFixAll')
-  end
-end
-
-autocmd({ "BufWritePre" }, {
-  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
-  -- command = 'EslintFixAll',
-  callback = fix_on_save,
-  desc = "Eslint Fix All"
-})
 
 local startify = require('alpha.themes.startify')
 local header = {
