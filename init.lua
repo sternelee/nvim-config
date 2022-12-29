@@ -9,9 +9,10 @@ local fn = vim.fn
 local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
--- local usercmd = vim.api.nvim_create_user_command
+local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
@@ -134,19 +135,39 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
-  {
-    'gelguy/wilder.nvim',
-    lazy = true,
-    event = 'VeryLazy',
-    config = function()
-      local wilder = require('wilder')
-      wilder.set_option('renderer', wilder.popupmenu_renderer({
-        highlighter = wilder.basic_highlighter(),
-      }))
-      wilder.setup({modes = {':', '/', '?'}})
-    end,
-  },
-  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  -- {
+  --   'gelguy/wilder.nvim',
+  --   lazy = true,
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     local wilder = require('wilder')
+  --     wilder.set_option('renderer', wilder.popupmenu_renderer({
+  --       highlighter = wilder.basic_highlighter(),
+  --     }))
+  --     wilder.setup({modes = {':', '/', '?'}})
+  --   end,
+  -- },
+  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+    {'cshuaimin/ssr.nvim',
+  lazy = true,
+  event = 'VeryLazy',
+  module = 'ssr',
+  config = function()
+    require("ssr").setup {
+      min_width = 50,
+      min_height = 5,
+      max_width = 120,
+      max_height = 25,
+      keymaps = {
+        close = "q",
+        next_match = "n",
+        prev_match = "N",
+        replace_confirm = "<cr>",
+        replace_all = "<leader><cr>",
+      },
+    }
+  end}
+
 }, {
   ui = {
     icons = {
@@ -337,6 +358,7 @@ map('v', '<A-h>', '<cmd>MoveHBlock(-1)<CR>')
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
+keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
@@ -378,7 +400,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme synthwave84'
+cmd 'colorscheme vscode'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
