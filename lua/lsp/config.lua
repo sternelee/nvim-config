@@ -79,43 +79,52 @@ local codes = {
   }
 }
 
+local format = function(diagnostic)
+  local code = diagnostic.user_data.lsp.code
+
+  if not diagnostic.source or not code then
+    return string.format('%s', diagnostic.message)
+  end
+
+  if diagnostic.source == 'eslint' then
+    for _, table in pairs(codes) do
+      if vim.tbl_contains(table, code) then
+        return string.format('%s [%s]', table.icon .. diagnostic.message, code)
+      end
+    end
+
+    return string.format('%s [%s]', diagnostic.message, code)
+  end
+
+  for _, table in pairs(codes) do
+    if vim.tbl_contains(table, code) then
+      return table.message
+    end
+  end
+
+  return string.format('%s [%s]', diagnostic.message, diagnostic.source)
+end
+
 vim.diagnostic.config({
   float = {
     source = true,
-    format = function(diagnostic)
-      local code = diagnostic.user_data.lsp.code
-
-      if not diagnostic.source or not code then
-        return string.format('%s', diagnostic.message)
-      end
-
-      if diagnostic.source == 'eslint' then
-        for _, table in pairs(codes) do
-          if vim.tbl_contains(table, code) then
-            return string.format('%s [%s]', table.icon .. diagnostic.message, code)
-          end
-        end
-
-        return string.format('%s [%s]', diagnostic.message, code)
-      end
-
-      for _, table in pairs(codes) do
-        if vim.tbl_contains(table, code) then
-          return table.message
-        end
-      end
-
-      return string.format('%s [%s]', diagnostic.message, diagnostic.source)
-    end
+    border = 'rounded',
+    focusable = false,
+    scope = 'line',
   },
-  severity_sort = true,
-  signs = true,
   underline = true,
+  signs = true,
   update_in_insert = false,
-  virtual_text = false,
-  -- virtual_lines = {
-  --  only_current_line = true
-  -- }
+  severity_sort = true,
+  virtual_text = {
+    prefix = '•',
+    spacing = 2,
+    source = false,
+    severity = {
+      min = vim.diagnostic.severity.HINT,
+    },
+    format = format,
+  },
 })
 
 -- UI
