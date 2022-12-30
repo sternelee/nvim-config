@@ -105,7 +105,7 @@ require("lazy").setup({
   },
   {'aduros/ai.vim', lazy = true, cmd = 'AI'},
   -- {'dense-analysis/neural'},
-  {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
+  -- {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
   -- ({
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   lazy = true,
@@ -140,7 +140,7 @@ require("lazy").setup({
   {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
-  -- {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
+  {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"},
   -- config = function() require 'modules.dap' end},
   -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
