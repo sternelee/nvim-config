@@ -10,6 +10,7 @@
   "bigfile.nvim": { "branch": "main", "commit": "c1bad34ce742b4f360b67ca23c873fef998240fc" },
   "coc-code-action-menu.nvim": { "branch": "main", "commit": "42c641ac3ac366d6f0f2536bac4407cba64bae77" },
   "coc-fzf": { "branch": "master", "commit": "4f8d072df2609219b8d79b67641a9753e3d7fff0" },
+  "coc.nvim": { "branch": "master", "commit": "d8e458300051a1f04531775c8d9b6f794890f947" },
   "codi.vim": { "branch": "master", "commit": "6537ba677a0c7c6c796b195f29077b57fad33716" },
   "crates.nvim": { "branch": "main", "commit": "a70328ae638e20548bcfc64eb9561101104b3008" },
   "diffview.nvim": { "branch": "main", "commit": "18f83302f71889b39403919b8be00d7244d1fcfc" },
