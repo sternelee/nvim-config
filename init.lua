@@ -135,20 +135,20 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
-  -- {
-  --   'gelguy/wilder.nvim',
-  --   lazy = true,
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     local wilder = require('wilder')
-  --     wilder.set_option('renderer', wilder.popupmenu_renderer({
-  --       highlighter = wilder.basic_highlighter(),
-  --     }))
-  --     wilder.setup({modes = {':', '/', '?'}})
-  --   end,
-  -- },
-  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
-    {'cshuaimin/ssr.nvim',
+  {
+    'gelguy/wilder.nvim',
+    lazy = true,
+    event = 'VeryLazy',
+    config = function()
+      local wilder = require('wilder')
+      wilder.set_option('renderer', wilder.popupmenu_renderer({
+        highlighter = wilder.basic_highlighter(),
+      }))
+      wilder.setup({modes = {':', '/', '?'}})
+    end,
+  },
+  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {'cshuaimin/ssr.nvim',
   lazy = true,
   event = 'VeryLazy',
   module = 'ssr',
@@ -220,7 +220,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -400,7 +400,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme vscode'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
