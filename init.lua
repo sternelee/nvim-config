@@ -54,7 +54,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.runtimepath:prepend(lazypath)
-require("lazy").setup({
+require('lazy').setup({
   'lewis6991/impatient.nvim',
   'nathom/filetype.nvim',
   'nvim-lua/plenary.nvim',
@@ -141,8 +141,7 @@ require("lazy").setup({
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
-  -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"},
-  -- config = function() require 'modules.dap' end},
+  -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
   -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
   {'simrat39/rust-tools.nvim',
@@ -178,13 +177,6 @@ require("lazy").setup({
   {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
   {'ZhiyuanLck/smart-pairs', lazy = true, event = 'VeryLazy', config = function() require('pairs'):setup() end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
-  -- {
-  --   "kylechui/nvim-surround",
-  --   tag = "main",
-  --   lazy = true, event = 'VeryLazy',
-  --   config = function()
-  --       require("nvim-surround").setup{}
-  --   end},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.marks' end},
   'folke/which-key.nvim', -- 提示leader按键
   {'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
@@ -203,9 +195,7 @@ require("lazy").setup({
   {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
   {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' }},
-  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
-    require("autoclose").setup({})
-  end},
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function () require("autoclose").setup({}) end},
   {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
