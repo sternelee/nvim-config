@@ -26,6 +26,13 @@ g.maplocalleader = ","
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
+-- g.neovide_scale_factor = 1.0
+-- g.neovide_input_macos_alt_is_meta = true
+-- g.neovide_input_use_logo = true
+-- g.neovide_remember_window_size = true
+-- g.neovide_confirm_quit = true
+-- g.neovide_hide_mouse_when_typing = true
+
 --set shortmess
 vim.o.shortmess = vim.o.shortmess .. "c"
 
@@ -108,6 +115,7 @@ require('lazy').setup({
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
+  -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   -- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
