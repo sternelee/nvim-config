@@ -148,24 +148,22 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
-  {
-    'gelguy/wilder.nvim',
-    lazy = true,
-    event = 'VeryLazy',
-    config = function()
-      local wilder = require('wilder')
-      wilder.set_option('renderer', wilder.popupmenu_renderer(
-        wilder.popupmenu_palette_theme({
-          border = 'rounded',
-          max_height = '75%',
-          min_height = 0,
-          prompt_position = 'top',
-          reverse = 0,
-        })
-      ))
-      wilder.setup({modes = {':', '/', '?'}})
-    end,
-  },
+  -- {'gelguy/wilder.nvim',
+  --   lazy = true,
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     local wilder = require('wilder')
+  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
+  --       wilder.popupmenu_palette_theme({
+  --         border = 'rounded',
+  --         max_height = '75%',
+  --         min_height = 0,
+  --         prompt_position = 'top',
+  --         reverse = 0,
+  --       })
+  --     ))
+  --     wilder.setup({modes = {':', '/', '?'}})
+  --   end},
   {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim',
   lazy = true,
