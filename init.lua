@@ -94,9 +94,7 @@ require('lazy').setup({
   {'fedepujol/move.nvim', lazy = true, event = 'VeryLazy'},
   {'phaazon/hop.nvim', lazy = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
-  {'junegunn/fzf', dir = '~/.fzf', build = './install --all'},
-  {'junegunn/fzf.vim', 'antoinemadec/coc-fzf'},
-  'ibhagwan/fzf-lua',
+  {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', 'fannheyward/telescope-coc.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }}, config = function() require('modules.telescope') end},
   -- 语法建议
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
   {
@@ -115,7 +113,7 @@ require('lazy').setup({
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
-  -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
+  {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   -- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
@@ -140,6 +138,13 @@ require('lazy').setup({
   {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
     require("autoclose").setup({})
   end},
+  -- {'roobert/search-replace.nvim',
+  -- config = function()
+  --   require("search-replace").setup({
+  --     default_replace_single_buffer_options = "gcI",
+  --     default_replace_multi_buffer_options = "egcI",
+  --   })
+  -- end},
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
@@ -149,13 +154,19 @@ require('lazy').setup({
     event = 'VeryLazy',
     config = function()
       local wilder = require('wilder')
-      wilder.set_option('renderer', wilder.popupmenu_renderer({
-        highlighter = wilder.basic_highlighter(),
-      }))
+      wilder.set_option('renderer', wilder.popupmenu_renderer(
+        wilder.popupmenu_palette_theme({
+          border = 'rounded',
+          max_height = '75%',
+          min_height = 0,
+          prompt_position = 'top',
+          reverse = 0,
+        })
+      ))
       wilder.setup({modes = {':', '/', '?'}})
     end,
   },
-  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim',
   lazy = true,
   event = 'VeryLazy',
@@ -228,7 +239,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -287,19 +298,21 @@ map('n', 'g/', '<cmd>HopPattern<CR>')
 
 map('n', '<leader>:', '<cmd>terminal<CR>')
 
-map('n', '<leader>*', '<cmd>FzfLua<CR>')
-map('n', '<leader>f', '<cmd>lua require("fzf-lua").files()<CR>')
-map('n', '<leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>')
--- map('n', '<leader>m', '<cmd>lua require("fzf-lua").marks()<CR>')
+map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+-- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
 map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
-map('n', '<leader>\'', '<cmd>lua require("fzf-lua").resume()<CR>')
-map('n', '<leader>/', '<cmd>lua require("fzf-lua").live_grep()<CR>')
-map('n', 'gs', '<cmd>lua require("fzf-lua").grep_cword()<CR>')
-map('n', 'fp', '<cmd>lua require("fzf-lua").grep_project()<CR>')
-map('n', 'fg', '<cmd>lua require("fzf-lua").git_files()<CR>')
-map('n', 'fc', '<cmd>lua require("fzf-lua").commands()<CR>')
-map('n', '<leader>C', '<cmd>CocFzfList<CR>')
-map('n', 'gq', '<cmd>CocFzfList diagnostics<CR>')
+map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
+map('n', 'gs', '<cmd>Telescope grep_string<CR>')
+map('n', 'fg', '<cmd>Telescope git_files<CR>')
+map('n', 'ft', '<cmd>Telescope treesitter<CR>')
+map('n', 'fc', '<cmd>Telescope commands<CR>')
+map('n', 'fe', '<cmd>Telescope file_browser<CR>')
+map('n', 'fp', '<cmd>Telescope projects<CR>')
+map('n', 'gq', '<cmd>Telescope coc diagnostics<CR>')
+
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
@@ -429,7 +442,6 @@ notify.setup{
 }
 vim.notify = notify
 
-require'modules.fzf'
 require'modules.treesitter'
 
 local startify = require('alpha.themes.startify')

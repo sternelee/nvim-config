@@ -1,6 +1,7 @@
 require("noice").setup {
   -- messages = { enabled = false, view_error = nil },
   lsp_progress = { enabled = false },
+  cmdline = { enabled = false },
   views = {
     messages = {
       view = "split",
