@@ -148,23 +148,32 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
-  -- {'gelguy/wilder.nvim',
-  --   lazy = true,
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     local wilder = require('wilder')
-  --     wilder.set_option('renderer', wilder.popupmenu_renderer(
-  --       wilder.popupmenu_palette_theme({
-  --         border = 'rounded',
-  --         max_height = '75%',
-  --         min_height = 0,
-  --         prompt_position = 'top',
-  --         reverse = 0,
-  --       })
-  --     ))
-  --     wilder.setup({modes = {':', '/', '?'}})
-  --   end},
-  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {'gelguy/wilder.nvim',
+    lazy = true,
+    event = 'VeryLazy',
+    config = function()
+      local wilder = require('wilder')
+      local gradient = {
+        '#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
+        '#ff6658', '#ff704e', '#ff7a45', '#ff843d', '#ff9036',
+        '#f89b31', '#efa72f', '#e6b32e', '#dcbe30', '#d2c934',
+        '#c8d43a', '#bfde43', '#b6e84e', '#aff05b'
+      }
+      for i, fg in ipairs(gradient) do
+        gradient[i] = wilder.make_hl('WilderGradient' .. i, 'Pmenu', {{a = 1}, {a = 1}, {foreground = fg}})
+      end
+
+      wilder.set_option('renderer', wilder.popupmenu_renderer({
+        highlights = {
+          gradient = gradient, -- must be set
+        },
+        highlighter = wilder.highlighter_with_gradient({
+          wilder.basic_highlighter(), -- or wilder.lua_fzy_highlighter(),
+        }),
+      }))
+      wilder.setup({modes = {':', '/', '?'}})
+    end},
+  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim',
   lazy = true,
   event = 'VeryLazy',
@@ -237,7 +246,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)

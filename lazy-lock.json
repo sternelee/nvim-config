@@ -26,8 +26,6 @@
   "mind.nvim": { "branch": "v2.2", "commit": "79e0ca131d5e37dfa65f3f0e725d99742e4ff783" },
   "move.nvim": { "branch": "main", "commit": "2cd533590a133ae5fe751ca8081cd1a2047d7c7f" },
   "neogen": { "branch": "main", "commit": "71f16ffb485a3b3faf4dd91116516ce8e7552e3d" },
-  "noice.nvim": { "branch": "main", "commit": "eadc279a27abc34ffcde84596e24e7780add11b1" },
-  "nui.nvim": { "branch": "main", "commit": "257da38029d3859ed111804f9d4e95b0fa993a31" },
   "numb.nvim": { "branch": "master", "commit": "d95b7ea62e320b02ca1aa9df3635471a88d6f3b1" },
   "nvim-base16": { "branch": "master", "commit": "be09864ae8b60f6f96d42ed60752dcfa3b7d31b5" },
   "nvim-code-action-menu": { "branch": "main", "commit": "e4399dbaf6eabff998d3d5f1cbcd8d9933710027" },
