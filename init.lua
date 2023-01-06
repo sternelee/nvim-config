@@ -14,8 +14,8 @@ local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
 local usercmd = vim.api.nvim_create_user_command
 
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+g.loaded_netrw = 0
+g.loaded_netrwPlugin = 0
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
@@ -438,7 +438,7 @@ g.markdown_fenced_language = {
 }
 
 --theme
-cmd 'colorscheme vscode'
+cmd 'colorscheme synthwave84'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
