@@ -18,12 +18,12 @@ require'nvim-tree'.setup {
     update_root = true,
     ignore_list = { ".git", "node_modules", ".cache" },
   },
-  -- view = {
-  --   side = 'right'
-  -- },
+  view = {
+    side = 'right'
+  },
   filters = {
     dotfiles = false,
-    custom = {},
+    custom = {"^\\.git"},
     exclude = {},
   }
 }

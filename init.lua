@@ -114,6 +114,7 @@ require('lazy').setup({
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
   {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
+  {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
   -- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
@@ -246,7 +247,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
