@@ -37,7 +37,7 @@ nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 vim.o.sessionoptions="buffers,help,tabpages"
-vim.opt.fillchars:append('fold:•')
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 nvim_exec([[
 filetype plugin on
@@ -261,10 +261,11 @@ opt('o', 'incsearch', true)
 opt('o', 'foldmethod', 'indent')
 -- opt('o', 'foldmethod', 'expr')
 -- opt('o', 'foldexpr', 'nvim_treesitter#foldexpr()')
--- opt('o', 'foldcolumn', '1')
-opt('o', 'foldenable', true)
+opt('o', 'foldcolumn', '1')
 opt('o', 'foldlevel', 99)
+opt('o', 'foldenable', true)
 opt('o', 'foldlevelstart', 99)
+opt('o', 'statuscolumn', '%=%l%s%C')
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
