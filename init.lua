@@ -119,11 +119,12 @@ require('lazy').setup({
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
   {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
-  {'yardnsm/vim-import-cost', build = 'npm install --production' },
+  -- {'yardnsm/vim-import-cost', build = 'npm install --production' },
+  {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   'folke/which-key.nvim', -- 提示leader按键
-  {'p00f/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
+  {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
   { 'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
   {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
@@ -139,6 +140,8 @@ require('lazy').setup({
   {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
     require("autoclose").setup({})
   end},
+  {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end},
+  {'danymat/neogen', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = true},
   -- {'roobert/search-replace.nvim',
   -- config = function()
   --   require("search-replace").setup({
@@ -146,6 +149,7 @@ require('lazy').setup({
   --     default_replace_multi_buffer_options = "egcI",
   --   })
   -- end},
+  -- {'asiryk/auto-hlsearch.nvim', lazy = true, event = 'VeryLazy', config = function () require("auto-hlsearch").setup() end},
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
@@ -247,7 +251,7 @@ opt('w', 'number', true)                              -- Print line number
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 -- opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 0)
+opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -393,6 +397,8 @@ map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+
+keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
