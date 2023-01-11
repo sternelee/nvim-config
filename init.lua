@@ -115,7 +115,7 @@ require('lazy').setup({
   -- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
-  {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
+  {'numToStr/Comment.nvim', lazy = true, event = 'VeryLazy', config = function() require('Comment').setup() end},
   -- {'yardnsm/vim-import-cost', build = 'npm install --production' },
   {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
@@ -149,7 +149,7 @@ require('lazy').setup({
   -- {'asiryk/auto-hlsearch.nvim', lazy = true, event = 'VeryLazy', config = function () require("auto-hlsearch").setup() end},
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
-  {'petertriho/nvim-scrollbar', config = function() require'scrollbar'.setup() end},
+  {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim',
     lazy = true,
     event = 'VeryLazy',
@@ -553,34 +553,34 @@ g.coc_global_extensions = {
   -- 'coc-ds-pinyin-lsp'
 }
 
-g.coc_start_at_startup = 0
+-- g.coc_start_at_startup = 0
 g.coc_default_semantic_highlight_groups = 1
 -- g.coc_enable_locationlist = 0
 -- g.coc_selectmode_mapping = 0
 
-g.trigger_size = 0.5 * 1048576
+-- g.trigger_size = 0.5 * 1048576
 
-cmd [[
-  augroup hugefile
-    autocmd!
-    autocmd BufReadPre *
-       \ let size = getfsize(expand('<afile>')) |
-       \ if (size > g:trigger_size) || (size == -2) |
-  	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
-       \   exec 'CocDisable' |
-       \ else |
-       \   exec 'CocEnable' |
-       \ endif |
-       \ unlet size
-  augroup END
-]]
+-- cmd [[
+--   augroup hugefile
+--     autocmd!
+--     autocmd BufReadPre *
+--        \ let size = getfsize(expand('<afile>')) |
+--        \ if (size > g:trigger_size) || (size == -2) |
+--   	   \   execute "lua vim.notify('WARNING: altering options for this huge file!', 'error', { title = 'Coc.nvim Status', timeout = 1000 })" |
+--        \   exec 'CocDisable' |
+--        \ else |
+--        \   exec 'CocEnable' |
+--        \ endif |
+--        \ unlet size
+--   augroup END
+-- ]]
 
-cmd [[
-  function! CocTimerStart(timer)
-      exec "CocStart"
-  endfunction
-  call timer_start(2000,'CocTimerStart',{'repeat':1})
-]]
+-- cmd [[
+--   function! CocTimerStart(timer)
+--       exec "CocStart"
+--   endfunction
+--   call timer_start(2000,'CocTimerStart',{'repeat':1})
+-- ]]
 
 require'modules.coc'
 
