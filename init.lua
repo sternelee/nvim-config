@@ -91,7 +91,8 @@ require('lazy').setup({
   {'fedepujol/move.nvim', lazy = true, event = 'VeryLazy'},
   {'phaazon/hop.nvim', lazy = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
-  {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', 'fannheyward/telescope-coc.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }}, config = function() require('modules.telescope') end},
+  {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', 'fannheyward/telescope-coc.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
+  {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, lazy = true, event = 'VeryLazy', config = function() require'modules.telekasten' end},
   -- 语法建议
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
   {
@@ -112,6 +113,9 @@ require('lazy').setup({
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
   {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
+  {'skywind3000/asyncrun.vim', lazy = true, cmd = 'AsyncRun'},
+  {'tpope/vim-dispatch', lazy = true, cmd = {'Make', 'Dispatch', 'Focus', 'Start'}},
+  -- {'skywind3000/asynctasks.vim', lazy = true, cmd = 'AsyncTask'},
   -- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
@@ -122,7 +126,7 @@ require('lazy').setup({
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   'folke/which-key.nvim', -- 提示leader按键
   {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
-  { 'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
+  {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
   {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
   {'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy'},
@@ -130,12 +134,14 @@ require('lazy').setup({
   'rcarriga/nvim-notify',
   {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end},
   {'tpope/vim-repeat', lazy = true, event = 'VeryLazy'},
+  -- {'beauwilliams/focus.nvim', lazy = true, event = 'VeryLazy', config = function() require('focus').setup() end},
+  {'sunjon/shade.nvim', lazy = true, event = 'VeryLazy'},
   {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
   {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
   {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
-    require("autoclose").setup({})
+    require('autoclose').setup({})
   end},
   {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end},
   {'danymat/neogen', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = true},
@@ -328,6 +334,7 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
 map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', 'gq', '<cmd>Telescope coc diagnostics<CR>')
+map('n', 'gQ', '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
 
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 
@@ -403,6 +410,19 @@ map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+
+-- telekasten
+map('n', '<leader>zf', '<cmd>lua require("telekasten").find_notes()<CR>')
+map('n', '<leader>zd', '<cmd>lua require("telekasten").find_daily_notes()<CR>')
+map('n', '<leader>zg', '<cmd>lua require("telekasten").search_notes()<CR>')
+map('n', '<leader>zz', '<cmd>lua require("telekasten").follow_link()<CR>')
+map('n', '<leader>zT', '<cmd>lua require("telekasten").goto_today()<CR>')
+map('n', '<leader>zw', '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
+map('n', '<leader>zn', '<cmd>lua require("telekasten").new_note()<CR>')
+map('n', '<leader>zc', '<cmd>lua require("telekasten").show_calendar()<CR>')
+map('n', '<leader>zC', '<cmd>CalendarT<CR>')
+map('n', '<leader>zt', '<cmd>lua require("telekasten").toggle_todo()<CR>')
+map('n', '<leader>za', '<cmd>lua require("telekasten").show_tags()<CR>')
 
 cmd [[autocmd BufWritePre * %s/\s\+$//e]]                             --remove trailing whitespaces
 cmd [[autocmd BufWritePre * %s/\n\+\%$//e]]
@@ -518,6 +538,20 @@ cmd [[
   hi! link CocSymbolLine CursorLine
   hi! link CocSymbolLineSeparator Constant
   hi! link CocSymbolLineEllipsis Function
+  " just blue and gray links
+  hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
+  hi tkBrackets ctermfg=gray guifg=gray
+  " for gruvbox
+  " hi tklink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
+  " hi tkBrackets ctermfg=gray guifg=gray
+  " real yellow
+  " hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=darkred gui=bold
+  " gruvbox
+  "hi tkHighlight ctermbg=214 ctermfg=124 cterm=bold guibg=#fabd2f guifg=#9d0006 gui=bold
+
+  hi link CalNavi CalRuler
+  hi tkTagSep ctermfg=gray guifg=gray
+  hi tkTag ctermfg=175 guifg=#d3869B
 ]]
 
 -- coc
