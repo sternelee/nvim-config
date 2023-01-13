@@ -128,7 +128,7 @@ require('lazy').setup({
   {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
   {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
-  {'danymat/neogen', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
+  {'danymat/neogen', lazy = true, event = 'VeryLazy', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
   {'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy'},
   {'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood'},
   'rcarriga/nvim-notify',
@@ -144,7 +144,6 @@ require('lazy').setup({
     require('autoclose').setup({})
   end},
   {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end},
-  {'danymat/neogen', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = true},
   -- {'roobert/search-replace.nvim',
   -- config = function()
   --   require("search-replace").setup({
