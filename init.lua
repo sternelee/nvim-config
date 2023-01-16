@@ -6,13 +6,13 @@ end
 local cmd = vim.cmd
 local g = vim.g
 local fn = vim.fn
-local execute = vim.api.nvim_command
+-- local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
-local usercmd = vim.api.nvim_create_user_command
+-- local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_netrw = 0
 g.loaded_netrwPlugin = 0
@@ -46,9 +46,9 @@ filetype indent on
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
+  fn.system({
     "git",
     "clone",
     "--filter=blob:none",
@@ -95,16 +95,10 @@ require('lazy').setup({
   {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, lazy = true, event = 'VeryLazy', config = function() require'modules.telekasten' end},
   -- 语法建议
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
-  {
-    'weilbith/nvim-code-action-menu',
-    dependencies = 'xiyaowong/coc-code-action-menu.nvim',
-    config = function()
-      require 'coc-code-action-menu'
-    end,
-  },
+  {'weilbith/nvim-code-action-menu', dependencies = 'xiyaowong/coc-code-action-menu.nvim', config = function() require 'coc-code-action-menu' end},
   -- 语法提示
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
-  {'aduros/ai.vim', lazy = true, cmd = 'AI'},
+  -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
   -- {'dense-analysis/neural'}
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
@@ -155,31 +149,7 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  {'gelguy/wilder.nvim',
-    lazy = true,
-    event = 'VeryLazy',
-    config = function()
-      local wilder = require('wilder')
-      local gradient = {
-        '#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
-        '#ff6658', '#ff704e', '#ff7a45', '#ff843d', '#ff9036',
-        '#f89b31', '#efa72f', '#e6b32e', '#dcbe30', '#d2c934',
-        '#c8d43a', '#bfde43', '#b6e84e', '#aff05b'
-      }
-      for i, fg in ipairs(gradient) do
-        gradient[i] = wilder.make_hl('WilderGradient' .. i, 'Pmenu', {{a = 1}, {a = 1}, {foreground = fg}})
-      end
-
-      wilder.set_option('renderer', wilder.popupmenu_renderer({
-        highlights = {
-          gradient = gradient, -- must be set
-        },
-        highlighter = wilder.highlighter_with_gradient({
-          wilder.basic_highlighter(), -- or wilder.lua_fzy_highlighter(),
-        }),
-      }))
-      wilder.setup({modes = {':', '/', '?'}})
-    end},
+  {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim',
   lazy = true,
@@ -435,15 +405,15 @@ autocmd({ "TextYankPost" }, {
     group = autogroup("highlight_yank", { clear = true }),
 })
 
-autocmd('BufReadPost', {
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
+-- autocmd('BufReadPost', {
+--   callback = function()
+--     local mark = vim.api.nvim_buf_get_mark(0, '"')
+--     local lcount = vim.api.nvim_buf_line_count(0)
+--     if mark[1] > 0 and mark[1] <= lcount then
+--       pcall(vim.api.nvim_win_set_cursor, 0, mark)
+--     end
+--   end,
+-- })
 
 -- 自动保存
 require'modules.auto-save'
@@ -622,7 +592,6 @@ local coc_status_record = {}
 
 function coc_status_notify(msg, level)
   local notify_opts = { title = "LSP Status", timeout = 500, hide_from_history = true, on_close = reset_coc_status_record }
-  -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
   if coc_status_record ~= {} then
     notify_opts["replace"] = coc_status_record.id
   end
@@ -637,7 +606,6 @@ local coc_diag_record = {}
 
 function coc_diag_notify(msg, level)
   local notify_opts = { title = "LSP Diagnostics", timeout = 500, on_close = reset_coc_diag_record }
-  -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
   if coc_diag_record ~= {} then
     notify_opts["replace"] = coc_diag_record.id
   end
