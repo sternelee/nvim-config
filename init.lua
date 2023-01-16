@@ -138,24 +138,12 @@ require('lazy').setup({
     require('autoclose').setup({})
   end},
   {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end},
-  -- {'roobert/search-replace.nvim',
-  -- config = function()
-  --   require("search-replace").setup({
-  --     default_replace_single_buffer_options = "gcI",
-  --     default_replace_multi_buffer_options = "egcI",
-  --   })
-  -- end},
-  -- {'asiryk/auto-hlsearch.nvim', lazy = true, event = 'VeryLazy', config = function () require("auto-hlsearch").setup() end},
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
-  {'cshuaimin/ssr.nvim',
-  lazy = true,
-  event = 'VeryLazy',
-  module = 'ssr',
-  config = function()
+  {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
       min_height = 5,
@@ -473,8 +461,6 @@ local header = {
 
 -- 布局
 startify.section.header.val = header
--- 高亮
--- startify.section.header.opts.hl = 'AlphaHeader'
 
 require'alpha'.setup(startify.opts)
 

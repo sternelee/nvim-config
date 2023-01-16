@@ -121,6 +121,7 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.semicolons": "remove",
   "typescript.format.semicolons": "remove",
+  "eslint.enable": false,
   "eslint.packageManager": "pnpm",
   "eslint.run": "onSave",
   "eslint.autoFixOnSave": false,

@@ -74,41 +74,41 @@ vim.api.nvim_create_autocmd("User", {
 
 -- Applying codeAction to the selected region.
 -- Example: `<leader>aap` for current paragraph
-local opts = {silent = true, nowait = true}
-keyset("x", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts)
-keyset("n", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts)
+local opts2 = {silent = true, nowait = true}
+keyset("x", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts2)
+keyset("n", "<leader>ca", "<Plug>(coc-codeaction-selected)", opts2)
 
 -- Remap keys for applying codeAction to the current buffer.
-keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts)
+keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts2)
 
 -- Apply AutoFix to problem on the current line.
-keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts)
+keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts2)
 
 -- Run the Code Lens action on the current line.
-keyset("n", "<leader>cl", "<Plug>(coc-codelens-action)", opts)
+keyset("n", "<leader>cl", "<Plug>(coc-codelens-action)", opts2)
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-keyset("x", "if", "<Plug>(coc-funcobj-i)", opts)
-keyset("o", "if", "<Plug>(coc-funcobj-i)", opts)
-keyset("x", "af", "<Plug>(coc-funcobj-a)", opts)
-keyset("o", "af", "<Plug>(coc-funcobj-a)", opts)
-keyset("x", "ic", "<Plug>(coc-classobj-i)", opts)
-keyset("o", "ic", "<Plug>(coc-classobj-i)", opts)
-keyset("x", "ac", "<Plug>(coc-classobj-a)", opts)
-keyset("o", "ac", "<Plug>(coc-classobj-a)", opts)
+keyset("x", "if", "<Plug>(coc-funcobj-i)", opts2)
+keyset("o", "if", "<Plug>(coc-funcobj-i)", opts2)
+keyset("x", "af", "<Plug>(coc-funcobj-a)", opts2)
+keyset("o", "af", "<Plug>(coc-funcobj-a)", opts2)
+keyset("x", "ic", "<Plug>(coc-classobj-i)", opts2)
+keyset("o", "ic", "<Plug>(coc-classobj-i)", opts2)
+keyset("x", "ac", "<Plug>(coc-classobj-a)", opts2)
+keyset("o", "ac", "<Plug>(coc-classobj-a)", opts2)
 
 -- Remap <C-f> and <C-b> for scroll float windows/popups.
 ---@diagnostic disable-next-line: redefined-local
-local opts = {silent = true, nowait = true, expr = true}
-keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
-keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
+local opts3 = {silent = true, nowait = true, expr = true}
+keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts3)
+keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts3)
 keyset("i", "<C-f>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
+       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts3)
 keyset("i", "<C-b>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
-keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
-keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
+       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts3)
+keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts3)
+keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts3)
 
 
 -- Use CTRL-S for selections ranges.
