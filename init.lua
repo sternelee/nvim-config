@@ -1,7 +1,7 @@
-local ok, _ = pcall(require, 'impatient')
-if ok then
-  -- require('impatient') -- 必须是第一加载
-  require('impatient').enable_profile()
+local impatientOk, _ = pcall(require, 'impatient')
+if impatientOk then
+  require('impatient') -- 必须是第一加载
+  -- require('impatient').enable_profile()
 end
 local cmd = vim.cmd
 local g = vim.g
@@ -92,10 +92,7 @@ require('lazy').setup({
   {'kevinhwang91/nvim-hlslens', lazy = true, event = 'VeryLazy', config = function() require('modules.hlslens') end},
   {'phaazon/hop.nvim', lazy = true, cmd = { 'HopWord', 'HopLine', 'HopPattern' }, config = function() require('hop'):setup() end},
   -- {'ggandor/lightspeed.nvim', lazy = true, event = 'VeryLazy'},
-  'nvim-telescope/telescope.nvim',
-  'nvim-telescope/telescope-file-browser.nvim',
-  {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  {'ahmedkhalf/project.nvim', config = function() require 'project_nvim'.setup {} end},
+  {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}},
   {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   -- 语法建议
   {
@@ -131,6 +128,12 @@ require('lazy').setup({
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
   }},
+  {"roobert/tailwindcss-colorizer-cmp.nvim",
+  config = function()
+    require("tailwindcss-colorizer-cmp").setup({
+      color_square_width = 2,
+    })
+  end},
   {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'VeryLazy', config = function()
     require('refactoring').setup()
     require 'telescope'.load_extension('refactoring')
@@ -328,7 +331,7 @@ map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj') --move by visual line not actual line
 map('n', 'k', 'gk')
-map('n', 'q', '<cmd>q<CR>')
+-- map('n', 'q', '<cmd>q<CR>')
 map('n', 'gw', '<cmd>HopWord<CR>') --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
@@ -347,6 +350,7 @@ map('n', 'fc', '<cmd>Telescope commands<CR>')
 map('n', 'fe', '<cmd>Telescope file_browser<CR>')
 map('n', 'fp', '<cmd>Telescope projects<CR>')
 map('n', 'gq', '<cmd>Telescope diagnostics<CR>')
+map('n', 'gQ', '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
 map('n', '<leader>ns', '<cmd>lua require("package-info").show()<CR>')
 map('n', '<leader>np', '<cmd>lua require("package-info").change_version()<CR>')
 map('n', '<leader>ni', '<cmd>lua require("package-info").install()<CR>')
@@ -624,14 +628,17 @@ cmp.setup({
     -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol_text', -- show only symbol annotations
-      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      before = function(entry, vim_item)
-        return vim_item
-      end
-    })
+  -- formatting = {
+  --   format = lspkind.cmp_format({
+  --     mode = 'symbol_text', -- show only symbol annotations
+  --     maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+  --     before = function(entry, vim_item)
+  --       return vim_item
+  --     end
+  --   })
+  -- },
+  formatting =  {
+    format = require("tailwindcss-colorizer-cmp").formatter
   },
   flags = {
     debounce_text_changes = 150,
@@ -644,7 +651,6 @@ cmp.setup({
     ghost_text = true
   }
 })
-
 
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({

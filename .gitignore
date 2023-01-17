@@ -1,3 +1,4 @@
 .vscode
 plugin
 .vim
+coc-settings.json
