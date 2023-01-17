@@ -128,12 +128,12 @@ require('lazy').setup({
     -- {'dmitmel/cmp-digraphs'},
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
   }},
-  {"roobert/tailwindcss-colorizer-cmp.nvim",
-  config = function()
-    require("tailwindcss-colorizer-cmp").setup({
-      color_square_width = 2,
-    })
-  end},
+  -- {"roobert/tailwindcss-colorizer-cmp.nvim",
+  -- config = function()
+  --   require("tailwindcss-colorizer-cmp").setup({
+  --     color_square_width = 2,
+  --   })
+  -- end},
   {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'VeryLazy', config = function()
     require('refactoring').setup()
     require 'telescope'.load_extension('refactoring')
@@ -628,18 +628,18 @@ cmp.setup({
     -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
   },
-  -- formatting = {
-  --   format = lspkind.cmp_format({
-  --     mode = 'symbol_text', -- show only symbol annotations
-  --     maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-  --     before = function(entry, vim_item)
-  --       return vim_item
-  --     end
-  --   })
-  -- },
-  formatting =  {
-    format = require("tailwindcss-colorizer-cmp").formatter
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol_text', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      before = function(entry, vim_item)
+        return vim_item
+      end
+    })
   },
+  -- formatting =  {
+  --   format = require("tailwindcss-colorizer-cmp").formatter
+  -- },
   flags = {
     debounce_text_changes = 150,
   },
