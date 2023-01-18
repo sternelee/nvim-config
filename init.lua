@@ -194,7 +194,8 @@ opt('o', 'hidden', true)                              -- Enable modified buffers
 opt('o', 'scrolloff', 3)                              -- Lines of context
 opt('o', 'shiftround', true)                          -- Round indent
 opt('o', 'sidescrolloff', 8)                          -- Columns of context
-opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
+-- opt('o', 'ignorecase', true)
+-- opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
 opt('o', 'termguicolors', true)                       -- True color support
