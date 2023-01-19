@@ -70,6 +70,7 @@ require('lazy').setup({
   {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
+  -- {'luukvbaal/statuscol.nvim', config = function() require('statuscol').setup() end},
   -- git相关
   {'tpope/vim-fugitive', lazy = true, event = 'VimEnter'},
   {'kdheepak/lazygit.nvim', lazy = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}},
@@ -99,7 +100,8 @@ require('lazy').setup({
   -- 语法提示
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
-  -- {'dense-analysis/neural'}
+  -- {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function () vim.keymap.set('i', '<C-g>', function () vim.fn['codeium#Accept']() end) end},
+  -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
