@@ -85,8 +85,8 @@ require('lazy').setup({
   {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VimEnter'}, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
-  -- 显示导航线
-  {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end},
+  -- 显示导航线和操作
+  {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', lazy = true, event = 'VeryLazy'},
   {'terryma/vim-expand-region', lazy = true, event = 'VeryLazy'},
   {'matze/vim-move', lazy = true, event = 'VeryLazy'},
@@ -103,11 +103,11 @@ require('lazy').setup({
   -- {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function () vim.keymap.set('i', '<C-g>', function () vim.fn['codeium#Accept']() end) end},
   -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
-  {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
+  {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   { 'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' } },
-  {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
+  -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
   {'skywind3000/asyncrun.vim', lazy = true, cmd = 'AsyncRun'},
   {'tpope/vim-dispatch', lazy = true, cmd = {'Make', 'Dispatch', 'Focus', 'Start'}},
@@ -124,42 +124,40 @@ require('lazy').setup({
   {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
   {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
-  {'danymat/neogen', lazy = true, event = 'VeryLazy', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写注释
+  {'danymat/neogen', lazy = true, event = 'VeryLazy', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写jsdoc注释
   {'ntpeters/vim-better-whitespace', lazy = true, event = 'VeryLazy'},
   {'ThePrimeagen/vim-be-good', lazy = true, cmd = 'VimBeGood'},
   'rcarriga/nvim-notify',
-  {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end},
+  {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end}, -- 全局搜索
   {'tpope/vim-repeat', lazy = true, event = 'VeryLazy'},
-  {'beauwilliams/focus.nvim', lazy = true, event = 'VeryLazy', config = function() require('focus').setup() end},
+  -- {'beauwilliams/focus.nvim', lazy = true, event = 'VeryLazy', config = function() require('focus').setup() end},
   -- {'sunjon/shade.nvim', lazy = true, event = 'VeryLazy'},
-  {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
+  {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}, -- 折叠
   {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = {'JqxList', 'JqxQuery'}},
-  {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
-  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function ()
-    require('autoclose').setup({})
-  end},
-  {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end},
+  {'godlygeek/tabular', lazy = true, event = 'VeryLazy'}, -- 对齐方式
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function () require('autoclose').setup{}end},
+  {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
-  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
+  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
-  {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
-    require("ssr").setup {
-      min_width = 50,
-      min_height = 5,
-      max_width = 120,
-      max_height = 25,
-      keymaps = {
-        close = "q",
-        next_match = "n",
-        prev_match = "N",
-        replace_confirm = "<cr>",
-        replace_all = "<leader><cr>",
-      },
-    }
-  end}
+  -- {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
+  --   require("ssr").setup {
+  --     min_width = 50,
+  --     min_height = 5,
+  --     max_width = 120,
+  --     max_height = 25,
+  --     keymaps = {
+  --       close = "q",
+  --       next_match = "n",
+  --       prev_match = "N",
+  --       replace_confirm = "<cr>",
+  --       replace_all = "<leader><cr>",
+  --     },
+  --   }
+  -- end}
 
 }, {
   ui = {
@@ -250,6 +248,8 @@ opt('o', 'showcmd', true)
 opt('o', 'history', 100)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
+opt('o', 'nobackup', true)
+opt('o', 'nowritebackup', true)
 opt('o', 'writebackup', false)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
