@@ -70,7 +70,6 @@ require('lazy').setup({
   {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
-  -- {'luukvbaal/statuscol.nvim', config = function() require('statuscol').setup() end},
   -- git相关
   {'tpope/vim-fugitive', lazy = true, event = 'VimEnter'},
   {'kdheepak/lazygit.nvim', lazy = true, cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}},
@@ -93,7 +92,7 @@ require('lazy').setup({
   {'phaazon/hop.nvim', lazy = true, cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', lazy = true, event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', 'fannheyward/telescope-coc.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
-  {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, lazy = true, event = 'VeryLazy', config = function() require'modules.telekasten' end},
+  {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, lazy = true, event = 'VeryLazy', config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
   {'weilbith/nvim-code-action-menu', dependencies = 'xiyaowong/coc-code-action-menu.nvim', config = function() require 'coc-code-action-menu' end},
@@ -116,7 +115,6 @@ require('lazy').setup({
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
   {'numToStr/Comment.nvim', lazy = true, event = 'VeryLazy', config = function() require('Comment').setup() end},
-  -- {'yardnsm/vim-import-cost', build = 'npm install --production' },
   {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
@@ -130,34 +128,31 @@ require('lazy').setup({
   'rcarriga/nvim-notify',
   {'nvim-pack/nvim-spectre', lazy = true, event = 'VeryLazy', config = function() require('spectre').setup() end}, -- 全局搜索
   {'tpope/vim-repeat', lazy = true, event = 'VeryLazy'},
-  -- {'beauwilliams/focus.nvim', lazy = true, event = 'VeryLazy', config = function() require('focus').setup() end},
-  -- {'sunjon/shade.nvim', lazy = true, event = 'VeryLazy'},
   {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end}, -- 折叠
   {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', lazy = true, event = 'VeryLazy'}, -- 对齐方式
-  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function () require('autoclose').setup{}end},
   {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
-  -- {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
-  --   require("ssr").setup {
-  --     min_width = 50,
-  --     min_height = 5,
-  --     max_width = 120,
-  --     max_height = 25,
-  --     keymaps = {
-  --       close = "q",
-  --       next_match = "n",
-  --       prev_match = "N",
-  --       replace_confirm = "<cr>",
-  --       replace_all = "<leader><cr>",
-  --     },
-  --   }
-  -- end}
+  {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
+    require("ssr").setup {
+      min_width = 50,
+      min_height = 5,
+      max_width = 120,
+      max_height = 25,
+      keymaps = {
+        close = "q",
+        next_match = "n",
+        prev_match = "N",
+        replace_confirm = "<cr>",
+        replace_all = "<leader><cr>",
+      },
+    }
+  end}
 
 }, {
   ui = {
