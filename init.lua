@@ -160,7 +160,7 @@ require('lazy').setup({
         }
       })
     end},
-  {'Saecki/crates.nvim', lazy = true, event = { "BufRead Cargo.toml" }, config = function() require('crates').setup() end},
+  {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
   {'David-Kunz/cmp-npm', lazy = true, event = 'BufRead package.json', config = function() require('cmp-npm').setup({}) end},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
@@ -168,11 +168,14 @@ require('lazy').setup({
   {'editorconfig/editorconfig-vim', lazy = true, event = 'VeryLazy'},
   {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  {'yardnsm/vim-import-cost', build = 'npm install --production'},
+  -- {'yardnsm/vim-import-cost', build = 'npm install --production'},
+  {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   -- 方便操作
   {"max397574/better-escape.nvim", lazy = true, event = 'VeryLazy', config = function() require("better_escape").setup() end},
   -- {"ellisonleao/glow.nvim", lazy = true, ft = 'markdown', cmd = 'Glow', config = function() require('glow') end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
+  {'skywind3000/asyncrun.vim', lazy = true, cmd = 'AsyncRun'},
+  {'tpope/vim-dispatch', lazy = true, cmd = {'Make', 'Dispatch', 'Focus', 'Start'}},
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'tpope/vim-eunuch', lazy = true, cmd = { 'Delete', 'Mkdir', 'Rename' }},
   {'voldikss/vim-translator', lazy = true, cmd = { 'Translate' }}, -- npm install fanyi -g 安装翻译
@@ -198,10 +201,11 @@ require('lazy').setup({
   {'kevinhwang91/nvim-ufo', lazy = true, event = 'VeryLazy', dependencies = 'kevinhwang91/promise-async', config = function() require'modules.ufo' end},
   {'wakatime/vim-wakatime', lazy = true, event = 'VeryLazy'},
   {'gennaro-tedesco/nvim-jqx', lazy = true, cmd = { 'JqxList', 'JqxQuery' }},
-  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function () require("autoclose").setup({}) end},
   {'godlygeek/tabular', lazy = true, event = 'VeryLazy'},
+  {'m4xshen/autoclose.nvim', lazy = true, event = 'VeryLazy', config = function () require("autoclose").setup({}) end},
+  {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
-  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'},
+  {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {
     'folke/noice.nvim',
     event = "VimEnter",
@@ -282,7 +286,7 @@ opt('w', 'number', true) -- Print line number
 opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
