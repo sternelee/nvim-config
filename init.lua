@@ -26,15 +26,12 @@ g.maplocalleader = ","
 
 nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
 
--- g.neovide_scale_factor = 1.0
--- g.neovide_input_macos_alt_is_meta = true
--- g.neovide_input_use_logo = true
--- g.neovide_remember_window_size = true
--- g.neovide_confirm_quit = true
--- g.neovide_hide_mouse_when_typing = true
-
---set shortmess
-vim.o.shortmess = vim.o.shortmess .. "c"
+g.neovide_scale_factor = 1.0
+g.neovide_input_macos_alt_is_meta = true
+g.neovide_input_use_logo = true
+g.neovide_remember_window_size = true
+g.neovide_confirm_quit = true
+g.neovide_hide_mouse_when_typing = true
 
 nvim_exec([[
 filetype plugin on
@@ -203,10 +200,10 @@ opt('o', 'background', 'dark')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
 opt('w', 'number', true)                              -- Print line number
--- opt('o', 'lazyredraw', true)
+opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
--- opt('o', 'shortmess', 'a')
+opt('o', 'shortmess', 'a')
 opt('o', 'cmdheight', 1)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
@@ -227,7 +224,6 @@ opt('o', 'showmode', false)
 -- opt('o', 'statuscolumn', '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " ") : " " }')
 opt('o', 'sessionoptions', 'buffers,help,tabpages')
 opt('o', 'fillchars', [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]])
-
 opt('o', 'breakindent', true)
 opt('o', 'lbr', true)
 opt('o', 'formatoptions', 'l')
@@ -267,7 +263,7 @@ map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
-map('n', 'q', '<cmd>q<CR>')
+-- map('n', 'q', '<cmd>q<CR>')
 
 map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
@@ -488,16 +484,9 @@ cmd [[
   hi! link CocSymbolLine CursorLine
   hi! link CocSymbolLineSeparator Constant
   hi! link CocSymbolLineEllipsis Function
-  " just blue and gray links
-  hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
+  hi tkLink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
   hi tkBrackets ctermfg=gray guifg=gray
-  " for gruvbox
-  " hi tklink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
-  " hi tkBrackets ctermfg=gray guifg=gray
-  " real yellow
-  " hi tkHighlight ctermbg=yellow ctermfg=darkred cterm=bold guibg=yellow guifg=darkred gui=bold
-  " gruvbox
-  "hi tkHighlight ctermbg=214 ctermfg=124 cterm=bold guibg=#fabd2f guifg=#9d0006 gui=bold
+  hi tkHighlight ctermbg=214 ctermfg=124 cterm=bold guibg=#fabd2f guifg=#9d0006 gui=bold
 
   hi link CalNavi CalRuler
   hi tkTagSep ctermfg=gray guifg=gray
