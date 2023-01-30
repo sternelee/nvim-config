@@ -147,4 +147,3 @@ require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('projects')
 require'telescope'.load_extension('coc')
--- require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }

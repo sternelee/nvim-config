@@ -96,7 +96,12 @@ require('lazy').setup({
   -- 语法提示
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
-  -- {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function () vim.keymap.set('i', '<C-g>', function () vim.fn['codeium#Accept']() end) end},
+  {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function ()
+    keymap('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+    keymap('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+    keymap('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+    keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+  end},
   -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
@@ -134,7 +139,7 @@ require('lazy').setup({
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
-  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -263,7 +268,7 @@ map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
--- map('n', 'q', '<cmd>q<CR>')
+map('n', 'q', '<cmd>q<CR>')
 
 map('n', 'gw', '<cmd>HopWord<CR>')                              --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
