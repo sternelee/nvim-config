@@ -97,7 +97,7 @@ require('lazy').setup({
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
   {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function ()
-    keymap('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+    keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true })
     keymap('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
     keymap('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
     keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
