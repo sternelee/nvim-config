@@ -24,7 +24,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " "                                                     --leader
 g.maplocalleader = ","
 
-nvim_exec([[set guifont=VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Dank\ Mono:h20,VictorMono\ NF:h18]], false)
 
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = true
