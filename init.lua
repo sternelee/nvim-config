@@ -63,7 +63,19 @@ require('lazy').setup({
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
-  {'kyazdani42/nvim-web-devicons', lazy = true, event = 'VimEnter'},
+  {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function ()
+    require'nvim-web-devicons'.setup{
+      override = {
+        vue = {
+          icon = "﵂",
+          color = "#428850",
+          cterm_color = "107",
+          name = "Vue"
+        }
+      },
+      color_icons = true,
+      default = true}
+  end},
   {'nvim-lualine/lualine.nvim', config = function() require'modules.lualine' end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
