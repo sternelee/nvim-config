@@ -108,14 +108,14 @@ require('lazy').setup({
   -- 语法提示
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
-  -- {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function ()
-  --   g.codeium_disable_bindings = 1
-  --   keymap('i', '<C-g>', function() return vim.fn['codeium#Complete']() end, { expr = true }) -- 都会自动触发，会卡
-  --   keymap('i', '<C-k>', function() return vim.fn['codeium#Accept']() end, { expr = true })
-  --   keymap('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-  --   keymap('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-  --   keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-  -- end},
+  {'Exafunction/codeium.vim', lazy = true, pin = true, event = 'VeryLazy', config = function ()
+    g.codeium_disable_bindings = 1
+    keymap('i', '<C-k>', function() return vim.fn['codeium#Complete']() end, { expr = true }) -- 都会自动触发，会卡
+    keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true })
+    keymap('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+    keymap('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+    keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+  end},
   -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
