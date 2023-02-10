@@ -91,6 +91,7 @@ require('lazy').setup({
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VimEnter'}, -- 色值高亮
+  {'tzachar/local-highlight.nvim', lazy = true, event = 'BufRead', config = function() require('local-highlight').setup{} end},
   -- theme 主题 -- https://vimcolorschemes.com/
   {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
   -- 显示导航线和操作
