@@ -106,7 +106,8 @@ require('lazy').setup({
   {'weilbith/nvim-code-action-menu', dependencies = 'xiyaowong/coc-code-action-menu.nvim', config = function() require 'coc-code-action-menu' end},
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
-  {'Exafunction/codeium.vim', lazy = true, pin = true, event = 'VeryLazy', config = function ()
+  {'Exafunction/codeium.vim', lazy = true, event = 'VeryLazy', config = function ()
+    -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
     g.codeium_disable_bindings = 1
     keymap('i', '<C-k>', function() return vim.fn['codeium#Complete']() end, { expr = true }) -- 都会自动触发，会卡
     keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true })
