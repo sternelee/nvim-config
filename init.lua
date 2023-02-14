@@ -120,6 +120,7 @@ require('lazy').setup({
   {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
+  -- {'laytan/tailwind-sorter.nvim', lazy = true, cmd = {'TailwindSort'}, dependencies = {'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim'}, build = 'cd formatter && npm i && npm run build', config = {}},
   -- {'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' }},
   -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
