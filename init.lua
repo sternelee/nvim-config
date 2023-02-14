@@ -264,6 +264,7 @@ opt('o', 'writebackup', false)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
 opt('o', 'showtabline', 0)
+opt('o', 'title', true)
 
 --mappings
 local function map(mode, lhs, rhs)
