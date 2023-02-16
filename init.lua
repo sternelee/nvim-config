@@ -27,11 +27,11 @@ g.maplocalleader = ","
 nvim_exec([[set guifont=Dank\ Mono:h20,VictorMono\ NF:h18]], false)
 
 g.neovide_scale_factor = 1.0
-g.neovide_input_macos_alt_is_meta = true
-g.neovide_input_use_logo = true
-g.neovide_remember_window_size = true
-g.neovide_confirm_quit = true
-g.neovide_hide_mouse_when_typing = true
+g.neovide_input_macos_alt_is_meta = 1
+g.neovide_input_use_logo = 1
+g.neovide_remember_window_size = 1
+g.neovide_confirm_quit = 1
+g.neovide_hide_mouse_when_typing = 0
 
 nvim_exec([[
 filetype plugin on
@@ -280,7 +280,10 @@ map('i', 'jk', '<esc>')                                               --jk to ex
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
--- map('n', ';', ':')                                                     --semicolon to enter command mode
+remap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+remap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+remap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+remap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 map('n', 'j', 'gj')                                                    --move by visual line not actual line
 map('n', 'k', 'gk')
 map('n', 'q', '<cmd>q<CR>')
