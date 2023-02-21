@@ -1,5 +1,4 @@
 local api = vim.api
-local fn = vim.fn
 
 local delay = 1000 -- ms
 

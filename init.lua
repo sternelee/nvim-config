@@ -17,7 +17,8 @@ local autogroup = vim.api.nvim_create_augroup
 g.loaded_netrw = 0
 g.loaded_netrwPlugin = 0
 g.loaded_python_provider = 0
-g.loaded_python3_provider = 0
+-- g.loaded_python3_provider = 0
+g.python3_host_prog = '/opt/homebrew/bin/python3'
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
@@ -152,7 +153,7 @@ require('lazy').setup({
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
-  -- {"folke/noice.nvim", event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -643,7 +644,7 @@ cmd[[
 ]]
 
 -- 自动保存
--- require'modules.auto-save'
+require'modules.auto-save'
 
 -- 代码运行指令
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])

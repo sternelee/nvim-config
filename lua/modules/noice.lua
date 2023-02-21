@@ -31,5 +31,5 @@ require("noice").setup {
     inc_rename = false,
     lsp_doc_border = false,
   },
-  throttle = 500
+  throttle = 1000
 }
