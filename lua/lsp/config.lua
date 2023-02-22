@@ -80,7 +80,7 @@ local codes = {
 }
 
 local format = function(diagnostic)
-  local code = diagnostic.user_data.lsp.code
+  local code = diagnostic.code
 
   if not diagnostic.source or not code then
     return string.format('%s', diagnostic.message)
@@ -106,23 +106,19 @@ local format = function(diagnostic)
 end
 
 vim.diagnostic.config({
-  float = {
-    source = true,
-    border = 'rounded',
-    focusable = false,
-    scope = 'line',
-  },
+  -- float = {
+  --   source = true,
+  --   border = 'rounded',
+  --   focusable = false,
+  --   scope = 'line',
+  -- },
   underline = true,
   signs = true,
   update_in_insert = false,
   severity_sort = true,
   virtual_text = {
-    prefix = '•',
-    spacing = 2,
-    source = false,
-    severity = {
-      min = vim.diagnostic.severity.HINT,
-    },
+    spacing = 4,
+    prefix = "●",
     format = format,
   },
 })
