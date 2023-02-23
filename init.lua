@@ -154,7 +154,7 @@ require('lazy').setup({
   end},
   -- 语法提示
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf'):setup() end},
-  -- {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
+  {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
@@ -436,16 +436,16 @@ map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
-map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+-- map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
+-- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+-- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+-- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+-- map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+-- map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+-- map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
+-- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+-- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
@@ -456,22 +456,19 @@ map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fo
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 
--- map('n', 'gD', '<cmd>Lspsaga preview_definition<CR>')
+map('n', 'gD', '<cmd>Lspsaga preview_definition<CR>')
 -- map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
--- map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
--- map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
--- map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
--- map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
--- map('n', 'gr', '<cmd>Lspsaga rename<CR>')
--- map('n', 'gi', '<cmd>Lspsaga implement<CR>')
--- map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
--- map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
--- map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
--- map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
--- map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
-
--- map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>')
--- map('n', '<A-i>', '<cmd>Lspsaga open_floaterm custom_cli_command<CR>')
+map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
+map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
+map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
+map('n', 'gr', '<cmd>Lspsaga rename<CR>')
+map('n', 'gi', '<cmd>Lspsaga implement<CR>')
+map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
+map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
+map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
 
 keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
@@ -556,24 +553,24 @@ local notify = require("notify")
 notify.setup {
   background_colour = '#000000'
 }
-vim.notify = notify
+-- vim.notify = notify
 
-vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  local client = vim.lsp.get_client_by_id(ctx.client_id)
-  local lvl = ({
-    'ERROR',
-    'WARN',
-    'INFO',
-    'DEBUG',
-  })[result.type]
-  notify({ result.message }, lvl, {
-    title = 'LSP | ' .. client.name,
-    timeout = 2000,
-    keep = function()
-      return lvl == 'ERROR' or lvl == 'WARN'
-    end,
-  })
-end
+-- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+--   local client = vim.lsp.get_client_by_id(ctx.client_id)
+--   local lvl = ({
+--     'ERROR',
+--     'WARN',
+--     'INFO',
+--     'DEBUG',
+--   })[result.type]
+--   notify({ result.message }, lvl, {
+--     title = 'LSP | ' .. client.name,
+--     timeout = 2000,
+--     keep = function()
+--       return lvl == 'ERROR' or lvl == 'WARN'
+--     end,
+--   })
+-- end
 
 require 'modules.telescope'
 require 'modules.treesitter'

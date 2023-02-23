@@ -106,12 +106,6 @@ local format = function(diagnostic)
 end
 
 vim.diagnostic.config({
-  -- float = {
-  --   source = true,
-  --   border = 'rounded',
-  --   focusable = false,
-  --   scope = 'line',
-  -- },
   underline = true,
   signs = true,
   update_in_insert = false,
@@ -283,3 +277,5 @@ autocmd({ "BufWritePre" }, {
   callback = fix_on_save,
   desc = "Eslint Fix All"
 })
+
+require('lsp/function')
