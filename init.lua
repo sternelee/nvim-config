@@ -657,7 +657,7 @@ cmd[[
 ]]
 
 -- 自动保存
-require'modules.auto-save'
+-- require'modules.auto-save'
 
 -- 代码运行指令
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
