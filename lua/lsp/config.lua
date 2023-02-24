@@ -105,19 +105,20 @@ local format = function(diagnostic)
   return string.format('%s [%s]', diagnostic.message, diagnostic.source)
 end
 
+-- lsp UI
 vim.diagnostic.config({
   underline = true,
   signs = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = {
-    spacing = 4,
-    prefix = "●",
-    format = format,
-  },
+  virtual_text = false
+  -- virtual_text = {
+  --   spacing = 4,
+  --   prefix = "●",
+  --   source = "if_many",
+  --   format = format
+  -- },
 })
-
--- UI
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 

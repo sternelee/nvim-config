@@ -117,14 +117,14 @@ require('lazy').setup({
   end},
   -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   -- {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    lazy = true,
-    event = 'VeryLazy',
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  },
+  -- {
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   lazy = true,
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- },
   {'jose-elias-alvarez/typescript.nvim', lazy = true, ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
   'b0o/schemastore.nvim', -- json server
   {'L3MON4D3/LuaSnip', dependencies = { 'rafamadriz/friendly-snippets' } },
@@ -332,8 +332,8 @@ map('v', 'x', 'd')
 map('v', 'd', '"_d')
 map('n', 'P', '"0p')
 map('v', 'P', '"0p')
--- map('i', 'jk', '<esc>')                                               --jk to exit
--- map('c', 'jk', '<C-C>')
+map('i', 'jk', '<esc>')                                               --jk to exit
+map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
 -- map('n', ';', ':')                                                     --semicolon to enter command mode
@@ -553,24 +553,8 @@ local notify = require("notify")
 notify.setup {
   background_colour = '#000000'
 }
--- vim.notify = notify
 
--- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
---   local client = vim.lsp.get_client_by_id(ctx.client_id)
---   local lvl = ({
---     'ERROR',
---     'WARN',
---     'INFO',
---     'DEBUG',
---   })[result.type]
---   notify({ result.message }, lvl, {
---     title = 'LSP | ' .. client.name,
---     timeout = 2000,
---     keep = function()
---       return lvl == 'ERROR' or lvl == 'WARN'
---     end,
---   })
--- end
+vim.notify = notify
 
 require 'modules.telescope'
 require 'modules.treesitter'
