@@ -90,7 +90,6 @@ require('lazy').setup({
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VimEnter'}, -- 色值高亮
-  -- {'tzachar/local-highlight.nvim', lazy = true, event = 'BufRead', config = function() require('local-highlight').setup{} end},
   -- theme 主题 -- https://vimcolorschemes.com/
   {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
   -- 显示导航线和操作
@@ -121,7 +120,7 @@ require('lazy').setup({
   {'Saecki/crates.nvim', lazy = true, event = 'BufRead Cargo.toml', config = function() require('crates').setup() end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
-  -- {'laytan/tailwind-sorter.nvim', lazy = true, cmd = {'TailwindSort'}, dependencies = {'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim'}, build = 'cd formatter && npm i && npm run build', config = {}},
+  {'laytan/tailwind-sorter.nvim', lazy = true, cmd = {'TailwindSort'}, build = 'cd formatter && npm i && npm run build', config = {}},
   -- {'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' }},
   -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
   {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
@@ -606,7 +605,7 @@ function coc_diag_notify(msg, level)
   coc_diag_record = vim.notify(msg, level, notify_opts)
 end
 
-function reset_coc_diag_record(window)
+function reset_coc_diag_record()
   coc_diag_record = {}
 end
 
