@@ -451,19 +451,19 @@ map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fo
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 
-map('n', 'gD', '<cmd>Lspsaga preview_definition<CR>')
+map('n', 'gD', '<cmd>Lspsaga peek_definition<CR>')
 -- map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
 map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
 map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
 map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
 map('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>')
 map('n', 'gr', '<cmd>Lspsaga rename<CR>')
-map('n', 'gi', '<cmd>Lspsaga implement<CR>')
+map('n', 'gi', '<cmd>Lspsaga peek_type_definition<CR>')
 map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
 map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
 map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
 map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-map('n', '<leader>ts', '<cmd>LSoutlineToggle<CR>')
+map('n', '<leader>ts', '<cmd>Lspsaga outline<CR>')
 
 keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
