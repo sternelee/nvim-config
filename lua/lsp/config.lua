@@ -111,13 +111,13 @@ vim.diagnostic.config({
   signs = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = false
-  -- virtual_text = {
-  --   spacing = 4,
-  --   prefix = "●",
-  --   source = "if_many",
-  --   format = format
-  -- },
+  -- virtual_text = false
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
+    source = "if_many",
+    format = format
+  },
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -128,8 +128,8 @@ for type, icon in pairs(signs) do
 end
 
 
-local autocmd = vim.api.nvim_create_autocmd
-local execute = vim.api.nvim_command
+-- local autocmd = vim.api.nvim_create_autocmd
+-- local execute = vim.api.nvim_command
 -- lspconfig
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
@@ -153,6 +153,8 @@ local on_attach = function(client, bufnr)
   -- end
 
 end
+
+-- require("neoconf").setup({})
 
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
