@@ -273,7 +273,7 @@ setup_servers()
 --     execute('EslintFixAll')
 --   end
 -- end
-
+--
 -- autocmd({ "BufWritePre" }, {
 --   pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
 --   -- command = 'EslintFixAll',
