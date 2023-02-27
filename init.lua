@@ -54,7 +54,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-  {'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
+  {'nathom/filetype.nvim', 'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
   {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
