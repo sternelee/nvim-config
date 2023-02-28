@@ -49,7 +49,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-  {'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
+  {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
   {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 2,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
@@ -81,10 +81,9 @@ require('lazy').setup({
   {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'VeryLazy', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
-  {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VimEnter'}, -- 色值高亮
-  -- {'tzachar/local-highlight.nvim', lazy = true, event = 'BufRead', config = function() require('local-highlight').setup{} end},
+  {'NvChad/nvim-colorizer.lua', lazy = true, event = 'VeryLazy'}, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'katawful/kat.nvim'},
+  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', lazy = true, event = 'VeryLazy'},
@@ -142,7 +141,7 @@ require('lazy').setup({
   -- end},
   {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'VeryLazy', config = function()
     require('refactoring').setup()
-    require 'telescope'.load_extension('refactoring')
+    require('telescope').load_extension('refactoring')
   end},
   -- 语法提示
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf'):setup() end},
@@ -151,7 +150,7 @@ require('lazy').setup({
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
+  {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -171,7 +170,7 @@ require('lazy').setup({
   {'vuki656/package-info.nvim', lazy = true, event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'NTBBloodbath/rest.nvim', lazy = true, ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', lazy = true, cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
-  {'editorconfig/editorconfig-vim', lazy = true, event = 'VeryLazy'},
+  -- {'editorconfig/editorconfig-vim', lazy = true, event = 'VeryLazy'},
   {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- {'laytan/tailwind-sorter.nvim', lazy = true, cmd = {'TailwindSort'}, build = 'cd formatter && npm i && npm run build', config = {}},
@@ -204,7 +203,7 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -552,7 +551,6 @@ notify.setup {
 
 vim.notify = notify
 
-require 'modules.telescope'
 require 'modules.treesitter'
 
 local lspkind = require('lspkind')
