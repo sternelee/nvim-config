@@ -168,7 +168,7 @@ require("mason-lspconfig").setup({
 })
 
 local servers = {
-  "sumneko_lua",
+  "lua_ls",
   "html",
   "cssls",
   "jsonls",
@@ -237,8 +237,8 @@ local function setup_servers()
     if lsp == "volar" then
       opts.root_dir = lsputil.root_pattern('.volarrc')
     end
-    if lsp == "sumneko_lua" then
-      opts.settings = require('lsp/sumneko_lua').settings
+    if lsp == "lua_ls" then
+      opts.settings = require('lsp/lua_ls').settings
     end
     -- if lsp == "eslint" then
     --   opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')

@@ -1,8 +1,3 @@
-local impatientOk, _ = pcall(require, 'impatient')
-if impatientOk then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
-end
 local cmd = vim.cmd
 local g = vim.g
 -- local fn = vim.fn
@@ -54,9 +49,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-  {'nathom/filetype.nvim', 'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
+  {'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
   {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
-  {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
+  {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 2,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
   {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function ()
@@ -179,11 +174,17 @@ require('lazy').setup({
   {'editorconfig/editorconfig-vim', lazy = true, event = 'VeryLazy'},
   {'rmagatti/goto-preview', lazy = true, ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
+  -- {'laytan/tailwind-sorter.nvim', lazy = true, cmd = {'TailwindSort'}, build = 'cd formatter && npm i && npm run build', config = {}},
+  -- {'metakirby5/codi.vim', lazy = true, cmd = { 'Codi' }},
+  -- {'phaazon/mind.nvim',branch = 'v2.2', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-lua/plenary.nvim' }, config = function() require'mind'.setup() end},
+  {'iamcco/markdown-preview.nvim', lazy = true, ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
+  {'skywind3000/asyncrun.vim', lazy = true, cmd = 'AsyncRun'},
+  {'tpope/vim-dispatch', lazy = true, cmd = {'Make', 'Dispatch', 'Focus', 'Start'}},
   --- 方便操作
   {'nacro90/numb.nvim', lazy = true, event = 'VeryLazy', config = function() require('numb').setup() end},
   {'voldikss/vim-translator', lazy = true, cmd = {'Translate'}}, -- npm install fanyi -g 安装翻译
   {'numToStr/Comment.nvim', lazy = true, event = 'VeryLazy', config = function() require('Comment').setup() end},
+  {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   {'folke/which-key.nvim', lazy = true, event = 'VeryLazy'}, -- 提示leader按键
@@ -549,7 +550,7 @@ notify.setup {
   background_colour = '#000000'
 }
 
--- vim.notify = notify
+vim.notify = notify
 
 require 'modules.telescope'
 require 'modules.treesitter'
