@@ -60,7 +60,7 @@ local codes = {
     "init_conversion_failed",
   },
   undeclared_variable = {
-    message = " Have you delcared that variable somewhere?",
+    message = " Have you declared that variable somewhere?",
     "undeclared_var_use",
   },
   lowercase_global = {
@@ -111,6 +111,10 @@ vim.diagnostic.config({
   signs = true,
   update_in_insert = false,
   severity_sort = true,
+  float = {
+    source = "if_many",
+    format = format
+  },
   virtual_text = false
   -- virtual_text = {
   --   spacing = 4,
@@ -196,13 +200,6 @@ local function setup_servers()
         json = {
           schemas = require('schemastore').json.schemas(),
           validate = { enable = true },
-        },
-        commands = {
-          Format = {
-            function()
-              vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
-            end,
-          },
         },
       }
     end
