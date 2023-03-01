@@ -102,6 +102,7 @@ require('lazy').setup({
   {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, lazy = true, event = 'VeryLazy', config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法提示
   {'neoclide/coc.nvim', branch = 'master', build = 'yarn install --frozen-lockfile'},
+  {'kevinhwang91/nvim-bqf', lazy = true, event = 'VeryLazy'},
   {'weilbith/nvim-code-action-menu', dependencies = 'xiyaowong/coc-code-action-menu.nvim', config = function() require 'coc-code-action-menu' end},
   {'liuchengxu/vista.vim', lazy = true, cmd = {'Vista'}},
   -- {'aduros/ai.vim', lazy = true, cmd = 'AI'},
@@ -548,7 +549,7 @@ g.coc_global_extensions = {
 
 -- g.coc_start_at_startup = 0
 g.coc_default_semantic_highlight_groups = 1
--- g.coc_enable_locationlist = 0
+g.coc_enable_locationlist = 0
 -- g.coc_selectmode_mapping = 0
 
 -- g.trigger_size = 0.5 * 1048576
@@ -652,6 +653,51 @@ cmd[[
   " autocmd User CocStatusChange call s:StatusNotify()
 ]]
 
+
+-- for nvim-bqf
+cmd([[
+    aug Coc
+        au!
+        au User CocLocationsChange lua _G.jumpToLoc()
+    aug END
+]])
+
+map("n", "<leader>qd", "<cmd>lua _G.diagnostic()<CR>")
+function _G.jumpToLoc(locs)
+    locs = locs or vim.g.coc_jump_locations
+    fn.setloclist(0, {}, ' ', {title = 'CocLocationList', items = locs})
+    local winid = fn.getloclist(0, {winid = 0}).winid
+    if winid == 0 then
+        cmd('abo lw')
+    else
+        vim.api.nvim_set_current_win(winid)
+    end
+end
+
+function _G.diagnostic()
+    fn.CocActionAsync('diagnosticList', '', function(err, res)
+        if err == vim.NIL then
+            local items = {}
+            for _, d in ipairs(res) do
+                local text = ('[%s%s] %s'):format((d.source == '' and 'coc.nvim' or d.source),
+                    (d.code == vim.NIL and '' or ' ' .. d.code), d.message:match('([^\n]+)\n*'))
+                local item = {
+                    filename = d.file,
+                    lnum = d.lnum,
+                    end_lnum = d.end_lnum,
+                    col = d.col,
+                    end_col = d.end_col,
+                    text = text,
+                    type = d.severity
+                }
+                table.insert(items, item)
+            end
+            fn.setqflist({}, ' ', {title = 'CocDiagnosticList', items = items})
+
+            cmd('bo cope')
+        end
+    end)
+end
 -- 自动保存
 -- require'modules.auto-save'
 
