@@ -120,17 +120,17 @@ require('lazy').setup({
   'b0o/schemastore.nvim', -- json server
   {'L3MON4D3/LuaSnip', dependencies = { 'rafamadriz/friendly-snippets' } },
   {'hrsh7th/nvim-cmp', dependencies = {
-    { 'petertriho/cmp-git' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/cmp-buffer' },
-    { 'saadparwaiz1/cmp_luasnip' },
-    { 'rafamadriz/friendly-snippets' },
-    { 'hrsh7th/cmp-calc' },
-    { 'hrsh7th/cmp-emoji' },
-    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-    { 'hrsh7th/cmp-cmdline' },
-    -- {'octaltree/cmp-look'}, -- 太多了
-    -- {'dmitmel/cmp-digraphs'},
+    'lukas-reineke/cmp-under-comparator',
+    'petertriho/cmp-git',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer','saadparwaiz1/cmp_luasnip',
+    'rafamadriz/friendly-snippets',
+    'hrsh7th/cmp-calc',
+    'hrsh7th/cmp-emoji',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-cmdline',
+    -- 'octaltree/cmp-look', -- 太多了
+    -- 'dmitmel/cmp-digraphs',
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
   }},
   -- {"roobert/tailwindcss-colorizer-cmp.nvim",
@@ -139,7 +139,7 @@ require('lazy').setup({
   --     color_square_width = 2,
   --   })
   -- end},
-  {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'VeryLazy', config = function()
+  {'ThePrimeagen/refactoring.nvim', lazy = true, event = 'InsertEnter', config = function()
     require('refactoring').setup()
     require('telescope').load_extension('refactoring')
   end},
@@ -185,6 +185,7 @@ require('lazy').setup({
   {'numToStr/Comment.nvim', lazy = true, event = 'VeryLazy', config = function() require('Comment').setup() end},
   {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
+  {'windwp/nvim-autopairs', layz = true, event = 'InsertEnter', config = function () require('nvim-autopairs').setup() end},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   {'folke/which-key.nvim', lazy = true, event = 'VeryLazy'}, -- 提示leader按键
   {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
@@ -568,6 +569,9 @@ local check_backspace = function()
 end
 
 cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -580,7 +584,7 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm { select = false },
+    ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), {'i'}),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -636,6 +640,18 @@ cmp.setup({
   -- formatting =  {
   --   format = require("tailwindcss-colorizer-cmp").formatter
   -- },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require "cmp-under-comparator".under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   flags = {
     debounce_text_changes = 150,
   },
@@ -647,6 +663,13 @@ cmp.setup({
     ghost_text = true
   }
 })
+
+-- for autopairs
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
