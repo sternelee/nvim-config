@@ -27,6 +27,19 @@ end
 
 require('ufo').setup({
   fold_virt_text_handler = handler,
+  preview = {
+      win_config = {
+          border = {'', '─', '', '', '', '─', '', ''},
+          winhighlight = 'Normal:Folded',
+          winblend = 0
+      },
+      mappings = {
+          scrollU = '<C-u>',
+          scrollD = '<C-d>',
+          jumpTop = '[',
+          jumpBot = ']'
+      }
+  },
   provider_selector = function()
       return {'treesitter', 'indent'}
   end

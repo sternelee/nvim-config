@@ -150,7 +150,7 @@ require('lazy').setup({
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
+  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -185,7 +185,7 @@ require('lazy').setup({
   {'numToStr/Comment.nvim', lazy = true, event = 'VeryLazy', config = function() require('Comment').setup() end},
   {'barrett-ruth/import-cost.nvim', lazy = true, event = 'VeryLazy', build = 'sh install.sh yarn', config = function () require('import-cost').setup({}) end},
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
-  {'windwp/nvim-autopairs', layz = true, event = 'InsertEnter', config = function () require('nvim-autopairs').setup() end},
+  {'windwp/nvim-autopairs', lazy = true, event = 'InsertEnter', config = function () require('nvim-autopairs').setup() end},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   {'folke/which-key.nvim', lazy = true, event = 'VeryLazy'}, -- 提示leader按键
   {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
@@ -204,7 +204,7 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -275,7 +275,7 @@ opt('o', 'lazyredraw', false)
 opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'shortmess', 'a')
-opt('o', 'cmdheight', 1)
+opt('o', 'cmdheight', 0)
 opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
@@ -547,7 +547,10 @@ g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugiti
 -- require("neoconf").setup()
 local notify = require("notify")
 notify.setup {
-  background_colour = '#000000'
+  timeout = 500,
+  background_colour = '#000000',
+  render = "compact",
+  stages = "fade",
 }
 
 vim.notify = notify
