@@ -77,7 +77,7 @@ require('lazy').setup({
   {'rbong/vim-flog', lazy = true, cmd = {'Flog'}},
   {'sindrets/diffview.nvim', lazy = true, cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end},
   -- 语法高亮
-  {'kevinhwang91/nvim-treesitter', lazy = false, build = ':TSUpdate'},
+  {'kevinhwang91/nvim-treesitter', lazy = false, build = ':TSUpdate', config = function () require 'modules.treesitter' end },
   {'nvim-treesitter/nvim-treesitter-context', lazy = true, event = 'VeryLazy', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", lazy = true, event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', lazy = true, cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
@@ -547,15 +547,13 @@ g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugiti
 -- require("neoconf").setup()
 local notify = require("notify")
 notify.setup {
-  timeout = 500,
+  timeout = 1000,
   background_colour = '#000000',
   render = "compact",
   stages = "fade",
 }
 
 vim.notify = notify
-
-require 'modules.treesitter'
 
 local lspkind = require('lspkind')
 require 'lspkind'.init()
