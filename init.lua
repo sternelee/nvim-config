@@ -434,8 +434,10 @@ cmd 'colorscheme base16-ayu-dark'
 g.better_whitespace_filetypes_blacklist ={'diff', 'git', 'qf', 'help', 'fugitive', 'minimap'}
 
 local notify = require("notify")
-notify.setup{
-  background_colour = '#1e1e1e'
+notify.setup {
+  timeout = 1000,
+  background_colour = '#000000',
+  stages = "fade",
 }
 vim.notify = notify
 
