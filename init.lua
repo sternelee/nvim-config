@@ -1,8 +1,3 @@
-local impatientOk, _ = pcall(require, 'impatient')
-if impatientOk then
-  require('impatient') -- 必须是第一加载
-  -- require('impatient').enable_profile()
-end
 local cmd = vim.cmd
 local g = vim.g
 local fn = vim.fn
@@ -57,7 +52,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-  {'lewis6991/impatient.nvim', 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
+  {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
   {'antoinemadec/FixCursorHold.nvim', lazy = true, event = 'VeryLazy'},
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
@@ -149,23 +144,7 @@ require('lazy').setup({
   {'ckolkey/ts-node-action', lazy = true, event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
-  {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
-  {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
-    require("ssr").setup {
-      min_width = 50,
-      min_height = 5,
-      max_width = 120,
-      max_height = 25,
-      keymaps = {
-        close = "q",
-        next_match = "n",
-        prev_match = "N",
-        replace_confirm = "<cr>",
-        replace_all = "<leader><cr>",
-      },
-    }
-  end}
 
 }, {
   ui = {
@@ -364,7 +343,6 @@ map('n', '<leader>sp', 'viw:lua require("spectre").open_file_search()<cr>')
 map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
-keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
