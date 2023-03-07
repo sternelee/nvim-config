@@ -123,7 +123,7 @@
   "eslint.enable": true,
   "eslint.packageManager": "pnpm",
   "eslint.run": "onSave",
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": false,
   "json.trace.server": "off",
   "json.schemas": [
     {
@@ -202,5 +202,7 @@
     "typescriptreact",
     "javascriptreact"
   ],
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd"
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
+  "vetur.enable": false,
+  "volar.enable": true
 }
