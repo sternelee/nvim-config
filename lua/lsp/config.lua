@@ -160,6 +160,7 @@ end
 
 -- require("neoconf").setup({})
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require("lspconfig")
 local lsputil = require 'lspconfig.util'
 
@@ -213,23 +214,7 @@ local function setup_servers()
     end
     if lsp == "vuels" then
       opts.root_dir = lsputil.root_pattern('.veturrc')
-      opts.init_options = {
-        config = {
-          vetur = {
-            completion = {
-              autoImport = true,
-              tagCasing = "kebab",
-              useScaffoldSnippets = true,
-            },
-            useWorkspaceDependencies = true,
-            validation = {
-              script = true,
-              style = true,
-              template = true,
-            },
-          },
-        },
-      }
+      opts.init_options = require('lsp/vuels').init_options
     end
     if lsp == "volar" then
       opts.root_dir = lsputil.root_pattern('.volarrc')

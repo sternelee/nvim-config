@@ -54,19 +54,7 @@ require('lazy').setup({
   {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 2,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
-  {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function ()
-    require'nvim-web-devicons'.setup{
-      override = {
-        vue = {
-          icon = "﵂",
-          color = "#428850",
-          cterm_color = "107",
-          name = "Vue"
-        }
-      },
-      color_icons = true,
-      default = true}
-  end},
+  {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
   {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
@@ -188,7 +176,7 @@ require('lazy').setup({
   {'windwp/nvim-autopairs', lazy = true, event = 'InsertEnter', config = function () require('nvim-autopairs').setup() end},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   {'folke/which-key.nvim', lazy = true, event = 'VeryLazy'}, -- 提示leader按键
-  {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
+  {'HiPhish/nvim-ts-rainbow2', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
   {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
   {'danymat/neogen', lazy = true, event = 'VeryLazy', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写jsdoc注释
