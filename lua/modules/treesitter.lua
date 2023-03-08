@@ -19,9 +19,9 @@ require('nvim-treesitter.configs').setup {
   },
   rainbow = {
     enable = true,
-    extended_mode = true,
-    max_file_lines = nil,
-    disable = disableTsOrLsp,
+    query = 'rainbow-parens',
+    -- Highlight the entire buffer all at once
+    strategy = require 'ts-rainbow.strategy.global',
   },
   autotag = {
     enable = true,

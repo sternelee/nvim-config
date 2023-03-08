@@ -129,7 +129,7 @@ require('lazy').setup({
   {'machakann/vim-sandwich', lazy = true, event = 'VeryLazy'},
   {'chentoast/marks.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.marks' end},
   {'folke/which-key.nvim', lazy = true, event = 'VeryLazy'}, -- 提示leader按键
-  {'mrjones2014/nvim-ts-rainbow', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
+  {'HiPhish/nvim-ts-rainbow2', lazy = true, event = 'VeryLazy'}, -- 彩虹匹配
   {'windwp/nvim-ts-autotag', lazy = true, event = 'VeryLazy' },
   {'folke/todo-comments.nvim', lazy = true, event = 'VeryLazy', config = function () require'modules.todo' end},
   {'danymat/neogen', lazy = true, event = 'VeryLazy', config = function() require'neogen'.setup { enabled = true } end}, -- 方便写jsdoc注释
