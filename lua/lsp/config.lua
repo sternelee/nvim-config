@@ -243,24 +243,4 @@ end
 
 setup_servers()
 
--- eslint autoFixOnSave
--- local function can_autofix(client)
---   return client.config.settings.autoFixOnSave or false
--- end
---
--- local function fix_on_save()
---   local clients = vim.lsp.get_active_clients()
---   local can_autofix_clients = vim.tbl_filter(can_autofix, clients)
---   if #can_autofix_clients > 0 then
---     execute('EslintFixAll')
---   end
--- end
---
--- autocmd({ "BufWritePre" }, {
---   pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.vue" },
---   -- command = 'EslintFixAll',
---   callback = fix_on_save,
---   desc = "Eslint Fix All"
--- })
-
 require('lsp/function')
