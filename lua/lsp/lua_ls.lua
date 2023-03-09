@@ -12,7 +12,7 @@ M.settings = {
         path = runtime_path,
     },
     diagnostics = {
-        globals = {'vim', 'use', 'bit'},
+        globals = {'vim', 'use', 'bit', 'require'},
     },
     workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
