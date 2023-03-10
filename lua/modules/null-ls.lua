@@ -6,10 +6,10 @@ null_ls.setup({
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.diagnostics.markdownlint,
         -- null_ls.builtins.diagnostics.cspell.with({
-        --   extra_args = { "trace", "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
+        --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
         -- }),
         -- null_ls.builtins.code_actions.cspell.with({
-        --   extra_args = { "trace", "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
+        --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
         -- }),
         null_ls.builtins.diagnostics.codespell,
         -- null_ls.builtins.formatting.prettier,

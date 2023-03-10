@@ -95,7 +95,6 @@ require('lazy').setup({
     keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
   end},
   -- {'dense-analysis/neural', lazy = true, cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
-  -- {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   lazy = true,
@@ -137,6 +136,7 @@ require('lazy').setup({
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
+  -- {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
   -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
   -- rust

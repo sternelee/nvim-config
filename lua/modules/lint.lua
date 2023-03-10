@@ -1,9 +1,15 @@
+local cspell = require('lint').linters.cspell
+cspell.args = {
+  '-c ~/.config/nvim/cspell.json',
+  '-v',
+  '-'
+}
 require('lint').linters_by_ft = {
   markdown = { 'markdownlint' },
-  html = { 'cspell' },
-  javascript = { 'cspell' },
-  typescript = { 'cspell' },
-  vue = { 'cspell' },
+  html = { 'eslint_d', 'cspell' },
+  javascript = { 'eslint_d', 'cspell' },
+  typescript = { 'eslint_d', 'cspell' },
+  vue = { 'eslint_d', 'cspell' },
   json = { 'jsonlint', 'cspell' }
 }
 
