@@ -116,7 +116,7 @@ require('lazy').setup({
     'hrsh7th/cmp-calc',
     'hrsh7th/cmp-emoji',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    -- 'hrsh7th/cmp-cmdline',
+    'hrsh7th/cmp-cmdline',
     -- 'octaltree/cmp-look', -- 太多了
     -- 'dmitmel/cmp-digraphs',
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
@@ -196,7 +196,7 @@ require('lazy').setup({
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
-  {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
+  -- {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -674,17 +674,17 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
--- cmp.setup.cmdline('/', {
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- cmp.setup.cmdline(':', {
---   sources = cmp.config.sources({
---     { name = 'cmdline' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'cmdline' }
+  })
+})
 
 -- LSP config
 require('lsp/config')
