@@ -134,7 +134,7 @@ require('lazy').setup({
   -- 语法提示
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf'):setup() end},
   {'glepnir/lspsaga.nvim', lazy = true, event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
-  {'VidocqH/lsp-lens.nvim', lazy = true, event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
+  -- {'VidocqH/lsp-lens.nvim', lazy = true, event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
   {'weilbith/nvim-code-action-menu', lazy = true, cmd = 'CodeActionMenu'},
   'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
