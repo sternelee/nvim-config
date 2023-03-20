@@ -542,7 +542,7 @@ local notify = require("notify")
 notify.setup {
   timeout = 1000,
   background_colour = '#000000',
-  render = "compact",
+  -- render = "compact",
   stages = "fade",
 }
 
