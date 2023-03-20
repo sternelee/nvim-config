@@ -10,9 +10,11 @@ local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
     sources = {
-        code_actions.eslint,
-        -- code_actions.eslint_d,
+        diagnostics.eslint_d,
+        formatting.eslint_d,
+        code_actions.eslint_d,
         diagnostics.markdownlint,
+        formatting.markdownlint,
         -- diagnostics.cspell.with({
         --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
         -- }),
@@ -20,10 +22,10 @@ null_ls.setup({
         --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
         -- }),
         diagnostics.codespell,
-        formatting.prettier,
+        formatting.codespell,
+        -- formatting.prettier,
         formatting.stylua,
-        -- formatting.prettierd,
-        diagnostics.eslint_d,
+        formatting.prettierd,
         -- code_actions.gitsigns,
     },
     -- on_attach = function(client, bufnr)

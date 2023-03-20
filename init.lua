@@ -55,10 +55,8 @@ require('lazy').setup({
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
   {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
-  {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter',
-    -- dependencies = {'arkav/lualine-lsp-progress'},
-    config = function() require'modules.lualine' end},
-  -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
+  -- {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter', config = function() require'modules.lualine' end},
+  {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
   -- git相关
