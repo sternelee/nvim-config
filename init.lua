@@ -55,7 +55,9 @@ require('lazy').setup({
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
   {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
-  {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter', dependencies = {'arkav/lualine-lsp-progress'}, config = function() require'modules.lualine' end},
+  {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter',
+    -- dependencies = {'arkav/lualine-lsp-progress'},
+    config = function() require'modules.lualine' end},
   -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
@@ -196,7 +198,7 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   -- {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
