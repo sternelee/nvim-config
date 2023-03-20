@@ -145,6 +145,8 @@ local on_attach = function(client, bufnr)
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+  client.server_capabilities.semanticTokensProvider = false
+
   if client.name == 'tailwindcss' then
     if client.server_capabilities.colorProvider then
       require "lsp/documentcolors".buf_attach(bufnr)
