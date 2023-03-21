@@ -55,8 +55,8 @@ require('lazy').setup({
   -- 状态栏
   {'romgrk/barbar.nvim', lazy = true, event = 'VeryLazy'},
   {'nvim-tree/nvim-web-devicons', lazy = true, event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
-  -- {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter', config = function() require'modules.lualine' end},
-  {'windwp/windline.nvim', config = function() require('modules.windline') end},
+  {'nvim-lualine/lualine.nvim', lazy = true, event = 'VimEnter', config = function() require'modules.lualine' end},
+  -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', lazy = true, cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', lazy = true, event = 'VimEnter'},
   -- git相关
@@ -141,7 +141,7 @@ require('lazy').setup({
   {'jose-elias-alvarez/null-ls.nvim', lazy = true, event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {'mfussenegger/nvim-lint', lazy = true, event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {"rcarriga/nvim-dap-ui", lazy = true, event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require('fidget'):setup() end}, -- 用noice代替
+  {'j-hui/fidget.nvim', lazy = true, event = 'VeryLazy', config = function() require"fidget".setup{sources = {["null-ls"] = {ignore = true}}} end}, -- 用noice代替
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -196,7 +196,7 @@ require('lazy').setup({
   {'numToStr/FTerm.nvim', lazy = true, event = 'VeryLazy'},
   {'is0n/fm-nvim', lazy = true, event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', lazy = true, event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   -- {'gelguy/wilder.nvim', lazy = true, event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', lazy = true, event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
@@ -426,7 +426,7 @@ map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
 -- map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
--- map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
+map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
 -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 -- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
