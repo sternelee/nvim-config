@@ -10,7 +10,7 @@ local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   debounce = 500,
-  update_in_insert = true,
+  -- update_in_insert = true,
   sources = {
     diagnostics.eslint_d,
     formatting.eslint_d,
