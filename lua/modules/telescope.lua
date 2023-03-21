@@ -143,3 +143,30 @@ require'telescope'.load_extension('fzf')
 require'telescope'.load_extension('file_browser')
 require'telescope'.load_extension('notify')
 require'telescope'.load_extension('projects')
+
+-- https://luyuhuang.tech/2023/03/21/nvim.html
+function live_grep_opts(opts)
+    local flags = tostring(vim.v.count)
+    local additional_args = {}
+    local prompt_title = 'Live Grep'
+    if flags:find('1') then
+        prompt_title = prompt_title .. ' [.*]'
+    else
+        table.insert(additional_args, '--fixed-strings')
+    end
+    if flags:find('2') then
+        prompt_title = prompt_title .. ' [w]'
+        table.insert(additional_args, '--word-regexp')
+    end
+    if flags:find('3') then
+        prompt_title = prompt_title .. ' [Aa]'
+        table.insert(additional_args, '--case-sensitive')
+    end
+
+    opts = opts or {}
+    opts.additional_args = function() return additional_args end
+    opts.prompt_title = prompt_title
+    return opts
+end
+
+vim.keymap.set('n', '<leader>/', function() require('telescope.builtin').live_grep(live_grep_opts{}) end)
