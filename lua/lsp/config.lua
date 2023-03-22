@@ -185,7 +185,7 @@ local servers = {
   "tsserver",
   "denols",
   "rust_analyzer",
-  -- "eslint", -- 由null-ls来管理
+  "eslint", -- 由null-ls来管理
   "tailwindcss",
   "bashls",
   "marksman"
@@ -224,13 +224,13 @@ local function setup_servers()
     if lsp == "lua_ls" then
       opts.settings = require('lsp/lua_ls').settings
     end
-    -- if lsp == "eslint" then
-    --   opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
-    --   opts.settings = require('lsp/eslint').settings
-    --   opts.handlers = {
-    --     ['window/showMessageRequest'] = function(_, result, params) return result end
-    --   }
-    -- end
+    if lsp == "eslint" then
+      opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
+      opts.settings = require('lsp/eslint').settings
+      opts.handlers = {
+        ['window/showMessageRequest'] = function(_, result, params) return result end
+      }
+    end
     if lsp == "tailwindcss" then
       opts.root_dir = lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
     'postcss.config.ts', 'package.json', 'node_modules')
