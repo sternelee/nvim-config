@@ -139,7 +139,7 @@ require('lazy').setup({
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {'mfussenegger/nvim-lint', event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require"fidget".setup{sources = {["null-ls"] = {ignore = true}}} end}, -- 用noice代替
+  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require"fidget".setup{sources = {["null-ls"] = {ignore = true}}} end}, -- 用noice代替
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
