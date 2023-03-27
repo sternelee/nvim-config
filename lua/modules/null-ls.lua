@@ -5,16 +5,16 @@ local null_ls = require("null-ls")
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
-local code_actions = null_ls.builtins.code_actions
+-- local code_actions = null_ls.builtins.code_actions
 -- local augroup = vim.api.nvim_create_augroup("NullForm", {})
 
 null_ls.setup({
   debounce = 500,
   update_in_insert = true,
   sources = {
-    diagnostics.eslint_d,
-    formatting.eslint_d,
-    code_actions.eslint_d,
+    -- diagnostics.eslint_d,
+    -- formatting.eslint_d,
+    -- code_actions.eslint_d,
     diagnostics.markdownlint,
     formatting.markdownlint,
     -- diagnostics.cspell.with({

@@ -65,12 +65,19 @@ require('lazy').setup({
   {'akinsho/git-conflict.nvim', cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end},
   {'rbong/vim-flog', cmd = {'Flog'}},
   {'sindrets/diffview.nvim', cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end},
+  {'lewis6991/gitsigns.nvim', event = 'VeryLazy', config = function() require'modules.gitsigns' end},
   -- 语法高亮
-  {'kevinhwang91/nvim-treesitter', build = ':TSUpdate', config = function () require 'modules.treesitter' end },
+  {'kevinhwang91/nvim-treesitter', event = 'VeryLazy', build = ':TSUpdate', config = function () require 'modules.treesitter' end },
   {'nvim-treesitter/nvim-treesitter-context', event = 'VeryLazy', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   {'NvChad/nvim-colorizer.lua', event = 'VeryLazy'}, -- 色值高亮
+  -- {"roobert/tailwindcss-colorizer-cmp.nvim", event = 'VeryLazy',
+  -- config = function()
+  --   require("tailwindcss-colorizer-cmp").setup({
+  --     color_square_width = 2,
+  --   })
+  -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
   {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'},
   -- 显示导航线
@@ -80,10 +87,10 @@ require('lazy').setup({
   {'matze/vim-move', event = 'VeryLazy'},
   {'phaazon/hop.nvim', cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
-  {'nvim-telescope/telescope.nvim', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
-  {'renerocksai/telekasten.nvim', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, event = 'VeryLazy', config = function() require'modules.telekasten' end}, -- 日志管理
+  {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
+  {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
-  {"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","neovim/nvim-lspconfig"},
+  {'neovim/nvim-lspconfig', event = 'VeryLazy', dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'onsails/lspkind-nvim'}, config = function () require('lsp/config') end},
   -- "folke/neoconf.nvim",
   -- {'aduros/ai.vim', cmd = 'AI'},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
@@ -103,10 +110,9 @@ require('lazy').setup({
       require("lsp_lines").setup()
     end,
   },
-  {'jose-elias-alvarez/typescript.nvim', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
-  'b0o/schemastore.nvim', -- json server
+  {'jose-elias-alvarez/typescript.nvim', event = 'VeryLazy', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
   {'L3MON4D3/LuaSnip', event = 'VeryLazy', dependencies = { 'rafamadriz/friendly-snippets' } },
-  {'hrsh7th/nvim-cmp', dependencies = {
+  {'hrsh7th/nvim-cmp', event = 'VeryLazy', dependencies = {
     'lukas-reineke/cmp-under-comparator',
     'petertriho/cmp-git',
     'hrsh7th/cmp-nvim-lsp',
@@ -120,12 +126,6 @@ require('lazy').setup({
     -- 'dmitmel/cmp-digraphs',
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
   }, config = function() require 'modules.cmp' end},
-  -- {"roobert/tailwindcss-colorizer-cmp.nvim",
-  -- config = function()
-  --   require("tailwindcss-colorizer-cmp").setup({
-  --     color_square_width = 2,
-  --   })
-  -- end},
   {'ThePrimeagen/refactoring.nvim', event = 'InsertEnter', config = function()
     require('refactoring').setup()
     require('telescope').load_extension('refactoring')
@@ -135,7 +135,6 @@ require('lazy').setup({
   {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   -- {'VidocqH/lsp-lens.nvim', event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
   {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},
-  'onsails/lspkind-nvim',
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {'mfussenegger/nvim-lint', event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
@@ -177,7 +176,7 @@ require('lazy').setup({
   {'windwp/nvim-autopairs', event = 'InsertEnter', config = function () require('nvim-autopairs').setup() end},
   {'utilyre/sentiment.nvim', event = 'VeryLazy', name = 'sentiment', version = "*",opts = {}},
   {'chentoast/marks.nvim', event = 'VeryLazy', config = function () require'modules.marks' end},
-  {'folke/which-key.nvim', event = 'VeryLazy'}, -- 提示leader按键
+  {'folke/which-key.nvim', event = 'VeryLazy', config = function() require 'which-key'.setup {} end}, -- 提示leader按键
   {'HiPhish/nvim-ts-rainbow2', event = 'VeryLazy'}, -- 彩虹匹配
   {'windwp/nvim-ts-autotag', event = 'VeryLazy' },
   {'folke/todo-comments.nvim', event = 'VeryLazy', config = function () require'modules.todo' end},
@@ -545,9 +544,6 @@ notify.setup {
 
 vim.notify = notify
 
--- LSP config
-require('lsp/config')
-
 local startify = require('alpha.themes.startify')
 local header = {
   '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
@@ -578,7 +574,6 @@ startify.section.header.val = header
 
 require 'alpha'.setup(startify.opts)
 
-require 'which-key'.setup {}
 cmd([[ let @r="\y:%s/\<C-r>\"//g\<Left>\<Left>" ]])
 cmd([[ let @h=":ProjectRoot \<CR> :w\<CR> :vsp | terminal  go run *.go \<CR>i" ]])
 cmd([[ let @1=":call CppComp() \<CR>G:66\<CR>" ]])
