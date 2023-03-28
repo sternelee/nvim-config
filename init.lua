@@ -79,7 +79,7 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'},
+  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'glepnir/porcelain.nvim'},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -525,7 +525,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme porcelain'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
@@ -562,9 +562,9 @@ local header = {
   '│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │',
   '│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │',
   '┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙',
-  '+--------------------------------+',
-  '|    I Love You, 小璇同学❤❤❤     |',
-  '+----------------+---------------+',
+  -- '+--------------------------------+',
+  -- '|    I Love You, 小璇同学❤❤❤     |',
+  -- '+----------------+---------------+',
 }
 
 -- 布局
