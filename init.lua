@@ -79,7 +79,7 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim', 'glepnir/porcelain.nvim'},
+  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -190,7 +190,7 @@ require('lazy').setup({
   {'gennaro-tedesco/nvim-jqx', cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', event = 'VeryLazy'}, -- 对齐方式
   {'ckolkey/ts-node-action', event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
-  {'numToStr/FTerm.nvim', event = 'VeryLazy'},
+  -- {'numToStr/FTerm.nvim', event = 'VeryLazy'},
   {'is0n/fm-nvim', event = 'VeryLazy'}, -- 快速使用终端命令
   {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
@@ -459,8 +459,10 @@ keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
-map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
-map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+-- map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+-- map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+map('n', '<A-i>', '<cmd>Lspsaga term_toggle<CR>')
+map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga term_toggle<CR>')
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
@@ -525,7 +527,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme porcelain'
+cmd 'colorscheme base16-ayu-dark'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
