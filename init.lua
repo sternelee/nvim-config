@@ -49,11 +49,24 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-  {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim', 'rcarriga/nvim-notify'},
+  {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim'},
   {'antoinemadec/FixCursorHold.nvim', event = 'VeryLazy'},
-  {'LunarVim/bigfile.nvim', config = function() require'bigfile'.config{filesize = 2,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
+  {'LunarVim/bigfile.nvim', event = 'VimEnter', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
+  {'rcarriga/nvim-notify', event = 'VeryLazy', config = function ()
+    local notify = require("notify")
+    notify.setup {
+      timeout = 1000,
+      background_colour = '#000000',
+      stages = "fade",
+    }
+    vim.notify = notify
+  end},
   -- 状态栏
-  {'romgrk/barbar.nvim', event = 'VeryLazy'},
+  {'romgrk/barbar.nvim', event = 'VeryLazy', config = function() require'bufferline'.setup{
+    animation = true,
+    auto_hide =true,
+    icons = { buffer_index = true, filetype = { enabled = true } }
+  } end},
   {'nvim-tree/nvim-web-devicons', event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
   {'nvim-lualine/lualine.nvim', event = 'VimEnter', config = function() require'modules.lualine' end},
   -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
@@ -79,7 +92,8 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16','Mofiqul/vscode.nvim', 'sternelee/synthwave84.nvim'},
+  {'glepnir/porcelain.nvim'},
+  {'RRethy/nvim-base16', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -513,21 +527,13 @@ for _, num in pairs(numbers) do
 end
 map('n', '<leader>0', '<cmd>BufferGoto 10<CR>')
 
---barbar
-nvim_exec([[
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.animation = v:false
-let bufferline.auto_hide = v:true
-let bufferline.icons = 'both'
-]], false)
-
 g.markdown_fenced_language = {
   "ts=typescript"
 }
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme porcelain'
 
 -- editorconfig-vim
 g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
@@ -536,16 +542,6 @@ g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
 
 -- require("neoconf").setup()
-local notify = require("notify")
-notify.setup {
-  timeout = 1000,
-  background_colour = '#000000',
-  -- render = "compact",
-  stages = "fade",
-}
-
-vim.notify = notify
-
 local startify = require('alpha.themes.startify')
 local header = {
   '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
@@ -564,9 +560,9 @@ local header = {
   '│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │',
   '│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │',
   '┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙',
-  -- '+--------------------------------+',
-  -- '|    I Love You, 小璇同学❤❤❤     |',
-  -- '+----------------+---------------+',
+  '+--------------------------------+',
+  '|    Love You, 小璇同学❤❤❤     |',
+  '+----------------+---------------+',
 }
 
 -- 布局
