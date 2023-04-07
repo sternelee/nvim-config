@@ -27,8 +27,8 @@ require('lualine').setup({
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics', 'selectioncount'},
-    lualine_c = {'filesize', 'filename', 'searchcount', lsp_progress },
+    lualine_b = {'branch', 'filename', 'filesize'},
+    lualine_c = { 'diff', 'diagnostics', 'selectioncount', 'searchcount', lsp_progress },
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}

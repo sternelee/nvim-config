@@ -59,7 +59,7 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = 'nvim_lsp', priority = 8 },
+    { name = 'nvim_lsp', priority = 10 },
     { name = 'luasnip', priority = 7 },
     { name = 'buffer', option = { keyword_length = 2 } },
     { name = 'nvim_lsp_signature_help' },

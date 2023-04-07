@@ -145,12 +145,11 @@ require('lazy').setup({
     require('telescope').load_extension('refactoring')
   end},
   -- 语法提示
-  {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf'):setup() end},
+  {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf').setup() end},
   {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   -- {'VidocqH/lsp-lens.nvim', event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
   {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
-  -- {'mfussenegger/nvim-lint', event = 'VeryLazy', config = function() require'modules.lint' end},
   -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
   -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require"fidget".setup{sources = {["null-ls"] = {ignore = true}}} end}, -- 用noice代替
   -- rust
@@ -536,7 +535,7 @@ g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go",
 cmd 'colorscheme porcelain'
 
 -- editorconfig-vim
-g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
+-- g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }

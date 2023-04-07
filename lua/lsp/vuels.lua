@@ -9,13 +9,24 @@ local M = {
         },
         format = {
           enable = true,
+          options = {
+            tabSize = 2
+          },
           defaultFormatter = {
+            html ="prettier",
+            pug ="prettier",
+            css ="prettier",
             js = "prettier",
-            ts = "prettier"
+            ts = "prettier",
+            scss ="prettier",
+            postcss ="prettier",
+            sass ="prettier",
+            less ="prettier",
+            stylus ="prettier",
           },
           defaultFormatterOptions = {},
           scriptInitialIndent = false,
-          styleInitialIndent = false
+          styleInitialIndent = false,
         },
         useWorkspaceDependencies = true,
         validation = {
