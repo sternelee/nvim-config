@@ -145,7 +145,7 @@ local on_attach = function(client, bufnr)
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  client.server_capabilities.semanticTokensProvider = false
+  -- client.server_capabilities.semanticTokensProvider = nil
 
   if client.name == 'tailwindcss' then
     if client.server_capabilities.colorProvider then
@@ -180,7 +180,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  "vuels",
+  -- "vuels",
   "volar",
   "tsserver",
   "denols",
@@ -214,13 +214,13 @@ local function setup_servers()
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
-    if lsp == "vuels" then
-      opts.root_dir = lsputil.root_pattern('.veturrc')
-      opts.init_options = require('lsp/vuels').init_options
-    end
-    if lsp == "volar" then
-      opts.root_dir = lsputil.root_pattern('.volarrc')
-    end
+    -- if lsp == "vuels" then
+    --   opts.root_dir = lsputil.root_pattern('.veturrc')
+    --   opts.init_options = require('lsp/vuels').init_options
+    -- end
+    -- if lsp == "volar" then
+    --   opts.root_dir = lsputil.root_pattern('.volarrc')
+    -- end
     if lsp == "lua_ls" then
       opts.settings = require('lsp/lua_ls').settings
     end
@@ -233,7 +233,7 @@ local function setup_servers()
     end
     if lsp == "tailwindcss" then
       opts.root_dir = lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
-    'postcss.config.ts', 'package.json', 'node_modules')
+    'postcss.config.ts')
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options

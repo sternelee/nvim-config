@@ -61,7 +61,7 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp', priority = 10 },
     { name = 'luasnip', priority = 7 },
-    { name = 'buffer', option = { keyword_length = 2 } },
+    { name = 'buffer', option = { keyword_length = 3, keyword_pattern = [[\k\+]] } },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
     { name = 'emoji' },

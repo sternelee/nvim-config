@@ -92,8 +92,8 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'glepnir/porcelain.nvim'},
-  {'RRethy/nvim-base16', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim'}},
+  {'sainnhe/gruvbox-material'},
+  {'RRethy/nvim-base16', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'glepnir/porcelain.nvim'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -171,7 +171,6 @@ require('lazy').setup({
   {'vuki656/package-info.nvim', event = 'BufRead package.json', config = function() require('package-info').setup { package_manager = 'pnpm' } end},
   {'NTBBloodbath/rest.nvim', ft = 'http', config = function() require 'rest-nvim'.setup() end},
   {'pechorin/any-jump.vim', cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
-  -- {'editorconfig/editorconfig-vim', event = 'VeryLazy'},
   {'rmagatti/goto-preview', ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   -- {'laytan/tailwind-sorter.nvim', cmd = {'TailwindSort'}, build = 'cd formatter && npm i && npm run build', config = {}},
@@ -365,7 +364,7 @@ map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
 map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 map('n', '<leader>tl', '<cmd>Twilight<CR>')
 map('n', '<leader>tw', '<cmd>Translate<CR>')
-map('n', '<leader>th', '<cmd>TSDisable highlight<CR>')
+map('n', '<leader>th', '<cmd>TSToggle highlight<CR>')
 -- diffview
 map('n', '<leader>td', '<cmd>DiffviewOpen<CR>')
 map('n', '<leader>tD', '<cmd>DiffviewClose<CR>')
@@ -532,10 +531,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme porcelain'
-
--- editorconfig-vim
--- g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*', '' }
+cmd 'colorscheme gruvbox-material'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
