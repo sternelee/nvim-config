@@ -100,6 +100,7 @@ require('lazy').setup({
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
   {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
+  {'stevearc/aerial.nvim', event = 'VeryLazy', config = function () require('modules.aerial') end},
   -- "folke/neoconf.nvim",
   -- {'aduros/ai.vim', cmd = 'AI'},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
@@ -210,8 +211,7 @@ require('lazy').setup({
   {'ckolkey/ts-node-action', event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', event = 'VeryLazy'},
   {'is0n/fm-nvim', event = 'VeryLazy'}, -- 快速使用终端命令
-  -- {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
-  {'lewis6991/satellite.nvim', event = 'VeryLazy', config = function () require('satellite').setup() end},
+  {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {"stevearc/dressing.nvim",
     event = "BufEnter",
