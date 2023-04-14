@@ -45,7 +45,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
   {'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim'},
-  {'antoinemadec/FixCursorHold.nvim', event = 'VeryLazy'},
+  {'antoinemadec/FixCursorHold.nvim', event = 'BufNewFile'},
   {'LunarVim/bigfile.nvim', event = 'VimEnter', config = function() require'bigfile'.config{filesize = 1,features = {'treesitter', 'lsp', 'indent_blankline'}} end},
   {'rcarriga/nvim-notify', event = 'VeryLazy', config = function ()
     local notify = require("notify")
@@ -68,7 +68,7 @@ require('lazy').setup({
   {'kyazdani42/nvim-tree.lua', cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', event = 'VimEnter'},
   -- git相关
-  {'tpope/vim-fugitive', event = 'VimEnter'},
+  {'tpope/vim-fugitive', event = 'VeryLazy', dependencies = {'tpope/vim-rhubarb'}},
   {'kdheepak/lazygit.nvim', cmd = {'LazyGit', 'LazyGitConfig', 'LazyGitFilter', 'LazyGitFilterCurrentFile'}},
   {'akinsho/git-conflict.nvim', cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end},
   {'rbong/vim-flog', cmd = {'Flog'}},
@@ -96,10 +96,10 @@ require('lazy').setup({
   {'matze/vim-move', event = 'VeryLazy'},
   {'phaazon/hop.nvim', cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
   {'toppair/reach.nvim', event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
-  {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
+  {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim', 'aaronhallaert/advanced-git-search.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
-  {'neovim/nvim-lspconfig', event = 'VeryLazy', dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
+  {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
   -- "folke/neoconf.nvim",
   -- {'aduros/ai.vim', cmd = 'AI'},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
@@ -112,13 +112,13 @@ require('lazy').setup({
     keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
   end},
   -- {'dense-analysis/neural', cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event = 'VeryLazy',
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  },
+  -- {
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --   end,
+  -- },
   {'jose-elias-alvarez/typescript.nvim', event = 'VeryLazy', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
   {'hrsh7th/nvim-cmp', event = {"InsertEnter", "CmdlineEnter"}, dependencies = {
     'lukas-reineke/cmp-under-comparator',
@@ -147,12 +147,11 @@ require('lazy').setup({
   end},
   -- 语法提示
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf').setup() end},
-  -- {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   -- {'VidocqH/lsp-lens.nvim', event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
   {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  -- {'j-hui/fidget.nvim', event = 'LspAttach', config = function()
+  -- {'j-hui/fidget.nvim', event = {"BufReadPre", "BufNewFile"}, config = function()
   --   require"fidget".setup{
   --     window = {
   --       blend = 0 -- set 0 if using transparent background, otherwise set 100
@@ -494,27 +493,12 @@ map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fo
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 
--- map('n', 'gD', '<cmd>Lspsaga peek_definition<CR>')
--- -- map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
--- map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
--- map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
--- map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
--- map('n', 'gr', '<cmd>Lspsaga rename<CR>')
--- map('n', 'gi', '<cmd>Lspsaga peek_type_definition<CR>')
--- map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
--- map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
--- map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
--- map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
--- map('n', '<leader>ts', '<cmd>Lspsaga outline<CR>')
-
 keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
 map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
 map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
--- map('n', '<A-i>', '<cmd>Lspsaga term_toggle<CR>')
--- map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga term_toggle<CR>')
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 

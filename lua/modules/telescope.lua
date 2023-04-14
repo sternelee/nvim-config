@@ -73,6 +73,16 @@ require('telescope').setup {
         override_generic_sorter = true,
         override_file_sorter = true,
         case_mode = "smart_case",
+      },
+      advanced_git_search = {
+          -- fugitive or diffview
+          diff_plugin = "fugitive",
+          -- customize git in previewer
+          -- e.g. flags such as { "--no-pager" }, or { "-c", "delta.side-by-side=false" }
+          git_flags = {},
+          -- customize git diff in previewer
+          -- e.g. flags such as { "--raw" }
+          git_diff_flags = {},
       }
     },
 
@@ -170,3 +180,8 @@ function live_grep_opts(opts)
 end
 
 vim.keymap.set('n', '<leader>/', function() require('telescope.builtin').live_grep(live_grep_opts{}) end)
+vim.api.nvim_create_user_command(
+    "DiffCommitLine",
+    "lua require('telescope').extensions.advanced_git_search.diff_commit_line()",
+    { range = true }
+)

@@ -168,7 +168,6 @@ local on_attach = function(client, bufnr)
   --   local msg = string.format("Language server %s started!", client.name)
   --   notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
   -- end
-
 end
 
 -- require("neoconf").setup({})
@@ -246,7 +245,7 @@ local function setup_servers()
     end
     if lsp == "tailwindcss" then
       opts.root_dir = lsputil.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
-    'postcss.config.ts')
+        'postcss.config.ts')
       opts.filetypes = require('lsp/tailwindcss').filetypes
       opts.capabilities = require('lsp/tailwindcss').capabilities
       opts.init_options = require('lsp/tailwindcss').init_options
