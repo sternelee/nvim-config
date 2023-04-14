@@ -5,7 +5,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 
 -- Settings
-
 local filetypes = { "astro", "astro-markdown", "html", "javascript", "javascriptreact","typescript", "typescriptreact", "vue", "svelte", "rust", "rs" }
 
 local init_options = {

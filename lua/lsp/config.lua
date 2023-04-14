@@ -112,9 +112,19 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = {
-    source = "if_many",
+    border = "rounded",
+    source = "always", -- Or "if_many"
+    prefix = " - ",
     format = format
   },
+  -- float = {
+  --   source = "if_many",
+  --   format = format
+  -- },
+  -- virtual_text = {
+  --   prefix = '●',
+  --   severity_sort = true,
+  -- },
   virtual_text = false
   -- virtual_text = {
   --   spacing = 4,
@@ -135,6 +145,7 @@ end
 -- local autocmd = vim.api.nvim_create_autocmd
 -- local execute = vim.api.nvim_command
 -- lspconfig
+require("lspconfig.ui.windows").default_options.border = "rounded"
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
@@ -145,7 +156,7 @@ local on_attach = function(client, bufnr)
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- client.server_capabilities.semanticTokensProvider = nil
+  client.server_capabilities.semanticTokensProvider = nil
 
   if client.name == 'tailwindcss' then
     if client.server_capabilities.colorProvider then
@@ -180,7 +191,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  -- "vuels",
+  "vuels",
   "volar",
   "tsserver",
   "denols",
@@ -208,19 +219,19 @@ local function setup_servers()
     end
     if lsp == "tsserver" then
       opts.root_dir = lsputil.root_pattern('package.json')
-      opts.capabilities = require('lsp/tsserver').capabilities
-      opts.settings = require('lsp/tsserver').settings
+      -- opts.capabilities = require('lsp/tsserver').capabilities
+      -- opts.settings = require('lsp/tsserver').settings
     end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern('deno.json', 'deno.jsonc')
     end
-    -- if lsp == "vuels" then
-    --   opts.root_dir = lsputil.root_pattern('.veturrc')
-    --   opts.init_options = require('lsp/vuels').init_options
-    -- end
-    -- if lsp == "volar" then
-    --   opts.root_dir = lsputil.root_pattern('.volarrc')
-    -- end
+    if lsp == "vuels" then
+      opts.root_dir = lsputil.root_pattern('.veturrc')
+      opts.init_options = require('lsp/vuels').init_options
+    end
+    if lsp == "volar" then
+      opts.root_dir = lsputil.root_pattern('.volarrc')
+    end
     if lsp == "lua_ls" then
       opts.settings = require('lsp/lua_ls').settings
     end
@@ -228,7 +239,9 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern('.eslintrc', '.eslintrc.js', '.eslintignore')
       opts.settings = require('lsp/eslint').settings
       opts.handlers = {
-        ['window/showMessageRequest'] = function(_, result, params) return result end
+        ['window/showMessageRequest'] = function(_, result, params) return result end,
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
       }
     end
     if lsp == "tailwindcss" then

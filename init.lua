@@ -26,11 +26,6 @@ g.neovide_remember_window_size = 1
 g.neovide_confirm_quit = 1
 g.neovide_hide_mouse_when_typing = 0
 
-nvim_exec([[
-filetype plugin on
-filetype indent on
-]], false)
-
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
@@ -67,7 +62,7 @@ require('lazy').setup({
     auto_hide =true,
     icons = { buffer_index = true, filetype = { enabled = true } }
   } end},
-  {'nvim-tree/nvim-web-devicons', event = 'VimEnter', config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
+  {'nvim-tree/nvim-web-devicons', lazy = true, config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
   {'nvim-lualine/lualine.nvim', event = 'VimEnter', config = function() require'modules.lualine' end},
   -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
@@ -78,13 +73,13 @@ require('lazy').setup({
   {'akinsho/git-conflict.nvim', cmd = {'GitConflictChooseOurs', 'GitConflictChooseTheirs', 'GitConflictChooseBoth', 'GitConflictChooseNone', 'GitConflictNextConflict', 'GitConflictPrevConflict'}, config = function() require('git-conflict').setup() end},
   {'rbong/vim-flog', cmd = {'Flog'}},
   {'sindrets/diffview.nvim', cmd = {'DiffviewOpen', 'DiffviewToggleFiles', 'DiffviewFocusFiles'}, config = function () require('diffview').setup() end},
-  {'lewis6991/gitsigns.nvim', event = 'VeryLazy', config = function() require'modules.gitsigns' end},
+  {'lewis6991/gitsigns.nvim', event = 'BufEnter', config = function() require'modules.gitsigns' end},
   -- 语法高亮
   {'kevinhwang91/nvim-treesitter', event = 'VeryLazy', build = ':TSUpdate', config = function () require 'modules.treesitter' end },
   {'nvim-treesitter/nvim-treesitter-context', event = 'VeryLazy', config = function() require'treesitter-context'.setup() end},
   -- {"ziontee113/syntax-tree-surfer", event = 'BufWritePre', config = function() require'modules.syntax-tree-surfer' end},
   {'folke/twilight.nvim', cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
-  {'NvChad/nvim-colorizer.lua', event = 'VeryLazy'}, -- 色值高亮
+  {'NvChad/nvim-colorizer.lua', event = 'BufEnter'}, -- 色值高亮
   -- {"roobert/tailwindcss-colorizer-cmp.nvim", event = 'VeryLazy',
   -- config = function()
   --   require("tailwindcss-colorizer-cmp").setup({
@@ -92,8 +87,8 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'sainnhe/gruvbox-material'},
-  {'RRethy/nvim-base16', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'glepnir/porcelain.nvim'}},
+  {'RRethy/nvim-base16'},
+  {'sainnhe/gruvbox-material', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'glepnir/porcelain.nvim'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -104,7 +99,7 @@ require('lazy').setup({
   {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
-  {'neovim/nvim-lspconfig', event = 'VeryLazy', dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'onsails/lspkind-nvim'}, config = function () require('lsp/config') end},
+  {'neovim/nvim-lspconfig', event = 'VeryLazy', dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
   -- "folke/neoconf.nvim",
   -- {'aduros/ai.vim', cmd = 'AI'},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
@@ -125,8 +120,7 @@ require('lazy').setup({
     end,
   },
   {'jose-elias-alvarez/typescript.nvim', event = 'VeryLazy', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
-  {'L3MON4D3/LuaSnip', event = 'VeryLazy', dependencies = { 'rafamadriz/friendly-snippets' } },
-  {'hrsh7th/nvim-cmp', event = 'VeryLazy', dependencies = {
+  {'hrsh7th/nvim-cmp', event = {"InsertEnter", "CmdlineEnter"}, dependencies = {
     'lukas-reineke/cmp-under-comparator',
     'petertriho/cmp-git',
     'hrsh7th/cmp-nvim-lsp',
@@ -139,6 +133,13 @@ require('lazy').setup({
     -- 'octaltree/cmp-look', -- 太多了
     -- 'dmitmel/cmp-digraphs',
     -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
+    -- Snippet engine
+    {"L3MON4D3/LuaSnip",
+      dependencies = "rafamadriz/friendly-snippets", -- Set of preconfigured snippets for different languages.
+      config = function() require 'modules.luasnip' end },
+    -- vscode-like pictograms
+    {"onsails/lspkind-nvim",
+      config = function() require("lspkind").init() end},
   }, config = function() require 'modules.cmp' end},
   {'ThePrimeagen/refactoring.nvim', event = 'InsertEnter', config = function()
     require('refactoring').setup()
@@ -146,12 +147,18 @@ require('lazy').setup({
   end},
   -- 语法提示
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf').setup() end},
-  {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
+  -- {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   -- {'VidocqH/lsp-lens.nvim', event = 'VeryLazy', config = function () require'lsp-lens'.setup({}) end},
   {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
   -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
-  -- {'j-hui/fidget.nvim', event = 'VeryLazy', config = function() require"fidget".setup{sources = {["null-ls"] = {ignore = true}}} end}, -- 用noice代替
+  -- {'j-hui/fidget.nvim', event = 'LspAttach', config = function()
+  --   require"fidget".setup{
+  --     window = {
+  --       blend = 0 -- set 0 if using transparent background, otherwise set 100
+  --     },
+  --     sources = {["null-ls"] = {ignore = true}}}
+  --   end}, -- 用lualine代替
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -202,10 +209,22 @@ require('lazy').setup({
   {'gennaro-tedesco/nvim-jqx', cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', event = 'VeryLazy'}, -- 对齐方式
   {'ckolkey/ts-node-action', event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
-  -- {'numToStr/FTerm.nvim', event = 'VeryLazy'},
+  {'numToStr/FTerm.nvim', event = 'VeryLazy'},
   {'is0n/fm-nvim', event = 'VeryLazy'}, -- 快速使用终端命令
-  {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
+  -- {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
+  {'lewis6991/satellite.nvim', event = 'VeryLazy', config = function () require('satellite').setup() end},
   -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
+  {"stevearc/dressing.nvim",
+    event = "BufEnter",
+    config = function()
+      require("dressing").setup({
+        input = {
+          win_options = {
+            winblend = 0,
+          },
+        },
+      })
+    end},
   {'gelguy/wilder.nvim', event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
@@ -239,6 +258,28 @@ require('lazy').setup({
       task = "📌",
     },
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      }
+    }
+  }
+})
+
+autocmd("FileType", {
+  pattern = {
+    "lazy",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end
 })
 
 --settings
@@ -255,6 +296,7 @@ opt('b', 'shiftwidth', indent)                        -- Size of an indent
 opt('b', 'smartindent', true)                         -- Insert indents automatically
 opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
 opt('o', 'completeopt', 'menu,menuone,noselect')      -- Completion options
+opt('o', 'pumheight', 10)                             -- Maximum number of items to show in the popup menu
 opt('o', 'hidden', true)                              -- Enable modified buffers in background
 opt('o', 'scrolloff', 3)                              -- Lines of context
 opt('o', 'shiftround', true)                          -- Round indent
@@ -268,7 +310,7 @@ opt('o', 'clipboard', 'unnamedplus')                      -- 与系统剪切板�
 opt('o', 'pumblend', 25 )
 opt('o', 'softtabstop', 2)
 opt('o', 'swapfile', false)
-opt('o', 'showmode', false)
+opt('o', 'showmode', true)
 opt('o', 'background', 'dark')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
@@ -293,7 +335,6 @@ opt('o', 'foldenable', true)
 opt('o', 'foldlevelstart', 99)
 opt('o', 'magic', true)
 opt('o', 'splitkeep', 'screen')
-opt('o', 'showmode', false)
 -- opt('o', 'statuscolumn', '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " ") : " " }')
 opt('o', 'sessionoptions', 'buffers,help,tabpages')
 opt('o', 'fillchars', [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]])
@@ -309,12 +350,11 @@ opt('o', 'syntax', 'on')
 opt('o', 'filetype', 'on')
 opt('o', 'timeoutlen', 300)
 opt('o', 'showcmd', true)
-opt('o', 'history', 100)
+opt('o', 'history', 500)
 opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 300)
 opt('o', 'nobackup', true)
 opt('o', 'nowritebackup', true)
-opt('o', 'writebackup', false)
 opt('o', 'scrolljump', 6)
 opt('o', 'undofile', true)
 opt('o', 'showtabline', 0)
@@ -434,16 +474,16 @@ map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
--- map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
--- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
--- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
--- map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
--- map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
--- map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
--- map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
--- map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
--- map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
@@ -454,27 +494,27 @@ map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_fo
 map('n', 'gm', '<cmd>CodeActionMenu<CR>')
 map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 
-map('n', 'gD', '<cmd>Lspsaga peek_definition<CR>')
--- map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
-map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
-map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
-map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
-map('n', 'gr', '<cmd>Lspsaga rename<CR>')
-map('n', 'gi', '<cmd>Lspsaga peek_type_definition<CR>')
-map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
-map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
-map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
-map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-map('n', '<leader>ts', '<cmd>Lspsaga outline<CR>')
+-- map('n', 'gD', '<cmd>Lspsaga peek_definition<CR>')
+-- -- map('n', '<leader>l', '<cmd>Lspsaga lsp_finder<CR>')
+-- map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
+-- map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
+-- map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+-- map('n', 'gr', '<cmd>Lspsaga rename<CR>')
+-- map('n', 'gi', '<cmd>Lspsaga peek_type_definition<CR>')
+-- map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
+-- map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
+-- map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+-- map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+-- map('n', '<leader>ts', '<cmd>Lspsaga outline<CR>')
 
 keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
 
--- map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
--- map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-map('n', '<A-i>', '<cmd>Lspsaga term_toggle<CR>')
-map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga term_toggle<CR>')
+map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+-- map('n', '<A-i>', '<cmd>Lspsaga term_toggle<CR>')
+-- map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga term_toggle<CR>')
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
@@ -531,7 +571,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme gruvbox-material'
+cmd 'colorscheme base16-ayu-dark'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
