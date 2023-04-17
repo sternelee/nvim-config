@@ -137,10 +137,24 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
--- local autocmd = vim.api.nvim_create_autocmd
--- local execute = vim.api.nvim_command
 -- lspconfig
+
+require("neoconf").setup({}) --- or tamago324/nlsp-settings.nvim
+
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+local lspconfig = require("lspconfig")
+local lsputil = require("lspconfig.util")
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls" },
+	automatic_installation = true,
+})
+
 require("lspconfig.ui.windows").default_options.border = "rounded"
+
 local handlers = {
 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
@@ -167,27 +181,13 @@ local on_attach = function(client, bufnr)
 	-- end
 end
 
--- require("neoconf").setup({})
-
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local lspconfig = require("lspconfig")
-local lsputil = require("lspconfig.util")
-
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-	ensure_installed = { "html", "cssls", "jsonls", "tsserver", "emmet_ls" },
-	automatic_installation = true,
-})
-
 local servers = {
 	"lua_ls",
 	"html",
 	"cssls",
 	"jsonls",
 	"emmet_ls",
-	-- "vuels",
+	"vuels",
 	"volar",
 	"tsserver",
 	"denols",
@@ -221,19 +221,19 @@ local function setup_servers()
 		if lsp == "denols" then
 			opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
 		end
-		-- if lsp == "vuels" then
-		-- 	opts.root_dir = lsputil.root_pattern(".veturrc")
-		-- 	opts.init_options = require("lsp/vuels").init_options
-		-- end
-		-- if lsp == "volar" then
-		-- 	opts.root_dir = lsputil.root_pattern(".volarrc")
-		-- end
-		if lsp == "lua_ls" then
-			opts.settings = require("lsp/lua_ls").settings
+		if lsp == "vuels" then
+			opts.root_dir = lsputil.root_pattern(".veturrc")
+			opts.init_options = require("lsp/vuels").init_options
 		end
+		if lsp == "volar" then
+			opts.root_dir = lsputil.root_pattern(".volarrc")
+		end
+		-- if lsp == "lua_ls" then
+		-- 	opts.settings = require("lsp/lua_ls").settings
+		-- end
 		if lsp == "eslint" then
 			opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
-			opts.settings = require("lsp/eslint").settings
+			-- opts.settings = require("lsp/eslint").settings
 			opts.handlers = {
 				["window/showMessageRequest"] = function(_, result, params)
 					return result
@@ -252,7 +252,7 @@ local function setup_servers()
 			opts.filetypes = require("lsp/tailwindcss").filetypes
 			opts.capabilities = require("lsp/tailwindcss").capabilities
 			opts.init_options = require("lsp/tailwindcss").init_options
-			opts.settings = require("lsp/tailwindcss").settings
+			-- opts.settings = require("lsp/tailwindcss").settings
 		end
 		lspconfig[lsp].setup(opts)
 	end
