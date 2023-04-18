@@ -87,7 +87,8 @@ require('lazy').setup({
   --   })
   -- end},
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16'},
+  { "akinsho/horizon.nvim", version = "*" },
+  -- {'RRethy/nvim-base16'},
   {'sainnhe/gruvbox-material', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'glepnir/porcelain.nvim'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
@@ -211,7 +212,7 @@ require('lazy').setup({
   {'ckolkey/ts-node-action', event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
   {'numToStr/FTerm.nvim', event = 'VeryLazy'},
   {'is0n/fm-nvim', event = 'VeryLazy'}, -- 快速使用终端命令
-  {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
+  -- {'petertriho/nvim-scrollbar', event = 'VeryLazy', config = function() require'scrollbar'.setup() end},
   -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {"stevearc/dressing.nvim",
     event = "BufEnter",
@@ -225,6 +226,15 @@ require('lazy').setup({
       })
     end},
   {'gelguy/wilder.nvim', event = 'VeryLazy', config = function() require'modules.wilder' end},
+  -- {"Bryley/neoai.nvim", dependencies = { "MunifTanjim/nui.nvim"}, cmd = { "NeoAI", "NeoAIOpen", "NeoAIClose", "NeoAIToggle", "NeoAIContext", "NeoAIContextOpen", "NeoAIContextClose", "NeoAIInject", "NeoAIInjectCode", "NeoAIInjectContext", "NeoAIInjectContextCode"},
+  -- keys = {
+  --     { "<leader>as", desc = "summarize text" },
+  --     { "<leader>ag", desc = "generate git message" },
+  -- },
+  -- config = function()
+  --   require("neoai").setup({
+  --       -- Options go here
+  --   }) end},
   {'cshuaimin/ssr.nvim', event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -325,6 +335,7 @@ opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
 opt('o', 'smarttab', true)
 opt('o', 'incsearch', true)
+opt('o', 'list', true)
 opt('o', 'foldmethod', 'indent')
 -- opt('o', 'foldmethod', 'expr')
 -- opt('o', 'foldexpr', 'nvim_treesitter#foldexpr()')
@@ -555,7 +566,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme horizon'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
@@ -618,6 +629,7 @@ cmd [[
   highlight IndentBlanklineIndent5 guifg=#61AFEF
   highlight IndentBlanklineIndent6 guifg=#C678DD
   highlight link LspSagaFinderSelection Search
+
   highlight Normal ctermbg=NONE guibg=NONE
   hi default link HlSearchNear IncSearch
   hi default link HlSearchLens WildMenu
