@@ -77,8 +77,8 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = 'nvim_lsp', priority = 10 },
-    { name = 'luasnip', priority = 7 },
+    { name = 'nvim_lsp', priority_weight = 10 },
+    { name = 'luasnip', priority_weight = 1 },
     { name = 'buffer', option = { keyword_length = 3 } },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
@@ -95,12 +95,6 @@ cmp.setup({
     format = lspkind.cmp_format({
       mode = 'symbol_text', -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      -- menu = ({ -- showing type in menu
-      --   nvim_lsp = "(LSP)",
-      --   path = "(Path)",
-      --   buffer = "(Buffer)",
-      --   luasnip = "(LuaSnip)",
-      -- }),
       before = function(entry, vim_item)
         vim_item.menu = "(" .. vim_item.kind .. ")"
         vim_item.dup = ({
@@ -128,13 +122,6 @@ cmp.setup({
     debounce_text_changes = 150,
   },
   window = {
-    -- completion = {
-    --   col_offset = -3 -- align the abbr and word on cursor (due to fields order below)
-    -- },
-    -- documentation = {
-    --   winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None"
-    -- },
-
     -- border style
     completion = cmp.config.window.bordered({
       col_offset = -3, -- align the abbr and word on cursor (due to fields order below)
