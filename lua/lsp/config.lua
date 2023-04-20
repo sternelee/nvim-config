@@ -196,6 +196,7 @@ local servers = {
 	"tailwindcss",
 	"bashls",
 	"marksman",
+  "pyright"
 }
 
 local function setup_servers()
@@ -214,7 +215,11 @@ local function setup_servers()
 			}
 		end
 		if lsp == "tsserver" then
-			opts.root_dir = lsputil.root_pattern("package.json")
+			opts.root_dir = function(fname)
+        return lsputil.root_pattern('tsconfig.json')(fname)
+            or lsputil.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
+            or lsputil.path.dirname(fname)
+      end
 			-- opts.capabilities = require('lsp/tsserver').capabilities
 			-- opts.settings = require('lsp/tsserver').settings
 		end

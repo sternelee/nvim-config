@@ -80,8 +80,9 @@ require('lazy').setup({
   {'folke/twilight.nvim', cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   {'NvChad/nvim-colorizer.lua', event = 'BufEnter'}, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  {'RRethy/nvim-base16'},
-  -- {'sainnhe/gruvbox-material', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'LunarVim/synthwave84.nvim', 'glepnir/porcelain.nvim'}},
+  -- {'RRethy/nvim-base16'},
+  {'glepnir/porcelain.nvim'},
+  {'sainnhe/gruvbox-material', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -94,8 +95,6 @@ require('lazy').setup({
   -- 语法建议
   {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'folke/neoconf.nvim'}, config = function () require('lsp/config') end},
   {'stevearc/aerial.nvim', event = 'VeryLazy', config = function () require('modules.aerial') end},
-  -- "folke/neoconf.nvim",
-  -- {'aduros/ai.vim', cmd = 'AI'},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
     -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
     g.codeium_disable_bindings = 1
@@ -105,6 +104,32 @@ require('lazy').setup({
     keymap('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
     keymap('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
   end},
+  {"Bryley/neoai.nvim", dependencies = { "MunifTanjim/nui.nvim"},
+    cmd = {
+        "NeoAI",
+        "NeoAIOpen",
+        "NeoAIClose",
+        "NeoAIToggle",
+        "NeoAIContext",
+        "NeoAIContextOpen",
+        "NeoAIContextClose",
+        "NeoAIInject",
+        "NeoAIInjectCode",
+        "NeoAIInjectContext",
+        "NeoAIInjectContextCode",
+    },
+    config = function()
+        require("neoai").setup({
+          models = {
+            {
+              name = "openai",
+              model = "gpt-3.5-turbo"
+            },
+          },
+          open_api_key_env = "OPENAI_API_KEY",
+        })
+    end,
+  },
   -- {'dense-analysis/neural', cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   -- {
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -547,12 +572,11 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme porcelain'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
 
--- require("neoconf").setup()
 local startify = require('alpha.themes.startify')
 local header = {
   '┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑',
