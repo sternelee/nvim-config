@@ -1,13 +1,10 @@
 local cmd = vim.cmd
 local g = vim.g
--- local fn = vim.fn
--- local execute = vim.api.nvim_command
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 local autogroup = vim.api.nvim_create_augroup
--- local usercmd = vim.api.nvim_create_user_command
 
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
@@ -64,7 +61,6 @@ require('lazy').setup({
   } end},
   {'nvim-tree/nvim-web-devicons', lazy = true, config = function () require'nvim-web-devicons'.setup{ color_icons = true, default = true} end},
   {'nvim-lualine/lualine.nvim', event = 'VimEnter', config = function() require'modules.lualine' end},
-  -- {'windwp/windline.nvim', config = function() require('modules.windline') end},
   {'kyazdani42/nvim-tree.lua', cmd = 'NvimTreeToggle', config = function() require'modules.nvim-tree' end},
   {'goolord/alpha-nvim', event = 'VimEnter'},
   -- git相关
@@ -94,7 +90,7 @@ require('lazy').setup({
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
   {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'folke/neoconf.nvim'}, config = function () require('lsp/config') end},
-  {'stevearc/aerial.nvim', event = 'VeryLazy', config = function () require('modules.aerial') end},
+  {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
     -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
     g.codeium_disable_bindings = 1
@@ -130,7 +126,6 @@ require('lazy').setup({
         })
     end,
   },
-  -- {'dense-analysis/neural', cmd = 'NeuralText', config = function() require('neural').setup{ open_ai = { api_key = vim.env.OPENAI_API_KEY }} end, dependencies = { 'MunifTanjim/nui.nvim', 'ElPiloto/significant.nvim'}},
   -- {
   --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   event = 'VeryLazy',
@@ -149,14 +144,9 @@ require('lazy').setup({
     'hrsh7th/cmp-calc',
     'hrsh7th/cmp-emoji',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    -- 'octaltree/cmp-look', -- 太多了
-    -- 'dmitmel/cmp-digraphs',
-    -- {'tzachar/cmp-tabnine', run='./install.sh'}, -- 内存占用太大
-    -- Snippet engine
     {"L3MON4D3/LuaSnip",
       dependencies = "rafamadriz/friendly-snippets", -- Set of preconfigured snippets for different languages.
       config = function() require 'modules.luasnip' end },
-    -- vscode-like pictograms
     {"onsails/lspkind-nvim",
       config = function() require("lspkind").init() end},
   }, config = function() require 'modules.cmp' end},
@@ -217,9 +207,7 @@ require('lazy').setup({
   {'gennaro-tedesco/nvim-jqx', cmd = {'JqxList', 'JqxQuery'}},
   {'godlygeek/tabular', event = 'VeryLazy'}, -- 对齐方式
   {'ckolkey/ts-node-action', event = 'VeryLazy', dependencies = { 'nvim-treesitter' }, config = function() require("ts-node-action").setup({})end}, -- 字符组合切换
-  {'numToStr/FTerm.nvim', event = 'VeryLazy'},
   {'is0n/fm-nvim', event = 'VeryLazy'}, -- 快速使用终端命令
-  -- {'folke/noice.nvim', event = "VimEnter", config = function() require'modules.noice' end, dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"}},
   {"stevearc/dressing.nvim",
     event = "BufEnter",
     config = function()
@@ -232,15 +220,6 @@ require('lazy').setup({
       })
     end},
   {'gelguy/wilder.nvim', event = 'VeryLazy', config = function() require'modules.wilder' end},
-  -- {"Bryley/neoai.nvim", dependencies = { "MunifTanjim/nui.nvim"}, cmd = { "NeoAI", "NeoAIOpen", "NeoAIClose", "NeoAIToggle", "NeoAIContext", "NeoAIContextOpen", "NeoAIContextClose", "NeoAIInject", "NeoAIInjectCode", "NeoAIInjectContext", "NeoAIInjectContextCode"},
-  -- keys = {
-  --     { "<leader>as", desc = "summarize text" },
-  --     { "<leader>ag", desc = "generate git message" },
-  -- },
-  -- config = function()
-  --   require("neoai").setup({
-  --       -- Options go here
-  --   }) end},
   {'cshuaimin/ssr.nvim', event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
       min_width = 50,
@@ -490,16 +469,19 @@ map('n', 'zR', '<cmd>lua require("ufo").openAllFolds()<CR>')
 map('n', 'zM', '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
-map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-map('n', 'gh', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-map('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', 'gD', '<cmd>Lspsaga peek_definition<CR>')
+map('n', 'ga', '<cmd>Lspsaga code_action<CR>')
+map('x', 'gA', '<cmd>Lspsaga range_code_action<CR>')
+map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+map('n', 'gr', '<cmd>Lspsaga rename<CR>')
+map('n', 'gi', '<cmd>Lspsaga peek_type_definition<CR>')
+map('n', 'gC', '<cmd>Lspsaga show_cursor_diagnostics<CR>')
+map('n', 'ge', '<cmd>Lspsaga show_line_diagnostics<CR>')
+map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+map('n', '<leader>ts', '<cmd>Lspsaga outline<CR>')
+map('n', '<A-i>', '<cmd>Lspsaga term_toggle<CR>')
+map('t', '<A-i>', '<C-\\><C-n><cmd>Lspsaga term_toggle<CR>')
 
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
@@ -513,9 +495,6 @@ map('n', 'gj', '<cmd>TypescriptGoToSourceDefinition<CR>')
 keymap({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- LazyGit
 map('n', '<leaader><leader>g', '<cmd>LazyGit<CR>')
-
-map('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
-map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 

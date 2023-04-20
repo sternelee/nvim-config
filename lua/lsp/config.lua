@@ -111,23 +111,20 @@ vim.diagnostic.config({
 	signs = true,
 	update_in_insert = false,
 	severity_sort = true,
-	float = {
-		border = "rounded",
-		source = "always", -- Or "if_many"
-		prefix = " - ",
-		format = format,
-	},
+  float = false,
 	-- float = {
-	--   source = "if_many",
-	--   format = format
+	-- 	border = "rounded",
+	-- 	source = "always", -- Or "if_many"
+	-- 	prefix = " - ",
+	-- 	format = format,
 	-- },
 	-- virtual_text = false,
-	virtual_text = {
-	  spacing = 4,
-	  prefix = "●",
-	  source = "if_many",
-	  format = format
-	},
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
+    source = "if_many",
+    format = format
+  },
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
