@@ -85,7 +85,7 @@ require('lazy').setup({
   {'terryma/vim-expand-region', event = 'VeryLazy'},
   {'matze/vim-move', event = 'BufRead'},
   {'phaazon/hop.nvim', cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
-  {'toppair/reach.nvim', event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
+  -- {'toppair/reach.nvim', event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim', 'aaronhallaert/advanced-git-search.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
@@ -106,13 +106,6 @@ require('lazy').setup({
         "NeoAIOpen",
         "NeoAIClose",
         "NeoAIToggle",
-        "NeoAIContext",
-        "NeoAIContextOpen",
-        "NeoAIContextClose",
-        "NeoAIInject",
-        "NeoAIInjectCode",
-        "NeoAIInjectContext",
-        "NeoAIInjectContextCode",
     },
     config = function()
         require("neoai").setup({
@@ -380,8 +373,8 @@ map('n', '<leader>:', '<cmd>terminal<CR>')
 map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
+map('n', '<leader>m', '<cmd>Telescope marks<CR>')
+-- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')

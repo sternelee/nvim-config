@@ -20,14 +20,14 @@ local function get_dprint_config_path()
   return { "--config", config_path }
 end
 
-require "null-ls".register({
-  name = "more_actions",
-  method = { require "null-ls".methods.CODE_ACTION },
-  filetypes = { "_all" },
-  generator = {
-    fn = require("ts-node-action").available_actions
-  }
-})
+-- require "null-ls".register({
+--   name = "more_actions",
+--   method = { require "null-ls".methods.CODE_ACTION },
+--   filetypes = { "_all" },
+--   generator = {
+--     fn = require("ts-node-action").available_actions
+--   }
+-- })
 
 null_ls.setup({
   debounce = 500,
@@ -35,8 +35,8 @@ null_ls.setup({
   sources = {
     -- diagnostics.eslint_d,
     -- formatting.eslint_d,
-    code_actions.eslint_d,
-    diagnostics.markdownlint,
+    -- code_actions.eslint_d,
+    -- diagnostics.markdownlint,
     formatting.markdownlint,
     -- diagnostics.cspell.with({
     --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
@@ -47,8 +47,8 @@ null_ls.setup({
     diagnostics.codespell,
     formatting.codespell,
     -- formatting.prettier,
-    formatting.stylua,
-    require("typescript.extensions.null-ls.code-actions"),
+    -- formatting.stylua,
+    -- require("typescript.extensions.null-ls.code-actions"),
     formatting.prettierd.with({
       filetypes = { "html", "css", "scss" },
       extra_args = { "--print-width", "120" }
