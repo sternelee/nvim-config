@@ -38,14 +38,14 @@ null_ls.setup({
     -- code_actions.eslint_d,
     -- diagnostics.markdownlint,
     formatting.markdownlint,
-    -- diagnostics.cspell.with({
-    --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
-    -- }),
-    -- code_actions.cspell.with({
-    --   extra_args = { "--config", vim.fn.expand("~/.config/nvim/cspell.json") },
-    -- }),
-    diagnostics.codespell,
-    formatting.codespell,
+    diagnostics.cspell.with({
+      extra_args = { "--config", "~/.config/nvim/cspell.json" },
+    }),
+    code_actions.cspell.with({
+      extra_args = { "--config", "~/.config/nvim/cspell.json" },
+    }),
+    -- diagnostics.codespell,
+    -- formatting.codespell,
     -- formatting.prettier,
     -- formatting.stylua,
     -- require("typescript.extensions.null-ls.code-actions"),
