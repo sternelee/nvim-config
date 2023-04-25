@@ -20,14 +20,17 @@ local function get_dprint_config_path()
   return { "--config", config_path }
 end
 
--- require "null-ls".register({
---   name = "more_actions",
---   method = { require "null-ls".methods.CODE_ACTION },
---   filetypes = { "_all" },
---   generator = {
---     fn = require("ts-node-action").available_actions
---   }
--- })
+require "null-ls".register({
+  name = "more_actions",
+  method = { require "null-ls".methods.CODE_ACTION },
+  filetypes = { "_all" },
+  generator = {
+    fn = require("ts-node-action").available_actions
+  },
+  diagnostics_postprocess = function(diagnostic)
+    diagnostic.severity = vim.diagnostic.severity["HINT"]     -- ERROR, WARN, INFO, HINT
+  end,
+})
 
 null_ls.setup({
   debounce = 500,
@@ -40,9 +43,25 @@ null_ls.setup({
     formatting.markdownlint,
     diagnostics.cspell.with({
       extra_args = { "--config", "~/.config/nvim/cspell.json" },
+      diagnostics_postprocess = function(diagnostic)
+        diagnostic.severity = vim.diagnostic.severity["HINT"]     -- ERROR, WARN, INFO, HINT
+      end,
     }),
     code_actions.cspell.with({
-      extra_args = { "--config", "~/.config/nvim/cspell.json" },
+      config = {
+        find_json = function(_)
+          return vim.fn.expand("~/.config/nvim/cspell.json")
+        end,
+        on_success = function(cspell_config_file)
+          os.execute(
+            string.format(
+              "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
+              cspell_config_file,
+              cspell_config_file
+            )
+          )
+        end,
+      },
     }),
     -- diagnostics.codespell,
     -- formatting.codespell,
@@ -59,16 +78,16 @@ null_ls.setup({
     }),
     -- code_actions.gitsigns,
   },
-    -- on_attach = function(client, bufnr)
-    --   if client.supports_method("textDocument/formatting") then
-    --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    --     vim.api.nvim_create_augroup("BufWritePre", {
-    --       group = augroup,
-    --       buffer = bufnr,
-    --       callback = function()
-    --         vim.lsp.buf.format({ bufnr = bufnr })
-    --       end,
-    --     })
-    --   end
-    -- end,
+  -- on_attach = function(client, bufnr)
+  --   if client.supports_method("textDocument/formatting") then
+  --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  --     vim.api.nvim_create_augroup("BufWritePre", {
+  --       group = augroup,
+  --       buffer = bufnr,
+  --       callback = function()
+  --         vim.lsp.buf.format({ bufnr = bufnr })
+  --       end,
+  --     })
+  --   end
+  -- end,
 })
