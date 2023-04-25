@@ -76,9 +76,7 @@ require('lazy').setup({
   {'folke/twilight.nvim', cmd = {'Twilight'}, config = function() require('twilight'):setup() end},
   {'NvChad/nvim-colorizer.lua', event = 'BufEnter'}, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- {'RRethy/nvim-base16'},
-  {'glepnir/porcelain.nvim'},
-  {'sainnhe/gruvbox-material', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim'}},
+  {'RRethy/nvim-base16', event = 'VeryLazy', dependencies = {'Mofiqul/vscode.nvim', 'glepnir/porcelain.nvim', 'sainnhe/gruvbox-material'}},
   -- 显示导航线
   {'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = function() require'modules.indent_blankline'end}, -- 对齐线
   {'mg979/vim-visual-multi', event = 'VeryLazy'},
@@ -249,7 +247,7 @@ require('lazy').setup({
     rtp = {
       disabled_plugins = {
         "gzip",
-        -- "netrwPlugin",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
@@ -544,7 +542,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme porcelain'
+cmd 'colorscheme base16-ayu-dark'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }

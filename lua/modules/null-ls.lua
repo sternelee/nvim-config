@@ -63,11 +63,14 @@ null_ls.setup({
         end,
       },
     }),
+    null_ls.builtins.formatting.jq,
+    null_ls.builtins.formatting.stylua.with({
+        extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
+    }),
     -- diagnostics.codespell,
     -- formatting.codespell,
     -- formatting.prettier,
-    -- formatting.stylua,
-    -- require("typescript.extensions.null-ls.code-actions"),
+    require("typescript.extensions.null-ls.code-actions"),
     formatting.prettierd.with({
       filetypes = { "html", "css", "scss" },
       extra_args = { "--print-width", "120" }
