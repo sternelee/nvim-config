@@ -118,13 +118,13 @@ vim.diagnostic.config({
 	-- 	prefix = " - ",
 	-- 	format = format,
 	-- },
-	-- virtual_text = false,
-  virtual_text = {
-    spacing = 4,
-    prefix = "●",
-    source = "if_many",
-    format = format
-  },
+	virtual_text = false,
+  -- virtual_text = {
+  --   spacing = 4,
+  --   prefix = "●",
+  --   source = "if_many",
+  --   format = format
+  -- },
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
