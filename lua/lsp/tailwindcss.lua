@@ -14,35 +14,35 @@ local init_options = {
   }
 }
 
--- local settings = {
---   tailwindCSS = {
---     lint = {
---       cssConflict = "warning",
---       invalidApply = "error",
---       invalidConfigPath = "error",
---       invalidScreen = "error",
---       invalidTailwindDirective = "error",
---       invalidVariant = "error",
---       recommendedVariantOrder = "warning"
---     },
---     experimental = {
---       classRegex = {
---         [[class="([^"]*)]],
---         "class=\\s+\"([^\"]*)",
---         "tw`([^`]*)",
---         "tw=\"([^\"]*)",
---         "tw={\"([^\"}]*)",
---         "tw\\.\\w+`([^`]*)",
---         "tw\\(.*?\\)`([^`]*)"
---       }
---     },
---     validate = true
---   }
--- }
+local settings = {
+  tailwindCSS = {
+    lint = {
+      cssConflict = "warning",
+      invalidApply = "error",
+      invalidConfigPath = "error",
+      invalidScreen = "error",
+      invalidTailwindDirective = "error",
+      invalidVariant = "error",
+      recommendedVariantOrder = "warning"
+    },
+    experimental = {
+      classRegex = {
+        [[class="([^"]*)]],
+        "class=\\s+\"([^\"]*)",
+        "tw`([^`]*)",
+        "tw=\"([^\"]*)",
+        "tw={\"([^\"}]*)",
+        "tw\\.\\w+`([^`]*)",
+        "tw\\(.*?\\)`([^`]*)"
+      }
+    },
+    validate = true
+  }
+}
 
 M.filetypes = filetypes;
 M.capabilities = capabilities;
--- M.settings = settings;
+M.settings = settings;
 M.init_options = init_options;
 
 

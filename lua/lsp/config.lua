@@ -136,7 +136,7 @@ end
 
 -- lspconfig
 
-require("neoconf").setup({}) --- or tamago324/nlsp-settings.nvim
+-- require("neoconf").setup({}) --- or tamago324/nlsp-settings.nvim
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require("lspconfig")
@@ -217,25 +217,25 @@ local function setup_servers()
             or lsputil.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
             or lsputil.path.dirname(fname)
       end
-			-- opts.capabilities = require('lsp/tsserver').capabilities
-			-- opts.settings = require('lsp/tsserver').settings
+			opts.capabilities = require('lsp/tsserver').capabilities
+			opts.settings = require('lsp/tsserver').settings
 		end
 		if lsp == "denols" then
 			opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
 		end
 		if lsp == "vuels" then
 			opts.root_dir = lsputil.root_pattern(".veturrc")
-			opts.init_options = require("lsp/vuels").init_options
+			opts.settings = require("lsp/vuels").settings
 		end
 		if lsp == "volar" then
 			opts.root_dir = lsputil.root_pattern(".volarrc")
 		end
-		-- if lsp == "lua_ls" then
-		-- 	opts.settings = require("lsp/lua_ls").settings
-		-- end
+		if lsp == "lua_ls" then
+			opts.settings = require("lsp/lua_ls").settings
+		end
 		if lsp == "eslint" then
 			opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
-			-- opts.settings = require("lsp/eslint").settings
+			opts.settings = require("lsp/eslint").settings
 			opts.handlers = {
 				["window/showMessageRequest"] = function(_, result, params)
 					return result
@@ -254,7 +254,7 @@ local function setup_servers()
 			opts.filetypes = require("lsp/tailwindcss").filetypes
 			opts.capabilities = require("lsp/tailwindcss").capabilities
 			opts.init_options = require("lsp/tailwindcss").init_options
-			-- opts.settings = require("lsp/tailwindcss").settings
+			opts.settings = require("lsp/tailwindcss").settings
 		end
 		lspconfig[lsp].setup(opts)
 	end

@@ -87,7 +87,7 @@ require('lazy').setup({
   {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim', 'aaronhallaert/advanced-git-search.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
-  {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'folke/neoconf.nvim'}, config = function () require('lsp/config') end},
+  {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
   {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
     -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
