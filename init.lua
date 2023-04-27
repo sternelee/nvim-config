@@ -210,6 +210,7 @@ require('lazy').setup({
         },
       })
     end},
+  {'beauwilliams/focus.nvim', event = 'VeryLazy', config = function() require("focus").setup() end },
   {'gelguy/wilder.nvim', event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
@@ -305,7 +306,7 @@ opt('o', 'signcolumn', 'yes')
 opt('o', 'mouse', 'a')
 opt('o', 'shortmess', 'a')
 opt('o', 'cmdheight', 1)
-opt('o', 'wrap', true)
+opt('o', 'wrap', false)
 opt('o', 'relativenumber', true)
 opt('o', 'hlsearch', true)
 opt('o', 'inccommand', 'split')
