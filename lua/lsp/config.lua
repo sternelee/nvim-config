@@ -118,13 +118,13 @@ vim.diagnostic.config({
 	-- 	prefix = " - ",
 	-- 	format = format,
 	-- },
-	virtual_text = false,
-  -- virtual_text = {
-  --   spacing = 4,
-  --   prefix = "●",
-  --   source = "if_many",
-  --   format = format
-  -- },
+	-- virtual_text = false,
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
+    source = "if_many",
+    format = format
+  },
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -212,11 +212,7 @@ local function setup_servers()
 			}
 		end
 		if lsp == "tsserver" then
-			opts.root_dir = function(fname)
-        return lsputil.root_pattern('tsconfig.json')(fname)
-            or lsputil.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
-            or lsputil.path.dirname(fname)
-      end
+			opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
 			opts.capabilities = require('lsp/tsserver').capabilities
 			opts.settings = require('lsp/tsserver').settings
 		end
@@ -245,12 +241,6 @@ local function setup_servers()
 			}
 		end
 		if lsp == "tailwindcss" then
-			opts.root_dir = lsputil.root_pattern(
-				"tailwind.config.js",
-				"tailwind.config.ts",
-				"postcss.config.js",
-				"postcss.config.ts"
-			)
 			opts.filetypes = require("lsp/tailwindcss").filetypes
 			opts.capabilities = require("lsp/tailwindcss").capabilities
 			opts.init_options = require("lsp/tailwindcss").init_options

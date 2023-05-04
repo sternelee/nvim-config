@@ -210,7 +210,6 @@ require('lazy').setup({
         },
       })
     end},
-  {'beauwilliams/focus.nvim', event = 'VeryLazy', config = function() require("focus").setup() end },
   {'gelguy/wilder.nvim', event = 'VeryLazy', config = function() require'modules.wilder' end},
   {'cshuaimin/ssr.nvim', event = 'VeryLazy', module = 'ssr', config = function()
     require("ssr").setup {
