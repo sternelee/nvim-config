@@ -36,6 +36,10 @@ end
 
 vim.api.nvim_create_user_command('LspToggleAutoFormat', 'lua require("lsp.function").toggle_format_on_save()', {})
 vim.api.nvim_create_user_command('Format', 'lua vim.lsp.buf.format({ async = true })', {})
+-- dapui
+vim.api.nvim_create_user_command('DapOpen', 'lua require("dapui").open()', {})
+vim.api.nvim_create_user_command('DapClose', 'lua require("dapui").close()', {})
+vim.api.nvim_create_user_command('DapToggle', 'lua require("dapui").toggle()', {})
 
 -- Custom textDocument/hover LSP handler to colorize colors inside hover results - WIP
 function M.custom_hover_handler(_, result)

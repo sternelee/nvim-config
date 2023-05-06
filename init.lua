@@ -83,7 +83,6 @@ require('lazy').setup({
   {'terryma/vim-expand-region', event = 'VeryLazy'},
   {'matze/vim-move', event = 'BufRead'},
   {'phaazon/hop.nvim', cmd = {'HopWord', 'HopLine', 'HopPattern'}, config = function() require('hop'):setup() end},
-  -- {'toppair/reach.nvim', event = 'VeryLazy', config = function() require('reach').setup{ notifications = true } end},
   {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim', 'aaronhallaert/advanced-git-search.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
@@ -117,13 +116,7 @@ require('lazy').setup({
         })
     end,
   },
-  -- {
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --   end,
-  -- },
+  -- {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", event = 'VeryLazy', config = function() require("lsp_lines").setup() end},
   {'jose-elias-alvarez/typescript.nvim', event = 'VeryLazy', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
   {'hrsh7th/nvim-cmp', event = {"InsertEnter"}, dependencies = {
     'lukas-reineke/cmp-under-comparator',
@@ -149,7 +142,7 @@ require('lazy').setup({
   {'kevinhwang91/nvim-bqf', ft = 'qf', event = 'VeryLazy', config = function() require('bqf').setup() end},
   {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},
   {'jose-elias-alvarez/null-ls.nvim', event = 'VeryLazy', config = function() require 'modules.null-ls' end },
-  -- {"rcarriga/nvim-dap-ui", event = 'VeryLazy', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
+  {"rcarriga/nvim-dap-ui", cmd = 'DapOpen', dependencies = { "mfussenegger/nvim-dap"}, config = function() require 'modules.dap' end},
   -- rust
   {'simrat39/rust-tools.nvim',
     ft = 'rust',
@@ -171,7 +164,7 @@ require('lazy').setup({
   {'pechorin/any-jump.vim', cmd = { 'AnyJump', 'AnyJumpVisual', 'AnyJumpBack' }},
   {'rmagatti/goto-preview', ft = { 'typescript', 'javascript', 'typescriptreact', 'rust', 'vue' }, event = 'VeryLazy', config = function() require('goto-preview').setup {} end},
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  -- {'metakirby5/codi.vim', cmd = { 'Codi' }},
+  {'metakirby5/codi.vim', cmd = { 'Codi' }},
   {'iamcco/markdown-preview.nvim', ft = 'markdown', build = 'cd app && yarn install', cmd = 'MarkdownPreview'},
   {'skywind3000/asyncrun.vim', cmd = 'AsyncRun'},
   {'tpope/vim-dispatch', cmd = {'Make', 'Dispatch', 'Focus', 'Start'}},
@@ -372,7 +365,6 @@ map('n', '<leader>*', '<cmd>Telescope<CR>') --fuzzy
 map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>m', '<cmd>Telescope marks<CR>')
--- map('n', '<leader>m', '<cmd>ReachOpen marks<CR>')
 -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>\'', '<cmd>Telescope resume<CR>')
 map('n', 'gs', '<cmd>Telescope grep_string<CR>')
@@ -542,7 +534,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme base16-ayu-dark'
+cmd 'colorscheme porcelain'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
