@@ -3,7 +3,6 @@ local lspkind = require('lspkind')
 local cmp = require 'cmp'
 
 require("cmp_git").setup()
-local luasnip = require("luasnip")
 
 local check_backspace = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -36,7 +35,7 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      vim.fn["vsnip#anonymous"](args.body)
     end
   },
   mapping = {
@@ -50,10 +49,6 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
       elseif check_backspace() then
         cmp.complete()
       else
@@ -66,8 +61,6 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
       end
@@ -78,7 +71,7 @@ cmp.setup({
   },
   sources = {
     { name = 'nvim_lsp', priority_weight = 10 },
-    { name = 'luasnip', priority_weight = 1 },
+    { name = 'vsnip' },
     { name = 'buffer', option = { keyword_length = 3 } },
     { name = 'nvim_lsp_signature_help' },
     { name = 'calc' },
@@ -130,7 +123,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   experimental = {
-    ghost_text = true
+    -- ghost_text = true
   }
 })
 

@@ -6,7 +6,6 @@ local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
--- local augroup = vim.api.nvim_create_augroup("NullForm", {})
 
 local function get_dprint_config_path()
   local path_separator = _G.IS_WINDOWS and "\\" or "/"
@@ -67,8 +66,8 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua.with({
         extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
     }),
-    -- diagnostics.codespell,
-    -- formatting.codespell,
+    diagnostics.codespell,
+    formatting.codespell,
     -- formatting.prettier,
     require("typescript.extensions.null-ls.code-actions"),
     formatting.prettierd.with({
