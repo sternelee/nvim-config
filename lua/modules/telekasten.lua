@@ -5,8 +5,8 @@ local home = vim.fn.expand("~/zettelkasten")
 -- - if you **must** use Windows, use "/Users/myname/zettelkasten" instead of "~/zettelkasten"
 -- - NEVER use "C:\Users\myname" style paths
 -- - Using `vim.fn.expand("~/zettelkasten")` should work now but mileage will vary with anything outside of finding and opening files
-require('telekasten').setup({
-    home         = home,
+require("telekasten").setup({
+    home = home,
 
     -- if true, telekasten will be enabled when opening a note within the configured home
     take_over_my_home = true,
@@ -16,9 +16,9 @@ require('telekasten').setup({
     auto_set_filetype = true,
 
     -- dir names for special notes (absolute path or subdir name)
-    dailies      = home .. '/' .. 'daily',
-    weeklies     = home .. '/' .. 'weekly',
-    templates    = home .. '/' .. 'templates',
+    dailies = home .. "/" .. "daily",
+    weeklies = home .. "/" .. "weekly",
+    templates = home .. "/" .. "templates",
 
     -- image (sub)dir for pasting
     -- dir name (absolute path or subdir name)
@@ -26,7 +26,7 @@ require('telekasten').setup({
     image_subdir = "img",
 
     -- markdown file extension
-    extension    = ".md",
+    extension = ".md",
 
     -- Generate note filenames. One of:
     -- "title" (default) - Use title if supplied, uuid otherwise
@@ -57,15 +57,15 @@ require('telekasten').setup({
 
     -- template for new notes (new_note, follow_link)
     -- set to `nil` or do not specify if you do not want a template
-    template_new_note = home .. '/' .. 'templates/new_note.md',
+    template_new_note = home .. "/" .. "templates/new_note.md",
 
     -- template for newly created daily notes (goto_today)
     -- set to `nil` or do not specify if you do not want a template
-    template_new_daily = home .. '/' .. 'templates/daily.md',
+    template_new_daily = home .. "/" .. "templates/daily.md",
 
     -- template for newly created weekly notes (goto_thisweek)
     -- set to `nil` or do not specify if you do not want a template
-    template_new_weekly= home .. '/' .. 'templates/weekly.md',
+    template_new_weekly = home .. "/" .. "templates/weekly.md",
 
     -- image link style
     -- wiki:     ![[image name]]
@@ -83,7 +83,7 @@ require('telekasten').setup({
         -- use monday as first day of week: 1 .. true, 0 .. false
         calendar_monday = 1,
         -- calendar mark: where to put mark for marked days: 'left', 'right', 'left-fit'
-        calendar_mark = 'left-fit',
+        calendar_mark = "left-fit",
     },
 
     -- telescope actions behavior

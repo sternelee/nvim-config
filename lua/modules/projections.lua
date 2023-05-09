@@ -1,8 +1,8 @@
 require("projections").setup({
-  workspaces = { "~/.config/nvim/workspace" },
-  patterns = { ".git", ".svn", ".hg" },
-  store_hooks = { pre = nil, post = nil },
-  restore_hooks = { pre = nil, post = nil },
+    workspaces = { "~/.config/nvim/workspace" },
+    patterns = { ".git", ".svn", ".hg" },
+    store_hooks = { pre = nil, post = nil },
+    restore_hooks = { pre = nil, post = nil },
 })
 
 -- Bind <leader>p to Telescope find_projects
@@ -10,7 +10,7 @@ require("projections").setup({
 local Workspace = require("projections.workspace")
 local Session = require("projections.session")
 
-require('telescope').load_extension('projections')
+require("telescope").load_extension("projections")
 
 vim.keymap.set("n", "fp", function()
     local find_projects = require("telescope").extensions.projections.projections
@@ -24,8 +24,10 @@ vim.keymap.set("n", "fp", function()
 end, { desc = "Find projects" })
 
 -- Autostore session on DirChange and VimExit
-vim.api.nvim_create_autocmd({ 'DirChangedPre', 'VimLeavePre' }, {
-    callback = function() Session.store(vim.loop.cwd()) end,
+vim.api.nvim_create_autocmd({ "DirChangedPre", "VimLeavePre" }, {
+    callback = function()
+        Session.store(vim.loop.cwd())
+    end,
     desc = "Store project session",
 })
 

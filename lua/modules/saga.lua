@@ -1,6 +1,6 @@
-local saga = require 'lspsaga'
-saga.setup{
-  ui = {
-    border = "rounded",
-  }
-}
+local saga = require("lspsaga")
+saga.setup({
+    ui = {
+        border = "rounded",
+    },
+})
