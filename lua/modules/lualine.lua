@@ -28,7 +28,7 @@ require("lualine").setup({
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = {
-      "branch",
+      "filename",
       "filesize"
     },
 		lualine_c = {
@@ -38,7 +38,7 @@ require("lualine").setup({
 			"searchcount",
 			lsp_progress,
 		},
-		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_x = { "branch", "encoding", "fileformat", "filetype" },
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},

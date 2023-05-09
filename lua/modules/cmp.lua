@@ -29,6 +29,10 @@ local formatForTailwindCSS = function(entry, vim_item)
   return vim_item
 end
 
+local winhighlight = {
+  winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
+}
+
 cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert'
@@ -119,8 +123,9 @@ cmp.setup({
     completion = cmp.config.window.bordered({
       col_offset = -3, -- align the abbr and word on cursor (due to fields order below)
       side_padding = 0,
+      bordered = winhighlight
     }),
-    documentation = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(winhighlight),
   },
   experimental = {
     -- ghost_text = true

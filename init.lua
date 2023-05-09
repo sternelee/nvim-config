@@ -86,7 +86,7 @@ require('lazy').setup({
   {'nvim-telescope/telescope.nvim', event = 'VeryLazy', dependencies = {'nvim-telescope/telescope-file-browser.nvim', 'ahmedkhalf/project.nvim', {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, 'nvim-telescope/telescope-symbols.nvim', 'aaronhallaert/advanced-git-search.nvim'}, config = function() require('modules.telescope') end},
   {'renerocksai/telekasten.nvim', event = 'VeryLazy', dependencies = {'renerocksai/calendar-vim', 'mzlogin/vim-markdown-toc'}, config = function() require'modules.telekasten' end}, -- 日志管理
   -- 语法建议
-  {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim'}, config = function () require('lsp/config') end},
+  {'neovim/nvim-lspconfig', event = { "BufReadPre", "BufNewFile" }, dependencies = {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim', 'b0o/schemastore.nvim', 'folke/neoconf.nvim'}, config = function () require('lsp/config') end},
   {'glepnir/lspsaga.nvim', event = 'VeryLazy', branch = 'main', config = function() require 'modules.saga' end},
   {'Exafunction/codeium.vim', event = 'VeryLazy', config = function ()
     -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
@@ -116,7 +116,7 @@ require('lazy').setup({
         })
     end,
   },
-  -- {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", event = 'VeryLazy', config = function() require("lsp_lines").setup() end},
+  {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", event = 'VeryLazy', config = function() require("lsp_lines").setup() end},
   {'jose-elias-alvarez/typescript.nvim', event = 'VeryLazy', ft = { 'typescript', 'typescriptreact', 'vue' }, config = function() require 'modules.typescript' end},
   {'hrsh7th/nvim-cmp', event = {"InsertEnter"}, dependencies = {
     'lukas-reineke/cmp-under-comparator',
@@ -351,10 +351,10 @@ map('i', 'jk', '<esc>')                                               --jk to ex
 map('c', 'jk', '<C-C>')
 map('n', ';f', '<C-f>')
 map('n', ';b', '<C-b>')
--- map('n', ';', ':')                                                     --semicolon to enter command mode
+map('n', ';', ':')                                                     --semicolon to enter command mode
 map('n', 'j', 'gj') --move by visual line not actual line
 map('n', 'k', 'gk')
-map('n', 'q', '<cmd>q<CR>')
+-- map('n', 'q', '<cmd>q<CR>')
 map('n', 'gw', '<cmd>HopWord<CR>') --easymotion/hop
 map('n', 'gl', '<cmd>HopLine<CR>')
 map('n', 'g/', '<cmd>HopPattern<CR>')
@@ -532,7 +532,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd 'colorscheme porcelain'
+cmd 'colorscheme base16-ayu-dark'
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { 'diff', 'git', 'qf', 'help', 'fugitive', 'minimap' }
