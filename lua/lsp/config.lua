@@ -119,8 +119,8 @@ vim.diagnostic.config({
     -- },
     virtual_lines = {
         format = format,
-        only_current_line = true,
-        highighlight_whole_line = false,
+        only_current_line = false,
+        highighlight_whole_line = true,
     },
     virtual_text = false,
     -- virtual_text = {

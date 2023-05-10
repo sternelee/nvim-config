@@ -700,7 +700,7 @@ map("n", ";b", "<C-b>")
 map("n", ";", ":") --semicolon to enter command mode
 map("n", "j", "gj") --move by visual line not actual line
 map("n", "k", "gk")
--- map('n', 'q', '<cmd>q<CR>')
+map('n', 'q', '<cmd>q<CR>')
 map("n", "gw", "<cmd>HopWord<CR>") --easymotion/hop
 map("n", "gl", "<cmd>HopLine<CR>")
 map("n", "g/", "<cmd>HopPattern<CR>")

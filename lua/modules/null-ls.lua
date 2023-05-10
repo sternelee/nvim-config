@@ -69,7 +69,7 @@ null_ls.setup({
         diagnostics.codespell,
         formatting.codespell,
         -- formatting.prettier,
-        require("typescript.extensions.null-ls.code-actions"),
+        -- require("typescript.extensions.null-ls.code-actions"),
         formatting.prettierd.with({
             filetypes = { "html", "css", "scss" },
             extra_args = { "--print-width", "120" },
