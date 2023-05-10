@@ -14,7 +14,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-nvim_exec([[set guifont=Dank\ Mono:h20,VictorMono\ NF:h18]], false)
+nvim_exec([[set guifont=Dank\ Mono:h20,OperatorMono\ Nerd\ Font:h18]], false)
 
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = 1
@@ -47,11 +47,14 @@ require("lazy").setup({
         "LunarVim/bigfile.nvim",
         event = "VimEnter",
         config = function()
-            require("bigfile").config({ filesize = 1, features = {
-                "treesitter",
-                "lsp",
-                "indent_blankline",
-            } })
+            require("bigfile").config({
+                filesize = 1,
+                features = {
+                    "treesitter",
+                    "lsp",
+                    "indent_blankline",
+                },
+            })
         end,
     },
     {
@@ -290,6 +293,7 @@ require("lazy").setup({
         event = "VeryLazy",
         config = function()
             require("lsp_lines").setup()
+            keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
         end,
     },
     {
@@ -598,7 +602,7 @@ autocmd("FileType", {
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
-        vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+        keymap("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
     end,
 })
 
@@ -700,7 +704,7 @@ map("n", ";b", "<C-b>")
 map("n", ";", ":") --semicolon to enter command mode
 map("n", "j", "gj") --move by visual line not actual line
 map("n", "k", "gk")
-map('n', 'q', '<cmd>q<CR>')
+map("n", "q", "<cmd>q<CR>")
 map("n", "gw", "<cmd>HopWord<CR>") --easymotion/hop
 map("n", "gl", "<cmd>HopLine<CR>")
 map("n", "g/", "<cmd>HopPattern<CR>")
