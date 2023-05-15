@@ -62,8 +62,8 @@ null_ls.setup({
                 end,
             },
         }),
-        null_ls.builtins.formatting.jq,
-        null_ls.builtins.formatting.stylua.with({
+        formatting.jq,
+        formatting.stylua.with({
             extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
         }),
         -- diagnostics.codespell,
