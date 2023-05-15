@@ -40,34 +40,34 @@ null_ls.setup({
         -- code_actions.eslint_d,
         -- diagnostics.markdownlint,
         formatting.markdownlint,
-        diagnostics.cspell.with({
-            extra_args = { "--config", "~/.config/nvim/cspell.json" },
-            diagnostics_postprocess = function(diagnostic)
-                diagnostic.severity = vim.diagnostic.severity["HINT"] -- ERROR, WARN, INFO, HINT
-            end,
-        }),
-        code_actions.cspell.with({
-            config = {
-                find_json = function(_)
-                    return vim.fn.expand("~/.config/nvim/cspell.json")
-                end,
-                on_success = function(cspell_config_file)
-                    os.execute(
-                        string.format(
-                            "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
-                            cspell_config_file,
-                            cspell_config_file
-                        )
-                    )
-                end,
-            },
-        }),
+        -- diagnostics.cspell.with({
+        --     extra_args = { "--config", "~/.config/nvim/cspell.json" },
+        --     diagnostics_postprocess = function(diagnostic)
+        --         diagnostic.severity = vim.diagnostic.severity["HINT"] -- ERROR, WARN, INFO, HINT
+        --     end,
+        -- }),
+        -- code_actions.cspell.with({
+        --     config = {
+        --         find_json = function(_)
+        --             return vim.fn.expand("~/.config/nvim/cspell.json")
+        --         end,
+        --         on_success = function(cspell_config_file)
+        --             os.execute(
+        --                 string.format(
+        --                     "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
+        --                     cspell_config_file,
+        --                     cspell_config_file
+        --                 )
+        --             )
+        --         end,
+        --     },
+        -- }),
         formatting.jq,
         formatting.stylua.with({
             extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
         }),
-        -- diagnostics.codespell,
-        -- formatting.codespell,
+        diagnostics.codespell,
+        formatting.codespell,
         -- formatting.prettier,
         -- require("typescript.extensions.null-ls.code-actions"),
         formatting.prettierd.with({
