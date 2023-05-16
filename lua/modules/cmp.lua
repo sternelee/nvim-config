@@ -37,11 +37,11 @@ cmp.setup({
     completion = {
         completeopt = "menu,menuone,noinsert",
     },
-    snippet = {
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-        end,
-    },
+    -- snippet = {
+    --     expand = function(args)
+    --         vim.fn["vsnip#anonymous"](args.body)
+    --     end,
+    -- },
     mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -78,7 +78,7 @@ cmp.setup({
     },
     sources = {
         { name = "nvim_lsp", priority_weight = 10 },
-        { name = "vsnip" },
+        -- { name = "vsnip" },
         { name = "buffer", option = { keyword_length = 3 } },
         { name = "nvim_lsp_signature_help" },
         { name = "calc" },
