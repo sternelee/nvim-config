@@ -345,12 +345,20 @@ require("lazy").setup({
         end,
     },
     -- 语法提示
+    -- {
+    --     "kevinhwang91/nvim-bqf",
+    --     ft = "qf",
+    --     event = "VeryLazy",
+    --     config = function()
+    --         require("bqf").setup()
+    --     end,
+    -- },
     {
-        "kevinhwang91/nvim-bqf",
+        "folke/trouble.nvim",
         ft = "qf",
         event = "VeryLazy",
         config = function()
-            require("bqf").setup()
+            require("trouble").setup()
         end,
     },
     { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
@@ -824,7 +832,8 @@ map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
 map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
 
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+-- map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 map("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
 map("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
