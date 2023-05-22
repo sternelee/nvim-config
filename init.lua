@@ -180,13 +180,20 @@ require("lazy").setup({
         },
     },
     -- 显示导航线
+    -- {
+    --   "lukas-reineke/indent-blankline.nvim",
+    --   event = "VeryLazy",
+    --   config = function()
+    --     require("modules.indent_blankline")
+    --   end,
+    -- },   -- 对齐线
     {
-        "lukas-reineke/indent-blankline.nvim",
+        "shellRaining/hlchunk.nvim",
         event = "VeryLazy",
         config = function()
-            require("modules.indent_blankline")
+            require("modules.hlchunk")
         end,
-    }, -- 对齐线
+    },
     { "mg979/vim-visual-multi", event = "VeryLazy" },
     { "terryma/vim-expand-region", event = "VeryLazy" },
     { "matze/vim-move", event = "BufRead" },
@@ -316,8 +323,8 @@ require("lazy").setup({
             "hrsh7th/cmp-calc",
             "hrsh7th/cmp-emoji",
             "hrsh7th/cmp-nvim-lsp-signature-help",
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
+            -- "hrsh7th/cmp-vsnip",
+            -- "hrsh7th/vim-vsnip",
             {
                 "onsails/lspkind-nvim",
                 config = function()
