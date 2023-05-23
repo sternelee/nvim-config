@@ -39,7 +39,7 @@ require("lualine").setup({
       lsp_progress,
     },
     lualine_x = { "branch", "encoding", "fileformat", "filetype" },
-    lualine_y = { "progress" },
+    lualine_y = { "progress"},
     lualine_z = { "location" },
   },
   inactive_sections = {

@@ -238,7 +238,7 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      "lvimuser/lsp-inlayhints.nvim"
+      { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal" },
     },
     config = function()
       require("lsp/config")
@@ -258,6 +258,7 @@ require("lazy").setup({
     config = function()
       -- 注释掉 autocmd InsertEnter...等自动codeium#DebouncedComplete 那一行
       g.codeium_disable_bindings = 1
+      g.codeium_manual = true
       keymap("i", "<C-k>", function()
         return vim.fn["codeium#Complete"]()
       end, { expr = true })       -- 都会自动触发，会卡

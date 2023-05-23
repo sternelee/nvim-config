@@ -153,10 +153,10 @@ require("telescope").setup({
   },
 })
 
-require("project_nvim").setup({})
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("notify")
+require("project_nvim").setup({})
 require("telescope").load_extension("projects")
 
 -- https://luyuhuang.tech/2023/03/21/nvim.html
