@@ -6,50 +6,50 @@ capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 
 -- Settings
 local filetypes = {
-    "astro",
-    "astro-markdown",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "svelte",
-    "rust",
-    "rs",
+  "astro",
+  "astro-markdown",
+  "html",
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "vue",
+  "svelte",
+  "rust",
+  "rs",
 }
 
 local init_options = {
-    userLanguages = {
-        eelixir = "html-eex",
-        eruby = "erb",
-    },
+  userLanguages = {
+    eelixir = "html-eex",
+    eruby = "erb",
+  },
 }
 
 local settings = {
-    tailwindCSS = {
-        lint = {
-            cssConflict = "warning",
-            invalidApply = "error",
-            invalidConfigPath = "error",
-            invalidScreen = "error",
-            invalidTailwindDirective = "error",
-            invalidVariant = "error",
-            recommendedVariantOrder = "warning",
-        },
-        experimental = {
-            classRegex = {
-                [[class="([^"]*)]],
-                'class=\\s+"([^"]*)',
-                "tw`([^`]*)",
-                'tw="([^"]*)',
-                'tw={"([^"}]*)',
-                "tw\\.\\w+`([^`]*)",
-                "tw\\(.*?\\)`([^`]*)",
-            },
-        },
-        validate = true,
+  tailwindCSS = {
+    lint = {
+      cssConflict = "warning",
+      invalidApply = "error",
+      invalidConfigPath = "error",
+      invalidScreen = "error",
+      invalidTailwindDirective = "error",
+      invalidVariant = "error",
+      recommendedVariantOrder = "warning",
     },
+    experimental = {
+      classRegex = {
+        [[class="([^"]*)]],
+        'class=\\s+"([^"]*)',
+        "tw`([^`]*)",
+        'tw="([^"]*)',
+        'tw={"([^"}]*)',
+        "tw\\.\\w+`([^`]*)",
+        "tw\\(.*?\\)`([^`]*)",
+      },
+    },
+    validate = true,
+  },
 }
 
 M.filetypes = filetypes

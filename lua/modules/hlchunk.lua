@@ -19,6 +19,8 @@ require("hlchunk").setup({
     exclude_filetype = {
       "help",
       "plugin",
+      "lazy",
+      "alpha"
     },
   },
   blank = {

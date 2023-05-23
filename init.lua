@@ -237,7 +237,8 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
-      "folke/neoconf.nvim",
+      -- "folke/neoconf.nvim",
+      "lvimuser/lsp-inlayhints.nvim"
     },
     config = function()
       require("lsp/config")
@@ -387,7 +388,7 @@ require("lazy").setup({
         tools = {
           autoSetHints = true,
           runnables = { use_telescope = true },
-          inlay_hints = { show_parameter_hints = true },
+          inlay_hints = { show_parameter_hints = true, auto = false },
           hover_actions = { auto_focus = true },
         },
       })
