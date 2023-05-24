@@ -24,13 +24,13 @@ require("hlchunk").setup({
     },
   },
   blank = {
-    enable = true,
-    chars = {
-      " ",
-    },
-    style = {
-      { bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("cursorline")), "bg", "gui") },
-      { bg = "",                                                                         fg = "" },
-    },
+    enable = false,
+    -- chars = {
+    --   " ",
+    -- },
+    -- style = {
+    --   { bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("cursorline")), "bg", "gui") },
+    --   { bg = "",                                                                         fg = "" },
+    -- },
   },
 })
