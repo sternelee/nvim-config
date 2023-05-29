@@ -15,9 +15,8 @@ require("nvim-treesitter.configs").setup({
   },
   rainbow = {
     enable = true,
-    query = "rainbow-parens",
-    -- Highlight the entire buffer all at once
-    strategy = require("ts-rainbow.strategy.global"),
+    -- query = "rainbow-parens",
+    -- strategy = require("ts-rainbow.strategy.global"),
   },
   autotag = {
     enable = true,

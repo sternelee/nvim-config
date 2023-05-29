@@ -26,6 +26,7 @@ g.neovide_hide_mouse_when_typing = 0
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
 -- https://github.com/neovim/neovim/wiki/Related-projects#Plugins
+-- https://github.com/yutkat/my-neovim-pluginlist
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -42,10 +43,8 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
   { "nvim-lua/plenary.nvim",           "nvim-lua/popup.nvim" },
-  { "antoinemadec/FixCursorHold.nvim", event = "BufNewFile" },
   {
     "LunarVim/bigfile.nvim",
-    event = "VimEnter",
     config = function()
       require("bigfile").config({
         filesize = 1,
@@ -53,10 +52,13 @@ require("lazy").setup({
           "treesitter",
           "lsp",
           "indent_blankline",
+          "syntax",
+          "filetype",
         },
       })
     end,
   },
+  { "antoinemadec/FixCursorHold.nvim", event = "BufNewFile" },
   {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
@@ -154,13 +156,13 @@ require("lazy").setup({
       require("modules.treesitter")
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = "VeryLazy",
-    config = function()
-      require("treesitter-context").setup()
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("treesitter-context").setup()
+  --   end,
+  -- },
   {
     "folke/twilight.nvim",
     cmd = { "Twilight" },
@@ -171,11 +173,14 @@ require("lazy").setup({
   { "NvChad/nvim-colorizer.lua", event = "BufEnter" },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {
-    "RRethy/nvim-base16",
+    "Mofiqul/vscode.nvim",
     event = "VeryLazy",
     dependencies = {
-      "Mofiqul/vscode.nvim",
-      "glepnir/porcelain.nvim",
+      "lunarvim/synthwave84.nvim",
+      -- "LunarVim/horizon.nvim",
+      "RRethy/nvim-base16",
+      "LunarVim/darkplus.nvim",
+      -- "glepnir/porcelain.nvim",
       "sainnhe/gruvbox-material",
     },
   },
@@ -218,6 +223,13 @@ require("lazy").setup({
       require("modules.telescope")
     end,
   },
+  -- use({
+  --   "tomasky/bookmarks.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("modules.bookmarks").setup()
+  --   end,
+  -- }),
   {
     "renerocksai/telekasten.nvim",
     event = "VeryLazy",
@@ -494,9 +506,10 @@ require("lazy").setup({
     config = function()
       require("which-key").setup({})
     end,
-  },                                                    -- 提示leader按键
-  { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
+  },   -- 提示leader按键
+  -- { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
   { "windwp/nvim-ts-autotag",   event = "VeryLazy" },
+  { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
   {
     "folke/todo-comments.nvim",
     event = "VeryLazy",
@@ -681,7 +694,7 @@ opt("o", "magic", true)
 opt("o", "splitkeep", "screen")
 -- opt('o', 'statuscolumn', '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " ") : " " }')
 opt("o", "sessionoptions", "buffers,help,tabpages")
-opt("o", "fillchars", [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]])
+-- opt("o", "fillchars", [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]])
 opt("o", "breakindent", true)
 opt("o", "lbr", true)
 opt("o", "formatoptions", "l")
@@ -928,7 +941,7 @@ local header = {
   "│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │",
   "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙",
   "+--------------------------------+",
-  "|    Love You, 小璇同学❤❤❤     |",
+  "|      Love You, 小璇同学❤❤❤     |",
   "+----------------+---------------+",
 }
 

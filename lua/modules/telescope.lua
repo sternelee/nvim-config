@@ -158,6 +158,7 @@ require("telescope").load_extension("file_browser")
 require("telescope").load_extension("notify")
 require("project_nvim").setup({})
 require("telescope").load_extension("projects")
+-- require('telescope').load_extension('bookmarks')
 
 -- https://luyuhuang.tech/2023/03/21/nvim.html
 function live_grep_opts(opts)
