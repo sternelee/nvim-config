@@ -1,6 +1,6 @@
 require("noice").setup({
   lsp = {
-    progress_lua = {
+    progress = {
       enabled = false
     },
     signature = {
