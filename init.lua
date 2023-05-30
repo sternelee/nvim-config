@@ -337,7 +337,7 @@ require("lazy").setup({
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/cmp-cmdline",
+      -- "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       {
