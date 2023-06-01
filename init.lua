@@ -14,7 +14,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-nvim_exec([[set guifont=Dank\ Mono:h20,OperatorMono\ Nerd\ Font:h18]], false)
+vim.o.guifont = 'OperatorMono Nerd Font:h18'
 
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = 1
@@ -453,6 +453,9 @@ require("lazy").setup({
     build = "cd app && yarn install",
     cmd = "MarkdownPreview",
   },
+  -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
+  --   require("modules.otter")
+  -- end},
   { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
   { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
   --- 方便操作
