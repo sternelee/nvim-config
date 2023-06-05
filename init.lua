@@ -42,7 +42,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
-  { "nvim-lua/plenary.nvim",           "nvim-lua/popup.nvim" },
+  { "nvim-lua/plenary.nvim",           "nvim-lua/popup.nvim", event = "VeryLazy" },
   {
     "LunarVim/bigfile.nvim",
     config = function()
@@ -288,6 +288,7 @@ require("lazy").setup({
       end, { expr = true })
     end,
   },
+  -- { "madox2/vim-ai" },
   {
     "Bryley/neoai.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -337,9 +338,13 @@ require("lazy").setup({
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-nvim-lsp-signature-help",
+      "saadparwaiz1/cmp_luasnip",
+      {      "L3MON4D3/LuaSnip",
+        config = function()
+          require"modules.luasnip"
+        end,
+      },
       -- "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-vsnip",
-      "hrsh7th/vim-vsnip",
       {
         "onsails/lspkind-nvim",
         config = function()
@@ -371,7 +376,7 @@ require("lazy").setup({
   {
     "folke/trouble.nvim",
     ft = "qf",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("trouble").setup()
     end,
@@ -888,9 +893,12 @@ map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
 map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
 map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
 map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
-map("n", "<leader>zC", "<cmd>CalendarT<CR>")
+map("n", "<leader>zC", '<cmd>CalendarT<CR>')
 map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
 map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
+
+-- Codi
+map("n", "<leader>ce", '<Cmd>CodiExpand')
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
