@@ -27,6 +27,7 @@
   "dressing.nvim": { "branch": "master", "commit": "f16d7586fcdd8b2e3850d0abb7e46f944125cc25" },
   "dropbar.nvim": { "branch": "master", "commit": "7d20061c8dd5dc7e8771dd35741e63d18a68a238" },
   "executor.nvim": { "branch": "main", "commit": "c1c8d69dceefbfa299c43c8b69433e2adcb0ed02" },
+  "fluoromachine.nvim": { "branch": "main", "commit": "f083b6d05a59cdb79885ed6e188c1fbff57958f7" },
   "fm-nvim": { "branch": "master", "commit": "8e6a77049330e7c797eb9e63affd75eb796fe75e" },
   "friendly-snippets": { "branch": "main", "commit": "9025d37189f26b6ca0b965a9e5eec3e69c37d2e9" },
   "git-conflict.nvim": { "branch": "main", "commit": "3c89812a83ac749b8851a473863958325a1cd57c" },

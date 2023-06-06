@@ -173,10 +173,25 @@ require("lazy").setup({
   { "NvChad/nvim-colorizer.lua", event = "BufEnter" },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {
+    "maxmx03/fluoromachine.nvim",
+    config = function()
+      local fm = require("fluoromachine")
+
+      fm.setup({
+        glow = true,
+        brightness = 0.1,
+        theme = "retrowave",
+        transparent = "full",
+      })
+
+      vim.cmd.colorscheme("fluoromachine")
+    end,
+  },
+  {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
     dependencies = {
-      "lunarvim/synthwave84.nvim",
+      -- "lunarvim/synthwave84.nvim",
       -- "LunarVim/horizon.nvim",
       "RRethy/nvim-base16",
       "LunarVim/darkplus.nvim",
@@ -970,7 +985,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd("colorscheme base16-ayu-dark")
+-- cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
