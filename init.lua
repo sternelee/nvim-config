@@ -178,8 +178,8 @@ require("lazy").setup({
       local fm = require("fluoromachine")
 
       fm.setup({
-        glow = true,
-        brightness = 0.1,
+        glow = false,
+        brightness = 0.5,
         theme = "retrowave",
         transparent = "full",
       })
