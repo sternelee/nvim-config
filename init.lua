@@ -14,7 +14,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-vim.o.guifont = 'OperatorMono Nerd Font:h18'
+vim.o.guifont = "OperatorMono Nerd Font:h18"
 
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = 1
@@ -142,7 +142,7 @@ require("lazy").setup({
   },
   {
     "lewis6991/gitsigns.nvim",
-    event = "BufEnter",
+    event = "BufRead",
     config = function()
       require("modules.gitsigns")
     end,
@@ -257,13 +257,14 @@ require("lazy").setup({
     end,
   },
   {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     event = "VeryLazy",
     branch = "main",
     config = function()
       require("modules.saga")
     end,
   },
+  { "Bekaboo/dropbar.nvim",           event = "VeryLazy" },
   {
     "Exafunction/codeium.vim",
     event = "VeryLazy",
@@ -312,7 +313,7 @@ require("lazy").setup({
   },
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("lsp_lines").setup()
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
@@ -339,9 +340,10 @@ require("lazy").setup({
       "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "saadparwaiz1/cmp_luasnip",
-      {      "L3MON4D3/LuaSnip",
+      {
+        "L3MON4D3/LuaSnip",
         config = function()
-          require"modules.luasnip"
+          require("modules.luasnip")
         end,
       },
       -- "hrsh7th/cmp-cmdline",
@@ -384,7 +386,7 @@ require("lazy").setup({
   { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("modules.null-ls")
     end,
@@ -401,7 +403,7 @@ require("lazy").setup({
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("rust-tools").setup({
         tools = {
@@ -441,7 +443,7 @@ require("lazy").setup({
       require("rest-nvim").setup()
     end,
   },
-  { "pechorin/any-jump.vim",          cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
+  { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
   {
     "rmagatti/goto-preview",
     ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
@@ -451,7 +453,14 @@ require("lazy").setup({
     end,
   },
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  { "metakirby5/codi.vim",      cmd = { "Codi" } },
+  { "metakirby5/codi.vim",   cmd = { "Codi" } },
+  {
+    "google/executor.nvim",
+    cmd = { "ExecutorRun", "ExecutorToggleDetail" },
+    config = function()
+      require("executor").setup({})
+    end,
+  },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -590,11 +599,11 @@ require("lazy").setup({
   --   },
   -- },
   {
-      "gelguy/wilder.nvim",
-      event = "VeryLazy",
-      config = function()
-          require("modules.wilder")
-      end,
+    "gelguy/wilder.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modules.wilder")
+    end,
   },
   {
     "cshuaimin/ssr.nvim",
@@ -615,6 +624,27 @@ require("lazy").setup({
         },
       })
     end,
+  },
+  {
+    "Dhanus3133/LeetBuddy.nvim",
+    cmd = { "LBQuestions" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("leetbuddy").setup({
+        domain = "cn",
+        language = "ts",
+      })
+    end,
+    keys = {
+      { "<leader>lq", "<cmd>LBQuestions<cr>", desc = "List Questions" },
+      { "<leader>ll", "<cmd>LBQuestion<cr>",  desc = "View Question" },
+      { "<leader>lr", "<cmd>LBReset<cr>",     desc = "Reset Code" },
+      { "<leader>lt", "<cmd>LBTest<cr>",      desc = "Run Code" },
+      { "<leader>ls", "<cmd>LBSubmit<cr>",    desc = "Submit Code" },
+    },
   },
 }, {
   ui = {
@@ -893,12 +923,12 @@ map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
 map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
 map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
 map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
-map("n", "<leader>zC", '<cmd>CalendarT<CR>')
+map("n", "<leader>zC", "<cmd>CalendarT<CR>")
 map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
 map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
 
 -- Codi
-map("n", "<leader>ce", '<Cmd>CodiExpand')
+map("n", "<leader>ce", "<Cmd>CodiExpand")
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
