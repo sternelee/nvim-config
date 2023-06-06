@@ -80,7 +80,6 @@
   "schemastore.nvim": { "branch": "main", "commit": "bd6b279322f0628e4a58cb8129129d6106fea56a" },
   "sentiment": { "branch": "main", "commit": "54a6db15b630eccfa98c32a76baf90f21c6f1e40" },
   "ssr.nvim": { "branch": "main", "commit": "e5768511518a397fa712f26389ba30d0404990de" },
-  "synthwave84.nvim": { "branch": "master", "commit": "eac1f349713e2f470d8ee857913a42135bcc1a7f" },
   "tabular": { "branch": "master", "commit": "339091ac4dd1f17e225fe7d57b48aff55f99b23a" },
   "tagalong.vim": { "branch": "main", "commit": "7b8cf57d8b5cbf5ece29e8198e72e8db39d9fe26" },
   "telekasten.nvim": { "branch": "main", "commit": "36dad2692974a5cc69813441442ccce8c53fbfd4" },
