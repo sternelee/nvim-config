@@ -344,7 +344,7 @@ require("lazy").setup({
   },
   {
     "hrsh7th/nvim-cmp",
-    event = { "VeryLazy" },
+    event = { "InsertEnter" },
     dependencies = {
       "lukas-reineke/cmp-under-comparator",
       "petertriho/cmp-git",
@@ -361,7 +361,7 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      "hrsh7th/cmp-cmdline",
+      -- "hrsh7th/cmp-cmdline",
       {
         "onsails/lspkind-nvim",
         config = function()
@@ -602,24 +602,24 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("modules.noice")
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-  },
   -- {
-  --   "gelguy/wilder.nvim",
-  --   event = "VeryLazy",
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
   --   config = function()
-  --     require("modules.wilder")
+  --     require("modules.noice")
   --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   },
   -- },
+  {
+    "gelguy/wilder.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modules.wilder")
+    end,
+  },
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
@@ -740,7 +740,7 @@ opt("o", "lazyredraw", false)
 opt("o", "signcolumn", "yes")
 opt("o", "mouse", "a")
 opt("o", "shortmess", "a")
-opt("o", "cmdheight", 0)
+opt("o", "cmdheight", 1)
 opt("o", "wrap", false)
 opt("o", "relativenumber", true)
 opt("o", "hlsearch", true)
