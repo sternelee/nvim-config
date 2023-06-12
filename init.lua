@@ -1,6 +1,6 @@
 local cmd = vim.cmd
 local g = vim.g
-local nvim_exec = vim.api.nvim_exec
+-- local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
@@ -30,7 +30,7 @@ g.neovide_hide_mouse_when_typing = 0
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -94,6 +94,9 @@ require("lazy").setup({
   {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
+    dependencies = {
+        'linrongbin16/lsp-progress.nvim',
+    },
     config = function()
       require("modules.lualine")
     end,
@@ -170,7 +173,7 @@ require("lazy").setup({
       require("twilight"):setup()
     end,
   },
-  { "NvChad/nvim-colorizer.lua", event = "BufEnter" },   -- 色值高亮
+  { "NvChad/nvim-colorizer.lua", event = "BufEnter", config = function() require("modules.colorizer") end },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {
     "maxmx03/fluoromachine.nvim",
@@ -224,12 +227,13 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
+  {"leafOfTree/vim-project", cmd = {"Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles"}},
   {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
-      "ahmedkhalf/project.nvim",
+      -- "ahmedkhalf/project.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
       "aaronhallaert/advanced-git-search.nvim",
@@ -775,8 +779,6 @@ opt("o", "showcmd", true)
 opt("o", "history", 500)
 opt("o", "ttimeoutlen", 10)
 opt("o", "updatetime", 300)
-opt("o", "nobackup", true)
-opt("o", "nowritebackup", true)
 opt("o", "scrolljump", 6)
 opt("o", "undofile", true)
 opt("o", "showtabline", 0)
@@ -943,7 +945,10 @@ map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
 map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
 
 -- Codi
-map("n", "<leader>ce", "<Cmd>CodiExpand")
+map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
+
+-- vim-project
+map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])

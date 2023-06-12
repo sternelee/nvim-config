@@ -1,19 +1,20 @@
 -- lualine config
 
-local lsp_progress = function()
-  local messages = vim.lsp.util.get_progress_messages()
-  if #messages == 0 then
-    return ""
-  end
-  local status = {}
-  for _, msg in pairs(messages) do
-    table.insert(status, (msg.percentage or 0) .. "%% " .. (msg.title or ""))
-  end
-  local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-  local ms = vim.loop.hrtime() / 1000000
-  local frame = math.floor(ms / 120) % #spinners
-  return spinners[frame + 1] .. " " .. table.concat(status, " | ")
-end
+-- local lsp_progress = function()
+--   local messages = vim.lsp.status()
+--   if #messages == 0 then
+--     return ""
+--   end
+--   local status = {}
+--   for _, msg in pairs(messages) do
+--     table.insert(status, (msg.percentage or 0) .. "%% " .. (msg.title or ""))
+--   end
+--   local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+--   local ms = vim.uv.hrtime() / 1000000
+--   local frame = math.floor(ms / 120) % #spinners
+--   return spinners[frame + 1] .. " " .. table.concat(status, " | ")
+-- end
+require('lsp-progress').setup()
 
 require("lualine").setup({
   options = {
@@ -36,7 +37,8 @@ require("lualine").setup({
       "diagnostics",
       "selectioncount",
       "searchcount",
-      lsp_progress,
+      -- lsp_progress,
+      require("lsp-progress").progress
     },
     lualine_x = { "branch", "encoding", "fileformat", "filetype" },
     lualine_y = { "progress"},

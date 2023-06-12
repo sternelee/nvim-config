@@ -246,6 +246,7 @@ local function setup_servers()
       }
     end
     if lsp == "tailwindcss" then
+      opts.root_dir = lsputil.root_pattern("tailwind.config.js", "tailwind.config.ts")
       opts.filetypes = require("lsp/tailwindcss").filetypes
       opts.capabilities = require("lsp/tailwindcss").capabilities
       opts.init_options = require("lsp/tailwindcss").init_options
