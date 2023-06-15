@@ -95,7 +95,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-        'linrongbin16/lsp-progress.nvim',
+      "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -173,7 +173,13 @@ require("lazy").setup({
       require("twilight"):setup()
     end,
   },
-  { "NvChad/nvim-colorizer.lua", event = "BufEnter", config = function() require("modules.colorizer") end },   -- 色值高亮
+  {
+    "NvChad/nvim-colorizer.lua",
+    event = "BufEnter",
+    config = function()
+      require("modules.colorizer")
+    end,
+  },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {
     "maxmx03/fluoromachine.nvim",
@@ -227,7 +233,7 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  {"leafOfTree/vim-project", cmd = {"Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles"}},
+  { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
@@ -283,7 +289,7 @@ require("lazy").setup({
       require("modules.saga")
     end,
   },
-  { "Bekaboo/dropbar.nvim",           event = "VeryLazy" },
+  { "Bekaboo/dropbar.nvim",   event = "VeryLazy" },
   {
     "Exafunction/codeium.vim",
     event = "VeryLazy",
@@ -310,26 +316,38 @@ require("lazy").setup({
   },
   -- { "madox2/vim-ai" },
   {
-    "Bryley/neoai.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = {
-      "NeoAI",
-      "NeoAIOpen",
-      "NeoAIClose",
-      "NeoAIToggle",
-    },
+    "jackMort/ChatGPT.nvim",
+    cmd = { "ChatGPT", "ChatGPTRun" },
     config = function()
-      require("neoai").setup({
-        models = {
-          {
-            name = "openai",
-            model = "gpt-3.5-turbo",
-          },
-        },
-        open_api_key_env = "OPENAI_API_KEY",
-      })
+      require("chatgpt").setup()
     end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
   },
+  -- {
+  --   "Bryley/neoai.nvim",
+  --   dependencies = { "MunifTanjim/nui.nvim" },
+  --   cmd = {
+  --     "NeoAI",
+  --     "NeoAIOpen",
+  --     "NeoAIClose",
+  --     "NeoAIToggle",
+  --   },
+  --   config = function()
+  --     require("neoai").setup({
+  --       models = {
+  --         {
+  --           name = "openai",
+  --           model = "gpt-3.5-turbo",
+  --         },
+  --       },
+  --       open_api_key_env = "OPENAI_API_KEY",
+  --     })
+  --   end,
+  -- },
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     event = "InsertEnter",
@@ -462,7 +480,7 @@ require("lazy").setup({
       require("rest-nvim").setup()
     end,
   },
-  { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
+  { "pechorin/any-jump.vim",          cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
   {
     "rmagatti/goto-preview",
     ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
@@ -472,7 +490,7 @@ require("lazy").setup({
     end,
   },
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
-  { "metakirby5/codi.vim",   cmd = { "Codi" } },
+  { "metakirby5/codi.vim",      cmd = { "Codi" } },
   {
     "google/executor.nvim",
     cmd = { "ExecutorRun", "ExecutorToggleDetail" },
@@ -617,6 +635,13 @@ require("lazy").setup({
   --     "rcarriga/nvim-notify",
   --   },
   -- },
+  {
+    "petertriho/nvim-scrollbar",
+    event = "VeryLazy",
+    config = function()
+      require("scrollbar").setup()
+    end,
+  },
   {
     "gelguy/wilder.nvim",
     event = "VeryLazy",

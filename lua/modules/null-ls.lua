@@ -12,24 +12,24 @@ local function get_dprint_config_path()
   local patterns = vim.tbl_flatten({ ".dprint.json", "dprint.json" })
   local config_path = vim.fn.stdpath("config") .. "/lua/dprint.json"
   for _, name in ipairs(patterns) do
-    if vim.loop.fs_stat(vim.loop.cwd() .. path_separator .. name) then
-      config_path = vim.loop.cwd() .. path_separator .. name
+    if vim.uv.fs_stat(vim.uv.cwd() .. path_separator .. name) then
+      config_path = vim.uv.cwd() .. path_separator .. name
     end
   end
   return { "--config", config_path }
 end
 
-require("null-ls").register({
-  name = "more_actions",
-  method = { require("null-ls").methods.CODE_ACTION },
-  filetypes = { "_all" },
-  generator = {
-    fn = require("ts-node-action").available_actions,
-  },
-  diagnostics_postprocess = function(diagnostic)
-    diagnostic.severity = vim.diagnostic.severity["HINT"]     -- ERROR, WARN, INFO, HINT
-  end,
-})
+-- require("null-ls").register({
+--   name = "more_actions",
+--   method = { require("null-ls").methods.CODE_ACTION },
+--   filetypes = { "_all" },
+--   generator = {
+--     fn = require("ts-node-action").available_actions,
+--   },
+--   diagnostics_postprocess = function(diagnostic)
+--     diagnostic.severity = vim.diagnostic.severity["HINT"]     -- ERROR, WARN, INFO, HINT
+--   end,
+-- })
 
 null_ls.setup({
   debounce = 500,
