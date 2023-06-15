@@ -139,9 +139,6 @@ for type, icon in pairs(signs) do
 end
 
 -- lspconfig
-
--- require("neoconf").setup({}) --- or tamago324/nlsp-settings.nvim
-
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")

@@ -187,13 +187,13 @@ require("lazy").setup({
       local fm = require("fluoromachine")
 
       fm.setup({
-        glow = false,
-        brightness = 0.5,
+        glow = true,
+        brightness = 0.1,
         theme = "retrowave",
         transparent = "full",
       })
 
-      -- vim.cmd.colorscheme("fluoromachine")
+      vim.cmd.colorscheme("fluoromachine")
     end,
   },
   {
@@ -202,8 +202,8 @@ require("lazy").setup({
     dependencies = {
       -- "lunarvim/synthwave84.nvim",
       -- "LunarVim/horizon.nvim",
-      "RRethy/nvim-base16",
-      "LunarVim/darkplus.nvim",
+      -- "RRethy/nvim-base16",
+      -- "LunarVim/darkplus.nvim",
       -- "glepnir/porcelain.nvim",
       "sainnhe/gruvbox-material",
     },
@@ -375,7 +375,7 @@ require("lazy").setup({
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
+      -- "hrsh7th/cmp-nvim-lsp-signature-help",
       "saadparwaiz1/cmp_luasnip",
       {
         "L3MON4D3/LuaSnip",
@@ -395,14 +395,14 @@ require("lazy").setup({
       require("modules.cmp")
     end,
   },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("refactoring").setup()
-      require("telescope").load_extension("refactoring")
-    end,
-  },
+  -- {
+  --   "ThePrimeagen/refactoring.nvim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("refactoring").setup()
+  --     require("telescope").load_extension("refactoring")
+  --   end,
+  -- },
   -- 语法提示
   -- {
   --     "kevinhwang91/nvim-bqf",
@@ -491,13 +491,13 @@ require("lazy").setup({
   },
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   { "metakirby5/codi.vim",      cmd = { "Codi" } },
-  {
-    "google/executor.nvim",
-    cmd = { "ExecutorRun", "ExecutorToggleDetail" },
-    config = function()
-      require("executor").setup({})
-    end,
-  },
+  -- {
+  --   "google/executor.nvim",
+  --   cmd = { "ExecutorRun", "ExecutorToggleDetail" },
+  --   config = function()
+  --     require("executor").setup({})
+  --   end,
+  -- },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -1015,7 +1015,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd("colorscheme base16-ayu-dark")
+-- cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
