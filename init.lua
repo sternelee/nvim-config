@@ -193,7 +193,7 @@ require("lazy").setup({
         transparent = "full",
       })
 
-      vim.cmd.colorscheme("fluoromachine")
+      -- vim.cmd.colorscheme("fluoromachine")
     end,
   },
   {
@@ -202,7 +202,7 @@ require("lazy").setup({
     dependencies = {
       -- "lunarvim/synthwave84.nvim",
       -- "LunarVim/horizon.nvim",
-      -- "RRethy/nvim-base16",
+      "RRethy/nvim-base16",
       -- "LunarVim/darkplus.nvim",
       -- "glepnir/porcelain.nvim",
       "sainnhe/gruvbox-material",
@@ -1015,7 +1015,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
--- cmd("colorscheme base16-ayu-dark")
+cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
