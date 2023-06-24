@@ -159,13 +159,6 @@ require("lazy").setup({
       require("modules.treesitter")
     end,
   },
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-context",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("treesitter-context").setup()
-  --   end,
-  -- },
   {
     "folke/twilight.nvim",
     cmd = { "Twilight" },
@@ -185,14 +178,12 @@ require("lazy").setup({
     "maxmx03/fluoromachine.nvim",
     config = function()
       local fm = require("fluoromachine")
-
       fm.setup({
         glow = true,
         brightness = 0.1,
         theme = "retrowave",
         transparent = "full",
       })
-
       -- vim.cmd.colorscheme("fluoromachine")
     end,
   },
@@ -248,13 +239,6 @@ require("lazy").setup({
       require("modules.telescope")
     end,
   },
-  -- use({
-  --   "tomasky/bookmarks.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.bookmarks").setup()
-  --   end,
-  -- }),
   {
     "renerocksai/telekasten.nvim",
     event = "VeryLazy",
@@ -283,7 +267,7 @@ require("lazy").setup({
   },
   {
     "nvimdev/lspsaga.nvim",
-    event = "VeryLazy",
+    event = {"BufReadPost"},
     branch = "main",
     config = function()
       require("modules.saga")
@@ -491,13 +475,6 @@ require("lazy").setup({
   },
   -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   { "metakirby5/codi.vim",      cmd = { "Codi" } },
-  -- {
-  --   "google/executor.nvim",
-  --   cmd = { "ExecutorRun", "ExecutorToggleDetail" },
-  --   config = function()
-  --     require("executor").setup({})
-  --   end,
-  -- },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -507,7 +484,7 @@ require("lazy").setup({
   -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
   --   require("modules.otter")
   -- end},
-  { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
+  -- { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
   { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
   --- 方便操作
   {
@@ -562,7 +539,7 @@ require("lazy").setup({
       require("which-key").setup({})
     end,
   },   -- 提示leader按键
-  -- { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
+  { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
   { "windwp/nvim-ts-autotag",   event = "VeryLazy" },
   { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
   {
@@ -668,27 +645,6 @@ require("lazy").setup({
         },
       })
     end,
-  },
-  {
-    "Dhanus3133/LeetBuddy.nvim",
-    cmd = { "LBQuestions" },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("leetbuddy").setup({
-        domain = "cn",
-        language = "ts",
-      })
-    end,
-    keys = {
-      { "<leader>lq", "<cmd>LBQuestions<cr>", desc = "List Questions" },
-      { "<leader>ll", "<cmd>LBQuestion<cr>",  desc = "View Question" },
-      { "<leader>lr", "<cmd>LBReset<cr>",     desc = "Reset Code" },
-      { "<leader>lt", "<cmd>LBTest<cr>",      desc = "Run Code" },
-      { "<leader>ls", "<cmd>LBSubmit<cr>",    desc = "Submit Code" },
-    },
   },
 }, {
   ui = {
