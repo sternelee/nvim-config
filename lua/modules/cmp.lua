@@ -116,18 +116,36 @@ cmp.setup({
       end,
     }),
   },
+  matching = {
+    disallow_fuzzy_matching = true,
+    disallow_fullfuzzy_matching = true,
+    disallow_partial_fuzzy_matching = false,
+    disallow_partial_matching = false,
+    disallow_prefix_unmatching = true,
+  },
   sorting = {
     comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      require("cmp-under-comparator").under,
-      cmp.config.compare.kind,
+      -- > To achieve consistency across languages and to honor different clients usually the client is responsible for filtering and sorting.
+      -- > This has also the advantage that client can experiment with different filter and sorting models.
+      -- > However servers can enforce different behavior by setting a sortText.
       cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
+      -- > The score is matched char count generally.
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
     },
   },
+  -- sorting = {
+  --   comparators = {
+  --     cmp.config.compare.offset,
+  --     cmp.config.compare.exact,
+  --     cmp.config.compare.score,
+  --     require("cmp-under-comparator").under,
+  --     cmp.config.compare.kind,
+  --     cmp.config.compare.sort_text,
+  --     cmp.config.compare.length,
+  --     cmp.config.compare.order,
+  --   },
+  -- },
   flags = {
     debounce_text_changes = 150,
   },

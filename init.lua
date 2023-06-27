@@ -351,7 +351,7 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter" },
     dependencies = {
-      "lukas-reineke/cmp-under-comparator",
+      -- "lukas-reineke/cmp-under-comparator",
       "petertriho/cmp-git",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -484,7 +484,7 @@ require("lazy").setup({
   --   require("modules.otter")
   -- end},
   -- { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
-  { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
+  -- { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
   --- 方便操作
   {
     "nacro90/numb.nvim",
@@ -644,6 +644,12 @@ require("lazy").setup({
         },
       })
     end,
+  },
+  {
+    "sourcegraph/sg.nvim",
+    event = "VeryLazy",
+    build = "cargo build --workspace",
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }, {
   ui = {
@@ -1025,12 +1031,12 @@ cmd([[
 ]])
 
 cmd([[
-  highlight IndentBlanklineIndent1 guifg=#E06C75
-  highlight IndentBlanklineIndent2 guifg=#E5C07B
-  highlight IndentBlanklineIndent3 guifg=#98C379
-  highlight IndentBlanklineIndent4 guifg=#56B6C2
-  highlight IndentBlanklineIndent5 guifg=#61AFEF
-  highlight IndentBlanklineIndent6 guifg=#C678DD
+  " highlight IndentBlanklineIndent1 guifg=#E06C75
+  " highlight IndentBlanklineIndent2 guifg=#E5C07B
+  " highlight IndentBlanklineIndent3 guifg=#98C379
+  " highlight IndentBlanklineIndent4 guifg=#56B6C2
+  " highlight IndentBlanklineIndent5 guifg=#61AFEF
+  " highlight IndentBlanklineIndent6 guifg=#C678DD
   highlight link LspSagaFinderSelection Search
 
   highlight Normal ctermbg=NONE guibg=NONE

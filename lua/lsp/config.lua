@@ -173,7 +173,19 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  -- require("lsp-inlayhints").on_attach(client, bufnr)
+  -- https://www.reddit.com/r/neovim/comments/14e41rb/today_on_nightly_native_lsp_inlay_hint_support/?utm_name=androidcss
+  -- vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+  -- vim.api.nvim_create_autocmd("InsertEnter", {
+  --   buffer = bufnr,
+  --   callback = function() vim.lsp.buf.inlay_hint(bufnr, true) end,
+  --   group = "lsp_augroup",
+  -- })
+  -- vim.api.nvim_create_autocmd("InsertLeave", {
+  --   buffer = bufnr,
+  --   callback = function() vim.lsp.buf.inlay_hint(bufnr, false) end,
+  --   group = "lsp_augroup",
+  -- })
+
   -- if client.name ~= 'jsonls' then
   --   local msg = string.format("Language server %s started!", client.name)
   --   notify(msg, 'info', {title = 'LSP Notify', timeout = '100'})
