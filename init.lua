@@ -279,7 +279,7 @@ require("lazy").setup({
     event = "VeryLazy",
     config = function()
       g.codeium_disable_bindings = 1
-      -- g.codeium_manual = true
+      g.codeium_manual = true
       keymap("i", "<C-k>", function()
         return vim.fn["codeium#Complete"]()
       end, { expr = true })       -- 都会自动触发，会卡
@@ -483,8 +483,8 @@ require("lazy").setup({
   -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
   --   require("modules.otter")
   -- end},
-  -- { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
-  -- { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
+  { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
+  { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
   --- 方便操作
   {
     "nacro90/numb.nvim",
