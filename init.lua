@@ -1,3 +1,13 @@
+local base_dir = vim.env.CVIM_BASE_DIR
+    or (function()
+      local init_path = debug.getinfo(1, "S").source
+      return init_path:sub(2):match("(.*[/\\])"):sub(1, -2)
+    end)()
+
+if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
+  vim.opt.rtp:prepend(base_dir)
+end
+
 local cmd = vim.cmd
 local g = vim.g
 -- local nvim_exec = vim.api.nvim_exec
@@ -644,12 +654,6 @@ require("lazy").setup({
         },
       })
     end,
-  },
-  {
-    "sourcegraph/sg.nvim",
-    event = "VeryLazy",
-    build = "cargo build --workspace",
-    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }, {
   ui = {
