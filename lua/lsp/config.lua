@@ -35,7 +35,7 @@ local codes = {
     "reportUndefinedVariable",
   },
   trailing_whitespace = {
-    message = "  Whitespaces are useless",
+    message = " Whitespace are useless",
     "trailing-whitespace",
     "trailing-space",
   },
@@ -120,7 +120,7 @@ vim.diagnostic.config({
   virtual_lines = {
     format = format,
     only_current_line = false,
-    highighlight_whole_line = true,
+    highlight_whole_line = true,
   },
   virtual_text = false,
   -- virtual_text = {
@@ -198,7 +198,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  -- "vuels",
+  "vuels",
   "volar",
   "tsserver",
   "denols",
@@ -233,13 +233,13 @@ local function setup_servers()
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
-    -- if lsp == "vuels" then
-    --   opts.root_dir = lsputil.root_pattern(".veturrc")
-    --   opts.settings = require("lsp/vuels").settings
-    -- end
-    -- if lsp == "volar" then
-    --   opts.root_dir = lsputil.root_pattern(".volarrc")
-    -- end
+    if lsp == "vuels" then
+      opts.root_dir = lsputil.root_pattern(".veturrc")
+      opts.settings = require("lsp/vuels").settings
+    end
+    if lsp == "volar" then
+      opts.root_dir = lsputil.root_pattern(".volarrc")
+    end
     if lsp == "lua_ls" then
       opts.settings = require("lsp/lua_ls").settings
     end
@@ -247,7 +247,7 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
       opts.settings = require("lsp/eslint").settings
       opts.handlers = {
-        ["window/showMessageRequest"] = function(_, result, params)
+        ["window/showMessageRequest"] = function(_, result)
           return result
         end,
         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),

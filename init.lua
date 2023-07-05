@@ -1,16 +1,5 @@
-local base_dir = vim.env.CVIM_BASE_DIR
-    or (function()
-      local init_path = debug.getinfo(1, "S").source
-      return init_path:sub(2):match("(.*[/\\])"):sub(1, -2)
-    end)()
-
-if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
-  vim.opt.rtp:prepend(base_dir)
-end
-
 local cmd = vim.cmd
 local g = vim.g
--- local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
@@ -234,6 +223,11 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
@@ -241,7 +235,7 @@ require("lazy").setup({
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
       -- "ahmedkhalf/project.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
       "aaronhallaert/advanced-git-search.nvim",
     },
@@ -283,7 +277,7 @@ require("lazy").setup({
       require("modules.saga")
     end,
   },
-  { "Bekaboo/dropbar.nvim",   event = "VeryLazy" },
+  { "Bekaboo/dropbar.nvim",   event = "VeryLazy", opts = {} },
   {
     "Exafunction/codeium.vim",
     event = "VeryLazy",
@@ -939,6 +933,23 @@ map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
 
 -- vim-project
 map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
+
+-- flash.nvim
+keymap({ "n", "x", "o" }, "s", function()
+  require("flash").jump()
+end, { desc = "Flash" })
+keymap({ "n", "x", "o" }, "S", function()
+  require("flash").treesitter()
+end, { desc = "Flash Treesitter" })
+keymap({ "o" }, "r", function()
+  require("flash").remote()
+end, { desc = "Remote Flash" })
+keymap({ "x", "o" }, "s", function()
+  require("flash").treesitter_search()
+end, { desc = "Flash Treesitter Search" })
+keymap({ "c" }, "<c-s>", function()
+  require("flash").toggle()
+end, { desc = "Toggle Flash Search" })
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])

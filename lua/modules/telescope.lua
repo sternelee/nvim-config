@@ -73,12 +73,12 @@ require("telescope").setup({
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewer_maker,
     extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = "smart_case",
-      },
+      -- fzf = {
+      --   fuzzy = true,
+      --   override_generic_sorter = true,
+      --   override_file_sorter = true,
+      --   case_mode = "smart_case",
+      -- },
       advanced_git_search = {
         -- fugitive or diffview
         diff_plugin = "fugitive",
@@ -153,7 +153,7 @@ require("telescope").setup({
   },
 })
 
-require("telescope").load_extension("fzf")
+-- require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("notify")
 -- require("project_nvim").setup({})

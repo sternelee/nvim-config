@@ -51,16 +51,6 @@ null_ls.setup({
         find_json = function(_)
           return vim.fn.expand("~/.config/nvim/cspell.json")
         end,
-        -- 下面的处理有bug,数据会被清空
-        -- on_success = function(cspell_config_file)
-        --     os.execute(
-        --         string.format(
-        --             "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
-        --             cspell_config_file,
-        --             cspell_config_file
-        --         )
-        --     )
-        -- end,
       },
     }),
     formatting.jq,
