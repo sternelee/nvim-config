@@ -263,7 +263,7 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal" },
+      { "lvimuser/lsp-inlayhints.nvim", branch = "main" },
     },
     config = function()
       require("lsp/config")
@@ -283,7 +283,7 @@ require("lazy").setup({
     event = "VeryLazy",
     config = function()
       g.codeium_disable_bindings = 1
-      g.codeium_manual = true
+      -- g.codeium_manual = true
       keymap("i", "<C-k>", function()
         return vim.fn["codeium#Complete"]()
       end, { expr = true })       -- 都会自动触发，会卡
@@ -301,7 +301,6 @@ require("lazy").setup({
       end, { expr = true })
     end,
   },
-  -- { "madox2/vim-ai" },
   {
     "jackMort/ChatGPT.nvim",
     cmd = { "ChatGPT", "ChatGPTRun" },
@@ -310,31 +309,8 @@ require("lazy").setup({
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
     },
   },
-  -- {
-  --   "Bryley/neoai.nvim",
-  --   dependencies = { "MunifTanjim/nui.nvim" },
-  --   cmd = {
-  --     "NeoAI",
-  --     "NeoAIOpen",
-  --     "NeoAIClose",
-  --     "NeoAIToggle",
-  --   },
-  --   config = function()
-  --     require("neoai").setup({
-  --       models = {
-  --         {
-  --           name = "openai",
-  --           model = "gpt-3.5-turbo",
-  --         },
-  --       },
-  --       open_api_key_env = "OPENAI_API_KEY",
-  --     })
-  --   end,
-  -- },
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     event = "InsertEnter",
@@ -351,6 +327,7 @@ require("lazy").setup({
       require("modules.typescript")
     end,
   },
+  -- 语法提示
   {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter" },
@@ -389,15 +366,6 @@ require("lazy").setup({
   --     require("refactoring").setup()
   --     require("telescope").load_extension("refactoring")
   --   end,
-  -- },
-  -- 语法提示
-  -- {
-  --     "kevinhwang91/nvim-bqf",
-  --     ft = "qf",
-  --     event = "VeryLazy",
-  --     config = function()
-  --         require("bqf").setup()
-  --     end,
   -- },
   {
     "folke/trouble.nvim",
