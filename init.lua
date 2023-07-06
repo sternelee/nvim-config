@@ -57,7 +57,6 @@ require("lazy").setup({
       })
     end,
   },
-  { "antoinemadec/FixCursorHold.nvim", event = "BufNewFile" },
   {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
@@ -94,7 +93,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      "linrongbin16/lsp-progress.nvim",
+      -- "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -183,7 +182,7 @@ require("lazy").setup({
         theme = "retrowave",
         transparent = "full",
       })
-      -- vim.cmd.colorscheme("fluoromachine")
+      vim.cmd.colorscheme("fluoromachine")
     end,
   },
   {
@@ -223,17 +222,17 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
+      -- "nvim-telescope/telescope-file-browser.nvim",
       -- "ahmedkhalf/project.nvim",
       -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
@@ -264,6 +263,7 @@ require("lazy").setup({
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
       { "lvimuser/lsp-inlayhints.nvim", branch = "main" },
+      { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
     },
     config = function()
       require("lsp/config")
@@ -499,6 +499,9 @@ require("lazy").setup({
   {
     "chentoast/marks.nvim",
     event = "VeryLazy",
+    dependencies = {
+      {"toppair/reach.nvim", config = function() require("reach").setup({ notifications = true }) end},
+    },
     config = function()
       require("modules.marks")
     end,
@@ -768,7 +771,7 @@ map("n", "gs", "<cmd>Telescope grep_string<CR>")
 map("n", "fg", "<cmd>Telescope git_files<CR>")
 map("n", "ft", "<cmd>Telescope treesitter<CR>")
 map("n", "fc", "<cmd>Telescope commands<CR>")
-map("n", "fe", "<cmd>Telescope file_browser<CR>")
+-- map("n", "fe", "<cmd>Telescope file_browser<CR>")
 map("n", "fp", "<cmd>Telescope projects<CR>")
 map("n", "gq", "<cmd>Telescope diagnostics<CR>")
 map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
@@ -809,12 +812,12 @@ map("n", "<leader>gr", "<cmd>Git reset --hard<CR>")
 map("n", "<leader><leader>g", "<cmd>LazyGit<CR>")
 
 -- refactoring
-map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
-map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
-map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
-map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
-map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
-map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
+-- map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
+-- map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
+-- map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
+-- map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+-- map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+-- map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
 
 map("n", "<leader>j", "<cmd>AnyJump<CR>")
 map("v", "<leader>j", "<cmd>AnyJumpVisual<CR>")
@@ -903,21 +906,21 @@ map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
 map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
 
 -- flash.nvim
-keymap({ "n", "x", "o" }, "s", function()
-  require("flash").jump()
-end, { desc = "Flash" })
-keymap({ "n", "x", "o" }, "S", function()
-  require("flash").treesitter()
-end, { desc = "Flash Treesitter" })
-keymap({ "o" }, "r", function()
-  require("flash").remote()
-end, { desc = "Remote Flash" })
-keymap({ "x", "o" }, "s", function()
-  require("flash").treesitter_search()
-end, { desc = "Flash Treesitter Search" })
-keymap({ "c" }, "<c-s>", function()
-  require("flash").toggle()
-end, { desc = "Toggle Flash Search" })
+-- keymap({ "n", "x", "o" }, "s", function()
+--   require("flash").jump()
+-- end, { desc = "Flash" })
+-- keymap({ "n", "x", "o" }, "S", function()
+--   require("flash").treesitter()
+-- end, { desc = "Flash Treesitter" })
+-- keymap({ "o" }, "r", function()
+--   require("flash").remote()
+-- end, { desc = "Remote Flash" })
+-- keymap({ "x", "o" }, "s", function()
+--   require("flash").treesitter_search()
+-- end, { desc = "Flash Treesitter Search" })
+-- keymap({ "c" }, "<c-s>", function()
+--   require("flash").toggle()
+-- end, { desc = "Toggle Flash Search" })
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
@@ -959,7 +962,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
-cmd("colorscheme base16-ayu-dark")
+-- cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
