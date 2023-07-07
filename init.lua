@@ -172,19 +172,19 @@ require("lazy").setup({
     end,
   },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  {
-    "maxmx03/fluoromachine.nvim",
-    config = function()
-      local fm = require("fluoromachine")
-      fm.setup({
-        glow = true,
-        brightness = 0.1,
-        theme = "retrowave",
-        transparent = "full",
-      })
-      vim.cmd.colorscheme("fluoromachine")
-    end,
-  },
+  -- {
+  --   "maxmx03/fluoromachine.nvim",
+  --   config = function()
+  --     local fm = require("fluoromachine")
+  --     fm.setup({
+  --       glow = true,
+  --       brightness = 0.1,
+  --       theme = "retrowave",
+  --       transparent = "full",
+  --     })
+  --     vim.cmd.colorscheme("fluoromachine")
+  --   end,
+  -- },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -222,11 +222,11 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
@@ -489,13 +489,13 @@ require("lazy").setup({
       require("nvim-autopairs").setup()
     end,
   },
-  {
-    "utilyre/sentiment.nvim",
-    event = "VeryLazy",
-    name = "sentiment",
-    version = "*",
-    opts = {},
-  },
+  -- {
+  --   "utilyre/sentiment.nvim",
+  --   event = "VeryLazy",
+  --   name = "sentiment",
+  --   version = "*",
+  --   opts = {},
+  -- },
   {
     "chentoast/marks.nvim",
     event = "VeryLazy",
@@ -904,23 +904,14 @@ map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
 
 -- vim-project
 map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
+map("n", "<leader>pf", "<Cmd>ProjectFindInFiles<CR>")
 
 -- flash.nvim
--- keymap({ "n", "x", "o" }, "s", function()
---   require("flash").jump()
--- end, { desc = "Flash" })
--- keymap({ "n", "x", "o" }, "S", function()
---   require("flash").treesitter()
--- end, { desc = "Flash Treesitter" })
--- keymap({ "o" }, "r", function()
---   require("flash").remote()
--- end, { desc = "Remote Flash" })
--- keymap({ "x", "o" }, "s", function()
---   require("flash").treesitter_search()
--- end, { desc = "Flash Treesitter Search" })
--- keymap({ "c" }, "<c-s>", function()
---   require("flash").toggle()
--- end, { desc = "Toggle Flash Search" })
+keymap({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
+keymap({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
+keymap({ "o" }, "r", function() require("flash").remote() end, { desc = "Remote Flash" })
+keymap({ "x", "o" }, "s", function() require("flash").treesitter_search() end, { desc = "Flash Treesitter Search" })
+keymap({ "c" }, "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
@@ -962,7 +953,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
 
 --theme
--- cmd("colorscheme base16-ayu-dark")
+cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
