@@ -1,5 +1,7 @@
 local cmd = vim.cmd
 local g = vim.g
+local fn = vim.fn
+local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
@@ -21,6 +23,14 @@ g.neovide_input_use_logo = 1
 g.neovide_remember_window_size = 1
 g.neovide_confirm_quit = 1
 g.neovide_hide_mouse_when_typing = 0
+
+nvim_exec(
+  [[
+filetype plugin on
+filetype indent on
+]],
+  false
+)
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
@@ -222,11 +232,11 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
@@ -455,8 +465,9 @@ require("lazy").setup({
   -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
   --   require("modules.otter")
   -- end},
-  { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
-  { "tpope/vim-dispatch",       cmd = { "Make", "Dispatch", "Focus", "Start" } },
+  -- { "tpope/vim-dispatch",         cmd = { "Make", "Dispatch", "Focus", "Start" } },
+  { "skywind3000/asyncrun.vim",   cmd = "AsyncRun" },
+  { 'skywind3000/asynctasks.vim', cmd = 'AsyncTask' },
   --- 方便操作
   {
     "nacro90/numb.nvim",
@@ -500,7 +511,7 @@ require("lazy").setup({
     "chentoast/marks.nvim",
     event = "VeryLazy",
     dependencies = {
-      {"toppair/reach.nvim", config = function() require("reach").setup({ notifications = true }) end},
+      -- {"toppair/reach.nvim", config = function() require("reach").setup({ notifications = true }) end},
     },
     config = function()
       require("modules.marks")
@@ -907,11 +918,11 @@ map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
 map("n", "<leader>pf", "<Cmd>ProjectFindInFiles<CR>")
 
 -- flash.nvim
-keymap({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
-keymap({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
-keymap({ "o" }, "r", function() require("flash").remote() end, { desc = "Remote Flash" })
-keymap({ "x", "o" }, "s", function() require("flash").treesitter_search() end, { desc = "Flash Treesitter Search" })
-keymap({ "c" }, "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
+-- keymap({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
+-- keymap({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
+-- keymap({ "o" }, "r", function() require("flash").remote() end, { desc = "Remote Flash" })
+-- keymap({ "x", "o" }, "s", function() require("flash").treesitter_search() end, { desc = "Flash Treesitter Search" })
+-- keymap({ "c" }, "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
