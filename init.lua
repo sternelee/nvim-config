@@ -38,9 +38,9 @@ filetype indent on
 -- https://github.com/yutkat/my-neovim-pluginlist
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
-  vim.fn.system({
+  fn.system({
     "git",
     "clone",
     "--filter=blob:none",
@@ -272,7 +272,7 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      { "lvimuser/lsp-inlayhints.nvim", branch = "main" },
+      { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal" },
       { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
     },
     config = function()
@@ -295,19 +295,19 @@ require("lazy").setup({
       g.codeium_disable_bindings = 1
       -- g.codeium_manual = true
       keymap("i", "<C-k>", function()
-        return vim.fn["codeium#Complete"]()
+        return fn["codeium#Complete"]()
       end, { expr = true })       -- 都会自动触发，会卡
       keymap("i", "<C-g>", function()
-        return vim.fn["codeium#Accept"]()
+        return fn["codeium#Accept"]()
       end, { expr = true })
       keymap("i", "<c-;>", function()
-        return vim.fn["codeium#CycleCompletions"](1)
+        return fn["codeium#CycleCompletions"](1)
       end, { expr = true })
       keymap("i", "<c-,>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
+        return fn["codeium#CycleCompletions"](-1)
       end, { expr = true })
       keymap("i", "<c-x>", function()
-        return vim.fn["codeium#Clear"]()
+        return fn["codeium#Clear"]()
       end, { expr = true })
     end,
   },
