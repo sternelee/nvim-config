@@ -556,6 +556,7 @@ require("lazy").setup({
       require("ts-node-action").setup({})
     end,
   },                                        -- 字符组合切换
+  { "numToStr/FTerm.nvim", event = "VeryLazy" },
   { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
   {
     "stevearc/dressing.nvim",
@@ -860,8 +861,8 @@ map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
 map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
-map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
-map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
+-- map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
+-- map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
 
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
@@ -900,6 +901,9 @@ map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
 -- vim-project
 map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
 map("n", "<leader>pf", "<Cmd>ProjectFindInFiles<CR>")
+
+map("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>')
+map("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 -- flash.nvim
 -- keymap({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })

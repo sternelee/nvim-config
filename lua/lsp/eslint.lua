@@ -27,6 +27,7 @@ M.settings = {
   },
   format = true,
   nodePath = "",
+  autoFixOnSave = true,
   onIgnoredFiles = "off",
   packageManager = "npm",
   quiet = false,
