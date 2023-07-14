@@ -20,7 +20,8 @@ require("hlchunk").setup({
       "help",
       "plugin",
       "lazy",
-      "alpha"
+      "alpha",
+      "gitcommit"
     },
   },
   blank = {

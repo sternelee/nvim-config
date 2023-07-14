@@ -557,7 +557,7 @@ require("lazy").setup({
     end,
   },                                        -- 字符组合切换
   { "numToStr/FTerm.nvim", event = "VeryLazy" },
-  { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
+  -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
   {
     "stevearc/dressing.nvim",
     event = "BufEnter",
