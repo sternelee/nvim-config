@@ -208,20 +208,20 @@ require("lazy").setup({
     },
   },
   -- 显示导航线
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.indent_blankline")
-  --   end,
-  -- },   -- 对齐线
   {
-    "shellRaining/hlchunk.nvim",
+    "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
     config = function()
-      require("modules.hlchunk")
+      require("modules.indent_blankline")
     end,
-  },
+  },   -- 对齐线
+  -- {
+  --   "shellRaining/hlchunk.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("modules.hlchunk")
+  --   end,
+  -- },
   { "mg979/vim-visual-multi",    event = "VeryLazy" },
   { "terryma/vim-expand-region", event = "VeryLazy" },
   { "matze/vim-move",            event = "BufRead" },
@@ -271,6 +271,7 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
+      {"folke/neodev.nvim", opts = {}},
       -- "folke/neoconf.nvim",
       { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal" },
       { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
@@ -1007,12 +1008,13 @@ cmd([[
 ]])
 
 cmd([[
-  " highlight IndentBlanklineIndent1 guifg=#E06C75
-  " highlight IndentBlanklineIndent2 guifg=#E5C07B
-  " highlight IndentBlanklineIndent3 guifg=#98C379
-  " highlight IndentBlanklineIndent4 guifg=#56B6C2
-  " highlight IndentBlanklineIndent5 guifg=#61AFEF
-  " highlight IndentBlanklineIndent6 guifg=#C678DD
+  highlight IndentBlanklineIndent1 guifg=#E06C75
+  highlight IndentBlanklineIndent2 guifg=#E5C07B
+  highlight IndentBlanklineIndent3 guifg=#98C379
+  highlight IndentBlanklineIndent4 guifg=#56B6C2
+  highlight IndentBlanklineIndent5 guifg=#61AFEF
+  highlight IndentBlanklineIndent6 guifg=#C678DD
+
   highlight link LspSagaFinderSelection Search
 
   highlight Normal ctermbg=NONE guibg=NONE

@@ -143,6 +143,8 @@ end
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")
 
+require("neodev").setup({})
+
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 require("mason").setup()
@@ -237,7 +239,14 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern(".volarrc")
     end
     if lsp == "lua_ls" then
-      opts.settings = require("lsp/lua_ls").settings
+      -- opts.settings = require("lsp/lua_ls").settings
+      opts.settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace"
+          }
+        }
+      }
     end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
