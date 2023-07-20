@@ -331,13 +331,13 @@ require("lazy").setup({
       "petertriho/cmp-git",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
-      "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       -- "hrsh7th/cmp-nvim-lsp-signature-help",
       "saadparwaiz1/cmp_luasnip",
       {
         "L3MON4D3/LuaSnip",
+        dependencies = "rafamadriz/friendly-snippets",
         config = function()
           require("modules.luasnip")
         end,

@@ -1,23 +1,32 @@
 local luasnip = require("luasnip")
 
--- forget the current snippet when leaving the insert mode. ref: https://github.com/L3MON4D3/LuaSnip/issues/656#issuecomment-1313310146
-local unlinkgrp = vim.api.nvim_create_augroup("UnlinkSnippetOnModeChange", { clear = true })
-
-vim.api.nvim_create_autocmd("ModeChanged", {
-  group = unlinkgrp,
-  pattern = { "s:n", "i:*" },
-  desc = "Forget the current snippet when leaving the insert mode",
-  callback = function(evt)
-    if luasnip.session and luasnip.session.current_nodes[evt.buf] and not luasnip.session.jump_active then
-      luasnip.unlink_current()
-    end
-  end,
+luasnip.config.set_config({
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
 })
 
 luasnip.filetype_extend("typescriptreact", { "html", "typescript" })
 luasnip.filetype_extend("javascriptreact", { "html", "javascript" })
 
+-- vscode format
 require("luasnip.loaders.from_vscode").lazy_load()
-luasnip.config.set_config({
-  region_check_events = "CursorMoved",
+require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
+
+-- snipmate format
+require("luasnip.loaders.from_snipmate").load()
+require("luasnip.loaders.from_snipmate").lazy_load({ paths = vim.g.snipmate_snippets_path or "" })
+
+-- lua format
+require("luasnip.loaders.from_lua").load()
+require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+    callback = function()
+        if
+            require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require("luasnip").session.jump_active
+        then
+            require("luasnip").unlink_current()
+        end
+    end,
 })
