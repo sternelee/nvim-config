@@ -983,8 +983,6 @@ local header = {
 
 -- 布局
 startify.section.header.val = header
--- 高亮
--- startify.section.header.opts.hl = 'AlphaHeader'
 
 require("alpha").setup(startify.opts)
 
