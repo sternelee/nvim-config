@@ -73,12 +73,12 @@ require("telescope").setup({
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewer_maker,
     extensions = {
-      -- fzf = {
-      --   fuzzy = true,
-      --   override_generic_sorter = true,
-      --   override_file_sorter = true,
-      --   case_mode = "smart_case",
-      -- },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
       advanced_git_search = {
         -- fugitive or diffview
         diff_plugin = "fugitive",
@@ -153,15 +153,15 @@ require("telescope").setup({
   },
 })
 
--- require("telescope").load_extension("fzf")
--- require("telescope").load_extension("file_browser")
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("file_browser")
 require("telescope").load_extension("notify")
 -- require("project_nvim").setup({})
 -- require("telescope").load_extension("projects")
 -- require('telescope').load_extension('bookmarks')
 
 -- https://luyuhuang.tech/2023/03/21/nvim.html
-function live_grep_opts(opts)
+local function live_grep_opts(opts)
   local flags = tostring(vim.v.count)
   local additional_args = {}
   local prompt_title = "Live Grep"

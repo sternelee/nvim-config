@@ -182,19 +182,19 @@ require("lazy").setup({
     end,
   },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- {
-  --   "maxmx03/fluoromachine.nvim",
-  --   config = function()
-  --     local fm = require("fluoromachine")
-  --     fm.setup({
-  --       glow = true,
-  --       brightness = 0.1,
-  --       theme = "retrowave",
-  --       transparent = "full",
-  --     })
-  --     vim.cmd.colorscheme("fluoromachine")
-  --   end,
-  -- },
+  {
+    "maxmx03/fluoromachine.nvim",
+    config = function()
+      local fm = require("fluoromachine")
+      fm.setup({
+        glow = true,
+        brightness = 0.1,
+        theme = "retrowave",
+        transparent = "full",
+      })
+      -- cmd("colorscheme fluoromachine")
+    end,
+  },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -242,9 +242,9 @@ require("lazy").setup({
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     dependencies = {
-      -- "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
       -- "ahmedkhalf/project.nvim",
-      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
       "aaronhallaert/advanced-git-search.nvim",
     },
@@ -768,7 +768,7 @@ map("n", "gs", "<cmd>Telescope grep_string<CR>")
 map("n", "fg", "<cmd>Telescope git_files<CR>")
 map("n", "ft", "<cmd>Telescope treesitter<CR>")
 map("n", "fc", "<cmd>Telescope commands<CR>")
--- map("n", "fe", "<cmd>Telescope file_browser<CR>")
+map("n", "fe", "<cmd>Telescope file_browser<CR>")
 map("n", "fp", "<cmd>Telescope projects<CR>")
 map("n", "gq", "<cmd>Telescope diagnostics<CR>")
 map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
