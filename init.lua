@@ -238,31 +238,38 @@ require("lazy").setup({
   --   opts = {},
   -- },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "nvim-telescope/telescope-file-browser.nvim",
+  --     -- "ahmedkhalf/project.nvim",
+  --     -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  --     "nvim-telescope/telescope-symbols.nvim",
+  --     "aaronhallaert/advanced-git-search.nvim",
+  --   },
+  --   config = function()
+  --     require("modules.telescope")
+  --   end,
+  -- },
   {
-    "nvim-telescope/telescope.nvim",
+    "ibhagwan/fzf-lua",
     event = "VeryLazy",
-    dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
-      -- "ahmedkhalf/project.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-symbols.nvim",
-      "aaronhallaert/advanced-git-search.nvim",
-    },
     config = function()
-      require("modules.telescope")
-    end,
+      require("fzf-lua").setup({'fzf-native'})
+    end
   },
-  {
-    "renerocksai/telekasten.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "renerocksai/calendar-vim",
-      "mzlogin/vim-markdown-toc",
-    },
-    config = function()
-      require("modules.telekasten")
-    end,
-  },   -- 日志管理
+  -- {
+  --   "renerocksai/telekasten.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "renerocksai/calendar-vim",
+  --     "mzlogin/vim-markdown-toc",
+  --   },
+  --   config = function()
+  --     require("modules.telekasten")
+  --   end,
+  -- },   -- 日志管理
   -- 语法建议
   {
     "neovim/nvim-lspconfig",
@@ -395,7 +402,7 @@ require("lazy").setup({
       require("rust-tools").setup({
         tools = {
           autoSetHints = true,
-          runnables = { use_telescope = true },
+          runnables = { use_telescope = false },
           inlay_hints = { show_parameter_hints = true, auto = false },
           hover_actions = { auto_focus = true },
         },
@@ -758,20 +765,32 @@ map("n", "gw", "<cmd>HopWord<CR>") --easymotion/hop
 map("n", "gl", "<cmd>HopLine<CR>")
 map("n", "g/", "<cmd>HopPattern<CR>")
 map("n", "<leader>:", "<cmd>terminal<CR>")
-map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
-map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
-map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
-map("n", "<leader>m", "<cmd>Telescope marks<CR>")
+-- telescope
+-- map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
+-- map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
+-- map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
+-- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
 -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map("n", "<leader>'", "<cmd>Telescope resume<CR>")
-map("n", "gs", "<cmd>Telescope grep_string<CR>")
-map("n", "fg", "<cmd>Telescope git_files<CR>")
-map("n", "ft", "<cmd>Telescope treesitter<CR>")
-map("n", "fc", "<cmd>Telescope commands<CR>")
-map("n", "fe", "<cmd>Telescope file_browser<CR>")
-map("n", "fp", "<cmd>Telescope projects<CR>")
-map("n", "gq", "<cmd>Telescope diagnostics<CR>")
-map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
+-- map("n", "<leader>'", "<cmd>Telescope resume<CR>")
+-- map("n", "gs", "<cmd>Telescope grep_string<CR>")
+-- map("n", "fg", "<cmd>Telescope git_files<CR>")
+-- map("n", "ft", "<cmd>Telescope treesitter<CR>")
+-- map("n", "fc", "<cmd>Telescope commands<CR>")
+-- map("n", "fe", "<cmd>Telescope file_browser<CR>")
+-- map("n", "fp", "<cmd>Telescope projects<CR>")
+-- map("n", "gq", "<cmd>Telescope diagnostics<CR>")
+-- map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
+-- lua fzf
+map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
+map("n", "<leader>f", "<cmd>FzfLua files<CR>")
+map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
+map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
+map('n', '<leader>/', '<cmd>FzfLua live_grep<CR>')
+map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
+map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
+map("n", "fg", "<cmd>FzfLua git_files<CR>")
+map("n", "fc", "<cmd>FzfLua commands<CR>")
+map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
@@ -884,17 +903,17 @@ map("n", "<leaader><leader>g", "<cmd>LazyGit<CR>")
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
 -- telekasten
-map("n", "<leader>zf", '<cmd>lua require("telekasten").find_notes()<CR>')
-map("n", "<leader>zd", '<cmd>lua require("telekasten").find_daily_notes()<CR>')
-map("n", "<leader>zg", '<cmd>lua require("telekasten").search_notes()<CR>')
-map("n", "<leader>zz", '<cmd>lua require("telekasten").follow_link()<CR>')
-map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
-map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
-map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
-map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
-map("n", "<leader>zC", "<cmd>CalendarT<CR>")
-map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
-map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
+-- map("n", "<leader>zf", '<cmd>lua require("telekasten").find_notes()<CR>')
+-- map("n", "<leader>zd", '<cmd>lua require("telekasten").find_daily_notes()<CR>')
+-- map("n", "<leader>zg", '<cmd>lua require("telekasten").search_notes()<CR>')
+-- map("n", "<leader>zz", '<cmd>lua require("telekasten").follow_link()<CR>')
+-- map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
+-- map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
+-- map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
+-- map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
+-- map("n", "<leader>zC", "<cmd>CalendarT<CR>")
+-- map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
+-- map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
 
 -- Codi
 map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")

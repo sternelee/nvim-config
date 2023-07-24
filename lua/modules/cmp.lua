@@ -82,9 +82,9 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = "nvim_lsp",               priority_weight = 10,           comparators = 10 },
-    { name = "luasnip",                priority_weight = 1,            comparators = 1 },
-    { name = "buffer",                 option = { keyword_length = 3 } },
+    { name = "nvim_lsp",               priority_weight = 8 },
+    { name = "luasnip",                priority_weight = 7 },
+    { name = "buffer",                 priority_weight = 7, option = { keyword_length = 3 } },
     -- { name = "nvim_lsp_signature_help" },
     { name = "calc" },
     { name = "emoji" },
