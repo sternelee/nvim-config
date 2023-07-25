@@ -15,7 +15,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-vim.o.guifont = "OperatorMono Nerd Font:h18"
+vim.o.guifont = "Dank Mono:h18,OperatorMono Nerd Font:h18"
 
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = 1
@@ -329,6 +329,13 @@ require("lazy").setup({
       require("modules.typescript")
     end,
   },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   event = "VeryLazy",
+  --   ft = { "typescript", "typescriptreact", "vue" },
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   opts = {},
+  -- },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",

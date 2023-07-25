@@ -128,18 +128,6 @@ cmp.setup({
       cmp.config.compare.recently_used,
     },
   },
-  -- sorting = {
-  --   comparators = {
-  --     cmp.config.compare.offset,
-  --     cmp.config.compare.exact,
-  --     cmp.config.compare.score,
-  --     require("cmp-under-comparator").under,
-  --     cmp.config.compare.kind,
-  --     cmp.config.compare.sort_text,
-  --     cmp.config.compare.length,
-  --     cmp.config.compare.order,
-  --   },
-  -- },
   flags = {
     debounce_text_changes = 150,
   },
