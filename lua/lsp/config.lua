@@ -145,7 +145,7 @@ local lsputil = require("lspconfig.util")
 
 vim.lsp.set_log_level('debug')
 
-require("neodev").setup({})
+-- require("neodev").setup({})
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -241,14 +241,7 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern(".volarrc")
     end
     if lsp == "lua_ls" then
-      -- opts.settings = require("lsp/lua_ls").settings
-      opts.settings = {
-        Lua = {
-          completion = {
-            callSnippet = "Replace"
-          }
-        }
-      }
+      opts.settings = require("lsp/lua_ls").settings
     end
     if lsp == "eslint" then
       opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")

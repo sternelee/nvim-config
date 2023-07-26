@@ -11,6 +11,9 @@ M.settings = {
       version = "LuaJIT",
       path = runtime_path,
     },
+    completion = {
+      callSnippet = "Replace"
+    },
     diagnostics = {
       globals = { "vim", "use", "bit", "require" },
     },

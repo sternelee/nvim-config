@@ -278,7 +278,7 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
-      {"folke/neodev.nvim", opts = {}},
+      -- {"folke/neodev.nvim", opts = {}},
       -- "folke/neoconf.nvim",
       { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal" },
       { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
