@@ -82,7 +82,7 @@
   "trouble.nvim": { "branch": "main", "commit": "0e6703c1d37d2d34ed029ab54f9bd66e3f2ecbf7" },
   "ts-node-action": { "branch": "master", "commit": "0787230f202e837e353c4396e5eb4363bceda547" },
   "twilight.nvim": { "branch": "main", "commit": "a4843e6e67092a1e6fa9666f02bf0ab59174c1df" },
-  "typescript.nvim": { "branch": "main", "commit": "de304087e6e49981fde01af8ccc5b21e8519306f" },
+  "typescript-tools.nvim": { "branch": "master", "commit": "a616eb8c5e406817d36f15f8f7fa085197089beb" },
   "vim-be-good": { "branch": "master", "commit": "c290810728a4f75e334b07dc0f3a4cdea908d351" },
   "vim-better-whitespace": { "branch": "master", "commit": "1b22dc57a2751c7afbc6025a7da39b7c22db635d" },
   "vim-expand-region": { "branch": "master", "commit": "966513543de0ddc2d673b5528a056269e7917276" },

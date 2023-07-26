@@ -332,9 +332,11 @@ require("lazy").setup({
   -- {
   --   "pmizio/typescript-tools.nvim",
   --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "vue" },
+  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
   --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  --   opts = {},
+  --   config = function()
+  --     require("modules.typescript-tools")
+  --   end,
   -- },
   -- 语法提示
   {
