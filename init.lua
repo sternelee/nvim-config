@@ -192,7 +192,7 @@ require("lazy").setup({
         theme = "retrowave",
         transparent = "full",
       })
-      cmd("colorscheme fluoromachine")
+      -- cmd("colorscheme fluoromachine")
     end,
   },
   {
@@ -795,22 +795,6 @@ map("n", "<leader>f", "<cmd>FzfLua files<CR>")
 map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
 map('n', '<leader>/', '<cmd>FzfLua live_grep<CR>')
--- local function live_grep_opts()
---   local flags = tostring(vim.v.count)
---   if flags:find("1") then
---     cmd("FzfLua live_grep")
---   elseif flags:find("2") then
---     cmd("FzfLua live_grep")
---   elseif flags:find("3") then
---     -- cmd("FzfLua live_grep")
---     require'fzf-lua'.live_grep({ cmd = "git grep --line-number --column --color=always" })
---   else
---     cmd("FzfLua live_grep")
---   end
--- end
--- keymap("n", "<leader>/", function()
---   live_grep_opts()
--- end)
 map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
 map("n", "fg", "<cmd>FzfLua git_files<CR>")
@@ -928,7 +912,8 @@ map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
-map("n", "gj", "<cmd>TypescriptGoToSourceDefinition<CR>")
+-- map("n", "gj", "<cmd>TypescriptGoToSourceDefinition<CR>")
+map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
 
 keymap({ "n", "x" }, "<leader>sr", function()
   require("ssr").open()
@@ -1008,7 +993,7 @@ g.markdown_fenced_language = {
 g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
--- cmd("colorscheme base16-ayu-dark")
+cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
