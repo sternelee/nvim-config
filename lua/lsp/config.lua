@@ -110,25 +110,25 @@ vim.diagnostic.config({
   signs = true,
   update_in_insert = false,
   severity_sort = true,
-  float = false,
-  -- float = {
-  -- 	border = "rounded",
-  -- 	source = "always", -- Or "if_many"
-  -- 	prefix = " - ",
-  -- 	format = format,
-  -- },
-  virtual_lines = {
-    format = format,
-    only_current_line = false,
-    highlight_whole_line = true,
+  -- float = false,
+  float = {
+  	border = "rounded",
+  	source = "always", -- Or "if_many"
+  	prefix = " - ",
+  	format = format,
   },
-  virtual_text = false,
-  -- virtual_text = {
-  --   spacing = 4,
-  --   prefix = "●",
-  --   source = "if_many",
-  --   format = format
+  -- virtual_lines = {
+  --   format = format,
+  --   only_current_line = false,
+  --   highlight_whole_line = true,
   -- },
+  -- virtual_text = false,
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
+    source = "if_many",
+    format = format
+  },
 })
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }

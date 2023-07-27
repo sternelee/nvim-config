@@ -313,14 +313,14 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
     },
   },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("lsp_lines").setup()
-      keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-    end,
-  },
+  -- {
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+  --   end,
+  -- },
   -- {
   --   "jose-elias-alvarez/typescript.nvim",
   --   event = "VeryLazy",
@@ -795,6 +795,22 @@ map("n", "<leader>f", "<cmd>FzfLua files<CR>")
 map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
 map('n', '<leader>/', '<cmd>FzfLua live_grep<CR>')
+-- local function live_grep_opts()
+--   local flags = tostring(vim.v.count)
+--   if flags:find("1") then
+--     cmd("FzfLua live_grep")
+--   elseif flags:find("2") then
+--     cmd("FzfLua live_grep")
+--   elseif flags:find("3") then
+--     -- cmd("FzfLua live_grep")
+--     require'fzf-lua'.live_grep({ cmd = "git grep --line-number --column --color=always" })
+--   else
+--     cmd("FzfLua live_grep")
+--   end
+-- end
+-- keymap("n", "<leader>/", function()
+--   live_grep_opts()
+-- end)
 map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
 map("n", "fg", "<cmd>FzfLua git_files<CR>")
