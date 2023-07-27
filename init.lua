@@ -188,11 +188,11 @@ require("lazy").setup({
       local fm = require("fluoromachine")
       fm.setup({
         glow = true,
-        brightness = 0.1,
+        brightness = 0.5,
         theme = "retrowave",
         transparent = "full",
       })
-      -- cmd("colorscheme fluoromachine")
+      cmd("colorscheme fluoromachine")
     end,
   },
   {
@@ -287,14 +287,14 @@ require("lazy").setup({
       require("lsp/config")
     end,
   },
-  {
-    "nvimdev/lspsaga.nvim",
-    event = {"BufReadPost"},
-    branch = "main",
-    config = function()
-      require("modules.saga")
-    end,
-  },
+  -- {
+  --   "nvimdev/lspsaga.nvim",
+  --   event = {"BufReadPost"},
+  --   branch = "main",
+  --   config = function()
+  --     require("modules.saga")
+  --   end,
+  -- },
   { "Bekaboo/dropbar.nvim",   event = "VeryLazy", opts = {} },
   {
     "Exafunction/codeium.vim",
@@ -321,23 +321,23 @@ require("lazy").setup({
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
-  {
-    "jose-elias-alvarez/typescript.nvim",
-    event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue" },
-    config = function()
-      require("modules.typescript")
-    end,
-  },
   -- {
-  --   "pmizio/typescript-tools.nvim",
+  --   "jose-elias-alvarez/typescript.nvim",
   --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
-  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   ft = { "typescript", "typescriptreact", "vue" },
   --   config = function()
-  --     require("modules.typescript-tools")
+  --     require("modules.typescript")
   --   end,
   -- },
+  {
+    "pmizio/typescript-tools.nvim",
+    event = "VeryLazy",
+    ft = { "typescript", "typescriptreact", "vue", "javascript" },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      require("modules.typescript-tools")
+    end,
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
@@ -879,27 +879,38 @@ map("n", "zR", '<cmd>lua require("ufo").openAllFolds()<CR>')
 map("n", "zM", '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
-map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
-map("n", "ga", "<cmd>Lspsaga code_action<CR>")
-map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
-map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-map("n", "gr", "<cmd>Lspsaga rename<CR>")
-map("n", "gi", "<cmd>Lspsaga peek_type_definition<CR>")
-map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
-map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
--- map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
--- map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
-
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
-map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
-map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 map("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
 map("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
 map("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
+map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
+
+map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+
+-- map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
+-- map("n", "ga", "<cmd>Lspsaga code_action<CR>")
+-- map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
+-- map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+-- map("n", "gr", "<cmd>Lspsaga rename<CR>")
+-- map("n", "gi", "<cmd>Lspsaga peek_type_definition<CR>")
+-- map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+-- map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
+-- map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+-- map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+-- map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
+-- map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
+-- map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
+
+map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
 map("n", "gj", "<cmd>TypescriptGoToSourceDefinition<CR>")
 
@@ -978,10 +989,10 @@ map("n", "<leader>0", "<cmd>BufferGoto 10<CR>")
 g.markdown_fenced_language = {
   "ts=typescript",
 }
-g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp" }
+g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
-cmd("colorscheme base16-ayu-dark")
+-- cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
