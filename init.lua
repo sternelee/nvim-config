@@ -53,18 +53,9 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
   { "nvim-lua/plenary.nvim",           "nvim-lua/popup.nvim", event = "VeryLazy" },
   {
-    "LunarVim/bigfile.nvim",
+    "sternelee/bigfile.nvim",
     config = function()
-      require("bigfile").config({
-        filesize = 1,
-        features = {
-          "treesitter",
-          "lsp",
-          "indent_blankline",
-          "syntax",
-          "filetype",
-        },
-      })
+      require("bigfile").config({})
     end,
   },
   {
