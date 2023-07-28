@@ -173,19 +173,19 @@ require("lazy").setup({
     end,
   },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  {
-    "maxmx03/fluoromachine.nvim",
-    config = function()
-      local fm = require("fluoromachine")
-      fm.setup({
-        glow = true,
-        brightness = 0.01,
-        theme = "retrowave",
-        transparent = "full",
-      })
-      -- cmd("colorscheme fluoromachine")
-    end,
-  },
+  -- {
+  --   "maxmx03/fluoromachine.nvim",
+  --   config = function()
+  --     local fm = require("fluoromachine")
+  --     fm.setup({
+  --       glow = true,
+  --       brightness = 0.01,
+  --       theme = "retrowave",
+  --       transparent = "full",
+  --     })
+  --     -- cmd("colorscheme fluoromachine")
+  --   end,
+  -- },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -317,23 +317,22 @@ require("lazy").setup({
   --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
   --   end,
   -- },
-  -- {
-  --   "jose-elias-alvarez/typescript.nvim",
-  --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "vue" },
-  --   config = function()
-  --     require("modules.typescript")
-  --   end,
-  -- },
   {
-    "pmizio/typescript-tools.nvim",
+    "jose-elias-alvarez/typescript.nvim",
     event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue", "javascript" },
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    ft = { "typescript", "typescriptreact", "vue" },
     config = function()
-      require("modules.typescript-tools")
+      require("modules.typescript")
     end,
   },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   config = function()
+  --     require("modules.typescript-tools")
+  --   end,
+  -- },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
@@ -559,16 +558,16 @@ require("lazy").setup({
   { "wakatime/vim-wakatime",    event = "VeryLazy" },
   { "gennaro-tedesco/nvim-jqx", cmd = { "JqxList", "JqxQuery" } },
   { "godlygeek/tabular",        event = "VeryLazy" }, -- 对齐方式
-  {
-    "ckolkey/ts-node-action",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-treesitter",
-    },
-    config = function()
-      require("ts-node-action").setup({})
-    end,
-  },                                        -- 字符组合切换
+  -- {
+  --   "ckolkey/ts-node-action",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "nvim-treesitter",
+  --   },
+  --   config = function()
+  --     require("ts-node-action").setup({})
+  --   end,
+  -- },                                        -- 字符组合切换
   { "numToStr/FTerm.nvim", event = "VeryLazy" },
   -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
   {
