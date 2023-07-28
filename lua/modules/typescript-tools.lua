@@ -22,13 +22,13 @@ require("typescript-tools").setup({
     tsserver_plugins = {},
     tsserver_max_memory = "auto",
     tsserver_format_options = {
+      allowIncompleteCompletions = false,
+      allowRenameOfImportPath = false,
+    },
+    tsserver_file_preferences = {
       includeInlayParameterNameHints = "all",
       includeCompletionsForModuleExports = true,
       quotePreference = "auto",
-    },
-    tsserver_file_preferences = {
-      allowIncompleteCompletions = false,
-      allowRenameOfImportPath = false,
     },
   },
 })

@@ -278,19 +278,19 @@ require("lazy").setup({
       require("lsp/config")
     end,
   },
-  -- {
-  --   "nvimdev/lspsaga.nvim",
-  --   event = {"BufReadPost"},
-  --   branch = "main",
-  --   config = function()
-  --     require("modules.saga")
-  --   end,
-  -- },
   {
-    'stevearc/aerial.nvim',
+    "nvimdev/lspsaga.nvim",
     event = {"BufReadPost"},
-    opts = {},
-  }, -- if not use lspsaga
+    branch = "main",
+    config = function()
+      require("modules.saga")
+    end,
+  },
+  -- {
+  --   'stevearc/aerial.nvim',
+  --   event = {"BufReadPost"},
+  --   opts = {},
+  -- }, -- if not use lspsaga
   { "Bekaboo/dropbar.nvim",   event = "VeryLazy", opts = {} },
   {
     "Exafunction/codeium.vim",
@@ -317,22 +317,23 @@ require("lazy").setup({
   --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
   --   end,
   -- },
-  {
-    "jose-elias-alvarez/typescript.nvim",
-    event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue" },
-    config = function()
-      require("modules.typescript")
-    end,
-  },
   -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
-  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   "jose-elias-alvarez/typescript.nvim",
+  --   event = "VeryLazy",
+  --   ft = { "typescript", "typescriptreact", "vue" },
   --   config = function()
-  --     require("modules.typescript-tools")
+  --     require("modules.typescript")
   --   end,
   -- },
+  {
+    "pmizio/typescript-tools.nvim",
+    event = "VeryLazy",
+    ft = { "typescript", "typescriptreact", "vue", "javascript" },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      require("modules.typescript-tools")
+    end,
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
@@ -881,28 +882,28 @@ map("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
 map("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
 map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 
-map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
+-- map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+-- map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+-- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+-- map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+-- map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+-- map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
+-- map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+-- map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+-- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+-- map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
 
--- map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
--- map("n", "ga", "<cmd>Lspsaga code_action<CR>")
--- map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
--- map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
--- map("n", "gr", "<cmd>Lspsaga rename<CR>")
--- map("n", "gi", "<cmd>Lspsaga peek_type_definition<CR>")
--- map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
--- map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
--- map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
--- map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
--- map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
+map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
+map("n", "ga", "<cmd>Lspsaga code_action<CR>")
+map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
+map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+map("n", "gr", "<cmd>Lspsaga rename<CR>")
+map("n", "gi", "<cmd>Lspsaga peek_type_definition<CR>")
+map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
+map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
 
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
@@ -915,7 +916,7 @@ end)
 -- LazyGit
 map("n", "<leaader><leader>g", "<cmd>LazyGit<CR>")
 
-keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+-- keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
 -- telekasten
 -- map("n", "<leader>zf", '<cmd>lua require("telekasten").find_notes()<CR>')
