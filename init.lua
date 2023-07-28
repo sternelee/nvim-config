@@ -179,7 +179,7 @@ require("lazy").setup({
       local fm = require("fluoromachine")
       fm.setup({
         glow = true,
-        brightness = 0.5,
+        brightness = 0.01,
         theme = "retrowave",
         transparent = "full",
       })
@@ -286,6 +286,11 @@ require("lazy").setup({
   --     require("modules.saga")
   --   end,
   -- },
+  {
+    'stevearc/aerial.nvim',
+    event = {"BufReadPost"},
+    opts = {},
+  }, -- if not use lspsaga
   { "Bekaboo/dropbar.nvim",   event = "VeryLazy", opts = {} },
   {
     "Exafunction/codeium.vim",
@@ -886,6 +891,7 @@ map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
 
 -- map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
 -- map("n", "ga", "<cmd>Lspsaga code_action<CR>")
@@ -898,8 +904,6 @@ map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 -- map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 -- map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 -- map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
--- map("n", "<A-i>", "<cmd>Lspsaga term_toggle<CR>")
--- map("t", "<A-i>", "<C-\\><C-n><cmd>Lspsaga term_toggle<CR>")
 
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
