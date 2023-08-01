@@ -37,7 +37,7 @@ function M.toggle_format_on_save()
 end
 
 -- 切换保存时自动格式化
-vim.api.nvim_create_user_command("LspToggleAutoFormat", 'lua require("lsp.function").toggle_format_on_save()', {})
+vim.api.nvim_create_user_command("AutoFormat", 'lua require("lsp.function").toggle_format_on_save()', {})
 
 vim.api.nvim_create_user_command("Format", "lua vim.lsp.buf.format({ async = true })", {})
 
@@ -70,7 +70,7 @@ function M.toggle_eslint_on_save()
 end
 
 -- 切换保存时自动EsLintFix
-vim.api.nvim_create_user_command("LspToggleAutoEslintFix", 'lua require("lsp.function").toggle_eslint_on_save()', {})
+vim.api.nvim_create_user_command("AutoEslintFix", 'lua require("lsp.function").toggle_eslint_on_save()', {})
 
 -- dapui
 vim.api.nvim_create_user_command("DapOpen", 'lua require("dapui").open()', {})
