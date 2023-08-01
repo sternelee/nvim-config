@@ -341,7 +341,7 @@ require("lazy").setup({
     config = function()
       require("modules.typescript-tools")
     end,
-  },
+  }, -- 会同时有本地和全局两个typescript进程
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
