@@ -15,14 +15,22 @@ g.loaded_perl_provider = 0
 g.mapleader = " " --leader
 g.maplocalleader = ","
 
-vim.o.guifont = "Dank Mono:h18,OperatorMono Nerd Font:h18"
+vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
 
+local alpha = function()
+  return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+end
+-- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
+g.neovide_transparency = 1
+g.transparency = 0.9
+g.neovide_background_color = "#0f1117" .. alpha()
 g.neovide_scale_factor = 1.0
 g.neovide_input_macos_alt_is_meta = 1
 g.neovide_input_use_logo = 1
 g.neovide_remember_window_size = 1
 g.neovide_confirm_quit = 1
 g.neovide_hide_mouse_when_typing = 0
+g.neovide_cursor_vfx_mode = "ripple"
 
 nvim_exec(
   [[
