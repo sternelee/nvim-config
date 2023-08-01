@@ -317,14 +317,14 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
     },
   },
-  -- {
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-  --   end,
-  -- },
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    event = "InsertEnter",
+    config = function()
+      require("lsp_lines").setup()
+      keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+    end,
+  },
   -- {
   --   "jose-elias-alvarez/typescript.nvim",
   --   event = "VeryLazy",
