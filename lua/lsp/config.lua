@@ -161,6 +161,7 @@ local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
 }
+local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
@@ -170,6 +171,11 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   client.server_capabilities.semanticTokensProvider = false
+  -- https://www.reddit.com/r/neovim/comments/14e41rb/today_on_nightly_native_lsp_inlay_hint_support/?utm_name=androidcss
+  -- from https://github.com/LazyVim/LazyVim/blob/566049aa4a26a86219dd1ad1624f9a1bf18831b6/lua/lazyvim/plugins/lsp/init.lua#L124
+  if client.supports_method('textDocument/inlayHint') then
+    inlay_hint(bufnr, true)
+  end
 
   if client.name == "tailwindcss" then
     if client.server_capabilities.colorProvider then
@@ -177,19 +183,6 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  -- https://www.reddit.com/r/neovim/comments/14e41rb/today_on_nightly_native_lsp_inlay_hint_support/?utm_name=androidcss
-  -- vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-  --
-  -- vim.api.nvim_create_autocmd("InsertEnter", {
-  --   buffer = bufnr,
-  --   callback = function() vim.lsp.inlay_hint(bufnr, true) end,
-  --   group = "lsp_augroup",
-  -- })
-  -- vim.api.nvim_create_autocmd("InsertLeave", {
-  --   buffer = bufnr,
-  --   callback = function() vim.lsp.inlay_hint(bufnr, false) end,
-  --   group = "lsp_augroup",
-  -- })
 end
 
 local servers = {
@@ -268,18 +261,3 @@ end
 setup_servers()
 
 require("lsp/function")
-
-require("lsp-inlayhints").setup()
-vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = "LspAttach_inlayhints",
-  callback = function(args)
-    if not (args.data and args.data.client_id) then
-      return
-    end
-
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    require("lsp-inlayhints").on_attach(client, bufnr)
-  end,
-})
