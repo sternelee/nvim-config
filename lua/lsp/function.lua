@@ -1,9 +1,6 @@
 local M = {}
 
-function M.enable_format_on_save()
-  local group = vim.api.nvim_create_augroup("format_on_save", { clear = false })
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    callback = function()
+function M.format ()
       local buf = vim.api.nvim_get_current_buf()
       local ft = vim.bo[buf].filetype
       local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
@@ -17,7 +14,12 @@ function M.enable_format_on_save()
           return client.name ~= "null-ls"
         end,
       })
-    end,
+end
+
+function M.enable_format_on_save()
+  local group = vim.api.nvim_create_augroup("format_on_save", { clear = false })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = M.format,
     group = group,
   })
   require("notify")("Enabled format on save", "info", { title = "LSP", timeout = 2000 })
@@ -40,6 +42,7 @@ end
 vim.api.nvim_create_user_command("AutoFormat", 'lua require("lsp.function").toggle_format_on_save()', {})
 
 vim.api.nvim_create_user_command("Format", "lua vim.lsp.buf.format({ async = true })", {})
+vim.api.nvim_create_user_command("FormatFile", 'lua require("lsp.function").format()', {})
 
 function M.enable_eslint_on_save()
   local group = vim.api.nvim_create_augroup("eslint_on_save", { clear = false })

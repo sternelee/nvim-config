@@ -198,12 +198,7 @@ require("lazy").setup({
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
     dependencies = {
-      -- "lunarvim/synthwave84.nvim",
-      -- "LunarVim/horizon.nvim",
       "RRethy/nvim-base16",
-      -- "LunarVim/darkplus.nvim",
-      -- "glepnir/porcelain.nvim",
-      "sainnhe/gruvbox-material",
     },
   },
   -- 显示导航线
@@ -231,11 +226,6 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   -- {
   --   "nvim-telescope/telescope.nvim",
@@ -258,17 +248,6 @@ require("lazy").setup({
       require("fzf-lua").setup({'fzf-native'})
     end
   },
-  -- {
-  --   "renerocksai/telekasten.nvim",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     "renerocksai/calendar-vim",
-  --     "mzlogin/vim-markdown-toc",
-  --   },
-  --   config = function()
-  --     require("modules.telekasten")
-  --   end,
-  -- },   -- 日志管理
   -- 语法建议
   {
     "neovim/nvim-lspconfig",
@@ -277,7 +256,6 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
-      -- {"folke/neodev.nvim", opts = {}},
       -- "folke/neoconf.nvim",
       { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
     },
@@ -340,19 +318,18 @@ require("lazy").setup({
     config = function()
       require("modules.typescript-tools")
     end,
-  }, -- 会同时有本地和全局两个typescript进程
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter" },
     dependencies = {
-      -- "lukas-reineke/cmp-under-comparator",
       "petertriho/cmp-git",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
-      -- "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "saadparwaiz1/cmp_luasnip",
       {
         "L3MON4D3/LuaSnip",
@@ -381,6 +358,7 @@ require("lazy").setup({
   --     require("telescope").load_extension("refactoring")
   --   end,
   -- },
+  -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   {
     "folke/trouble.nvim",
     ft = "qf",
@@ -415,7 +393,7 @@ require("lazy").setup({
         tools = {
           autoSetHints = true,
           runnables = { use_telescope = false },
-          inlay_hints = { show_parameter_hints = true, auto = false },
+          inlay_hints = { show_parameter_hints = true, auto = true },
           hover_actions = { auto_focus = true },
         },
       })
@@ -458,7 +436,6 @@ require("lazy").setup({
       require("goto-preview").setup({})
     end,
   },
-  -- {'napmn/react-extract.nvim', config = function() require('react-extract').setup() end} -- 重构react组件
   { "metakirby5/codi.vim",      cmd = { "Codi" } },
   {
     "iamcco/markdown-preview.nvim",
@@ -504,13 +481,6 @@ require("lazy").setup({
       require("nvim-autopairs").setup()
     end,
   },
-  -- {
-  --   "utilyre/sentiment.nvim",
-  --   event = "VeryLazy",
-  --   name = "sentiment",
-  --   version = "*",
-  --   opts = {},
-  -- },
   {
     "chentoast/marks.nvim",
     event = "VeryLazy",
@@ -566,16 +536,16 @@ require("lazy").setup({
   { "wakatime/vim-wakatime",    event = "VeryLazy" },
   { "gennaro-tedesco/nvim-jqx", cmd = { "JqxList", "JqxQuery" } },
   { "godlygeek/tabular",        event = "VeryLazy" }, -- 对齐方式
-  -- {
-  --   "ckolkey/ts-node-action",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     "nvim-treesitter",
-  --   },
-  --   config = function()
-  --     require("ts-node-action").setup({})
-  --   end,
-  -- },                                        -- 字符组合切换
+  {
+    "ckolkey/ts-node-action",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-treesitter",
+    },
+    config = function()
+      require("ts-node-action").setup({})
+    end,
+  },                                        -- 字符组合切换
   { "numToStr/FTerm.nvim", event = "VeryLazy" },
   -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
   {
@@ -923,20 +893,7 @@ end)
 -- LazyGit
 map("n", "<leaader><leader>g", "<cmd>LazyGit<CR>")
 
--- keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
-
--- telekasten
--- map("n", "<leader>zf", '<cmd>lua require("telekasten").find_notes()<CR>')
--- map("n", "<leader>zd", '<cmd>lua require("telekasten").find_daily_notes()<CR>')
--- map("n", "<leader>zg", '<cmd>lua require("telekasten").search_notes()<CR>')
--- map("n", "<leader>zz", '<cmd>lua require("telekasten").follow_link()<CR>')
--- map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
--- map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
--- map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
--- map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
--- map("n", "<leader>zC", "<cmd>CalendarT<CR>")
--- map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
--- map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
+keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
 -- Codi
 map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
@@ -947,13 +904,6 @@ map("n", "<leader>pf", "<Cmd>ProjectFindInFiles<CR>")
 
 map("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>')
 map("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-
--- flash.nvim
--- keymap({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
--- keymap({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
--- keymap({ "o" }, "r", function() require("flash").remote() end, { desc = "Remote Flash" })
--- keymap({ "x", "o" }, "s", function() require("flash").treesitter_search() end, { desc = "Flash Treesitter Search" })
--- keymap({ "c" }, "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
 
 cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
