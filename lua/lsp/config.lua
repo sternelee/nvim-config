@@ -203,6 +203,23 @@ local servers = {
   "pyright",
 }
 
+local function get_typescript_server_path(root_dir)
+
+  local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
+  local found_ts = ''
+  local function check_dir(path)
+    found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
+    if lsputil.path.exists(found_ts) then
+      return path
+    end
+  end
+  if lsputil.search_ancestors(root_dir, check_dir) then
+    return found_ts
+  else
+    return global_ts
+  end
+end
+
 local function setup_servers()
   for _, lsp in ipairs(servers) do
     local opts = {
@@ -232,6 +249,9 @@ local function setup_servers()
     end
     if lsp == "volar" then
       opts.root_dir = lsputil.root_pattern(".volarrc")
+      opts.on_new_config = function(new_config, new_root_dir)
+        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+      end
     end
     if lsp == "lua_ls" then
       opts.settings = require("lsp/lua_ls").settings
