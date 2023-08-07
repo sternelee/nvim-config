@@ -193,7 +193,7 @@ local servers = {
   "emmet_ls",
   "vuels",
   "volar",
-  -- "tsserver",
+  "tsserver",
   "denols",
   "rust_analyzer",
   "eslint",   -- 由null-ls来管理
@@ -218,11 +218,11 @@ local function setup_servers()
         },
       }
     end
-    -- if lsp == "tsserver" then
-    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-    --   opts.capabilities = require("lsp/tsserver").capabilities
-    --   opts.settings = require("lsp/tsserver").settings
-    -- end
+    if lsp == "tsserver" then
+      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+      opts.capabilities = require("lsp/tsserver").capabilities
+      opts.settings = require("lsp/tsserver").settings
+    end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end

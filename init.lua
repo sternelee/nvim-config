@@ -102,7 +102,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      -- "linrongbin16/lsp-progress.nvim",
+      "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -257,7 +257,7 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
+      -- { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
     },
     config = function()
       require("lsp/config")
@@ -310,15 +310,15 @@ require("lazy").setup({
   --     require("modules.typescript")
   --   end,
   -- },
-  {
-    "pmizio/typescript-tools.nvim",
-    event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue", "javascript" },
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("modules.typescript-tools")
-    end,
-  },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   event = "VeryLazy",
+  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   config = function()
+  --     require("modules.typescript-tools")
+  --   end,
+  -- },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",

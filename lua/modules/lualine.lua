@@ -1,5 +1,5 @@
 -- lualine config
--- require('lsp-progress').setup()
+require('lsp-progress').setup()
 
 require("lualine").setup({
   options = {
@@ -23,7 +23,7 @@ require("lualine").setup({
       "selectioncount",
       "searchcount",
       -- lsp_progress,
-      -- require("lsp-progress").progress
+      require("lsp-progress").progress
     },
     lualine_x = { "branch", "encoding", "fileformat", "filetype" },
     lualine_y = { "progress" },
