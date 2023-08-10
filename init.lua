@@ -390,9 +390,9 @@ require("lazy").setup({
     config = function()
       require("rust-tools").setup({
         tools = {
-          autoSetHints = true,
+          autoSetHints = false,
           runnables = { use_telescope = false },
-          inlay_hints = { show_parameter_hints = true, auto = true },
+          inlay_hints = { show_parameter_hints = false, auto = false },
           hover_actions = { auto_focus = true },
         },
       })

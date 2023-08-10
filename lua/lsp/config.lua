@@ -247,12 +247,12 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern(".veturrc")
       opts.settings = require("lsp/vuels").settings
     end
-    -- if lsp == "volar" then
-    --   opts.root_dir = lsputil.root_pattern(".volarrc")
-    --   opts.on_new_config = function(new_config, new_root_dir)
-    --     new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-    --   end
-    -- end
+    if lsp == "volar" then
+      -- opts.root_dir = lsputil.root_pattern(".volarrc")
+      opts.on_new_config = function(new_config, new_root_dir)
+        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+      end
+    end
     if lsp == "lua_ls" then
       opts.settings = require("lsp/lua_ls").settings
     end
