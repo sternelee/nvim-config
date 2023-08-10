@@ -193,7 +193,7 @@ local servers = {
   "emmet_ls",
   "vuels",
   "volar",
-  "tsserver",
+  -- "tsserver",
   "denols",
   "rust_analyzer",
   "eslint",   -- 由null-ls来管理
@@ -235,11 +235,11 @@ local function setup_servers()
         },
       }
     end
-    if lsp == "tsserver" then
-      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-      opts.capabilities = require("lsp/tsserver").capabilities
-      opts.settings = require("lsp/tsserver").settings
-    end
+    -- if lsp == "tsserver" then
+    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+    --   opts.capabilities = require("lsp/tsserver").capabilities
+    --   opts.settings = require("lsp/tsserver").settings
+    -- end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
@@ -247,12 +247,12 @@ local function setup_servers()
       opts.root_dir = lsputil.root_pattern(".veturrc")
       opts.settings = require("lsp/vuels").settings
     end
-    if lsp == "volar" then
-      opts.root_dir = lsputil.root_pattern(".volarrc")
-      opts.on_new_config = function(new_config, new_root_dir)
-        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-      end
-    end
+    -- if lsp == "volar" then
+    --   opts.root_dir = lsputil.root_pattern(".volarrc")
+    --   opts.on_new_config = function(new_config, new_root_dir)
+    --     new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+    --   end
+    -- end
     if lsp == "lua_ls" then
       opts.settings = require("lsp/lua_ls").settings
     end
