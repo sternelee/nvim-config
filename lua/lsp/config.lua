@@ -257,7 +257,7 @@ local function setup_servers()
       opts.settings = require("lsp/lua_ls").settings
     end
     if lsp == "eslint" then
-      opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
+      -- opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
       opts.settings = require("lsp/eslint").settings
       opts.handlers = {
         ["window/showMessageRequest"] = function(_, result)
