@@ -302,14 +302,6 @@ require("lazy").setup({
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
-  -- {
-  --   "jose-elias-alvarez/typescript.nvim",
-  --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "vue" },
-  --   config = function()
-  --     require("modules.typescript")
-  --   end,
-  -- },
   {
     "pmizio/typescript-tools.nvim",
     event = "VeryLazy",
@@ -390,9 +382,9 @@ require("lazy").setup({
     config = function()
       require("rust-tools").setup({
         tools = {
-          autoSetHints = false,
+          autoSetHints = true,
           runnables = { use_telescope = false },
-          inlay_hints = { show_parameter_hints = false, auto = false },
+          inlay_hints = { show_parameter_hints = true, auto = true },
           hover_actions = { auto_focus = true },
         },
       })
@@ -968,9 +960,14 @@ local header = {
   "│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │",
   "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙",
   "+--------------------------------+",
-  "|      Love You, 盼盼小同学❤❤❤   |",
+  "|  Love You, 盼盼和小璇同学❤❤❤   |",
   "+----------------+---------------+",
 }
+
+-- 布局
+startify.section.header.val = header
+
+require("alpha").setup(startify.opts)
 
 -- 布局
 startify.section.header.val = header
