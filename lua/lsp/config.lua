@@ -191,7 +191,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  "vuels",
+  -- "vuels",
   "volar",
   -- "tsserver",
   "denols",
@@ -243,10 +243,10 @@ local function setup_servers()
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
-    if lsp == "vuels" then
-      opts.root_dir = lsputil.root_pattern(".veturrc")
-      opts.settings = require("lsp/vuels").settings
-    end
+    -- if lsp == "vuels" then
+    --   opts.root_dir = lsputil.root_pattern(".veturrc")
+    --   opts.settings = require("lsp/vuels").settings
+    -- end
     if lsp == "volar" then
       -- opts.root_dir = lsputil.root_pattern(".volarrc")
       opts.on_new_config = function(new_config, new_root_dir)
