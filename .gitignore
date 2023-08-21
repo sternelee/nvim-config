@@ -2,3 +2,4 @@
 plugin
 .vim
 coc-settings.json
+*.http
