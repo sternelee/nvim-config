@@ -117,11 +117,11 @@ vim.diagnostic.config({
   	prefix = " - ",
   	format = format,
   },
-  virtual_lines = {
-    format = format,
-    only_current_line = false,
-    highlight_whole_line = true,
-  },
+  -- virtual_lines = {
+  --   format = format,
+  --   only_current_line = false,
+  --   highlight_whole_line = true,
+  -- },
   virtual_text = false,
   -- virtual_text = {
   --   spacing = 4,
