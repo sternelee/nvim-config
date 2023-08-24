@@ -302,14 +302,14 @@ require("lazy").setup({
   --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
   --   end,
   -- },
-  -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
-  --   config = function()
-  --     require("modules.typescript-tools")
-  --   end,
-  -- },
+  {
+    "pmizio/typescript-tools.nvim",
+    event = "VeryLazy",
+    ft = { "typescript", "typescriptreact", "vue", "javascript" },
+    config = function()
+      require("modules.typescript-tools")
+    end,
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",

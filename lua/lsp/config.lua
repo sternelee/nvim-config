@@ -193,7 +193,7 @@ local servers = {
   "emmet_ls",
   -- "vuels",
   "volar",
-  "tsserver",
+  -- "tsserver",
   "denols",
   "rust_analyzer",
   "eslint",   -- 由null-ls来管理
