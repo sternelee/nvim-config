@@ -181,19 +181,19 @@ require("lazy").setup({
     end,
   }, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  -- {
-  --   "maxmx03/fluoromachine.nvim",
-  --   config = function()
-  --     local fm = require("fluoromachine")
-  --     fm.setup({
-  --       glow = true,
-  --       brightness = 0.01,
-  --       theme = "retrowave",
-  --       transparent = "full",
-  --     })
-  --     -- cmd("colorscheme fluoromachine")
-  --   end,
-  -- },
+  {
+    "maxmx03/fluoromachine.nvim",
+    config = function()
+      local fm = require("fluoromachine")
+      fm.setup({
+        glow = true,
+        brightness = 0.01,
+        theme = "retrowave",
+        transparent = "full",
+      })
+      -- cmd("colorscheme fluoromachine")
+    end,
+  },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -294,14 +294,14 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
     },
   },
-  -- {
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-  --   end,
-  -- },
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    event = "LspAttach",
+    config = function()
+      require("lsp_lines").setup()
+      keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+    end,
+  },
   -- {
   --   "pmizio/typescript-tools.nvim",
   --   event = "VeryLazy",

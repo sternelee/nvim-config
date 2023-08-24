@@ -61,10 +61,10 @@ null_ls.setup({
     -- formatting.codespell,
     -- formatting.prettier,
     -- require("typescript.extensions.null-ls.code-actions"),
-    formatting.prettierd.with({
-      filetypes = { "html", "css", "scss" },
-      extra_args = { "--print-width", "120" },
-    }),
+    -- formatting.prettierd.with({
+    --   filetypes = { "html", "css", "scss" },
+    --   extra_args = { "--print-width", "120" },
+    -- }),
     formatting.dprint.with({
       filetypes = { "javascriptreact", "typescript", "typescriptreact", "json", "javascript" },
       extra_args = get_dprint_config_path(),
