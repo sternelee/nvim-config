@@ -302,14 +302,14 @@ require("lazy").setup({
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
-  {
-    "pmizio/typescript-tools.nvim",
-    event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue", "javascript" },
-    config = function()
-      require("modules.typescript-tools")
-    end,
-  },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   event = "VeryLazy",
+  --   ft = { "typescript", "typescriptreact", "vue", "javascript" },
+  --   config = function()
+  --     require("modules.typescript-tools")
+  --   end,
+  -- },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
@@ -883,7 +883,7 @@ map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
 -- map("n", "gj", "<cmd>TypescriptGoToSourceDefinition<CR>")
-map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
+-- map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
 
 keymap({ "n", "x" }, "<leader>sr", function()
   require("ssr").open()

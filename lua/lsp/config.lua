@@ -193,7 +193,7 @@ local servers = {
   "emmet_ls",
   -- "vuels",
   "volar",
-  -- "tsserver",
+  "tsserver",
   "denols",
   "rust_analyzer",
   "eslint",   -- 由null-ls来管理
@@ -204,7 +204,6 @@ local servers = {
 }
 
 local function get_typescript_server_path(root_dir)
-
   local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
   local found_ts = ''
   local function check_dir(path)
@@ -235,11 +234,11 @@ local function setup_servers()
         },
       }
     end
-    -- if lsp == "tsserver" then
-    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-    --   opts.capabilities = require("lsp/tsserver").capabilities
-    --   opts.settings = require("lsp/tsserver").settings
-    -- end
+    if lsp == "tsserver" then
+      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+      opts.capabilities = require("lsp/tsserver").capabilities
+      opts.settings = require("lsp/tsserver").settings
+    end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
