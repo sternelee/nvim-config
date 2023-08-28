@@ -1,6 +1,7 @@
-local cmd = vim.cmd
+
 local g = vim.g
 local fn = vim.fn
+local cmd = vim.cmd
 local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
