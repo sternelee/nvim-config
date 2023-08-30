@@ -1,7 +1,6 @@
 local g = vim.g
 local fn = vim.fn
 local cmd = vim.cmd
-local nvim_exec = vim.api.nvim_exec
 local remap = vim.api.nvim_set_keymap
 local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
@@ -32,13 +31,10 @@ g.neovide_confirm_quit = 1
 g.neovide_hide_mouse_when_typing = 0
 g.neovide_cursor_vfx_mode = "ripple"
 
-nvim_exec(
-  [[
-filetype plugin on
-filetype indent on
-]],
-  false
-)
+cmd([[
+  filetype plugin on
+  filetype indent on
+]])
 
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/glepnir/nvim-lua-guide-zh
