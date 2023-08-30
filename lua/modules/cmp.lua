@@ -83,7 +83,7 @@ cmp.setup({
   },
   sources = {
     { name = "nvim_lsp",               priority_weight = 8 },
-    { name = "luasnip",                priority_weight = 7 },
+    { name = "luasnip",                option = { show_autosnippets = false, use_show_condition = false }},
     { name = "buffer",                 priority_weight = 7, option = { keyword_length = 3 } },
     { name = "nvim_lsp_signature_help" },
     { name = "calc" },

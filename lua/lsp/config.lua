@@ -117,11 +117,11 @@ vim.diagnostic.config({
   	prefix = " - ",
   	format = format,
   },
-  -- virtual_lines = {
-  --   format = format,
-  --   only_current_line = false,
-  --   highlight_whole_line = true,
-  -- },
+  virtual_lines = {
+    format = format,
+    only_current_line = false,
+    highlight_whole_line = true,
+  },
   virtual_text = false,
   -- virtual_text = {
   --   spacing = 4,
@@ -144,8 +144,6 @@ local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")
 
 vim.lsp.set_log_level('debug')
-
--- require("neodev").setup({})
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -234,11 +232,11 @@ local function setup_servers()
         },
       }
     end
-    if lsp == "tsserver" then
-      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-      opts.capabilities = require("lsp/tsserver").capabilities
-      opts.settings = require("lsp/tsserver").settings
-    end
+    -- if lsp == "tsserver" then
+    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+    --   opts.capabilities = require("lsp/tsserver").capabilities
+    --   opts.settings = require("lsp/tsserver").settings
+    -- end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
@@ -248,6 +246,7 @@ local function setup_servers()
     -- end
     if lsp == "volar" then
       -- opts.root_dir = lsputil.root_pattern(".volarrc")
+      opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
       opts.on_new_config = function(new_config, new_root_dir)
         new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
       end

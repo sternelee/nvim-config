@@ -1,4 +1,3 @@
-
 local g = vim.g
 local fn = vim.fn
 local cmd = vim.cmd
@@ -180,7 +179,7 @@ require("lazy").setup({
     config = function()
       require("modules.colorizer")
     end,
-  }, -- 色值高亮
+  },   -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
   {
     "maxmx03/fluoromachine.nvim",
@@ -209,7 +208,7 @@ require("lazy").setup({
     config = function()
       require("modules.indent_blankline")
     end,
-  }, -- 对齐线
+  },   -- 对齐线
   -- {
   --   "shellRaining/hlchunk.nvim",
   --   event = "VeryLazy",
@@ -227,7 +226,7 @@ require("lazy").setup({
       require("hop"):setup()
     end,
   },
-  { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
+  { "leafOfTree/vim-project",         cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   -- {
   --   "nvim-telescope/telescope.nvim",
   --   event = "VeryLazy",
@@ -246,8 +245,8 @@ require("lazy").setup({
     "ibhagwan/fzf-lua",
     event = "VeryLazy",
     config = function()
-      require("fzf-lua").setup({ 'fzf-native' })
-    end
+      require("fzf-lua").setup({ "fzf-native" })
+    end,
   },
   -- 语法建议
   {
@@ -258,7 +257,13 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      { "j-hui/fidget.nvim", branch = "legacy", config = function() require("fidget").setup() end },
+      {
+        "j-hui/fidget.nvim",
+        branch = "legacy",
+        config = function()
+          require("fidget").setup()
+        end,
+      },
     },
     config = function()
       require("lsp/config")
@@ -266,7 +271,7 @@ require("lazy").setup({
   },
   {
     "nvimdev/lspsaga.nvim",
-    event = { "BufReadPost" },
+    event = { "LspAttach" },
     branch = "main",
     config = function()
       require("modules.saga")
@@ -277,7 +282,11 @@ require("lazy").setup({
   --   event = {"BufReadPost"},
   --   opts = {},
   -- }, -- if not use lspsaga
-  { "Bekaboo/dropbar.nvim",   event = "VeryLazy",                                                            opts = {} },
+  {
+    "Bekaboo/dropbar.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
   {
     "Exafunction/codeium.vim",
     event = "VeryLazy",
@@ -285,28 +294,28 @@ require("lazy").setup({
       require("modules.codeium")
     end,
   },
-  {
-    "jackMort/ChatGPT.nvim",
-    cmd = { "ChatGPT", "ChatGPTRun" },
-    config = function()
-      require("chatgpt").setup()
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-  },
   -- {
-  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   event = "LspAttach",
+  --   "jackMort/ChatGPT.nvim",
+  --   cmd = { "ChatGPT", "ChatGPTRun" },
   --   config = function()
-  --     require("lsp_lines").setup()
-  --     keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+  --     require("chatgpt").setup()
   --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --   },
   -- },
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    event = "LspAttach",
+    config = function()
+      require("lsp_lines").setup()
+      keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+    end,
+  },
   {
     "pmizio/typescript-tools.nvim",
     event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "vue", "javascript" },
+    ft = { "typescript", "typescriptreact", "javascript" },
     config = function()
       require("modules.typescript-tools")
     end,
@@ -351,12 +360,12 @@ require("lazy").setup({
   --   end,
   -- },
   {
-    'napmn/react-extract.nvim',
+    "napmn/react-extract.nvim",
     ft = { "typescriptreact", "javascriptreact" },
     config = function()
-      require('react-extract').setup()
-    end
-  },                                                           -- 重构react组件
+      require("react-extract").setup()
+    end,
+  },   -- 重构react组件
   {
     "folke/trouble.nvim",
     ft = "qf",
@@ -425,7 +434,7 @@ require("lazy").setup({
       require("rest-nvim").setup()
     end,
   },
-  { "pechorin/any-jump.vim",          cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
+  { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
   {
     "rmagatti/goto-preview",
     ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
@@ -434,7 +443,7 @@ require("lazy").setup({
       require("goto-preview").setup({})
     end,
   },
-  { "metakirby5/codi.vim",        cmd = { "Codi" } },
+  { "metakirby5/codi.vim",   cmd = { "Codi" } },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -446,7 +455,7 @@ require("lazy").setup({
   -- end},
   { "tpope/vim-dispatch",         cmd = { "Make", "Dispatch", "Focus", "Start" } },
   { "skywind3000/asyncrun.vim",   cmd = "AsyncRun" },
-  { 'skywind3000/asynctasks.vim', cmd = 'AsyncTask' },
+  { "skywind3000/asynctasks.vim", cmd = "AsyncTask" },
   --- 方便操作
   {
     "nacro90/numb.nvim",
@@ -455,7 +464,7 @@ require("lazy").setup({
       require("numb").setup()
     end,
   },
-  { "voldikss/vim-translator", cmd = { "Translate" } }, -- npm install fanyi -g 安装翻译
+  { "voldikss/vim-translator", cmd = { "Translate" } },   -- npm install fanyi -g 安装翻译
   {
     "numToStr/Comment.nvim",
     event = "VeryLazy",
@@ -483,7 +492,12 @@ require("lazy").setup({
     "chentoast/marks.nvim",
     event = "VeryLazy",
     dependencies = {
-      {"toppair/reach.nvim", config = function() require("reach").setup({ notifications = true }) end},
+      {
+        "toppair/reach.nvim",
+        config = function()
+          require("reach").setup({ notifications = true })
+        end,
+      },
     },
     config = function()
       require("modules.marks")
@@ -495,8 +509,8 @@ require("lazy").setup({
     config = function()
       require("which-key").setup({})
     end,
-  },                                                  -- 提示leader按键
-  { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" }, -- 彩虹匹配
+  },                                                    -- 提示leader按键
+  { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
   { "windwp/nvim-ts-autotag",   event = "VeryLazy" },
   { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
   {
@@ -512,7 +526,7 @@ require("lazy").setup({
     config = function()
       require("neogen").setup({ enabled = true })
     end,
-  }, -- 方便写jsdoc注释
+  },   -- 方便写jsdoc注释
   { "ntpeters/vim-better-whitespace", event = "VeryLazy" },
   { "ThePrimeagen/vim-be-good",       cmd = "VimBeGood" },
   {
@@ -521,7 +535,7 @@ require("lazy").setup({
     config = function()
       require("spectre").setup()
     end,
-  }, -- 全局搜索
+  },   -- 全局搜索
   { "tpope/vim-repeat",         event = "VeryLazy" },
   {
     "kevinhwang91/nvim-ufo",
@@ -530,7 +544,7 @@ require("lazy").setup({
     config = function()
       require("modules.ufo")
     end,
-  }, -- 折叠
+  },   -- 折叠
   { "wakatime/vim-wakatime",    event = "VeryLazy" },
   { "gennaro-tedesco/nvim-jqx", cmd = { "JqxList", "JqxQuery" } },
   { "godlygeek/tabular",        event = "VeryLazy" }, -- 对齐方式
@@ -543,7 +557,7 @@ require("lazy").setup({
     config = function()
       require("ts-node-action").setup({})
     end,
-  }, -- 字符组合切换
+  },   -- 字符组合切换
   { "numToStr/FTerm.nvim", event = "VeryLazy" },
   -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
   {
@@ -577,13 +591,13 @@ require("lazy").setup({
       require("scrollbar").setup()
     end,
   },
-  {
-    "gelguy/wilder.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("modules.wilder")
-    end,
-  },
+  -- {
+  --   "gelguy/wilder.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("modules.wilder")
+  --   end,
+  -- },
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
@@ -745,11 +759,13 @@ map("n", "gw", "<cmd>HopWord<CR>") --easymotion/hop
 map("n", "gl", "<cmd>HopLine<CR>")
 map("n", "g/", "<cmd>HopPattern<CR>")
 map("n", "<leader>:", "<cmd>terminal<CR>")
+
 -- telescope
 -- map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
 -- map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
 -- map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
--- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
+-- -- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
+-- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
 -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
 -- map("n", "<leader>'", "<cmd>Telescope resume<CR>")
 -- map("n", "gs", "<cmd>Telescope grep_string<CR>")
@@ -760,18 +776,20 @@ map("n", "<leader>:", "<cmd>terminal<CR>")
 -- map("n", "fp", "<cmd>Telescope projects<CR>")
 -- map("n", "gq", "<cmd>Telescope diagnostics<CR>")
 -- map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
+
 -- lua fzf
 map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
 map("n", "<leader>f", "<cmd>FzfLua files<CR>")
 map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 -- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
 map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
-map('n', '<leader>/', '<cmd>FzfLua live_grep<CR>')
+map("n", "<leader>/", "<cmd>FzfLua live_grep<CR>")
 map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
 map("n", "fg", "<cmd>FzfLua git_files<CR>")
 map("n", "fc", "<cmd>FzfLua commands<CR>")
 map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
+
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
@@ -883,8 +901,7 @@ map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
 
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
--- map("n", "gj", "<cmd>TypescriptGoToSourceDefinition<CR>")
--- map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
+map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
 
 keymap({ "n", "x" }, "<leader>sr", function()
   require("ssr").open()
@@ -941,8 +958,8 @@ map("n", "<leader>0", "<cmd>BufferGoto 10<CR>")
 g.markdown_fenced_language = {
   "ts=typescript",
 }
-g.markdown_fenced_languages = { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss",
-  "css" }
+g.markdown_fenced_languages =
+{ "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
 cmd("colorscheme base16-ayu-dark")
