@@ -43,7 +43,7 @@ cmd([[
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
     "clone",
