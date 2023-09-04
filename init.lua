@@ -278,11 +278,11 @@ require("lazy").setup({
   --   event = {"BufReadPost"},
   --   opts = {},
   -- }, -- if not use lspsaga
-  {
-    "Bekaboo/dropbar.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "Bekaboo/dropbar.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
   {
     "Exafunction/codeium.vim",
     event = "VeryLazy",
@@ -587,13 +587,13 @@ require("lazy").setup({
       require("scrollbar").setup()
     end,
   },
-  -- {
-  --   "gelguy/wilder.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.wilder")
-  --   end,
-  -- },
+  {
+    "gelguy/wilder.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modules.wilder")
+    end,
+  },
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
