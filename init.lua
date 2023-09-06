@@ -98,7 +98,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      -- "linrongbin16/lsp-progress.nvim",
+      "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -253,13 +253,13 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      {
-        "j-hui/fidget.nvim",
-        branch = "legacy",
-        config = function()
-          require("fidget").setup()
-        end,
-      },
+      -- {
+      --   "j-hui/fidget.nvim",
+      --   branch = "legacy",
+      --   config = function()
+      --     require("fidget").setup()
+      --   end,
+      -- },
     },
     config = function()
       require("lsp/config")

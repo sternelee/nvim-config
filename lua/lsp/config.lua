@@ -252,7 +252,7 @@ local function setup_servers()
       end
     end
     if lsp == "lua_ls" then
-      opts.settings = require("lsp/lua_ls").settings
+      opts.on_init = require("lsp/lua_ls").on_init
     end
     if lsp == "eslint" then
       -- opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
