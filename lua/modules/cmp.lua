@@ -19,7 +19,7 @@ local formatForTailwindCSS = function(entry, vim_item)
       if vim.fn.hlID(group) < 1 then
         vim.api.nvim_set_hl(0, group, { fg = "#" .. color })
       end
-      vim_item.kind = "●"     -- or "■" or anything
+      vim_item.kind = "●" -- or "■" or anything
       vim_item.kind_hl_group = group
       return vim_item
     end
@@ -83,8 +83,17 @@ cmp.setup({
   },
   sources = {
     { name = "nvim_lsp",               priority_weight = 8 },
-    { name = "luasnip",                option = { show_autosnippets = false, use_show_condition = false }},
-    { name = "buffer",                 priority_weight = 7, option = { keyword_length = 3 } },
+    {
+      name = "luasnip",
+      option = { show_autosnippets = false, use_show_condition = false, group_index = 1 },
+    },
+    {
+      name = "buffer",
+      priority_weight = 7,
+      option = {
+        keyword_length = 3,
+      },
+    },
     { name = "nvim_lsp_signature_help" },
     { name = "calc" },
     { name = "emoji" },
@@ -157,18 +166,18 @@ cmp.setup.filetype("gitcommit", {
   }),
 })
 
--- cmp.setup.cmdline({ "/", "?" }, {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = {
---     { name = "buffer" },
---   },
--- })
---
--- cmp.setup.cmdline(":", {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = cmp.config.sources({
---     { name = "path" },
---   }, {
---     { name = "cmdline" },
---   }),
--- })
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
