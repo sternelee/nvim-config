@@ -110,18 +110,18 @@ vim.diagnostic.config({
   signs = true,
   update_in_insert = false,
   severity_sort = true,
-  -- float = false,
-  float = {
-  	border = "rounded",
-  	source = "always", -- Or "if_many"
-  	prefix = " - ",
-  	format = format,
-  },
   virtual_lines = {
     format = format,
     only_current_line = false,
     highlight_whole_line = true,
   },
+  float = false,
+  -- float = {
+  -- 	border = "rounded",
+  -- 	source = "always", -- Or "if_many"
+  -- 	prefix = " - ",
+  -- 	format = format,
+  -- },
   virtual_text = false,
   -- virtual_text = {
   --   spacing = 4,
@@ -194,28 +194,28 @@ local servers = {
   -- "tsserver",
   "denols",
   "rust_analyzer",
-  "eslint",   -- 由null-ls来管理
+  -- "eslint",   -- 由null-ls来管理
   "tailwindcss",
   "bashls",
   "marksman",
   "pyright",
 }
 
-local function get_typescript_server_path(root_dir)
-  local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
-  local found_ts = ''
-  local function check_dir(path)
-    found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
-    if lsputil.path.exists(found_ts) then
-      return path
-    end
-  end
-  if lsputil.search_ancestors(root_dir, check_dir) then
-    return found_ts
-  else
-    return global_ts
-  end
-end
+-- local function get_typescript_server_path(root_dir)
+--   local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
+--   local found_ts = ''
+--   local function check_dir(path)
+--     found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
+--     if lsputil.path.exists(found_ts) then
+--       return path
+--     end
+--   end
+--   if lsputil.search_ancestors(root_dir, check_dir) then
+--     return found_ts
+--   else
+--     return global_ts
+--   end
+-- end
 
 local function setup_servers()
   for _, lsp in ipairs(servers) do
@@ -232,11 +232,11 @@ local function setup_servers()
         },
       }
     end
-    -- if lsp == "tsserver" then
-    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-    --   opts.capabilities = require("lsp/tsserver").capabilities
-    --   opts.settings = require("lsp/tsserver").settings
-    -- end
+    if lsp == "tsserver" then
+      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+      opts.capabilities = require("lsp/tsserver").capabilities
+      opts.settings = require("lsp/tsserver").settings
+    end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
@@ -244,27 +244,27 @@ local function setup_servers()
     --   opts.root_dir = lsputil.root_pattern(".veturrc")
     --   opts.settings = require("lsp/vuels").settings
     -- end
-    if lsp == "volar" then
-      -- opts.root_dir = lsputil.root_pattern(".volarrc")
-      opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-      opts.on_new_config = function(new_config, new_root_dir)
-        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-      end
-    end
+    -- if lsp == "volar" then
+    --   -- opts.root_dir = lsputil.root_pattern(".volarrc")
+    --   opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+    --   opts.on_new_config = function(new_config, new_root_dir)
+    --     new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+    --   end
+    -- end
     if lsp == "lua_ls" then
       opts.on_init = require("lsp/lua_ls").on_init
     end
-    if lsp == "eslint" then
-      -- opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
-      opts.settings = require("lsp/eslint").settings
-      opts.handlers = {
-        ["window/showMessageRequest"] = function(_, result)
-          return result
-        end,
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
-      }
-    end
+    -- if lsp == "eslint" then
+    --   opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
+    --   opts.settings = require("lsp/eslint").settings
+    --   opts.handlers = {
+    --     ["window/showMessageRequest"] = function(_, result)
+    --       return result
+    --     end,
+    --     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
+    --     ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
+    --   }
+    -- end
     if lsp == "tailwindcss" then
       opts.root_dir = lsputil.root_pattern("tailwind.config.js", "tailwind.config.ts")
       opts.filetypes = require("lsp/tailwindcss").filetypes

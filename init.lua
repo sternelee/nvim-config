@@ -365,7 +365,7 @@ require("lazy").setup({
   {
     "folke/trouble.nvim",
     ft = "qf",
-    event = "InsertEnter",
+    event = "LspAttach",
     config = function()
       require("trouble").setup()
     end,
@@ -739,8 +739,8 @@ local function map(mode, lhs, rhs)
   remap(mode, lhs, rhs, options)
 end
 
-map("v", "x", "d")
-map("v", "d", '"_d')
+-- map("v", "x", "d")
+-- map("v", "d", '"_d')
 map("n", "P", '"0p')
 map("v", "P", '"0p')
 map("i", "jk", "<esc>") --jk to exit
