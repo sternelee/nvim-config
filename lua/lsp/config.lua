@@ -143,7 +143,7 @@ end
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")
 
-vim.lsp.set_log_level('debug')
+vim.lsp.set_log_level('OFF')
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 

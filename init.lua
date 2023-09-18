@@ -62,19 +62,19 @@ require("lazy").setup({
       require("bigfile").config({})
     end,
   },
-  {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    config = function()
-      local notify = require("notify")
-      notify.setup({
-        timeout = 1000,
-        background_colour = "#000000",
-        stages = "fade",
-      })
-      vim.notify = notify
-    end,
-  },
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     local notify = require("notify")
+  --     notify.setup({
+  --       timeout = 1000,
+  --       background_colour = "#000000",
+  --       stages = "fade",
+  --     })
+  --     vim.notify = notify
+  --   end,
+  -- },
   -- 状态栏
   {
     "romgrk/barbar.nvim",
@@ -98,7 +98,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      -- "linrongbin16/lsp-progress.nvim",
+      "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -253,13 +253,13 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      {
-        "j-hui/fidget.nvim",
-        branch = "legacy",
-        config = function()
-          require("fidget").setup()
-        end,
-      },
+      -- {
+      --   "j-hui/fidget.nvim",
+      --   branch = "legacy",
+      --   config = function()
+      --     require("fidget").setup()
+      --   end,
+      -- },
     },
     config = function()
       require("lsp/config")
@@ -347,14 +347,14 @@ require("lazy").setup({
       require("modules.cmp")
     end,
   },
-  -- {
-  --   "ThePrimeagen/refactoring.nvim",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("refactoring").setup()
-  --     require("telescope").load_extension("refactoring")
-  --   end,
-  -- },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    event = "InsertEnter",
+    config = function()
+      require("refactoring").setup()
+      -- require("telescope").load_extension("refactoring")
+    end,
+  },
   {
     "napmn/react-extract.nvim",
     ft = { "typescriptreact", "javascriptreact" },
@@ -809,7 +809,6 @@ map("n", "<Tab>", "<cmd>BufferNext<CR>")
 map("n", "<s-Tab>", "<cmd>BufferPrevious<CR>")
 -- map('n', 'gb', '<cmd>BufferPick<CR>')
 -- map('n', 'gp', '<cmd>bprevious<CR>')
--- map('n', 'gn', '<cmd>bnext<CR>')
 -- map('n', '<leader>be', '<cmd>tabedit<CR>')
 -- git
 map("n", "<leader>ga", "<cmd>Git add %:p<CR>")
@@ -823,11 +822,11 @@ map("n", "<leader>gr", "<cmd>Git reset --hard<CR>")
 map("n", "<leader><leader>g", "<cmd>LazyGit<CR>")
 
 -- refactoring
--- map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
--- map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
--- map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
--- map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
--- map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("v", "<leader>re", '<cmd>lua require("refactoring").refactor("Extract Function")<CR>')
+map("v", "<leader>rf", '<cmd>lua require("refactoring").refactor("Extract Function To File")<CR>')
+map("v", "<leader>rv", '<cmd>lua require("refactoring").refactor("Extract Variable")<CR>')
+map("v", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
+map("n", "<leader>ri", '<cmd>lua require("refactoring").refactor("Inline Variable")<CR>')
 -- map("n", "<leader>rr", '<cmd><Esc><cmd>lua require("telescope").extensions.refactoring.refactors()<CR>')
 
 map("n", "<leader>j", "<cmd>AnyJump<CR>")
@@ -867,6 +866,8 @@ map("n", "zM", '<cmd>lua require("ufo").closeAllFolds()<CR>')
 -- LSP
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 map("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
 map("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
 map("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
@@ -875,10 +876,8 @@ map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 -- map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 -- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
--- map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+-- map("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>")
 -- map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
--- map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
--- map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 -- map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 -- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 -- map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
@@ -887,8 +886,8 @@ map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
 map("n", "ga", "<cmd>Lspsaga code_action<CR>")
 map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
 map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-map("n", "gr", "<cmd>Lspsaga rename<CR>")
-map("n", "gi", "<cmd>Lspsaga peek_type_definition<CR>")
+map("n", "gn", "<cmd>Lspsaga rename<CR>")
+map("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
 map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
 map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
