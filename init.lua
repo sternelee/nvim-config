@@ -98,7 +98,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      "linrongbin16/lsp-progress.nvim",
+      -- "linrongbin16/lsp-progress.nvim",
     },
     config = function()
       require("modules.lualine")
@@ -253,13 +253,13 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       -- "folke/neoconf.nvim",
-      -- {
-      --   "j-hui/fidget.nvim",
-      --   branch = "legacy",
-      --   config = function()
-      --     require("fidget").setup()
-      --   end,
-      -- },
+      {
+        "j-hui/fidget.nvim",
+        branch = "legacy",
+        config = function()
+          require("fidget").setup()
+        end,
+      },
     },
     config = function()
       require("lsp/config")
@@ -335,7 +335,7 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      "hrsh7th/cmp-cmdline",
+      -- "hrsh7th/cmp-cmdline",
       {
         "onsails/lspkind-nvim",
         config = function()
@@ -372,7 +372,7 @@ require("lazy").setup({
   },
   { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "neovim-stuff/null-ls.nvim",
     event = "InsertEnter",
     config = function()
       require("modules.null-ls")
@@ -569,17 +569,17 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("modules.noice")
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("modules.noice")
+  --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
   {
     "petertriho/nvim-scrollbar",
     event = "VeryLazy",
@@ -587,13 +587,13 @@ require("lazy").setup({
       require("scrollbar").setup()
     end,
   },
-  -- {
-  --   "gelguy/wilder.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.wilder")
-  --   end,
-  -- },
+  {
+    "gelguy/wilder.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modules.wilder")
+    end,
+  },
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
