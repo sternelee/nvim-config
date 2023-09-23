@@ -4,20 +4,18 @@ M.on_init = function(client)
     if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
         client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
             Lua = {
-                runtime = {
-                    version = "LuaJIT",
+                hint = {
+                    enable = true,
+                    setType = true,
+                },
+                codelens = {
+                    enable = true,
                 },
                 completion = {
                     callSnippet = "Replace",
-                },
-                diagnostics = {
-                    globals = { "vim", "use", "bit", "require" },
-                },
-                workspace = {
-                    checkThirdParty = false,
-                    library = {
-                        vim.env.VIMRUNTIME,
-                    },
+                    postfix = ".",
+                    showWord = "Disable",
+                    workspaceWord = false,
                 },
             },
         })
