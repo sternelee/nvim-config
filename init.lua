@@ -71,7 +71,7 @@ require("lazy").setup({
       notify.setup({
         stages = "static",
         top_down = false,
-        timeout = 1000,
+        timeout = 2000,
         background_colour = "#000000",
       })
       vim.notify = notify

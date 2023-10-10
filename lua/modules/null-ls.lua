@@ -47,11 +47,11 @@ null_ls.setup({
       end,
     }),
     code_actions.cspell.with({
-      config = {
-        find_json = function(_)
-          return vim.fn.expand("~/.config/nvim/cspell.json")
-        end,
-      },
+      -- config = {
+      --   find_json = function(_)
+      --     return vim.fn.expand("~/.config/nvim/cspell.json")
+      --   end,
+      -- },
     }),
     formatting.jq,
     formatting.stylua.with({
