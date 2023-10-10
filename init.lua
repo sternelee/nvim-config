@@ -17,7 +17,7 @@ g.maplocalleader = ","
 vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
 
 local alpha = function()
-  return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+    return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
 end
 -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
 g.neovide_transparency = 1
@@ -45,648 +45,659 @@ cmd([[
 -- log: nvim -V9myNvim.log
 local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--single-branch",
-    "https://github.com/folke/lazy.nvim.git",
-    lazypath,
-  })
+    fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    })
 end
 vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
-  { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim", event = "VeryLazy" },
-  {
-    "sternelee/bigfile.nvim",
-    config = function()
-      require("bigfile").config({})
-    end,
-  },
-  {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    config = function()
-      local notify = require("notify")
-      notify.setup({
-        stages = "static",
-        top_down = false,
-        timeout = 2000,
-        background_colour = "#000000",
-      })
-      vim.notify = notify
-    end,
-  },
-  -- 状态栏
-  {
-    "romgrk/barbar.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("bufferline").setup({
-        animation = true,
-        auto_hide = true,
-        icons = { buffer_index = true, filetype = { enabled = true } },
-      })
-    end,
-  },
-  {
-    "nvim-tree/nvim-web-devicons",
-    lazy = true,
-    config = function()
-      require("nvim-web-devicons").setup({ color_icons = true, default = true })
-    end,
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
-    dependencies = {
-      "linrongbin16/lsp-progress.nvim",
+    { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim", event = "VeryLazy" },
+    {
+        "sternelee/bigfile.nvim",
+        config = function()
+            require("bigfile").config({})
+        end,
     },
-    config = function()
-      require("modules.lualine")
-    end,
-  },
-  {
-    "kyazdani42/nvim-tree.lua",
-    cmd = "NvimTreeToggle",
-    config = function()
-      require("modules.nvim-tree")
-    end,
-  },
-  { "goolord/alpha-nvim",    event = "VimEnter" },
-  -- git相关
-  {
-    "tpope/vim-fugitive",
-    event = "VeryLazy",
-    dependencies = {
-      "tpope/vim-rhubarb",
+    {
+        "rcarriga/nvim-notify",
+        event = "VeryLazy",
+        config = function()
+            local notify = require("notify")
+            notify.setup({
+                stages = "static",
+                top_down = false,
+                timeout = 2000,
+                background_colour = "#000000",
+            })
+            vim.notify = notify
+        end,
     },
-  },
-  {
-    "kdheepak/lazygit.nvim",
-    cmd = { "LazyGit", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
-  },
-  {
-    "akinsho/git-conflict.nvim",
-    cmd = {
-      "GitConflictChooseOurs",
-      "GitConflictChooseTheirs",
-      "GitConflictChooseBoth",
-      "GitConflictChooseNone",
-      "GitConflictNextConflict",
-      "GitConflictPrevConflict",
+    -- 状态栏
+    {
+        "romgrk/barbar.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("bufferline").setup({
+                animation = true,
+                auto_hide = true,
+                icons = { buffer_index = true, filetype = { enabled = true } },
+            })
+        end,
     },
-    config = function()
-      require("git-conflict").setup()
-    end,
-  },
-  { "rbong/vim-flog",            cmd = { "Flog" } },
-  {
-    "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-    config = function()
-      require("diffview").setup()
-    end,
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    event = "BufRead",
-    config = function()
-      require("modules.gitsigns")
-    end,
-  },
-  -- 语法高亮
-  {
-    "kevinhwang91/nvim-treesitter",
-    event = "VeryLazy",
-    build = ":TSUpdate",
-    config = function()
-      require("modules.treesitter")
-    end,
-  },
-  {
-    "folke/twilight.nvim",
-    cmd = { "Twilight" },
-    config = function()
-      require("twilight"):setup()
-    end,
-  },
-  {
-    "NvChad/nvim-colorizer.lua",
-    event = "BufEnter",
-    config = function()
-      require("modules.colorizer")
-    end,
-  },   -- 色值高亮
-  -- theme 主题 -- https://vimcolorschemes.com/
-  {
-    "maxmx03/fluoromachine.nvim",
-    config = function()
-      local fm = require("fluoromachine")
-      fm.setup({
-        glow = true,
-        brightness = 0.01,
-        theme = "retrowave",
-        transparent = "full",
-      })
-      -- cmd("colorscheme fluoromachine")
-    end,
-  },
-  {
-    "Mofiqul/vscode.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "RRethy/nvim-base16",
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = true,
+        config = function()
+            require("nvim-web-devicons").setup({ color_icons = true, default = true })
+        end,
     },
-  },
-  -- 显示导航线
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    commit = "9637670",
-    event = "VeryLazy",
-    config = function()
-      require("modules.indent_blankline")
-    end,
-  },   -- 对齐线
-  -- {
-  --   "shellRaining/hlchunk.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.hlchunk")
-  --   end,
-  -- },
-  { "mg979/vim-visual-multi",    event = "VeryLazy" },
-  { "terryma/vim-expand-region", event = "VeryLazy" },
-  { "matze/vim-move",            event = "BufRead" },
-  {
-    "phaazon/hop.nvim",
-    cmd = { "HopWord", "HopLine", "HopPattern" },
-    config = function()
-      require("hop"):setup()
-    end,
-  },
-  { "leafOfTree/vim-project",         cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
-  {
-    "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
-      -- "ahmedkhalf/project.nvim",
-      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-symbols.nvim",
-      "aaronhallaert/advanced-git-search.nvim",
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VimEnter",
+        dependencies = {
+            "linrongbin16/lsp-progress.nvim",
+        },
+        config = function()
+            require("modules.lualine")
+        end,
     },
-    config = function()
-      require("modules.telescope")
-    end,
-  },
-  {
-    "ibhagwan/fzf-lua",
-    event = "VeryLazy",
-    config = function()
-      require("fzf-lua").setup({ "fzf-native" })
-    end,
-  },
-  -- 语法建议
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "b0o/schemastore.nvim",
-      -- "folke/neoconf.nvim",
-      -- {
-      --   "j-hui/fidget.nvim",
-      --   branch = "legacy",
-      --   config = function()
-      --     require("fidget").setup()
-      --   end,
-      -- },
+    {
+        "kyazdani42/nvim-tree.lua",
+        cmd = "NvimTreeToggle",
+        config = function()
+            require("modules.nvim-tree")
+        end,
     },
-    config = function()
-      require("lsp/config")
-    end,
-  },
-  {
-    "nvimdev/lspsaga.nvim",
-    event = { "LspAttach" },
-    branch = "main",
-    config = function()
-      require("modules.saga")
-    end,
-  },
-  -- {
-  --   'stevearc/aerial.nvim',
-  --   event = {"BufReadPost"},
-  --   opts = {},
-  -- }, -- if not use lspsaga
-  -- {
-  --   "Bekaboo/dropbar.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   cmd = { "ChatGPT", "ChatGPTRun" },
-  --   config = function()
-  --     require("chatgpt").setup()
-  --   end,
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --   },
-  -- },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event = "LspAttach",
-    config = function()
-      require("lsp_lines").setup()
-      keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-    end,
-  },
-  {
-    "pmizio/typescript-tools.nvim",
-    event = "VeryLazy",
-    ft = { "typescript", "typescriptreact", "javascript" },
-    config = function()
-      require("modules.typescript-tools")
-    end,
-  },
-  -- 语法提示
-	{
-		"hrsh7th/nvim-cmp",
-		event = { "InsertEnter", "CmdlineEnter" },
-		dependencies = {
-      "petertriho/cmp-git",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/cmp-calc",
-      "hrsh7th/cmp-emoji",
-			"saadparwaiz1/cmp_luasnip",
-      "lukas-reineke/cmp-under-comparator",
-			{
-				"L3MON4D3/LuaSnip",
-				dependencies = "rafamadriz/friendly-snippets",
-				version = "2.*",
-				build = "make install_jsregexp",
-				config = function()
-          require("modules.luasnip")
-				end
-			},
-			{
-				"jcdickinson/codeium.nvim",
-				config = function()
-					require("codeium").setup()
-				end
-			},
-			{
-				"onsails/lspkind.nvim",
-				event = "InsertEnter",
-				lazy = true,
-			},
-      {
-        "nvimtools/none-ls.nvim",
-        -- dependencies = { "davidmh/cspell.nvim" },
+    { "goolord/alpha-nvim", event = "VimEnter" },
+    -- git相关
+    {
+        "tpope/vim-fugitive",
+        event = "VeryLazy",
+        dependencies = {
+            "tpope/vim-rhubarb",
+        },
+    },
+    {
+        "kdheepak/lazygit.nvim",
+        cmd = { "LazyGit", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
+    },
+    {
+        "akinsho/git-conflict.nvim",
+        cmd = {
+            "GitConflictChooseOurs",
+            "GitConflictChooseTheirs",
+            "GitConflictChooseBoth",
+            "GitConflictChooseNone",
+            "GitConflictNextConflict",
+            "GitConflictPrevConflict",
+        },
+        config = function()
+            require("git-conflict").setup()
+        end,
+    },
+    { "rbong/vim-flog", cmd = { "Flog" } },
+    {
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+        config = function()
+            require("diffview").setup()
+        end,
+    },
+    {
+        "lewis6991/gitsigns.nvim",
+        event = "BufRead",
+        config = function()
+            require("modules.gitsigns")
+        end,
+    },
+    -- 语法高亮
+    {
+        "kevinhwang91/nvim-treesitter",
+        event = "VeryLazy",
+        build = ":TSUpdate",
+        config = function()
+            require("modules.treesitter")
+        end,
+    },
+    {
+        "folke/twilight.nvim",
+        cmd = { "Twilight" },
+        config = function()
+            require("twilight"):setup()
+        end,
+    },
+    {
+        "NvChad/nvim-colorizer.lua",
+        event = "BufEnter",
+        config = function()
+            require("modules.colorizer")
+        end,
+    }, -- 色值高亮
+    -- theme 主题 -- https://vimcolorschemes.com/
+    {
+        "maxmx03/fluoromachine.nvim",
+        config = function()
+            local fm = require("fluoromachine")
+            fm.setup({
+                glow = true,
+                brightness = 0.01,
+                theme = "retrowave",
+                transparent = "full",
+            })
+            -- cmd("colorscheme fluoromachine")
+        end,
+    },
+    {
+        "Mofiqul/vscode.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "RRethy/nvim-base16",
+        },
+    },
+    -- 显示导航线
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        commit = "9637670",
+        event = "VeryLazy",
+        config = function()
+            require("modules.indent_blankline")
+        end,
+    }, -- 对齐线
+    -- {
+    --   "shellRaining/hlchunk.nvim",
+    --   event = "VeryLazy",
+    --   config = function()
+    --     require("modules.hlchunk")
+    --   end,
+    -- },
+    { "mg979/vim-visual-multi", event = "VeryLazy" },
+    { "terryma/vim-expand-region", event = "VeryLazy" },
+    { "matze/vim-move", event = "BufRead" },
+    {
+        "phaazon/hop.nvim",
+        cmd = { "HopWord", "HopLine", "HopPattern" },
+        config = function()
+            require("hop"):setup()
+        end,
+    },
+    { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
+    {
+        "nvim-telescope/telescope.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "nvim-telescope/telescope-file-browser.nvim",
+            -- "ahmedkhalf/project.nvim",
+            -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            "nvim-telescope/telescope-symbols.nvim",
+            "aaronhallaert/advanced-git-search.nvim",
+        },
+        config = function()
+            require("modules.telescope")
+        end,
+    },
+    {
+        "ibhagwan/fzf-lua",
+        event = "VeryLazy",
+        config = function()
+            require("fzf-lua").setup({ "fzf-native" })
+        end,
+    },
+    {
+        "renerocksai/telekasten.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "renerocksai/calendar-vim",
+            "mzlogin/vim-markdown-toc",
+        },
+        config = function()
+            require("modules.telekasten")
+        end,
+    }, -- 日志管理
+    -- 语法建议
+    {
+        "neovim/nvim-lspconfig",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "b0o/schemastore.nvim",
+            -- "folke/neoconf.nvim",
+            -- {
+            --   "j-hui/fidget.nvim",
+            --   branch = "legacy",
+            --   config = function()
+            --     require("fidget").setup()
+            --   end,
+            -- },
+        },
+        config = function()
+            require("lsp/config")
+        end,
+    },
+    {
+        "nvimdev/lspsaga.nvim",
+        event = { "LspAttach" },
+        branch = "main",
+        config = function()
+            require("modules.saga")
+        end,
+    },
+    -- {
+    --   'stevearc/aerial.nvim',
+    --   event = {"BufReadPost"},
+    --   opts = {},
+    -- }, -- if not use lspsaga
+    -- {
+    --   "Bekaboo/dropbar.nvim",
+    --   event = "VeryLazy",
+    --   opts = {},
+    -- },
+    -- {
+    --   "jackMort/ChatGPT.nvim",
+    --   cmd = { "ChatGPT", "ChatGPTRun" },
+    --   config = function()
+    --     require("chatgpt").setup()
+    --   end,
+    --   dependencies = {
+    --     "MunifTanjim/nui.nvim",
+    --   },
+    -- },
+    {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        event = "LspAttach",
+        config = function()
+            require("lsp_lines").setup()
+            keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+        end,
+    },
+    {
+        "pmizio/typescript-tools.nvim",
+        event = "VeryLazy",
+        ft = { "typescript", "typescriptreact", "javascript" },
+        config = function()
+            require("modules.typescript-tools")
+        end,
+    },
+    -- 语法提示
+    {
+        "hrsh7th/nvim-cmp",
+        event = { "InsertEnter", "CmdlineEnter" },
+        dependencies = {
+            "petertriho/cmp-git",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-calc",
+            "hrsh7th/cmp-emoji",
+            "saadparwaiz1/cmp_luasnip",
+            "lukas-reineke/cmp-under-comparator",
+            {
+                "L3MON4D3/LuaSnip",
+                dependencies = "rafamadriz/friendly-snippets",
+                version = "2.*",
+                build = "make install_jsregexp",
+                config = function()
+                    require("modules.luasnip")
+                end,
+            },
+            {
+                "jcdickinson/codeium.nvim",
+                config = function()
+                    require("codeium").setup()
+                end,
+            },
+            {
+                "onsails/lspkind.nvim",
+                event = "InsertEnter",
+                lazy = true,
+            },
+            {
+                "nvimtools/none-ls.nvim",
+                -- dependencies = { "davidmh/cspell.nvim" },
+                event = "InsertEnter",
+                config = function()
+                    require("modules.null-ls")
+                end,
+            },
+            { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
+            { "liuchengxu/vista.vim", cmd = { "Vista" } },
+        },
+        config = function()
+            require("modules.cmp")
+        end,
+    },
+    {
+        "ThePrimeagen/refactoring.nvim",
         event = "InsertEnter",
         config = function()
-          require("modules.null-ls")
+            require("refactoring").setup()
+            require("telescope").load_extension("refactoring")
         end,
-      },
-      { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
-      { "liuchengxu/vista.vim",  cmd = { "Vista" } },
-		},
-		config = function()
-      require("modules.cmp")
-		end
-	},
-  {
-    "ThePrimeagen/refactoring.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("refactoring").setup()
-      -- require("telescope").load_extension("refactoring")
-    end,
-  },
-  {
-    "napmn/react-extract.nvim",
-    ft = { "typescriptreact", "javascriptreact" },
-    config = function()
-      require("react-extract").setup()
-    end,
-  },   -- 重构react组件
-  {
-    "folke/trouble.nvim",
-    ft = "qf",
-    event = "LspAttach",
-    config = function()
-      require("trouble").setup()
-    end,
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    cmd = "DapOpen",
-    dependencies = { "mfussenegger/nvim-dap" },
-    config = function()
-      require("modules.dap")
-    end,
-  },
-  -- rust
-  {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    event = "InsertEnter",
-    config = function()
-      require("rust-tools").setup({
-        tools = {
-          autoSetHints = true,
-          runnables = { use_telescope = false },
-          inlay_hints = { show_parameter_hints = true, auto = true },
-          hover_actions = { auto_focus = true },
-        },
-      })
-    end,
-  },
-  {
-    "Saecki/crates.nvim",
-    event = "BufRead Cargo.toml",
-    config = function()
-      require("crates").setup()
-    end,
-  },
-  {
-    "David-Kunz/cmp-npm",
-    event = "BufRead package.json",
-    config = function()
-      require("cmp-npm").setup({})
-    end,
-  },
-  {
-    "vuki656/package-info.nvim",
-    event = "BufRead package.json",
-    config = function()
-      require("package-info").setup({ package_manager = "pnpm" })
-    end,
-  },
-  {
-    "NTBBloodbath/rest.nvim",
-    ft = "http",
-    config = function()
-      require("rest-nvim").setup()
-    end,
-  },
-  { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
-  {
-    "rmagatti/goto-preview",
-    ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
-    event = "VeryLazy",
-    config = function()
-      require("goto-preview").setup({})
-    end,
-  },
-  { "metakirby5/codi.vim",   cmd = { "Codi" } },
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = "markdown",
-    build = "cd app && yarn install",
-    cmd = "MarkdownPreview",
-  },
-  -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
-  --   require("modules.otter")
-  -- end},
-  { "tpope/vim-dispatch",         cmd = { "Make", "Dispatch", "Focus", "Start" } },
-  { "skywind3000/asyncrun.vim",   cmd = "AsyncRun" },
-  { "skywind3000/asynctasks.vim", cmd = "AsyncTask" },
-  --- 方便操作
-  {
-    "nacro90/numb.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("numb").setup()
-    end,
-  },
-  { "voldikss/vim-translator", cmd = { "Translate" } },   -- npm install fanyi -g 安装翻译
-  {
-    "numToStr/Comment.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("Comment").setup()
-    end,
-  },
-  {
-    "barrett-ruth/import-cost.nvim",
-    event = "VeryLazy",
-    build = "sh install.sh yarn",
-    config = function()
-      require("import-cost").setup({})
-    end,
-  },
-  { "machakann/vim-sandwich",  event = "VeryLazy" },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      require("nvim-autopairs").setup()
-    end,
-  },
-  {
-    "chentoast/marks.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      {
-        "toppair/reach.nvim",
+    },
+    {
+        "napmn/react-extract.nvim",
+        ft = { "typescriptreact", "javascriptreact" },
         config = function()
-          require("reach").setup({ notifications = true })
+            require("react-extract").setup()
         end,
-      },
+    }, -- 重构react组件
+    {
+        "folke/trouble.nvim",
+        ft = "qf",
+        event = "LspAttach",
+        config = function()
+            require("trouble").setup()
+        end,
     },
-    config = function()
-      require("modules.marks")
-    end,
-  },
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("which-key").setup({})
-    end,
-  },                                                    -- 提示leader按键
-  { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" },   -- 彩虹匹配
-  { "windwp/nvim-ts-autotag",   event = "VeryLazy" },
-  { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
-  {
-    "folke/todo-comments.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("modules.todo")
-    end,
-  },
-  {
-    "danymat/neogen",
-    event = "VeryLazy",
-    config = function()
-      require("neogen").setup({ enabled = true })
-    end,
-  },   -- 方便写jsdoc注释
-  { "ntpeters/vim-better-whitespace", event = "VeryLazy" },
-  {
-    "max397574/better-escape.nvim",
-    config = function()
-      require("better_escape").setup()
-    end,
-  },
-  { "ThePrimeagen/vim-be-good",       cmd = "VimBeGood" },
-  {
-    "nvim-pack/nvim-spectre",
-    event = "VeryLazy",
-    config = function()
-      require("spectre").setup()
-    end,
-  },   -- 全局搜索
-  { "tpope/vim-repeat",         event = "VeryLazy" },
-  {
-    "kevinhwang91/nvim-ufo",
-    event = "VeryLazy",
-    dependencies = "kevinhwang91/promise-async",
-    config = function()
-      require("modules.ufo")
-    end,
-  },   -- 折叠
-  { "wakatime/vim-wakatime",    event = "VeryLazy" },
-  { "gennaro-tedesco/nvim-jqx", cmd = { "JqxList", "JqxQuery" } },
-  { "godlygeek/tabular",        event = "VeryLazy" }, -- 对齐方式
-  {
-    "ckolkey/ts-node-action",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-treesitter",
+    {
+        "rcarriga/nvim-dap-ui",
+        cmd = "DapOpen",
+        dependencies = { "mfussenegger/nvim-dap" },
+        config = function()
+            require("modules.dap")
+        end,
     },
-    config = function()
-      require("ts-node-action").setup({})
-    end,
-  },   -- 字符组合切换
-  { "numToStr/FTerm.nvim", event = "VeryLazy" },
-  -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
-  {
-    "stevearc/dressing.nvim",
-    event = "BufEnter",
-    config = function()
-      require("dressing").setup({
-        input = {
-          win_options = {
-            winblend = 0,
-          },
+    -- rust
+    {
+        "simrat39/rust-tools.nvim",
+        ft = "rust",
+        event = "InsertEnter",
+        config = function()
+            require("rust-tools").setup({
+                tools = {
+                    autoSetHints = true,
+                    runnables = { use_telescope = true },
+                    inlay_hints = { show_parameter_hints = true, auto = true },
+                    hover_actions = { auto_focus = true },
+                },
+            })
+        end,
+    },
+    {
+        "Saecki/crates.nvim",
+        event = "BufRead Cargo.toml",
+        config = function()
+            require("crates").setup()
+        end,
+    },
+    {
+        "David-Kunz/cmp-npm",
+        event = "BufRead package.json",
+        config = function()
+            require("cmp-npm").setup({})
+        end,
+    },
+    {
+        "vuki656/package-info.nvim",
+        event = "BufRead package.json",
+        config = function()
+            require("package-info").setup({ package_manager = "pnpm" })
+        end,
+    },
+    {
+        "NTBBloodbath/rest.nvim",
+        ft = "http",
+        config = function()
+            require("rest-nvim").setup()
+        end,
+    },
+    { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
+    {
+        "rmagatti/goto-preview",
+        ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
+        event = "VeryLazy",
+        config = function()
+            require("goto-preview").setup({})
+        end,
+    },
+    { "metakirby5/codi.vim", cmd = { "Codi" } },
+    {
+        "iamcco/markdown-preview.nvim",
+        ft = "markdown",
+        build = "cd app && yarn install",
+        cmd = "MarkdownPreview",
+    },
+    -- { "jmbuhr/otter.nvim",        ft = "markdown", event = "VeryLazy", config = function()
+    --   require("modules.otter")
+    -- end},
+    { "tpope/vim-dispatch", cmd = { "Make", "Dispatch", "Focus", "Start" } },
+    { "skywind3000/asyncrun.vim", cmd = "AsyncRun" },
+    { "skywind3000/asynctasks.vim", cmd = "AsyncTask" },
+    --- 方便操作
+    {
+        "nacro90/numb.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("numb").setup()
+        end,
+    },
+    { "voldikss/vim-translator", cmd = { "Translate" } }, -- npm install fanyi -g 安装翻译
+    {
+        "numToStr/Comment.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("Comment").setup()
+        end,
+    },
+    {
+        "barrett-ruth/import-cost.nvim",
+        event = "VeryLazy",
+        build = "sh install.sh yarn",
+        config = function()
+            require("import-cost").setup({})
+        end,
+    },
+    { "machakann/vim-sandwich", event = "VeryLazy" },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup()
+        end,
+    },
+    {
+        "chentoast/marks.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            {
+                "toppair/reach.nvim",
+                config = function()
+                    require("reach").setup({ notifications = true })
+                end,
+            },
         },
-      })
-    end,
-  },
-  {
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("modules.noice")
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
+        config = function()
+            require("modules.marks")
+        end,
     },
-  },
-  {
-    "petertriho/nvim-scrollbar",
-    event = "VeryLazy",
-    config = function()
-      require("scrollbar").setup()
-    end,
-  },
-  {
-    "cshuaimin/ssr.nvim",
-    event = "VeryLazy",
-    name = "ssr",
-    config = function()
-      require("ssr").setup({
-        min_width = 50,
-        min_height = 5,
-        max_width = 120,
-        max_height = 25,
-        keymaps = {
-          close = "q",
-          next_match = "n",
-          prev_match = "N",
-          replace_confirm = "<cr>",
-          replace_all = "<leader><cr>",
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("which-key").setup({})
+        end,
+    }, -- 提示leader按键
+    { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" }, -- 彩虹匹配
+    { "windwp/nvim-ts-autotag", event = "VeryLazy" },
+    { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
+    {
+        "folke/todo-comments.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("modules.todo")
+        end,
+    },
+    {
+        "danymat/neogen",
+        event = "VeryLazy",
+        config = function()
+            require("neogen").setup({ enabled = true })
+        end,
+    }, -- 方便写jsdoc注释
+    { "ntpeters/vim-better-whitespace", event = "VeryLazy" },
+    {
+        "max397574/better-escape.nvim",
+        config = function()
+            require("better_escape").setup()
+        end,
+    },
+    { "ThePrimeagen/vim-be-good", cmd = "VimBeGood" },
+    {
+        "nvim-pack/nvim-spectre",
+        event = "VeryLazy",
+        config = function()
+            require("spectre").setup()
+        end,
+    }, -- 全局搜索
+    { "tpope/vim-repeat", event = "VeryLazy" },
+    {
+        "kevinhwang91/nvim-ufo",
+        event = "VeryLazy",
+        dependencies = "kevinhwang91/promise-async",
+        config = function()
+            require("modules.ufo")
+        end,
+    }, -- 折叠
+    { "wakatime/vim-wakatime", event = "VeryLazy" },
+    { "gennaro-tedesco/nvim-jqx", cmd = { "JqxList", "JqxQuery" } },
+    { "godlygeek/tabular", event = "VeryLazy" }, -- 对齐方式
+    {
+        "ckolkey/ts-node-action",
+        event = "VeryLazy",
+        dependencies = {
+            "nvim-treesitter",
         },
-      })
-    end,
-  },
+        config = function()
+            require("ts-node-action").setup({})
+        end,
+    }, -- 字符组合切换
+    { "numToStr/FTerm.nvim", event = "VeryLazy" },
+    -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
+    {
+        "stevearc/dressing.nvim",
+        event = "BufEnter",
+        config = function()
+            require("dressing").setup({
+                input = {
+                    win_options = {
+                        winblend = 0,
+                    },
+                },
+            })
+        end,
+    },
+    {
+        "folke/noice.nvim",
+        event = "VimEnter",
+        config = function()
+            require("modules.noice")
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+    },
+    {
+        "petertriho/nvim-scrollbar",
+        event = "VeryLazy",
+        config = function()
+            require("scrollbar").setup()
+        end,
+    },
+    {
+        "cshuaimin/ssr.nvim",
+        event = "VeryLazy",
+        name = "ssr",
+        config = function()
+            require("ssr").setup({
+                min_width = 50,
+                min_height = 5,
+                max_width = 120,
+                max_height = 25,
+                keymaps = {
+                    close = "q",
+                    next_match = "n",
+                    prev_match = "N",
+                    replace_confirm = "<cr>",
+                    replace_all = "<leader><cr>",
+                },
+            })
+        end,
+    },
 }, {
-  ui = {
-    icons = {
-      cmd = "⌘",
-      config = "🛠",
-      event = "📅",
-      ft = "📂",
-      init = "⚙",
-      keys = "🗝",
-      plugin = "🔌",
-      runtime = "💻",
-      source = "📄",
-      start = "🚀",
-      task = "📌",
+    ui = {
+        icons = {
+            cmd = "⌘",
+            config = "🛠",
+            event = "📅",
+            ft = "📂",
+            init = "⚙",
+            keys = "🗝",
+            plugin = "🔌",
+            runtime = "💻",
+            source = "📄",
+            start = "🚀",
+            task = "📌",
+        },
     },
-  },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "gzip",
-        "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                "gzip",
+                "netrwPlugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
     },
-  },
 })
 
 autocmd("FileType", {
-  pattern = {
-    "lazy",
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    keymap("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-  end,
+    pattern = {
+        "lazy",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        keymap("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
 })
 
 --settings
 local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
 local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= "o" then
-    scopes["o"][key] = value
-  end
+    scopes[scope][key] = value
+    if scope ~= "o" then
+        scopes["o"][key] = value
+    end
 end
 
 local indent = 2
 opt("o", "encoding", "utf-8")
-opt("b", "expandtab", true)                      -- Use spaces instead of tabs
-opt("b", "shiftwidth", indent)                   -- Size of an indent
-opt("b", "smartindent", true)                    -- Insert indents automatically
-opt("b", "tabstop", indent)                      -- Number of spaces tabs count for
+opt("b", "expandtab", true) -- Use spaces instead of tabs
+opt("b", "shiftwidth", indent) -- Size of an indent
+opt("b", "smartindent", true) -- Insert indents automatically
+opt("b", "tabstop", indent) -- Number of spaces tabs count for
 opt("o", "completeopt", "menu,menuone,noselect") -- Completion options
-opt("o", "pumheight", 10)                        -- Maximum number of items to show in the popup menu
-opt("o", "hidden", true)                         -- Enable modified buffers in background
-opt("o", "scrolloff", 3)                         -- Lines of context
-opt("o", "shiftround", true)                     -- Round indent
-opt("o", "sidescrolloff", 8)                     -- Columns of context
+opt("o", "pumheight", 10) -- Maximum number of items to show in the popup menu
+opt("o", "hidden", true) -- Enable modified buffers in background
+opt("o", "scrolloff", 3) -- Lines of context
+opt("o", "shiftround", true) -- Round indent
+opt("o", "sidescrolloff", 8) -- Columns of context
 -- opt('o', 'ignorecase', true)
 -- opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
-opt("o", "splitbelow", true)         -- Put new windows below current
-opt("o", "splitright", true)         -- Put new windows right of current
-opt("o", "termguicolors", true)      -- True color support
+opt("o", "splitbelow", true) -- Put new windows below current
+opt("o", "splitright", true) -- Put new windows right of current
+opt("o", "termguicolors", true) -- True color support
 opt("o", "clipboard", "unnamedplus") -- 与系统剪切板相通
 opt("o", "pumblend", 25)
 opt("o", "softtabstop", 2)
@@ -742,8 +753,8 @@ opt("o", "showtabline", 0)
 
 --mappings
 local function map(mode, lhs, rhs)
-  local options = { noremap = true }
-  remap(mode, lhs, rhs, options)
+    local options = { noremap = true }
+    remap(mode, lhs, rhs, options)
 end
 
 -- map("v", "x", "d")
@@ -752,7 +763,7 @@ map("n", "P", '"0p')
 map("v", "P", '"0p')
 map("n", ";f", "<C-f>")
 map("n", ";b", "<C-b>")
-map("n", ";", ":")  --semicolon to enter command mode
+map("n", ";", ":") --semicolon to enter command mode
 map("n", "j", "gj") --move by visual line not actual line
 map("n", "k", "gk")
 map("n", "q", "<cmd>q<CR>")
@@ -763,33 +774,33 @@ map("n", "<leader>:", "<cmd>terminal<CR>")
 
 -- telescope
 map("n", "<leader>tt", "<cmd>Telescope<CR>") --fuzzy
--- map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
--- map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
--- -- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
--- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
+map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
+map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
+-- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
+map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
 -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
--- map("n", "<leader>'", "<cmd>Telescope resume<CR>")
+map("n", "<leader>'", "<cmd>Telescope resume<CR>")
 -- map("n", "gs", "<cmd>Telescope grep_string<CR>")
--- map("n", "fg", "<cmd>Telescope git_files<CR>")
--- map("n", "ft", "<cmd>Telescope treesitter<CR>")
--- map("n", "fc", "<cmd>Telescope commands<CR>")
--- map("n", "fe", "<cmd>Telescope file_browser<CR>")
+map("n", "fg", "<cmd>Telescope git_files<CR>")
+map("n", "ft", "<cmd>Telescope treesitter<CR>")
+map("n", "fc", "<cmd>Telescope commands<CR>")
+map("n", "fe", "<cmd>Telescope file_browser<CR>")
 -- map("n", "fp", "<cmd>Telescope projects<CR>")
--- map("n", "gq", "<cmd>Telescope diagnostics<CR>")
--- map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
+map("n", "gq", "<cmd>Telescope diagnostics<CR>")
+map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
 
 -- lua fzf
-map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
-map("n", "<leader>f", "<cmd>FzfLua files<CR>")
-map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
+-- map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
+-- map("n", "<leader>f", "<cmd>FzfLua files<CR>")
+-- map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 -- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
-map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
+-- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
 map("n", "<leader>/", "<cmd>FzfLua live_grep<CR>")
-map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
+-- map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
-map("n", "fg", "<cmd>FzfLua git_files<CR>")
-map("n", "fc", "<cmd>FzfLua commands<CR>")
-map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
+-- map("n", "fg", "<cmd>FzfLua git_files<CR>")
+-- map("n", "fc", "<cmd>FzfLua commands<CR>")
+-- map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
 
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
@@ -862,7 +873,7 @@ map("v", "<A-l>", "<cmd>MoveHBlock(1)<CR>")
 map("v", "<A-h>", "<cmd>MoveHBlock(-1)<CR>")
 
 keymap({ "n", "x" }, "<leader>sr", function()
-  require("ssr").open()
+    require("ssr").open()
 end)
 -- ufo
 map("n", "zR", '<cmd>lua require("ufo").openAllFolds()<CR>')
@@ -905,12 +916,25 @@ map("n", "gm", "<cmd>CodeActionMenu<CR>")
 map("n", "gj", "<cmd>TSToolsGoToSourceDefinition<CR>")
 
 keymap({ "n", "x" }, "<leader>sr", function()
-  require("ssr").open()
+    require("ssr").open()
 end)
 -- LazyGit
 map("n", "<leaader><leader>g", "<cmd>LazyGit<CR>")
 
 keymap({ "n" }, "gK", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+
+-- telekasten
+map("n", "<leader>zf", '<cmd>lua require("telekasten").find_notes()<CR>')
+map("n", "<leader>zd", '<cmd>lua require("telekasten").find_daily_notes()<CR>')
+map("n", "<leader>zg", '<cmd>lua require("telekasten").search_notes()<CR>')
+map("n", "<leader>zz", '<cmd>lua require("telekasten").follow_link()<CR>')
+map("n", "<leader>zT", '<cmd>lua require("telekasten").goto_today()<CR>')
+map("n", "<leader>zw", '<cmd>lua require("telekasten").find_weekly_notes()<CR>')
+map("n", "<leader>zn", '<cmd>lua require("telekasten").new_note()<CR>')
+map("n", "<leader>zc", '<cmd>lua require("telekasten").show_calendar()<CR>')
+map("n", "<leader>zC", "<cmd>CalendarT<CR>")
+map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
+map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
 
 -- Codi
 map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
@@ -926,41 +950,41 @@ cmd([[autocmd BufWritePre * %s/\s\+$//e]]) --remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 
 autocmd({ "TextYankPost" }, {
-  pattern = "*",
-  callback = function()
-    vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
-  end,
-  desc = "Highlight yanked text",
-  group = autogroup("highlight_yank", { clear = true }),
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({ higrou = "IncSearch", timeout = 500 })
+    end,
+    desc = "Highlight yanked text",
+    group = autogroup("highlight_yank", { clear = true }),
 })
 
 autocmd({ "FileType" }, {
-  pattern = "*.toml",
-  callback = function()
-    require("cmp").setup.buffer({ sources = { { name = "crates" } } })
-  end,
-  desc = "Add cmp source for toml",
+    pattern = "*.toml",
+    callback = function()
+        require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+    end,
+    desc = "Add cmp source for toml",
 })
 
 autocmd({ "FileType" }, {
-  pattern = "*.json",
-  callback = function()
-    require("cmp").setup.buffer({ sources = { { name = "npm", keyword_length = 3 } } })
-  end,
-  desc = "Add cmp source for json",
+    pattern = "*.json",
+    callback = function()
+        require("cmp").setup.buffer({ sources = { { name = "npm", keyword_length = 3 } } })
+    end,
+    desc = "Add cmp source for json",
 })
 
 local numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 for _, num in pairs(numbers) do
-  map("n", "<leader>" .. num, "<cmd>BufferGoto " .. num .. "<CR>")
+    map("n", "<leader>" .. num, "<cmd>BufferGoto " .. num .. "<CR>")
 end
 map("n", "<leader>0", "<cmd>BufferGoto 10<CR>")
 
 g.markdown_fenced_language = {
-  "ts=typescript",
+    "ts=typescript",
 }
 g.markdown_fenced_languages =
-{ "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
+    { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
 cmd("colorscheme base16-ayu-dark")
@@ -970,25 +994,25 @@ g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugiti
 
 local startify = require("alpha.themes.startify")
 local header = {
-  "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑",
-  "│ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ │",
-  "│ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ │",
-  "│ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ │",
-  "│ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ │",
-  "│ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ │",
-  "│ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ │",
-  "│ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ │",
-  "│ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ │",
-  "│ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ │",
-  "│ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ │",
-  "│ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ │",
-  "│ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ │",
-  "│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │",
-  "│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │",
-  "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙",
-  "+--------------------------------+",
-  "|  Love You, 盼盼和小璇同学❤❤❤   |",
-  "+----------------+---------------+",
+    "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑",
+    "│ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ │",
+    "│ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ │",
+    "│ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ │",
+    "│ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ │",
+    "│ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ │",
+    "│ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ │",
+    "│ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ │",
+    "│ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ │",
+    "│ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ │",
+    "│ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ │",
+    "│ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ │",
+    "│ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ │",
+    "│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │",
+    "│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │",
+    "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙",
+    "+--------------------------------+",
+    "|  Love You, 盼盼和小璇同学❤❤❤   |",
+    "+----------------+---------------+",
 }
 
 -- 布局
