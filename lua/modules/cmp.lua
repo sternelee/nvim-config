@@ -5,9 +5,15 @@ local cmp = require("cmp")
 
 require("cmp_git").setup()
 
+local check_backspace = function()
+	local col = vim.fn.col "." - 1
+	return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+end
+
 local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 
 local formatForTailwindCSS = function(entry, vim_item)
@@ -51,34 +57,37 @@ cmp.setup({
             c = cmp.mapping.close(),
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-            "c",
-        }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-            "c",
-        }),
+		    ["<Tab>"] = cmp.mapping(function(fallback)
+		    	if cmp.visible() and has_words_before() then
+		    		cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+		    	elseif luasnip.jumpable(1) then
+		    		luasnip.jump(1)
+		    	elseif luasnip.expand_or_jumpable() then
+		    		luasnip.expand_or_jump()
+		    	elseif luasnip.expandable() then
+		    		luasnip.expand()
+		    	elseif check_backspace() then
+		    		-- cmp.complete()
+		    		fallback()
+		    	else
+		    		fallback()
+		    	end
+		    end, {
+		    	"i",
+		    	"s",
+		    }),
+		    ["<S-Tab>"] = cmp.mapping(function(fallback)
+		    	if cmp.visible() then
+		    		cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+		    	elseif luasnip.jumpable(-1) then
+		    		luasnip.jump(-1)
+		    	else
+		    		fallback()
+		    	end
+		    end, {
+		    	"i",
+		    	"s",
+		    }),
     },
     sources = {
         { name = "nvim_lsp", priority_weight = 8 },
@@ -102,22 +111,28 @@ cmp.setup({
         -- { name = 'treesitter' },
         -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
     },
-    formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = lspkind.cmp_format({
-            mode = "symbol_text", -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            before = function(entry, vim_item)
-                vim_item.menu = "(" .. vim_item.kind .. ")"
-                vim_item.dup = ({
-                    nvim_lsp = 0,
-                    path = 0,
-                })[entry.source.name] or 0
-                vim_item = formatForTailwindCSS(entry, vim_item) -- for tailwind css autocomplete
-                return vim_item
-            end,
-        }),
-    },
+	  formatting = {
+	  	fields = { "kind", "abbr", "menu" },
+	  	format = function(entry, vim_item)
+	  		local kind = lspkind.cmp_format({
+	  			symbol_map = { Copilot = "", Codeium = "", Snippet = "", Keyword = "" },
+	  			preset = "codicons",
+	  			maxwidth = 40,
+          before = function(entry, vim_item)
+              vim_item.menu = "(" .. vim_item.kind .. ")"
+              vim_item.dup = ({
+                  nvim_lsp = 0,
+                  path = 0,
+              })[entry.source.name] or 0
+              vim_item = formatForTailwindCSS(entry, vim_item) -- for tailwind css autocomplete
+              return vim_item
+          end,
+	  		})(entry, vim_item)
+	  		local strings = vim.split(vim_item.kind, "%s+", { trimempty = true })
+	  		kind.kind = " " .. string.format("%s │", strings[1], strings[2]) .. " "
+	  		return kind
+	  	end,
+	  },
     matching = {
         disallow_fuzzy_matching = true,
         disallow_fullfuzzy_matching = true,

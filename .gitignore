@@ -2,4 +2,5 @@
 plugin
 .vim
 coc-settings.json
+lazy-lock.json
 *.http

@@ -189,7 +189,7 @@ local servers = {
   "cssls",
   "jsonls",
   "emmet_ls",
-  -- "vuels",
+  "vuels",
   "volar",
   -- "tsserver",
   "denols",
@@ -201,21 +201,21 @@ local servers = {
   "pyright",
 }
 
--- local function get_typescript_server_path(root_dir)
---   local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
---   local found_ts = ''
---   local function check_dir(path)
---     found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
---     if lsputil.path.exists(found_ts) then
---       return path
---     end
---   end
---   if lsputil.search_ancestors(root_dir, check_dir) then
---     return found_ts
---   else
---     return global_ts
---   end
--- end
+local function get_typescript_server_path(root_dir)
+  local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
+  local found_ts = ''
+  local function check_dir(path)
+    found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
+    if lsputil.path.exists(found_ts) then
+      return path
+    end
+  end
+  if lsputil.search_ancestors(root_dir, check_dir) then
+    return found_ts
+  else
+    return global_ts
+  end
+end
 
 local function setup_servers()
   for _, lsp in ipairs(servers) do
@@ -240,19 +240,34 @@ local function setup_servers()
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end
-    -- if lsp == "vuels" then
-    --   opts.root_dir = lsputil.root_pattern(".veturrc")
-    --   opts.settings = require("lsp/vuels").settings
-    -- end
-    -- if lsp == "volar" then
-    --   -- opts.root_dir = lsputil.root_pattern(".volarrc")
-    --   opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-    --   opts.on_new_config = function(new_config, new_root_dir)
-    --     new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-    --   end
-    -- end
+    if lsp == "vuels" then
+      opts.root_dir = lsputil.root_pattern(".veturrc")
+      opts.settings = require("lsp/vuels").settings
+    end
+    if lsp == "volar" then
+      opts.root_dir = lsputil.root_pattern(".volarrc")
+      opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+      opts.on_new_config = function(new_config, new_root_dir)
+        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+      end
+    end
     if lsp == "lua_ls" then
-      opts.on_init = require("lsp/lua_ls").on_init
+	    opts.settings = {
+	    	Lua = {
+	    		diagnostics = {
+	    			globals = { "vim" },
+	    		},
+	    		workspace = {
+	    			library = {
+	    				[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+	    				[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+	    				[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+	    			},
+	    			maxPreload = 100000,
+	    			preloadFileSize = 10000,
+	    		},
+	    	},
+	    }
     end
     -- if lsp == "eslint" then
     --   opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")

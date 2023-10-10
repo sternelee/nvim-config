@@ -201,6 +201,7 @@ require("lazy").setup({
   -- 显示导航线
   {
     "lukas-reineke/indent-blankline.nvim",
+    commit = "9637670",
     event = "VeryLazy",
     config = function()
       require("modules.indent_blankline")
@@ -284,13 +285,6 @@ require("lazy").setup({
   --   event = "VeryLazy",
   --   opts = {},
   -- },
-  {
-    "Exafunction/codeium.vim",
-    event = "VeryLazy",
-    config = function()
-      require("modules.codeium")
-    end,
-  },
   -- {
   --   "jackMort/ChatGPT.nvim",
   --   cmd = { "ChatGPT", "ChatGPTRun" },
@@ -318,37 +312,45 @@ require("lazy").setup({
     end,
   },
   -- 语法提示
-  {
-    "hrsh7th/nvim-cmp",
-    event = "VeryLazy",
-    dependencies = {
+	{
+		"hrsh7th/nvim-cmp",
+		event = { "InsertEnter", "CmdlineEnter" },
+		dependencies = {
       "petertriho/cmp-git",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "saadparwaiz1/cmp_luasnip",
-    "lukas-reineke/cmp-under-comparator",
-      {
-        "L3MON4D3/LuaSnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        config = function()
+			"saadparwaiz1/cmp_luasnip",
+      "lukas-reineke/cmp-under-comparator",
+			{
+				"L3MON4D3/LuaSnip",
+				dependencies = "rafamadriz/friendly-snippets",
+				version = "2.*",
+				build = "make install_jsregexp",
+				config = function()
           require("modules.luasnip")
-        end,
-      },
-      "hrsh7th/cmp-cmdline",
-      {
-        "onsails/lspkind-nvim",
-        config = function()
-          require("lspkind").init()
-        end,
-      },
-    },
-    config = function()
+				end
+			},
+			{
+				"jcdickinson/codeium.nvim",
+				config = function()
+          require("modules.codeium")
+				end
+			},
+			{
+				"onsails/lspkind.nvim",
+				event = "InsertEnter",
+				lazy = true,
+			},
+		},
+		config = function()
       require("modules.cmp")
-    end,
-  },
+		end
+	},
   {
     "ThePrimeagen/refactoring.nvim",
     event = "InsertEnter",
@@ -508,7 +510,7 @@ require("lazy").setup({
       require("which-key").setup({})
     end,
   },                                                    -- 提示leader按键
-  { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },   -- 彩虹匹配
+  { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" },   -- 彩虹匹配
   { "windwp/nvim-ts-autotag",   event = "VeryLazy" },
   { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
   {
@@ -526,6 +528,12 @@ require("lazy").setup({
     end,
   },   -- 方便写jsdoc注释
   { "ntpeters/vim-better-whitespace", event = "VeryLazy" },
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup()
+    end,
+  },
   { "ThePrimeagen/vim-be-good",       cmd = "VimBeGood" },
   {
     "nvim-pack/nvim-spectre",
@@ -745,8 +753,6 @@ end
 -- map("v", "d", '"_d')
 map("n", "P", '"0p')
 map("v", "P", '"0p')
-map("i", "jk", "<esc>") --jk to exit
-map("c", "jk", "<C-C>")
 map("n", ";f", "<C-f>")
 map("n", ";b", "<C-b>")
 map("n", ";", ":")  --semicolon to enter command mode
@@ -1017,14 +1023,15 @@ cmd([[
 	augroup end
 ]])
 
-cmd([[
-  highlight IndentBlanklineIndent1 guifg=#E06C75
-  highlight IndentBlanklineIndent2 guifg=#E5C07B
-  highlight IndentBlanklineIndent3 guifg=#98C379
-  highlight IndentBlanklineIndent4 guifg=#56B6C2
-  highlight IndentBlanklineIndent5 guifg=#61AFEF
-  highlight IndentBlanklineIndent6 guifg=#C678DD
+vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 
+cmd([[
   highlight link LspSagaFinderSelection Search
 
   highlight Normal ctermbg=NONE guibg=NONE
