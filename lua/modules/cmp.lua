@@ -90,7 +90,7 @@ cmp.setup({
     }),
   },
   sources = {
-		{ name = "codeium", max_item_count = 6 },
+		{ name = "codeium", max_item_count = 3 },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "nvim_lua" },
@@ -150,7 +150,6 @@ cmp.setup({
   --   debounce_text_changes = 150,
   -- },
   window = {
-    -- border style
     completion = cmp.config.window.bordered({
       col_offset = -3,       -- align the abbr and word on cursor (due to fields order below)
       side_padding = 0,
