@@ -41,17 +41,18 @@ null_ls.setup({
     -- diagnostics.markdownlint,
     formatting.markdownlint,
     diagnostics.cspell.with({
-      extra_args = { "--config", "~/.config/nvim/cspell.json" },
+      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "scss", "html" },
+      extra_args = { "--config", vim.fn.stdpath("config") .. "/cspell.json" },
       diagnostics_postprocess = function(diagnostic)
         diagnostic.severity = vim.diagnostic.severity["HINT"]         -- ERROR, WARN, INFO, HINT
       end,
     }),
     code_actions.cspell.with({
-      -- config = {
-      --   find_json = function(_)
-      --     return vim.fn.expand("~/.config/nvim/cspell.json")
-      --   end,
-      -- },
+      config = {
+        find_json = function(cwd)
+          return vim.fn.stdpath("config") .. "/cspell.json"
+        end,
+      },
     }),
     formatting.jq,
     formatting.stylua.with({
