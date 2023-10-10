@@ -597,13 +597,6 @@ require("lazy").setup({
       require("scrollbar").setup()
     end,
   },
-  -- {
-  --   "gelguy/wilder.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("modules.wilder")
-  --   end,
-  -- },
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
