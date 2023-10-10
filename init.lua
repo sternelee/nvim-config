@@ -126,6 +126,7 @@ require("lazy").setup({
         "kdheepak/lazygit.nvim",
         cmd = { "LazyGit", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
     },
+    { "chrisgrieser/nvim-tinygit", event = "VeryLazy"},
     {
         "akinsho/git-conflict.nvim",
         cmd = {
@@ -829,10 +830,12 @@ map("n", "<s-Tab>", "<cmd>BufferPrevious<CR>")
 -- git
 map("n", "<leader>ga", "<cmd>Git add %:p<CR>")
 map("n", "<leader>go", "<cmd>Git add .<CR>")
-map("n", "<leader>gm", "<cmd>Git commit<CR>")
+-- map("n", "<leader>gm", "<cmd>Git commit<CR>")
+map("n", "<leader>gm", '<cmd>lua require("tinygit").smartCommit { push = false, openReferencedIssue = false }<CR>')
 map("n", "<leader>gs", "<cmd>Git status<CR>")
 map("n", "<leader>gl", "<cmd>Git pull<CR>")
-map("n", "<leader>gu", "<cmd>Git push<CR>")
+-- map("n", "<leader>gu", "<cmd>Git push<CR>")
+map("n", "<leader>gu", '<cmd>lua require("tinygit").push()<CR>')
 map("n", "<leader>gr", "<cmd>Git reset --hard<CR>")
 -- map('n', '<leader>gl', '<cmd>Git log<CR>')
 map("n", "<leader><leader>g", "<cmd>LazyGit<CR>")
