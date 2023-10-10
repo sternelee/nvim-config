@@ -19,10 +19,12 @@ require("noice").setup({
       },
     },
     cmdline_popup = {
-      position = {
-        row = "30%",
-        col = "50%",
-      },
+      -- position = {
+      --   row = "30%",
+      --   col = "50%",
+      -- },
+      position = { row = 0, col = -2 },
+      relative = "cursor",
       size = {
         width = 60,
         height = "auto",
