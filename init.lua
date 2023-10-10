@@ -69,9 +69,11 @@ require("lazy").setup({
     config = function()
       local notify = require("notify")
       notify.setup({
+        render = "minimal",
+        stages = "static",
+        top_down = false,
         timeout = 1000,
         background_colour = "#000000",
-        stages = "fade",
       })
       vim.notify = notify
     end,
@@ -346,6 +348,15 @@ require("lazy").setup({
 				event = "InsertEnter",
 				lazy = true,
 			},
+      {
+        "nvimtools/none-ls.nvim",
+        event = "InsertEnter",
+        config = function()
+          require("modules.null-ls")
+        end,
+      },
+      { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
+      { "liuchengxu/vista.vim",  cmd = { "Vista" } },
 		},
 		config = function()
       require("modules.cmp")
@@ -372,14 +383,6 @@ require("lazy").setup({
     event = "LspAttach",
     config = function()
       require("trouble").setup()
-    end,
-  },
-  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
-  {
-    "neovim-stuff/null-ls.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("modules.null-ls")
     end,
   },
   {

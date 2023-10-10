@@ -246,7 +246,7 @@ local function setup_servers()
     end
     if lsp == "volar" then
       opts.root_dir = lsputil.root_pattern(".volarrc")
-      opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+      -- opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
       opts.on_new_config = function(new_config, new_root_dir)
         new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
       end
