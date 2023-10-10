@@ -90,23 +90,17 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = "nvim_lsp",               priority_weight = 8 },
-    {
-      name = "luasnip",
-      option = { show_autosnippets = false, use_show_condition = false, group_index = 1 },
-    },
-    {
-      name = "buffer",
-      priority_weight = 7,
-      option = {
-        keyword_length = 3,
-      },
-    },
+		{ name = "codeium", max_item_count = 6 },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+		{ name = "path" },
     { name = "nvim_lsp_signature_help" },
     { name = "calc" },
     { name = "emoji" },
     -- { name = 'cmp_tabnine' },
-    { name = "git" },
+    -- { name = "git" },
     -- { name = 'digraphs' },
     -- { name = 'treesitter' },
     -- { name = 'look', keyword_length=4, option={convert_case=true, loud=true}},
@@ -152,9 +146,9 @@ cmp.setup({
       cmp.config.compare.order,
     },
   },
-  flags = {
-    debounce_text_changes = 150,
-  },
+  -- flags = {
+  --   debounce_text_changes = 150,
+  -- },
   window = {
     -- border style
     completion = cmp.config.window.bordered({
@@ -174,11 +168,11 @@ local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 cmp.setup.filetype("gitcommit", {
-  sources = cmp.config.sources({
-    { name = "git" },
-  }, {
-    { name = "buffer" },
-  }),
+  sources = {
+    { name = "git",             max_item_count = 10 },
+    { name = "buffer",          max_item_count = 10 },
+    { name = "cmdline_history", max_item_count = 10 },
+  },
 })
 
 cmp.setup.cmdline({ "/", "?" }, {

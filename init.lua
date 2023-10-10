@@ -69,7 +69,6 @@ require("lazy").setup({
     config = function()
       local notify = require("notify")
       notify.setup({
-        render = "minimal",
         stages = "static",
         top_down = false,
         timeout = 1000,
@@ -227,20 +226,20 @@ require("lazy").setup({
     end,
   },
   { "leafOfTree/vim-project",         cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     "nvim-telescope/telescope-file-browser.nvim",
-  --     -- "ahmedkhalf/project.nvim",
-  --     -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-  --     "nvim-telescope/telescope-symbols.nvim",
-  --     "aaronhallaert/advanced-git-search.nvim",
-  --   },
-  --   config = function()
-  --     require("modules.telescope")
-  --   end,
-  -- },
+  {
+    "nvim-telescope/telescope.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope-file-browser.nvim",
+      -- "ahmedkhalf/project.nvim",
+      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-symbols.nvim",
+      "aaronhallaert/advanced-git-search.nvim",
+    },
+    config = function()
+      require("modules.telescope")
+    end,
+  },
   {
     "ibhagwan/fzf-lua",
     event = "VeryLazy",
@@ -324,6 +323,7 @@ require("lazy").setup({
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
 			"saadparwaiz1/cmp_luasnip",
@@ -340,7 +340,7 @@ require("lazy").setup({
 			{
 				"jcdickinson/codeium.nvim",
 				config = function()
-          require("modules.codeium")
+					require("codeium").setup()
 				end
 			},
 			{
@@ -350,6 +350,7 @@ require("lazy").setup({
 			},
       {
         "nvimtools/none-ls.nvim",
+        -- dependencies = { "davidmh/cspell.nvim" },
         event = "InsertEnter",
         config = function()
           require("modules.null-ls")
@@ -603,7 +604,7 @@ require("lazy").setup({
   {
     "cshuaimin/ssr.nvim",
     event = "VeryLazy",
-    module = "ssr",
+    name = "ssr",
     config = function()
       require("ssr").setup({
         min_width = 50,
@@ -761,7 +762,7 @@ map("n", "g/", "<cmd>HopPattern<CR>")
 map("n", "<leader>:", "<cmd>terminal<CR>")
 
 -- telescope
--- map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
+map("n", "<leader>tt", "<cmd>Telescope<CR>") --fuzzy
 -- map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
 -- map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
 -- -- map("n", "<leader>m", "<cmd>Telescope marks<CR>")

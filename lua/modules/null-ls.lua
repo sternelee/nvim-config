@@ -7,17 +7,17 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
 
-local function get_dprint_config_path()
-  local path_separator = _G.IS_WINDOWS and "\\" or "/"
-  local patterns = vim.tbl_flatten({ ".dprint.json", "dprint.json" })
-  local config_path = vim.fn.stdpath("config") .. "/lua/dprint.json"
-  for _, name in ipairs(patterns) do
-    if vim.loop.fs_stat(vim.loop.cwd() .. path_separator .. name) then
-      config_path = vim.loop.cwd() .. path_separator .. name
-    end
-  end
-  return { "--config", config_path }
-end
+-- local function get_dprint_config_path()
+--   local path_separator = _G.IS_WINDOWS and "\\" or "/"
+--   local patterns = vim.tbl_flatten({ ".dprint.json", "dprint.json" })
+--   local config_path = vim.fn.stdpath("config") .. "/dprint.json"
+--   for _, name in ipairs(patterns) do
+--     if vim.loop.fs_stat(vim.loop.cwd() .. path_separator .. name) then
+--       config_path = vim.loop.cwd() .. path_separator .. name
+--     end
+--   end
+--   return { "--config", config_path }
+-- end
 
 -- require("null-ls").register({
 --   name = "more_actions",
@@ -59,16 +59,16 @@ null_ls.setup({
     }),
     -- diagnostics.codespell, -- 这玩意有问题, datas 会被转成 data
     -- formatting.codespell,
-    -- formatting.prettier,
+    formatting.prettier,
     -- require("typescript.extensions.null-ls.code-actions"),
     -- formatting.prettierd.with({
     --   filetypes = { "html", "css", "scss" },
     --   extra_args = { "--print-width", "120" },
     -- }),
-    formatting.dprint.with({
-      filetypes = { "javascriptreact", "typescript", "typescriptreact", "json", "javascript" },
-      extra_args = get_dprint_config_path(),
-    }),
+    -- formatting.dprint.with({
+    --   filetypes = { "javascriptreact", "typescript", "typescriptreact", "json", "javascript" },
+    --   extra_args = get_dprint_config_path(),
+    -- }),
     -- code_actions.gitsigns,
   },
 })
