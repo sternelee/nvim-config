@@ -194,7 +194,7 @@ local servers = {
   -- "tsserver",
   "denols",
   "rust_analyzer",
-  -- "eslint",   -- 由null-ls来管理
+  "eslint",   -- 由null-ls来管理
   "tailwindcss",
   "bashls",
   "marksman",
@@ -269,17 +269,17 @@ local function setup_servers()
 	    	},
 	    }
     end
-    -- if lsp == "eslint" then
-    --   opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
-    --   opts.settings = require("lsp/eslint").settings
-    --   opts.handlers = {
-    --     ["window/showMessageRequest"] = function(_, result)
-    --       return result
-    --     end,
-    --     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
-    --     ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
-    --   }
-    -- end
+    if lsp == "eslint" then
+      opts.root_dir = lsputil.root_pattern(".eslintrc", ".eslintrc.js", ".eslintignore")
+      opts.settings = require("lsp/eslint").settings
+      opts.handlers = {
+        ["window/showMessageRequest"] = function(_, result)
+          return result
+        end,
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
+      }
+    end
     if lsp == "tailwindcss" then
       opts.root_dir = lsputil.root_pattern("tailwind.config.js", "tailwind.config.ts")
       opts.filetypes = require("lsp/tailwindcss").filetypes
