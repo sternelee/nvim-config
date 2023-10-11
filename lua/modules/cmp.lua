@@ -92,11 +92,11 @@ cmp.setup({
   sources = {
 		{ name = "codeium", max_item_count = 3 },
 		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
+		-- { name = "luasnip" },
 		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "path" },
-    { name = "nvim_lsp_signature_help" },
+    -- { name = "nvim_lsp_signature_help" },
     { name = "calc" },
     { name = "emoji" },
     -- { name = 'cmp_tabnine' },
@@ -193,4 +193,20 @@ cmp.setup.cmdline(":", {
     { name = "nvim_lua",        max_item_count = 10 },
     { name = "buffer",          max_item_count = 10 },
   },
+})
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "*.toml",
+    callback = function()
+        require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+    end,
+    desc = "Add cmp source for toml",
+})
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "*.json",
+    callback = function()
+        require("cmp").setup.buffer({ sources = { { name = "npm", keyword_length = 3 } } })
+    end,
+    desc = "Add cmp source for json",
 })

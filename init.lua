@@ -298,16 +298,16 @@ require("lazy").setup({
     --   event = "VeryLazy",
     --   opts = {},
     -- },
-    -- {
-    --   "jackMort/ChatGPT.nvim",
-    --   cmd = { "ChatGPT", "ChatGPTRun" },
-    --   config = function()
-    --     require("chatgpt").setup()
-    --   end,
-    --   dependencies = {
-    --     "MunifTanjim/nui.nvim",
-    --   },
-    -- },
+    {
+      "jackMort/ChatGPT.nvim",
+      cmd = { "ChatGPT", "ChatGPTRun" },
+      config = function()
+        require("chatgpt").setup()
+      end,
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+      },
+    },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         event = "LspAttach",
@@ -335,7 +335,7 @@ require("lazy").setup({
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lua",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
+            -- "hrsh7th/cmp-nvim-lsp-signature-help",
             "hrsh7th/cmp-calc",
             "hrsh7th/cmp-emoji",
             "saadparwaiz1/cmp_luasnip",
@@ -961,22 +961,6 @@ autocmd({ "TextYankPost" }, {
     end,
     desc = "Highlight yanked text",
     group = autogroup("highlight_yank", { clear = true }),
-})
-
-autocmd({ "FileType" }, {
-    pattern = "*.toml",
-    callback = function()
-        require("cmp").setup.buffer({ sources = { { name = "crates" } } })
-    end,
-    desc = "Add cmp source for toml",
-})
-
-autocmd({ "FileType" }, {
-    pattern = "*.json",
-    callback = function()
-        require("cmp").setup.buffer({ sources = { { name = "npm", keyword_length = 3 } } })
-    end,
-    desc = "Add cmp source for json",
 })
 
 local numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
