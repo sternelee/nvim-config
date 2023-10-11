@@ -11,7 +11,7 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
-g.mapleader = " " --leader
+g.mapleader = " "
 g.maplocalleader = ","
 
 vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
@@ -267,6 +267,14 @@ require("lazy").setup({
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "b0o/schemastore.nvim",
+            {
+                "nvimdev/lspsaga.nvim",
+                event = { "LspAttach" },
+                branch = "main",
+                config = function()
+                    require("modules.saga")
+                end,
+            },
             -- "folke/neoconf.nvim",
             -- {
             --   "j-hui/fidget.nvim",
@@ -278,14 +286,6 @@ require("lazy").setup({
         },
         config = function()
             require("lsp/config")
-        end,
-    },
-    {
-        "nvimdev/lspsaga.nvim",
-        event = { "LspAttach" },
-        branch = "main",
-        config = function()
-            require("modules.saga")
         end,
     },
     -- {
@@ -309,7 +309,7 @@ require("lazy").setup({
       },
     },
     {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        "sternelee/coc-lsp_lines.nvim",
         event = "LspAttach",
         config = function()
             require("lsp_lines").setup()
@@ -383,13 +383,13 @@ require("lazy").setup({
             require("telescope").load_extension("refactoring")
         end,
     },
-    {
-        "napmn/react-extract.nvim",
-        ft = { "typescriptreact", "javascriptreact" },
-        config = function()
-            require("react-extract").setup()
-        end,
-    }, -- 重构react组件
+    -- {
+    --     "napmn/react-extract.nvim",
+    --     ft = { "typescriptreact", "javascriptreact" },
+    --     config = function()
+    --         require("react-extract").setup()
+    --     end,
+    -- }, -- 重构react组件
     {
         "folke/trouble.nvim",
         ft = "qf",

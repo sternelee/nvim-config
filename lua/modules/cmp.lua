@@ -90,8 +90,8 @@ cmp.setup({
     }),
   },
   sources = {
-		{ name = "codeium", max_item_count = 3 },
 		{ name = "nvim_lsp" },
+		{ name = "codeium", max_item_count = 2 },
 		-- { name = "luasnip" },
 		{ name = "nvim_lua" },
 		{ name = "buffer" },
