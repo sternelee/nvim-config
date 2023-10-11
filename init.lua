@@ -885,7 +885,7 @@ map("n", "zR", '<cmd>lua require("ufo").openAllFolds()<CR>')
 map("n", "zM", '<cmd>lua require("ufo").closeAllFolds()<CR>')
 
 -- LSP
--- map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
 -- map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 -- map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
@@ -903,7 +903,7 @@ map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 -- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 -- map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
 
-map("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+-- map("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
 map("n", "ga", "<cmd>Lspsaga code_action<CR>")
 map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
 map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
