@@ -339,7 +339,7 @@ require("lazy").setup({
             "hrsh7th/cmp-calc",
             "hrsh7th/cmp-emoji",
             "saadparwaiz1/cmp_luasnip",
-            "lukas-reineke/cmp-under-comparator",
+            -- "lukas-reineke/cmp-under-comparator",
             {
                 "L3MON4D3/LuaSnip",
                 dependencies = "rafamadriz/friendly-snippets",
@@ -350,11 +350,19 @@ require("lazy").setup({
                 end,
             },
             {
-                "jcdickinson/codeium.nvim",
-                config = function()
-                    require("codeium").setup()
-                end,
+              "Exafunction/codeium.vim",
+              event = "InsertEnter",
+              lazy = true,
+              config = function()
+                require("modules.codeium")
+              end,
             },
+            -- {
+            --     "jcdickinson/codeium.nvim",
+            --     config = function()
+            --         require("codeium").setup()
+            --     end,
+            -- },
             {
                 "onsails/lspkind.nvim",
                 event = "InsertEnter",

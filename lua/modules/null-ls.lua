@@ -39,7 +39,7 @@ null_ls.setup({
     -- formatting.eslint_d,
     -- code_actions.eslint_d,
     -- diagnostics.markdownlint,
-    formatting.markdownlint,
+    -- formatting.markdownlint,
     diagnostics.cspell.with({
       filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "scss", "html" },
       extra_args = { "--config", vim.fn.stdpath("config") .. "/cspell.json" },
@@ -56,11 +56,11 @@ null_ls.setup({
     }),
     formatting.jq,
     formatting.stylua.with({
-      extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
+      extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
     }),
     -- diagnostics.codespell, -- 这玩意有问题, datas 会被转成 data
     -- formatting.codespell,
-    formatting.prettier,
+    -- formatting.prettier,
     -- require("typescript.extensions.null-ls.code-actions"),
     -- formatting.prettierd.with({
     --   filetypes = { "html", "css", "scss" },
