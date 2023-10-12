@@ -91,10 +91,10 @@ cmp.setup({
   },
   sources = {
 		{ name = "nvim_lsp" },
-		-- { name = "codeium", max_item_count = 2 },
+		{ name = "buffer" },
+		{ name = "codeium", max_item_count = 2 },
 		-- { name = "luasnip" },
 		{ name = "nvim_lua" },
-		{ name = "buffer" },
 		{ name = "path" },
     -- { name = "nvim_lsp_signature_help" },
     { name = "calc" },
