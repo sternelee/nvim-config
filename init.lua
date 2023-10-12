@@ -348,22 +348,22 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      {
-        "Exafunction/codeium.vim",
-        event = "InsertEnter",
-        lazy = true,
-        config = function()
-          require("modules.codeium")
-        end,
-      },
       -- {
-      --   "jcdickinson/codeium.nvim",
+      --   "Exafunction/codeium.vim",
       --   event = "InsertEnter",
       --   lazy = true,
       --   config = function()
-      --     require("codeium").setup()
+      --     require("modules.codeium")
       --   end,
       -- },
+      {
+        "jcdickinson/codeium.nvim",
+        event = "InsertEnter",
+        lazy = true,
+        config = function()
+          require("codeium").setup()
+        end,
+      },
       {
         "onsails/lspkind.nvim",
         event = "InsertEnter",
