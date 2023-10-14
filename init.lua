@@ -106,12 +106,19 @@ require("lazy").setup({
       require("modules.lualine")
     end,
   },
+  -- {
+  --   "kyazdani42/nvim-tree.lua",
+  --   cmd = "NvimTreeToggle",
+  --   config = function()
+  --     require("modules.nvim-tree")
+  --   end,
+  -- },
   {
-    "kyazdani42/nvim-tree.lua",
-    cmd = "NvimTreeToggle",
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
     config = function()
-      require("modules.nvim-tree")
-    end,
+      require("modules.neotree")
+    end
   },
   { "goolord/alpha-nvim", event = "VimEnter" },
   -- git相关
@@ -326,8 +333,7 @@ require("lazy").setup({
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
-    -- event = { "InsertEnter", "CmdlineEnter" },
-    event = "VeryLazy",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "petertriho/cmp-git",
       "hrsh7th/cmp-buffer",
@@ -349,22 +355,22 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      {
-        "Exafunction/codeium.vim",
-        event = "InsertEnter",
-        lazy = true,
-        config = function()
-          require("modules.codeium")
-        end,
-      },
       -- {
-      --   "jcdickinson/codeium.nvim",
+      --   "Exafunction/codeium.vim",
       --   event = "InsertEnter",
       --   lazy = true,
       --   config = function()
-      --     require("codeium").setup()
+      --     require("modules.codeium")
       --   end,
       -- },
+      {
+        "jcdickinson/codeium.nvim",
+        event = "InsertEnter",
+        lazy = true,
+        config = function()
+          require("codeium").setup()
+        end,
+      },
       {
         "onsails/lspkind.nvim",
         event = "InsertEnter",
@@ -816,7 +822,8 @@ map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
-map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
+-- map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
+map("n", "<leader>e", "<cmd>Neotree<<CR>")
 map("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>")
 map("n", "<leader>tl", "<cmd>Twilight<CR>")
 map("n", "<leader>tw", "<cmd>Translate<CR>")
