@@ -92,8 +92,8 @@ cmp.setup({
   sources = {
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
-		{ name = "codeium", max_item_count = 2 },
-		-- { name = "luasnip" },
+		-- { name = "codeium", max_item_count = 2 },
+		{ name = "luasnip" },
 		{ name = "nvim_lua" },
 		{ name = "path" },
     -- { name = "nvim_lsp_signature_help" },
@@ -127,26 +127,26 @@ cmp.setup({
       return kind
     end,
   },
-  matching = {
-    disallow_fuzzy_matching = true,
-    disallow_fullfuzzy_matching = true,
-    disallow_partial_fuzzy_matching = false,
-    disallow_partial_matching = false,
-    disallow_prefix_unmatching = true,
-  },
-  sorting = {
-    comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      cmp.config.compare.under,
-      -- require("cmp-under-comparator").under,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    },
-  },
+  -- matching = {
+  --   disallow_fuzzy_matching = true,
+  --   disallow_fullfuzzy_matching = true,
+  --   disallow_partial_fuzzy_matching = false,
+  --   disallow_partial_matching = false,
+  --   disallow_prefix_unmatching = true,
+  -- },
+  -- sorting = {
+  --   comparators = {
+  --     cmp.config.compare.offset,
+  --     cmp.config.compare.exact,
+  --     cmp.config.compare.score,
+  --     cmp.config.compare.under,
+  --     -- require("cmp-under-comparator").under,
+  --     cmp.config.compare.kind,
+  --     cmp.config.compare.sort_text,
+  --     cmp.config.compare.length,
+  --     cmp.config.compare.order,
+  --   },
+  -- },
   -- flags = {
   --   debounce_text_changes = 150,
   -- },
