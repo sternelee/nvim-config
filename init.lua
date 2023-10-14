@@ -326,7 +326,8 @@ require("lazy").setup({
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
-    event = { "InsertEnter", "CmdlineEnter" },
+    -- event = { "InsertEnter", "CmdlineEnter" },
+    event = "VeryLazy",
     dependencies = {
       "petertriho/cmp-git",
       "hrsh7th/cmp-buffer",

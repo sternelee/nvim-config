@@ -187,9 +187,9 @@ local function live_grep_opts(opts)
   return opts
 end
 
-vim.keymap.set("n", "<leader>tg", function()
+vim.keymap.set("n", "<leader>gg", function()
   builtin.live_grep(live_grep_opts({}))
-end)
+end, { desc = "Live Grep" })
 
 vim.api.nvim_create_user_command(
   "DiffCommitLine",
