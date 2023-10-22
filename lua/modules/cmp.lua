@@ -59,7 +59,7 @@ cmp.setup({
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and has_words_before() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        cmp.select_next_item()
       elseif luasnip.jumpable(1) then
         luasnip.jump(1)
       elseif luasnip.expand_or_jumpable() then
@@ -78,7 +78,7 @@ cmp.setup({
     }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+        cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
@@ -90,13 +90,13 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = "buffer" },
 		{ name = "nvim_lsp" },
 		{ name = "codeium", max_item_count = 3 },
+    { name = "buffer" },
 		{ name = "luasnip" },
 		{ name = "nvim_lua" },
 		{ name = "path" },
-    -- { name = "nvim_lsp_signature_help" },
+    { name = "nvim_lsp_signature_help" },
     { name = "calc" },
     { name = "emoji" },
     -- { name = 'cmp_tabnine' },
@@ -127,29 +127,29 @@ cmp.setup({
       return kind
     end,
   },
-  -- matching = {
-  --   disallow_fuzzy_matching = true,
-  --   disallow_fullfuzzy_matching = true,
-  --   disallow_partial_fuzzy_matching = false,
-  --   disallow_partial_matching = false,
-  --   disallow_prefix_unmatching = true,
-  -- },
-  -- sorting = {
-  --   comparators = {
-  --     cmp.config.compare.offset,
-  --     cmp.config.compare.exact,
-  --     cmp.config.compare.score,
-  --     cmp.config.compare.under,
-  --     -- require("cmp-under-comparator").under,
-  --     cmp.config.compare.kind,
-  --     cmp.config.compare.sort_text,
-  --     cmp.config.compare.length,
-  --     cmp.config.compare.order,
-  --   },
-  -- },
-  -- flags = {
-  --   debounce_text_changes = 150,
-  -- },
+  matching = {
+    disallow_fuzzy_matching = true,
+    disallow_fullfuzzy_matching = true,
+    disallow_partial_fuzzy_matching = false,
+    disallow_partial_matching = false,
+    disallow_prefix_unmatching = true,
+  },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.under,
+      require("cmp-under-comparator").under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+  flags = {
+    debounce_text_changes = 150,
+  },
   window = {
     completion = cmp.config.window.bordered({
       col_offset = -3,       -- align the abbr and word on cursor (due to fields order below)
