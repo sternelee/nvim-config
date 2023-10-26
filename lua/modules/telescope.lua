@@ -73,12 +73,12 @@ require("telescope").setup({
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewer_maker,
     extensions = {
-      -- fzf = {
-      --   fuzzy = true,
-      --   override_generic_sorter = true,
-      --   override_file_sorter = true,
-      --   case_mode = "smart_case",
-      -- },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
       advanced_git_search = {
         -- fugitive or diffview
         diff_plugin = "fugitive",
@@ -187,7 +187,7 @@ local function live_grep_opts(opts)
   return opts
 end
 
-vim.keymap.set("n", "<leader>gg", function()
+vim.keymap.set("n", "<leader>/", function()
   builtin.live_grep(live_grep_opts({}))
 end, { desc = "Live Grep" })
 
