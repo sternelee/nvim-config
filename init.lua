@@ -247,13 +247,13 @@ require("lazy").setup({
       require("modules.telescope")
     end,
   },
-  -- {
-  --   "ibhagwan/fzf-lua",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("fzf-lua").setup({ "fzf-native" })
-  --   end,
-  -- },
+  {
+    "ibhagwan/fzf-lua",
+    event = "VeryLazy",
+    config = function()
+      require("fzf-lua").setup({ "fzf-native" })
+    end,
+  },
   {
     "renerocksai/telekasten.nvim",
     event = "VeryLazy",
@@ -273,14 +273,14 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
-      {
-        "nvimdev/lspsaga.nvim",
-        event = { "LspAttach" },
-        branch = "main",
-        config = function()
-          require("modules.saga")
-        end,
-      },
+      -- {
+      --   "nvimdev/lspsaga.nvim",
+      --   event = { "LspAttach" },
+      --   branch = "main",
+      --   config = function()
+      --     require("modules.saga")
+      --   end,
+      -- },
       -- "folke/neoconf.nvim",
       -- {
       --   "j-hui/fidget.nvim",
@@ -294,16 +294,16 @@ require("lazy").setup({
       require("lsp/config")
     end,
   },
-  -- {
-  --   'stevearc/aerial.nvim',
-  --   event = {"BufReadPost"},
-  --   opts = {},
-  -- }, -- if not use lspsaga
-  -- {
-  --   "Bekaboo/dropbar.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
+  {
+    'stevearc/aerial.nvim',
+    event = {"LspAttach"},
+    opts = {},
+  }, -- if not use lspsaga
+  {
+    "Bekaboo/dropbar.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
   {
     "jackMort/ChatGPT.nvim",
     cmd = { "ChatGPT", "ChatGPTRun" },
@@ -812,7 +812,7 @@ map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji",
 -- map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 -- -- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
 -- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
--- map("n", "<leader>/", "<cmd>FzfLua live_grep<CR>")
+map("n", "<leader>gg", "<cmd>FzfLua live_grep<CR>")
 -- map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 -- map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
 -- map("n", "fg", "<cmd>FzfLua git_files<CR>")
@@ -907,27 +907,27 @@ map("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
 map("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
 map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 
--- map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
--- map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
--- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
--- map("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>")
--- map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
--- map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
--- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
--- map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
+map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+map("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+map("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
 
 -- map("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
-map("n", "ga", "<cmd>Lspsaga code_action<CR>")
-map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
-map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-map("n", "gr", "<cmd>Lspsaga rename<CR>")
-map("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
-map("n", "gi", "<cmd>Lspsaga finder<CR>")
-map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
-map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
+-- map("n", "ga", "<cmd>Lspsaga code_action<CR>")
+-- map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
+-- map("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+-- map("n", "gr", "<cmd>Lspsaga rename<CR>")
+-- map("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+-- map("n", "gi", "<cmd>Lspsaga finder<CR>")
+-- map("n", "gC", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+-- map("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
+-- map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+-- map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+-- map("n", "<leader>ts", "<cmd>Lspsaga outline<CR>")
 
 map("n", "<leader>q", "<cmd>TroubleToggle<CR>")
 map("n", "gm", "<cmd>CodeActionMenu<CR>")
