@@ -793,6 +793,7 @@ map("n", "gw", "<cmd>HopWord<CR>") --easymotion/hop
 map("n", "gl", "<cmd>HopLine<CR>")
 map("n", "g/", "<cmd>HopPattern<CR>")
 map("n", "<leader>:", "<cmd>terminal<CR>")
+remap("n", "<esc>", "<cmd>noh<CR><CR>", { noremap = true, silent = true })
 
 -- telescope
 map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
