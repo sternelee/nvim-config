@@ -240,10 +240,9 @@ require("lazy").setup({
   { "leafOfTree/vim-project", cmd = { "Project", "ProjectList", "ProjectSearchFiles", "ProjectFindInFiles" } },
   {
     "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
+    cmd = "Telescope",
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
-      -- "ahmedkhalf/project.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
       "aaronhallaert/advanced-git-search.nvim",
@@ -796,34 +795,34 @@ map("n", "<leader>:", "<cmd>terminal<CR>")
 remap("n", "<esc>", "<cmd>noh<CR><CR>", { noremap = true, silent = true })
 
 -- telescope
-map("n", "<leader>*", "<cmd>Telescope<CR>") --fuzzy
-map("n", "ft", "<cmd>Telescope treesitter<CR>")
-map("n", "fc", "<cmd>Telescope commands<CR>")
-map("n", "fe", "<cmd>Telescope file_browser<CR>")
-map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
-map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
-map("n", "<leader>m", "<cmd>Telescope marks<CR>")
-map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
--- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map("n", "<leader>'", "<cmd>Telescope resume<CR>")
-map("n", "gs", "<cmd>Telescope grep_string<CR>")
-map("n", "fg", "<cmd>Telescope git_files<CR>")
-map("n", "fp", "<cmd>Telescope projects<CR>")
-map("n", "gq", "<cmd>Telescope diagnostics<CR>")
+map("n", "<leader>tg", "<cmd>Telescope<CR>") --fuzzy
+-- map("n", "ft", "<cmd>Telescope treesitter<CR>")
+-- map("n", "fc", "<cmd>Telescope commands<CR>")
+-- map("n", "fe", "<cmd>Telescope file_browser<CR>")
+-- map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
+-- map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
+-- map("n", "<leader>m", "<cmd>Telescope marks<CR>")
+-- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
+-- -- map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
+-- map("n", "<leader>'", "<cmd>Telescope resume<CR>")
+-- map("n", "gs", "<cmd>Telescope grep_string<CR>")
+-- map("n", "fg", "<cmd>Telescope git_files<CR>")
+-- map("n", "fp", "<cmd>Telescope projects<CR>")
+-- map("n", "gq", "<cmd>Telescope diagnostics<CR>")
 map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
 
 -- lua fzf
--- map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
--- map("n", "<leader>f", "<cmd>FzfLua files<CR>")
--- map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
--- -- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
--- map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
-map("n", "<leader>gg", "<cmd>FzfLua live_grep<CR>")
--- map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
--- map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
--- map("n", "fg", "<cmd>FzfLua git_files<CR>")
--- map("n", "fc", "<cmd>FzfLua commands<CR>")
--- map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
+map("n", "<leader>*", "<cmd>FzfLua<CR>") --fuzzy
+map("n", "<leader>f", "<cmd>FzfLua files<CR>")
+map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
+-- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
+map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
+map('n', '<leader>/', '<cmd>FzfLua live_grep_native<CR>')
+map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
+map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
+map("n", "fg", "<cmd>FzfLua git_files<CR>")
+map("n", "fc", "<cmd>FzfLua commands<CR>")
+map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
 
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')

@@ -187,7 +187,7 @@ local function live_grep_opts(opts)
   return opts
 end
 
-vim.keymap.set("n", "<leader>/", function()
+vim.keymap.set("n", "<leader>gg", function()
   builtin.live_grep(live_grep_opts({}))
 end, { desc = "Live Grep" })
 
