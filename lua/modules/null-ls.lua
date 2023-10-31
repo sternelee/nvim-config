@@ -35,9 +35,9 @@ null_ls.setup({
   debounce = 500,
   update_in_insert = true,
   sources = {
-    diagnostics.eslint_d,
-    formatting.eslint_d,
-    code_actions.eslint_d,
+    -- diagnostics.eslint_d,
+    -- formatting.eslint_d,
+    -- code_actions.eslint_d,
     -- diagnostics.markdownlint,
     -- formatting.markdownlint,
     diagnostics.cspell.with({

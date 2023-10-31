@@ -120,7 +120,7 @@ require("lazy").setup({
   -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    cmd = "Neotree",
+    event = "VeryLazy",
     config = function()
       require("modules.neotree")
     end
@@ -828,7 +828,7 @@ map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
 -- map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-map("n", "<leader>e", "<cmd>Neotree<<CR>")
+map("n", "<leader>e", "<cmd>Neotree toggle<CR>")
 map("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>")
 map("n", "<leader>tl", "<cmd>Twilight<CR>")
 map("n", "<leader>tw", "<cmd>Translate<CR>")

@@ -34,15 +34,6 @@ require("noice").setup({
   cmdline = {
     enabled = true,
     view = "cmdline_popup",
-    format = {
-      cmdline = { pattern = "^:", icon = " ", lang = "vim" },
-      search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-      search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
-      filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-      lua = false,
-      help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
-      input = {},
-    },
   },
   routes = {
     {
