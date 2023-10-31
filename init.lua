@@ -471,14 +471,14 @@ require("lazy").setup({
     end,
   },
   { "pechorin/any-jump.vim", cmd = { "AnyJump", "AnyJumpVisual", "AnyJumpBack" } },
-  {
-    "rmagatti/goto-preview",
-    ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
-    event = "VeryLazy",
-    config = function()
-      require("goto-preview").setup({})
-    end,
-  },
+  -- {
+  --   "rmagatti/goto-preview",
+  --   ft = { "typescript", "javascript", "typescriptreact", "rust", "vue" },
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("goto-preview").setup({})
+  --   end,
+  -- },
   { "metakirby5/codi.vim", cmd = { "Codi" } },
   {
     "iamcco/markdown-preview.nvim",
@@ -873,11 +873,11 @@ map("v", "<leader>j", "<cmd>AnyJumpVisual<CR>")
 map("n", "<leader>ab", "<cmd>AnyJumpBack<CR>")
 map("n", "<leader>al", "<cmd>AnyJumpLastResults<CR>")
 
--- goto-preview
-map("n", "gpd", '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
-map("n", "gpi", '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
-map("n", "gP", '<cmd>lua require("goto-preview").close_all_win()<CR>')
-map("n", "gpr", '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
+-- goto-preview 用Lspsaga peek_definition代替
+-- map("n", "gpd", '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
+-- map("n", "gpi", '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>')
+-- map("n", "gP", '<cmd>lua require("goto-preview").close_all_win()<CR>')
+-- map("n", "gpr", '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
 
 -- spectre
 map("n", "<leader>S", '<cmd>lua require("spectre").open()<CR>')
@@ -921,7 +921,7 @@ map("n", "<leader>F", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>")
 -- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 -- map("n", "<leader>ts", "<cmd>AerialToggle<CR>")
 
-map("n", "gD", "<cmd>Lspsaga peek_definition<CR>")
+map("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 map("n", "ga", "<cmd>Lspsaga code_action<CR>")
 map("x", "gA", "<cmd>Lspsaga range_code_action<CR>")
 map("n", "K", "<cmd>Lspsaga hover_doc<CR>")

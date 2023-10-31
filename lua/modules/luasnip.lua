@@ -5,8 +5,8 @@ luasnip.config.set_config({
     updateevents = "TextChanged",
 })
 
-luasnip.filetype_extend("typescriptreact", { "html", "typescript" })
-luasnip.filetype_extend("javascriptreact", { "html", "javascript" })
+luasnip.filetype_extend("typescriptreact", { "html", "vue" })
+luasnip.filetype_extend("javascriptreact", { "html", "vue" })
 
 -- vscode format
 require("luasnip.loaders.from_vscode").lazy_load()

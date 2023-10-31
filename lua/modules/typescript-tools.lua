@@ -1,4 +1,3 @@
--- 该插件 hover doc没有语法高亮
 local api = require("typescript-tools.api")
 require("typescript-tools").setup({
   handlers = {
@@ -11,7 +10,7 @@ require("typescript-tools").setup({
       vim.api.nvim_buf_set_option(bufnr, ...)
     end
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-    client.server_capabilities.semanticTokensProvider = true
+    client.server_capabilities.semanticTokensProvider = nil
     local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
     if client.supports_method('textDocument/inlayHint') then
       inlay_hint(bufnr, true)

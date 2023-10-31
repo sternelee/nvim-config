@@ -168,7 +168,7 @@ local on_attach = function(client, bufnr)
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  client.server_capabilities.semanticTokensProvider = false
+  client.server_capabilities.semanticTokensProvider = nil
   -- https://www.reddit.com/r/neovim/comments/14e41rb/today_on_nightly_native_lsp_inlay_hint_support/?utm_name=androidcss
   -- from https://github.com/LazyVim/LazyVim/blob/566049aa4a26a86219dd1ad1624f9a1bf18831b6/lua/lazyvim/plugins/lsp/init.lua#L124
   if client.supports_method('textDocument/inlayHint') then
@@ -201,21 +201,21 @@ local servers = {
   "pyright",
 }
 
--- local function get_typescript_server_path(root_dir)
---   local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
---   local found_ts = ''
---   local function check_dir(path)
---     found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
---     if lsputil.path.exists(found_ts) then
---       return path
---     end
---   end
---   if lsputil.search_ancestors(root_dir, check_dir) then
---     return found_ts
---   else
---     return global_ts
---   end
--- end
+local function get_typescript_server_path(root_dir)
+  local global_ts = '/opt/homebrew/lib/node_modules/typescript/lib'
+  local found_ts = ''
+  local function check_dir(path)
+    found_ts =  lsputil.path.join(path, 'node_modules', 'typescript', 'lib')
+    if lsputil.path.exists(found_ts) then
+      return path
+    end
+  end
+  if lsputil.search_ancestors(root_dir, check_dir) then
+    return found_ts
+  else
+    return global_ts
+  end
+end
 
 local function setup_servers()
   for _, lsp in ipairs(servers) do
@@ -244,13 +244,13 @@ local function setup_servers()
     --   opts.root_dir = lsputil.root_pattern(".veturrc")
     --   opts.settings = require("lsp/vuels").settings
     -- end
-    -- if lsp == "volar" then
-    --   -- opts.root_dir = lsputil.root_pattern(".volarrc")
-    --   -- opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-    --   opts.on_new_config = function(new_config, new_root_dir)
-    --     new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-    --   end
-    -- end
+    if lsp == "volar" then
+      -- opts.root_dir = lsputil.root_pattern(".volarrc")
+      -- opts.filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+      opts.on_new_config = function(new_config, new_root_dir)
+        new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+      end
+    end
     if lsp == "lua_ls" then
 	    opts.settings = {
 	    	Lua = {
