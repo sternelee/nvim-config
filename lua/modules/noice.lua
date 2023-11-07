@@ -73,6 +73,8 @@ require("noice").setup({
       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
       ["vim.lsp.util.stylize_markdown"] = true,
       ["cmp.entry.get_documentation"] = true,
+      ["textDocument/hover"] = false,
+      ["textDocument/signatureHelp"] = false
     },
     message = {
       enabled = true,

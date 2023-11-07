@@ -38,10 +38,10 @@ null_ls.setup({
     -- diagnostics.eslint_d,
     -- formatting.eslint_d,
     -- code_actions.eslint_d,
-    -- diagnostics.markdownlint,
-    -- formatting.markdownlint,
+    diagnostics.markdownlint,
+    formatting.markdownlint,
     diagnostics.cspell.with({
-      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "scss", "html" },
+      filetypes = { "*" },
       extra_args = { "--config", vim.fn.stdpath("config") .. "/cspell.json" },
       diagnostics_postprocess = function(diagnostic)
         diagnostic.severity = vim.diagnostic.severity["HINT"]         -- ERROR, WARN, INFO, HINT

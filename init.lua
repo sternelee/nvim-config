@@ -16,20 +16,20 @@ g.maplocalleader = ","
 
 vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
 
-local alpha = function()
-    return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
-end
--- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
-g.neovide_transparency = 1
-g.transparency = 0.9
-g.neovide_background_color = "#0f1117" .. alpha()
-g.neovide_scale_factor = 1.0
-g.neovide_input_macos_alt_is_meta = 1
-g.neovide_input_use_logo = 1
-g.neovide_remember_window_size = 1
-g.neovide_confirm_quit = 1
-g.neovide_hide_mouse_when_typing = 0
-g.neovide_cursor_vfx_mode = "ripple"
+-- local alpha = function()
+--     return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+-- end
+-- -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
+-- g.neovide_transparency = 1
+-- g.transparency = 0.9
+-- g.neovide_background_color = "#0f1117" .. alpha()
+-- g.neovide_scale_factor = 1.0
+-- g.neovide_input_macos_alt_is_meta = 1
+-- g.neovide_input_use_logo = 1
+-- g.neovide_remember_window_size = 1
+-- g.neovide_confirm_quit = 1
+-- g.neovide_hide_mouse_when_typing = 0
+-- g.neovide_cursor_vfx_mode = "ripple"
 
 cmd([[
   filetype plugin on
@@ -111,20 +111,20 @@ require("lazy").setup({
       require("modules.lualine")
     end,
   },
-  -- {
-  --   "kyazdani42/nvim-tree.lua",
-  --   cmd = "NvimTreeToggle",
-  --   config = function()
-  --     require("modules.nvim-tree")
-  --   end,
-  -- },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy",
+    "kyazdani42/nvim-tree.lua",
+    cmd = "NvimTreeToggle",
     config = function()
-      require("modules.neotree")
-    end
+      require("modules.nvim-tree")
+    end,
   },
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("modules.neotree")
+  --   end
+  -- },
   { "goolord/alpha-nvim", event = "VimEnter" },
   -- git相关
   {
@@ -191,19 +191,25 @@ require("lazy").setup({
     end,
   }, -- 色值高亮
   -- theme 主题 -- https://vimcolorschemes.com/
-  {
-    "maxmx03/fluoromachine.nvim",
-    config = function()
-      local fm = require("fluoromachine")
-      fm.setup({
-        glow = true,
-        brightness = 0.01,
-        theme = "retrowave",
-        transparent = "full",
-      })
-      -- cmd("colorscheme fluoromachine")
-    end,
-  },
+  -- {
+  --   "maxmx03/fluoromachine.nvim",
+  --   config = function()
+  --     local fm = require("fluoromachine")
+  --     fm.setup({
+  --       glow = true,
+  --       brightness = 0.01,
+  --       theme = "retrowave",
+  --       transparent = "full",
+  --     })
+  --     -- cmd("colorscheme fluoromachine")
+  --   end,
+  -- },
+  -- {
+  --   "craftzdog/solarized-osaka.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -231,7 +237,9 @@ require("lazy").setup({
   { "terryma/vim-expand-region", event = "VeryLazy" },
   { "matze/vim-move", event = "BufRead" },
   {
-    "phaazon/hop.nvim",
+    "smoka7/hop.nvim",
+    version = "*",
+    opts = {},
     cmd = { "HopWord", "HopLine", "HopPattern" },
     config = function()
       require("hop"):setup()
@@ -382,8 +390,7 @@ require("lazy").setup({
       },
       {
         "nvimtools/none-ls.nvim",
-        -- dependencies = { "davidmh/cspell.nvim" },
-        event = "InsertEnter",
+        event = { "LspAttach" },
         config = function()
           require("modules.null-ls")
         end,
@@ -602,19 +609,19 @@ require("lazy").setup({
   }, -- 字符组合切换
   { "numToStr/FTerm.nvim", event = "VeryLazy" },
   -- { "is0n/fm-nvim", event = "VeryLazy" },   -- 快速使用终端命令
-  {
-    "stevearc/dressing.nvim",
-    event = "BufEnter",
-    config = function()
-      require("dressing").setup({
-        input = {
-          win_options = {
-            winblend = 0,
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "stevearc/dressing.nvim",
+  --   event = "BufEnter",
+  --   config = function()
+  --     require("dressing").setup({
+  --       input = {
+  --         win_options = {
+  --           winblend = 0,
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     "folke/noice.nvim",
     event = "VimEnter",
@@ -807,7 +814,6 @@ map("n", "<leader>tg", "<cmd>Telescope<CR>") --fuzzy
 -- map("n", "<leader>'", "<cmd>Telescope resume<CR>")
 -- map("n", "gs", "<cmd>Telescope grep_string<CR>")
 -- map("n", "fg", "<cmd>Telescope git_files<CR>")
--- map("n", "fp", "<cmd>Telescope projects<CR>")
 -- map("n", "gq", "<cmd>Telescope diagnostics<CR>")
 map("n", "gQ", '<cmd>lua require"telescope.builtin".symbols{ sources = {"emoji", "kaomoji", "gitmoji"} }<CR>')
 
@@ -827,9 +833,11 @@ map("n", "gq", "<cmd>FzfLua lsp_workspace_diagnostics<CR>")
 map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
--- map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-map("n", "<leader>e", "<cmd>Neotree toggle<CR>")
+
+map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
 map("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>")
+-- map("n", "<leader>e", "<cmd>Neotree toggle<CR>")
+--
 map("n", "<leader>tl", "<cmd>Twilight<CR>")
 map("n", "<leader>tw", "<cmd>Translate<CR>")
 map("n", "<leader>th", "<cmd>TSToggle highlight<CR>")

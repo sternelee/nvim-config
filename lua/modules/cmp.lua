@@ -66,9 +66,6 @@ cmp.setup({
         luasnip.expand_or_jump()
       elseif luasnip.expandable() then
         luasnip.expand()
-      elseif check_backspace() then
-        -- cmp.complete()
-        fallback()
       else
         fallback()
       end
@@ -93,7 +90,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "codeium", max_item_count = 3 },
     { name = "buffer" },
-		{ name = "luasnip", option = { use_show_condition = false } },
+		-- { name = "luasnip", option = { use_show_condition = false } },
 		{ name = "nvim_lua" },
 		{ name = "path" },
     { name = "nvim_lsp_signature_help" },
