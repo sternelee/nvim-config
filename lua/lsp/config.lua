@@ -159,8 +159,6 @@ local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" }),
 }
-local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
@@ -169,11 +167,6 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   client.server_capabilities.semanticTokensProvider = nil
-  -- https://www.reddit.com/r/neovim/comments/14e41rb/today_on_nightly_native_lsp_inlay_hint_support/?utm_name=androidcss
-  -- from https://github.com/LazyVim/LazyVim/blob/566049aa4a26a86219dd1ad1624f9a1bf18831b6/lua/lazyvim/plugins/lsp/init.lua#L124
-  if client.supports_method('textDocument/inlayHint') then
-    inlay_hint(bufnr, true)
-  end
 
   if client.name == "tailwindcss" then
     if client.server_capabilities.colorProvider then
@@ -295,3 +288,4 @@ end
 setup_servers()
 
 require("lsp/function")
+require("lsp/inlay-hint").init()
