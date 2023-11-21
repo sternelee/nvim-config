@@ -66,7 +66,7 @@ require("noice").setup({
     view = "notify",
   },
   lsp = {
-    progress = { enabled = false },
+    -- progress = { enabled = false },
     signature = { enabled = false },
     hover = { enabled = false },
     override = {

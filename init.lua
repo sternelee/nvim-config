@@ -104,9 +104,9 @@ require("lazy").setup({
   {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    dependencies = {
-      "linrongbin16/lsp-progress.nvim",
-    },
+    -- dependencies = {
+    --   "linrongbin16/lsp-progress.nvim",
+    -- },
     config = function()
       require("modules.lualine")
     end,
@@ -287,6 +287,7 @@ require("lazy").setup({
       "b0o/schemastore.nvim",
       {
         "nvimdev/lspsaga.nvim",
+        pin = true,
         event = { "LspAttach" },
         branch = "main",
         config = function()
@@ -390,6 +391,7 @@ require("lazy").setup({
       },
       {
         "nvimtools/none-ls.nvim",
+        pin = true,
         event = { "LspAttach" },
         config = function()
           require("modules.null-ls")
