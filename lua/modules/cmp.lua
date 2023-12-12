@@ -174,26 +174,26 @@ cmp.setup.filetype("gitcommit", {
   },
 })
 
-cmp.setup.cmdline({ "/", "?" }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "buffer",          max_item_count = 10 },
-    { name = "cmdline_history", max_item_count = 10 },
-    { name = "path",            max_item_count = 10 },
-    { name = "nvim_lua",        max_item_count = 10 },
-  },
-})
-
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "cmdline",         max_item_count = 10 },
-    { name = "cmdline_history", max_item_count = 10 },
-    { name = "path",            max_item_count = 10 },
-    { name = "nvim_lua",        max_item_count = 10 },
-    { name = "buffer",          max_item_count = 10 },
-  },
-})
+-- cmp.setup.cmdline({ "/", "?" }, {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = "buffer",          max_item_count = 10 },
+--     { name = "cmdline_history", max_item_count = 10 },
+--     { name = "path",            max_item_count = 10 },
+--     { name = "nvim_lua",        max_item_count = 10 },
+--   },
+-- })
+--
+-- cmp.setup.cmdline(":", {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = "cmdline",         max_item_count = 10 },
+--     { name = "cmdline_history", max_item_count = 10 },
+--     { name = "path",            max_item_count = 10 },
+--     { name = "nvim_lua",        max_item_count = 10 },
+--     { name = "buffer",          max_item_count = 10 },
+--   },
+-- })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "*.toml",

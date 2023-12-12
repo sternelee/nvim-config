@@ -14,7 +14,7 @@ g.loaded_perl_provider = 0
 g.mapleader = " "
 g.maplocalleader = ","
 
-vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
+-- vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
 
 -- local alpha = function()
 --     return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
@@ -111,20 +111,20 @@ require("lazy").setup({
       require("modules.lualine")
     end,
   },
-  {
-    "kyazdani42/nvim-tree.lua",
-    cmd = "NvimTreeToggle",
-    config = function()
-      require("modules.nvim-tree")
-    end,
-  },
   -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   event = "VeryLazy",
+  --   "kyazdani42/nvim-tree.lua",
+  --   cmd = "NvimTreeToggle",
   --   config = function()
-  --     require("modules.neotree")
-  --   end
+  --     require("modules.nvim-tree")
+  --   end,
   -- },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    config = function()
+      require("modules.neotree")
+    end
+  },
   { "goolord/alpha-nvim", event = "VimEnter" },
   -- git相关
   {
@@ -363,12 +363,13 @@ require("lazy").setup({
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
-    event = { "InsertEnter", "CmdlineEnter" },
+    -- event = { "InsertEnter", "CmdlineEnter" },
+    event = { "InsertEnter" },
     dependencies = {
       "petertriho/cmp-git",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
+      -- "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -641,22 +642,29 @@ require("lazy").setup({
   --     })
   --   end,
   -- },
-  {
-    "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-      require("modules.noice")
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("modules.noice")
+  --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
   {
     "petertriho/nvim-scrollbar",
     event = "VeryLazy",
     config = function()
       require("scrollbar").setup()
+    end,
+  },
+  {
+    "gelguy/wilder.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modules.wilder")
     end,
   },
   {
@@ -853,9 +861,9 @@ map("n", "<leader>ns", '<cmd>lua require("package-info").show()<CR>')
 map("n", "<leader>np", '<cmd>lua require("package-info").change_version()<CR>')
 map("n", "<leader>ni", '<cmd>lua require("package-info").install()<CR>')
 
-map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-map("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>")
--- map("n", "<leader>e", "<cmd>Neotree toggle<CR>")
+-- map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
+-- map("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>")
+map("n", "<leader>e", "<cmd>Neotree<CR>")
 --
 map("n", "<leader>tl", "<cmd>Twilight<CR>")
 map("n", "<leader>tw", "<cmd>Translate<CR>")
