@@ -44,12 +44,12 @@ cmd([[
 -- using :source % or :luafile %
 -- log: nvim -V9myNvim.log
 local function echo(str)
-	vim.cmd "redraw"
-	vim.api.nvim_echo({ { str, "Bold" } }, true, {})
+  vim.cmd("redraw")
+  vim.api.nvim_echo({ { str, "Bold" } }, true, {})
 end
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	echo("Welcome to TEVIM   Installing lazy.nvim & plugins ...")
+  echo("Welcome to TEVIM   Installing lazy.nvim & plugins ...")
   fn.system({
     "git",
     "clone",
@@ -233,7 +233,24 @@ require("lazy").setup({
   --     require("modules.hlchunk")
   --   end,
   -- },
-  { "mg979/vim-visual-multi", event = "VeryLazy" },
+  -- { "mg979/vim-visual-multi", event = "VeryLazy" },
+  {
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "smoka7/hydra.nvim",
+    },
+    opts = {},
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<Leader>m",
+        "<cmd>MCstart<cr>",
+        desc = "Create a selection for selected text or word under the cursor",
+      },
+    },
+  },
   { "terryma/vim-expand-region", event = "VeryLazy" },
   { "matze/vim-move", event = "BufRead" },
   {
@@ -287,8 +304,8 @@ require("lazy").setup({
       "b0o/schemastore.nvim",
       {
         "nvimdev/lspsaga.nvim",
-        pin = true,
         event = { "LspAttach" },
+        pin = true,
         branch = "main",
         config = function()
           require("modules.saga")
@@ -825,7 +842,7 @@ map("n", "<leader>f", "<cmd>FzfLua files<CR>")
 map("n", "<leader>b", "<cmd>FzfLua buffers<CR>")
 -- map("n", "<leader>m", "<cmd>FzfLua marks<CR>")
 map("n", "<leader>m", "<cmd>ReachOpen marks<CR>")
-map('n', '<leader>/', '<cmd>FzfLua live_grep_native<CR>')
+map("n", "<leader>/", "<cmd>FzfLua live_grep_native<CR>")
 map("n", "<leader>'", "<cmd>FzfLua resume<CR>")
 map("n", "gs", "<cmd>FzfLua grep_cword<CR>")
 map("n", "fg", "<cmd>FzfLua git_files<CR>")

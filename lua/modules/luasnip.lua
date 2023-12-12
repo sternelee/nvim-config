@@ -2,7 +2,8 @@ local luasnip = require("luasnip")
 
 luasnip.config.set_config({
     history = true,
-    updateevents = "TextChanged",
+    updateevents = 'TextChanged,TextChangedI',
+    enable_autosnippets = true,
 })
 
 luasnip.filetype_extend("typescriptreact", { "html", "vue" })

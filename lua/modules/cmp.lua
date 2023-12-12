@@ -60,8 +60,6 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and has_words_before() then
         cmp.select_next_item()
-      elseif luasnip.jumpable(1) then
-        luasnip.jump(1)
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif luasnip.expandable() then
@@ -90,7 +88,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "codeium", max_item_count = 3 },
     { name = "buffer" },
-		-- { name = "luasnip", option = { use_show_condition = false } },
+		{ name = "luasnip", option = { use_show_condition = false } },
 		{ name = "nvim_lua" },
 		{ name = "path" },
     { name = "nvim_lsp_signature_help" },
@@ -163,6 +161,10 @@ cmp.setup({
 -- for autopairs
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+cmp.setup.filetype('TelescopePrompt', {
+  enabled = false,
+})
 
 cmp.setup.filetype("gitcommit", {
   sources = {

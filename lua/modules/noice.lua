@@ -74,7 +74,7 @@ require("noice").setup({
       ["vim.lsp.util.stylize_markdown"] = true,
       ["cmp.entry.get_documentation"] = true,
       ["textDocument/hover"] = false,
-      ["textDocument/signatureHelp"] = false
+      ["textDocument/signatureHelp"] = false,
     },
     message = {
       enabled = true,
@@ -116,7 +116,7 @@ require("noice").setup({
           { error = true },
           { warning = true },
           { event = "msg_show", kind = { "" } },
-          { event = "lsp",      kind = "message" },
+          { event = "lsp", kind = "message" },
         },
       },
     },
@@ -129,7 +129,7 @@ require("noice").setup({
           { error = true },
           { warning = true },
           { event = "msg_show", kind = { "" } },
-          { event = "lsp",      kind = "message" },
+          { event = "lsp", kind = "message" },
         },
       },
       filter_opts = { count = 1 },
