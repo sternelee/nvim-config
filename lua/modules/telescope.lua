@@ -153,7 +153,7 @@ require("telescope").setup({
   },
 })
 
--- require("telescope").load_extension("fzf")
+require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("notify")
 -- require('telescope').load_extension('bookmarks')
@@ -185,7 +185,7 @@ local function live_grep_opts(opts)
   return opts
 end
 
-vim.keymap.set("n", "<leader>gg", function()
+vim.keymap.set("n", "<leader>/", function()
   builtin.live_grep(live_grep_opts({}))
 end, { desc = "Live Grep" })
 
