@@ -167,6 +167,9 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   client.server_capabilities.semanticTokensProvider = nil
+  if client and client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(bufnr, true)
+  end
 
   if client.name == "tailwindcss" then
     if client.server_capabilities.colorProvider then
@@ -288,4 +291,3 @@ end
 setup_servers()
 
 require("lsp/function")
-require("lsp/inlay-hint").init()

@@ -298,6 +298,11 @@ require("lazy").setup({
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      inlay_hints = {
+        enabled = false,
+      }
+    },
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -461,7 +466,7 @@ require("lazy").setup({
     config = function()
       require("rust-tools").setup({
         tools = {
-          autoSetHints = false,
+          autoSetHints = true,
           runnables = { use_telescope = true },
           inlay_hints = { show_parameter_hints = true, auto = true },
           hover_actions = { auto_focus = true },

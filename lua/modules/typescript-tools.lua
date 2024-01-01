@@ -11,6 +11,9 @@ require("typescript-tools").setup({
     end
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     client.server_capabilities.semanticTokensProvider = nil
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(bufnr, true)
+    end
   end,
   capabilities = require("lsp/tsserver").capabilities,
   settings = {
@@ -21,13 +24,26 @@ require("typescript-tools").setup({
     tsserver_plugins = {},
     tsserver_max_memory = "auto",
     tsserver_format_options = {
+      -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3418
       allowIncompleteCompletions = false,
       allowRenameOfImportPath = false,
     },
     tsserver_file_preferences = {
+      -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3439
       includeInlayParameterNameHints = "all",
+      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
       includeCompletionsForModuleExports = true,
+      organizeImportsIgnoreCase = "auto",
       quotePreference = "auto",
+      includePackageJsonAutoImports = "auto",
+      allowRenameOfImportPath = true,
+      allowIncompleteCompletions = false,
     },
   },
 })
