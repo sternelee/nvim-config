@@ -233,24 +233,24 @@ require("lazy").setup({
   --     require("modules.hlchunk")
   --   end,
   -- },
-  -- { "mg979/vim-visual-multi", event = "VeryLazy" },
-  {
-    "smoka7/multicursors.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "smoka7/hydra.nvim",
-    },
-    opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>M",
-        "<cmd>MCstart<cr>",
-        desc = "Create a selection for selected text or word under the cursor",
-      },
-    },
-  },
+  { "mg979/vim-visual-multi", event = "VeryLazy" },
+  -- {
+  --   "smoka7/multicursors.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "smoka7/hydra.nvim",
+  --   },
+  --   opts = {},
+  --   cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+  --   keys = {
+  --     {
+  --       mode = { "v", "n" },
+  --       "<Leader>M",
+  --       "<cmd>MCstart<cr>",
+  --       desc = "Create a selection for selected text or word under the cursor",
+  --     },
+  --   },
+  -- },
   { "terryma/vim-expand-region", event = "VeryLazy" },
   { "matze/vim-move", event = "BufRead" },
   {
@@ -511,7 +511,8 @@ require("lazy").setup({
   --     require("goto-preview").setup({})
   --   end,
   -- },
-  { "metakirby5/codi.vim", cmd = { "Codi" } },
+  -- { "metakirby5/codi.vim", cmd = { "Codi" } },
+  { "0x100101/lab.nvim", ft = { "javascript", "typescript"},  build = "cd js && npm ci" },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -1000,7 +1001,7 @@ map("n", "<leader>zt", '<cmd>lua require("telekasten").toggle_todo()<CR>')
 map("n", "<leader>za", '<cmd>lua require("telekasten").show_tags()<CR>')
 
 -- Codi
-map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
+-- map("n", "<leader>ce", "<Cmd>CodiExpand<CR>")
 
 -- vim-project
 map("n", "<leader>pl", "<Cmd>ProjectList<CR>")
