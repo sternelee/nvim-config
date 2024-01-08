@@ -391,22 +391,22 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      -- {
-      --   "Exafunction/codeium.vim",
-      --   event = "InsertEnter",
-      --   lazy = true,
-      --   config = function()
-      --     require("modules.codeium")
-      --   end,
-      -- },
       {
-        "jcdickinson/codeium.nvim",
+        "Exafunction/codeium.vim",
         event = "InsertEnter",
         lazy = true,
         config = function()
-          require("codeium").setup()
+          require("modules.codeium")
         end,
       },
+      -- {
+      --   "jcdickinson/codeium.nvim",
+      --   event = "InsertEnter",
+      --   lazy = true,
+      --   config = function()
+      --     require("codeium").setup()
+      --   end,
+      -- },
       {
         "onsails/lspkind.nvim",
         event = "InsertEnter",
@@ -512,7 +512,7 @@ require("lazy").setup({
   --   end,
   -- },
   -- { "metakirby5/codi.vim", cmd = { "Codi" } },
-  { "0x100101/lab.nvim", ft = { "javascript", "typescript"},  build = "cd js && npm ci" },
+  { "0x100101/lab.nvim", ft = { "javascript", "typescript"},  build = "cd js && npm ci", opts = { } },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
