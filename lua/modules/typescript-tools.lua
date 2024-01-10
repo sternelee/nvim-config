@@ -11,9 +11,9 @@ require("typescript-tools").setup({
     end
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     client.server_capabilities.semanticTokensProvider = nil
-    if client and client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint.enable(bufnr, true)
-    end
+    -- if client and client.server_capabilities.inlayHintProvider then
+    --   vim.lsp.inlay_hint.enable(bufnr, true)
+    -- end
   end,
   capabilities = require("lsp/tsserver").capabilities,
   settings = {
@@ -30,7 +30,7 @@ require("typescript-tools").setup({
     },
     tsserver_file_preferences = {
       -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3439
-      includeInlayParameterNameHints = "all",
+      -- includeInlayParameterNameHints = "all",
       -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
       -- includeInlayFunctionParameterTypeHints = true,
       -- includeInlayVariableTypeHints = true,

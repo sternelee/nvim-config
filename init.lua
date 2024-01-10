@@ -19,7 +19,6 @@ vim.o.guifont = "FiraCode Nerd Font Mono Light:h18"
 local alpha = function()
     return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
 end
--- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
 g.neovide_transparency = 1
 g.transparency = 0.9
 g.neovide_background_color = "#0f1117" .. alpha()
@@ -204,12 +203,12 @@ require("lazy").setup({
   --     -- cmd("colorscheme fluoromachine")
   --   end,
   -- },
-  -- {
-  --   "craftzdog/solarized-osaka.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {},
-  -- },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {
     "Mofiqul/vscode.nvim",
     event = "VeryLazy",
@@ -316,7 +315,7 @@ require("lazy").setup({
           require("modules.saga")
         end,
       },
-      -- "folke/neoconf.nvim",
+      "folke/neoconf.nvim",
       -- {
       --   "j-hui/fidget.nvim",
       --   branch = "legacy",
@@ -1035,7 +1034,7 @@ g.markdown_fenced_languages =
   { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
-cmd("colorscheme base16-ayu-dark")
+cmd("colorscheme solarized-osaka")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }
