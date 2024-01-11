@@ -103,9 +103,9 @@ require("lazy").setup({
   {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    -- dependencies = {
-    --   "linrongbin16/lsp-progress.nvim",
-    -- },
+    dependencies = {
+      "linrongbin16/lsp-progress.nvim",
+    },
     config = function()
       require("modules.lualine")
     end,
@@ -203,19 +203,14 @@ require("lazy").setup({
   --     -- cmd("colorscheme fluoromachine")
   --   end,
   -- },
-  {
-    "craftzdog/solarized-osaka.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "Mofiqul/vscode.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "RRethy/nvim-base16",
-    },
-  },
+  -- {
+  --   "craftzdog/solarized-osaka.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
+  {"RRethy/nvim-base16", event = "VeryLazy"},
+  -- {"Mofiqul/vscode.nvim", event = "VeryLazy"},
   -- 显示导航线
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -1034,7 +1029,7 @@ g.markdown_fenced_languages =
   { "javascript", "typescript", "bash", "lua", "go", "rust", "c", "cpp", "html", "scss", "css" }
 
 --theme
-cmd("colorscheme solarized-osaka")
+cmd("colorscheme base16-ayu-dark")
 
 -- vim-better-whitespace
 g.better_whitespace_filetypes_blacklist = { "diff", "git", "qf", "help", "fugitive", "minimap" }

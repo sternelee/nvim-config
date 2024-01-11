@@ -1,17 +1,17 @@
--- local disableTsOrLsp = function(lang, bufnr)
---   local lcount = vim.api.nvim_buf_line_count(bufnr)
---   local bytes = vim.api.nvim_buf_get_offset(bufnr, lcount)
---   return bytes / lcount > 500
--- end
+local disableTsOrLsp = function(lang, bufnr)
+  local lcount = vim.api.nvim_buf_line_count(bufnr)
+  local bytes = vim.api.nvim_buf_get_offset(bufnr, lcount)
+  return bytes / lcount > 500
+end
 
 --nvim treesitter 编辑大文件卡顿时最好关闭 highlight, rainbow, autotag
 require("nvim-treesitter.configs").setup({
   -- parser_install_dir = "~/.local/share/nvim/parsers",
   ensure_installed = {"vue", "html", "javascript", "typescript", "scss", "json", "rust", "lua", "tsx", "dockerfile", "graphql", "jsdoc", "toml", "comment", "yaml", "cmake", "bash", "http", "dot", "regex", "markdown", "markdown_inline"},
   highlight = {
-    enable = true,
+    enable = false,
     additional_vim_regex_highlighting = false,
-    -- disable = disableTsOrLsp,
+    disable = disableTsOrLsp,
   },
   rainbow = {
     enable = true,

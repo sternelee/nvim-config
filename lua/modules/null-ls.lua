@@ -40,13 +40,7 @@ null_ls.setup({
     -- code_actions.eslint_d,
     diagnostics.markdownlint,
     formatting.markdownlint,
-    diagnostics.cspell.with({
-      filetypes = { "*" },
-      extra_args = { "--config", vim.fn.stdpath("config") .. "/cspell.json" },
-      diagnostics_postprocess = function(diagnostic)
-        diagnostic.severity = vim.diagnostic.severity["HINT"]         -- ERROR, WARN, INFO, HINT
-      end,
-    }),
+    diagnostics.cspell,
     code_actions.cspell.with({
       config = {
         find_json = function(cwd)
