@@ -40,20 +40,20 @@ null_ls.setup({
     -- code_actions.eslint_d,
     diagnostics.markdownlint,
     formatting.markdownlint,
-    diagnostics.cspell,
-    code_actions.cspell.with({
-      config = {
-        find_json = function(cwd)
-          return vim.fn.stdpath("config") .. "/cspell.json"
-        end,
-      },
-    }),
+    -- diagnostics.cspell,
+    -- code_actions.cspell.with({
+    --   config = {
+    --     find_json = function(cwd)
+    --       return vim.fn.stdpath("config") .. "/cspell.json"
+    --     end,
+    --   },
+    -- }),
     formatting.jq,
     formatting.stylua.with({
       extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
     }),
-    -- diagnostics.codespell, -- 这玩意有问题, datas 会被转成 data
-    -- formatting.codespell,
+    diagnostics.codespell, -- 这玩意有问题, datas 会被转成 data
+    formatting.codespell,
     formatting.prettier,
     -- require("typescript.extensions.null-ls.code-actions"),
     -- formatting.prettierd.with({

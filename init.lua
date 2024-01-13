@@ -408,7 +408,6 @@ require("lazy").setup({
       },
       {
         "nvimtools/none-ls.nvim",
-        pin = true,
         event = { "LspAttach" },
         config = function()
           require("modules.null-ls")
