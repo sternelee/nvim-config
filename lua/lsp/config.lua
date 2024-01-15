@@ -167,10 +167,10 @@ local on_attach = function(client, bufnr)
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  -- client.server_capabilities.semanticTokensProvider = nil
-  -- if client and client.server_capabilities.inlayHintProvider then
-  --   vim.lsp.inlay_hint.enable(bufnr, true)
-  -- end
+  client.server_capabilities.semanticTokensProvider = nil
+  if client and client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(bufnr, true)
+  end
 
   if client.name == "tailwindcss" then
     if client.server_capabilities.colorProvider then
@@ -188,7 +188,7 @@ local servers = {
   "emmet_ls",
   -- "vuels",
   "volar",
-  -- "tsserver", -- use typescript-tools
+  "tsserver", -- use typescript-tools
   "denols",
   "rust_analyzer",
   "eslint",
@@ -230,11 +230,11 @@ local function setup_servers()
         },
       }
     end
-    -- if lsp == "tsserver" then
-    --   opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
-    --   opts.capabilities = require("lsp/tsserver").capabilities
-    --   opts.settings = require("lsp/tsserver").settings
-    -- end
+    if lsp == "tsserver" then
+      opts.root_dir = lsputil.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+      opts.capabilities = require("lsp/tsserver").capabilities
+      opts.settings = require("lsp/tsserver").settings
+    end
     if lsp == "denols" then
       opts.root_dir = lsputil.root_pattern("deno.json", "deno.jsonc")
     end

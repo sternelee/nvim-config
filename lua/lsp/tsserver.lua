@@ -1,7 +1,7 @@
 local M = {}
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = false
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
@@ -38,24 +38,24 @@ M.settings = {
   typescript = {
     inlayHints = {
       includeInlayParameterNameHints = "all",
-      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      -- includeInlayFunctionParameterTypeHints = true,
+      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      includeInlayFunctionParameterTypeHints = true,
       -- includeInlayVariableTypeHints = true,
-      -- includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
       -- includeInlayPropertyDeclarationTypeHints = true,
-      -- includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
       -- includeInlayEnumMemberValueHints = true,
     },
   },
   javascript = {
     inlayHints = {
       includeInlayParameterNameHints = "all",
-      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      -- includeInlayFunctionParameterTypeHints = true,
+      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      includeInlayFunctionParameterTypeHints = true,
       -- includeInlayVariableTypeHints = true,
-      -- includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
       -- includeInlayPropertyDeclarationTypeHints = true,
-      -- includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
       -- includeInlayEnumMemberValueHints = true,
     },
   },

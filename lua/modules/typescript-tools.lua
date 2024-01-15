@@ -10,10 +10,10 @@ require("typescript-tools").setup({
       vim.api.nvim_buf_set_option(bufnr, ...)
     end
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-    -- client.server_capabilities.semanticTokensProvider = nil
-    -- if client and client.server_capabilities.inlayHintProvider then
-    --   vim.lsp.inlay_hint.enable(bufnr, true)
-    -- end
+    client.server_capabilities.semanticTokensProvider = nil
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(bufnr, true)
+    end
   end,
   capabilities = require("lsp/tsserver").capabilities,
   settings = {
