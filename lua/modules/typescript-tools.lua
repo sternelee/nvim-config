@@ -20,7 +20,8 @@ require("typescript-tools").setup({
     separate_diagnostic_server = true,
     publish_diagnostic_on = "insert_leave",
     expose_as_code_action = {},
-    tsserver_path = "~/.local/share/nvim/mason/bin/typescript-language-server",
+    -- tsserver_path = "~/.local/share/nvim/mason/bin/typescript-language-server",
+    tsserver_path = nil,
     tsserver_plugins = {},
     tsserver_max_memory = "auto",
     tsserver_format_options = {

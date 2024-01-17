@@ -310,7 +310,7 @@ require("lazy").setup({
           require("modules.saga")
         end,
       },
-      "folke/neoconf.nvim",
+      -- "folke/neoconf.nvim",
       -- {
       --   "j-hui/fidget.nvim",
       --   branch = "legacy",
@@ -351,14 +351,14 @@ require("lazy").setup({
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
-  -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "javascript" },
-  --   config = function()
-  --     require("modules.typescript-tools")
-  --   end,
-  -- },
+  {
+    "pmizio/typescript-tools.nvim", -- semanticTokensProvider会自动开启
+    event = "VeryLazy",
+    ft = { "typescript", "typescriptreact", "javascript" },
+    config = function()
+      require("modules.typescript-tools")
+    end,
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
