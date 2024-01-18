@@ -188,7 +188,7 @@ local servers = {
   "emmet_ls",
   -- "vuels",
   "volar",
-  -- "tsserver", -- use typescript-tools
+  "tsserver", -- use typescript-tools
   "denols",
   "rust_analyzer",
   "eslint",
