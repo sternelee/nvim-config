@@ -351,14 +351,14 @@ require("lazy").setup({
       keymap("", "<Leader>tp", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
-  -- {
-  --   "pmizio/typescript-tools.nvim", -- semanticTokensProvider会自动开启
-  --   event = "VeryLazy",
-  --   ft = { "typescript", "typescriptreact", "javascript" },
-  --   config = function()
-  --     require("modules.typescript-tools")
-  --   end,
-  -- },
+  {
+    "pmizio/typescript-tools.nvim", -- semanticTokensProvider会自动开启
+    event = "VeryLazy",
+    ft = { "typescript", "typescriptreact", "javascript" },
+    config = function()
+      require("modules.typescript-tools")
+    end,
+  },
   -- 语法提示
   {
     "hrsh7th/nvim-cmp",
@@ -428,13 +428,13 @@ require("lazy").setup({
       require("telescope").load_extension("refactoring")
     end,
   },
-  -- {
-  --     "napmn/react-extract.nvim",
-  --     ft = { "typescriptreact", "javascriptreact" },
-  --     config = function()
-  --         require("react-extract").setup()
-  --     end,
-  -- }, -- 重构react组件
+  {
+      "napmn/react-extract.nvim",
+      ft = { "typescriptreact", "javascriptreact" },
+      config = function()
+          require("react-extract").setup()
+      end,
+  }, -- 重构react组件
   {
     "folke/trouble.nvim",
     ft = "qf",

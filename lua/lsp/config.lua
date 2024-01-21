@@ -188,7 +188,7 @@ local servers = {
   "emmet_ls",
   -- "vuels",
   "volar",
-  "tsserver", -- use typescript-tools
+  -- "tsserver", -- 不支持tsconfig.json中的paths, so use typescript-tools
   "denols",
   "rust_analyzer",
   "eslint",
