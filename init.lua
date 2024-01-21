@@ -385,22 +385,22 @@ require("lazy").setup({
           require("modules.luasnip")
         end,
       },
-      {
-        "Exafunction/codeium.vim",
-        event = "InsertEnter",
-        lazy = true,
-        config = function()
-          require("modules.codeium")
-        end,
-      },
       -- {
-      --   "jcdickinson/codeium.nvim",
+      --   "Exafunction/codeium.vim",
       --   event = "InsertEnter",
       --   lazy = true,
       --   config = function()
-      --     require("codeium").setup()
+      --     require("modules.codeium")
       --   end,
       -- },
+      {
+        "jcdickinson/codeium.nvim",
+        event = "InsertEnter",
+        lazy = true,
+        config = function()
+          require("codeium").setup()
+        end,
+      },
       {
         "onsails/lspkind.nvim",
         event = "InsertEnter",
@@ -574,7 +574,7 @@ require("lazy").setup({
   }, -- 提示leader按键
   { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" }, -- 彩虹匹配
   { "windwp/nvim-ts-autotag", event = "VeryLazy" },
-  { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
+  -- { "AndrewRadev/tagalong.vim", event = "VeryLazy" },
   {
     "folke/todo-comments.nvim",
     event = "VeryLazy",

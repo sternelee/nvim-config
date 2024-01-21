@@ -86,7 +86,7 @@ cmp.setup({
   },
   sources = {
 		{ name = "nvim_lsp" },
-		-- { name = "codeium", max_item_count = 3 },
+		{ name = "codeium", max_item_count = 3 },
     { name = "buffer" },
 		{ name = "luasnip", option = { use_show_condition = false } },
 		{ name = "nvim_lua" },
